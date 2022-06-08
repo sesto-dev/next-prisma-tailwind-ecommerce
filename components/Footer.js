@@ -9,9 +9,7 @@ import {
     Divider,
 } from '@geist-ui/core'
 
-import config from '../config'
-
-const Footer = () => {
+const Footer = ({ config }) => {
     const theme = useTheme()
 
     return (

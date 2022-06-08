@@ -20,6 +20,6 @@ This package relies on:
 
 ```json
    "@geist-ui/core": "^2.3.8",
-	"next": "^12.1.6",
-	"react": "^18.1.0"
+   "next": "^12.1.6",
+   "react": "^18.1.0"
 ```
