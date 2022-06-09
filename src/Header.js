@@ -11,9 +11,8 @@ import {
     Tabs,
 } from '@geist-ui/core'
 
-const Header = ({ config, prefers }) => {
+const Header = ({ config, themePreference }) => {
     const theme = useTheme()
-
     const title = config.meta.title
     const uppercaseTitle = title.toUpperCase()
 
@@ -26,7 +25,7 @@ const Header = ({ config, prefers }) => {
                     </Link>
                 </Text>
                 <div>
-                    <HeaderOptions prefers={prefers} />
+                    <HeaderOptions themePreference={themePreference} />
                 </div>
             </nav>
             <Submenu />
@@ -61,7 +60,8 @@ const Header = ({ config, prefers }) => {
     )
 }
 
-const HeaderOptions = ({ prefers }) => {
+const HeaderOptions = ({ themePreference }) => {
+    const prefers = themePreference()
     const theme = useTheme()
     const {
         toasts,
