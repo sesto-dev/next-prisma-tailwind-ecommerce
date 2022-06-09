@@ -1,6 +1,11 @@
 import Head from 'next/head'
 
-const Helmet = ({ config, title, url, description, keywords, image }) => {
+const Helmet = ({ config, title, url, description, image }) => {
+    title = title ? title : config.meta.title
+    url = url ? url : config.meta.url
+    description = description ? description : config.meta.description
+    image = image ? image : config.meta.image
+
     return (
         <Head>
             <meta name="twitter:card" content="summary_large_image" />
@@ -24,17 +29,9 @@ const Helmet = ({ config, title, url, description, keywords, image }) => {
             <meta name="og:image" content={image} />
 
             <meta name="og:url" content={url} />
-            <meta name="keyword" content={keywords} />
+            <meta name="keyword" content={config.meta.keywords} />
         </Head>
     )
-}
-
-Helmet.defaultProps = {
-    title: config.meta.title,
-    url: config.meta.url,
-    description: config.meta.description,
-    image: config.meta.image,
-    keywords: config.meta.keywords,
 }
 
 export default Helmet

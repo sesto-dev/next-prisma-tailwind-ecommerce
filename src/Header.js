@@ -11,10 +11,7 @@ import {
     Tabs,
 } from '@geist-ui/core'
 
-import config from '../config'
-import { themePreference } from '../state/Context'
-
-const Header = () => {
+const Header = ({ config, prefers }) => {
     const theme = useTheme()
 
     const title = config.meta.title
@@ -29,7 +26,7 @@ const Header = () => {
                     </Link>
                 </Text>
                 <div>
-                    <HeaderOptions />
+                    <HeaderOptions prefers={prefers} />
                 </div>
             </nav>
             <Submenu />
@@ -64,7 +61,7 @@ const Header = () => {
     )
 }
 
-const HeaderOptions = () => {
+const HeaderOptions = ({ prefers }) => {
     const theme = useTheme()
     const {
         toasts,
@@ -75,9 +72,6 @@ const HeaderOptions = () => {
     } = useToasts()
 
     const [sticky, setSticky] = useState(false)
-
-    // Global State
-    const prefers = themePreference()
 
     useEffect(() => {
         const scrollHandler = () =>
