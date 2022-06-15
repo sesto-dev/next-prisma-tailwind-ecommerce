@@ -6,8 +6,8 @@ const Banner = ({ header, small }) => {
     return (
         <>
             <div className="Banner">
-                <div style={{ marginTop: '2rem', marginBottom: '3rem' }}>
-                    <Text h2 mb={1}>
+                <div style={{ marginTop: '1rem', marginBottom: '3rem' }}>
+                    <Text h3 mb={0} pb={0}>
                         {header}
                     </Text>
                     <Text small>{small}</Text>
