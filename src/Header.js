@@ -28,7 +28,7 @@ const Header = ({ config, themePreference }) => {
                     <HeaderOptions themePreference={themePreference} />
                 </div>
             </nav>
-            <Submenu />
+            <Submenu config={config} />
             <style jsx global>
                 {`
                     .MenuNavigation {
@@ -122,7 +122,7 @@ const HeaderOptions = ({ themePreference }) => {
     )
 }
 
-const Submenu = () => {
+const Submenu = ({ config }) => {
     const router = useRouter()
     const theme = useTheme()
 
@@ -145,8 +145,12 @@ const Submenu = () => {
                             onChange={(route) => router.push(route)}
                         >
                             <Tabs.Item ml={0} label={'HOME'} value="/" />
-                            <Tabs.Item label="PROJECTS" value="/projects" />
-                            <Tabs.Item label="EXPERIENCE" value="/experience" />
+                            {config.tabs.map((tab) => (
+                                <Tabs.Item
+                                    label={tab.label}
+                                    value={tab.value}
+                                />
+                            ))}
                         </Tabs>
                     </div>
                 </div>
