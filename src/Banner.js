@@ -1,6 +1,6 @@
 import { Spacer, Text, useTheme } from '@geist-ui/core'
 
-const Banner = ({ large, small }) => {
+const Banner = ({ config, large, small }) => {
     const theme = useTheme()
 
     return (
@@ -17,7 +17,7 @@ const Banner = ({ large, small }) => {
             <style jsx global>
                 {`
                     .Banner {
-                        width: ${theme.layout.pageWidthWithMargin};
+                        width: ${config.theme.width};
                         max-width: 100%;
                         margin: 0 auto;
                         padding: 0 ${theme.layout.pageMargin};

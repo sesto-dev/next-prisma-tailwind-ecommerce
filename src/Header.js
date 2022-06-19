@@ -30,7 +30,7 @@ const Header = ({ config, themePreference }) => {
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
-                        width: ${theme.layout.pageWidthWithMargin};
+                        width: ${config.theme.width};
                         max-width: 100%;
                         margin: 0 auto;
                         padding: 0 ${theme.layout.pageMargin};
@@ -179,7 +179,7 @@ const Submenu = ({ config }) => {
                     }
                     .SubmenuInner {
                         display: flex;
-                        width: ${theme.layout.pageWidthWithMargin};
+                        width: ${config.theme.width};
                         max-width: 100%;
                         margin: 0 auto;
                         padding: 0 ${theme.layout.pageMargin};

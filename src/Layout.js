@@ -17,14 +17,14 @@ const Layout = ({
     return (
         <>
             <Helmet
+                config={config}
                 title={metaTitle}
                 image={metaImage}
                 description={metaDescription}
-                config={config}
             />
             <Header config={config} themePreference={themePreference} />
-            <Banner large={bannerLarge} small={bannerSmall} />
-            <Wrapper>{children}</Wrapper>
+            <Banner config={config} large={bannerLarge} small={bannerSmall} />
+            <Wrapper config={config}>{children}</Wrapper>
             <Footer config={config} />
         </>
     )
@@ -34,6 +34,9 @@ Layout.defaultProps = {
     bannerLarge: 'Large Text',
     bannerSmall: 'Small text as a description for the page.',
     config: {
+        theme: {
+            width: '782pt',
+        },
         meta: {
             title: 'GEIST-ABSTRACTION',
             url: 'https://example.com',

@@ -133,7 +133,7 @@ const Footer = ({ config }) => {
                         margin: 1rem auto;
                     }
                     .FooterWrapper {
-                        max-width: ${theme.layout.pageWidthWithMargin};
+                        max-width: ${config.theme.width};
                         margin: 0 auto;
                         padding: 0 ${theme.layout.pageMargin};
                         justify-content: center;
