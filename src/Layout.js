@@ -27,7 +27,7 @@ Layout.defaultProps = {
     bannerSmall: 'Small text as a description for the page.',
     config: {
         meta: {
-            title: 'GEIST-COMPONENTS',
+            title: 'GEIST-ABSTRACTION',
             keywords: ['geist-ui', 'nextjs', 'reactjs'],
         },
         links: {

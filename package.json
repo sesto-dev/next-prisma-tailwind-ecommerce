@@ -1,7 +1,7 @@
 {
-    "name": "@accretence/geist-components",
+    "name": "@accretence/geist-abstraction",
     "version": "0.2.0",
-    "description": "Standardized Geist components, currently for personal use.",
+    "description": "Standardized Geist abstraction, currently for personal use.",
     "type": "module",
     "main": "index.js",
     "scripts": {
@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Accretence/geist-components.git"
+        "url": "git+https://github.com/Accretence/geist-abstraction.git"
     },
     "keywords": [
         "geist-ui",
@@ -19,9 +19,9 @@
     "author": "@accretence",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/Accretence/geist-components/issues"
+        "url": "https://github.com/Accretence/geist-abstraction/issues"
     },
-    "homepage": "https://github.com/Accretence/geist-components#readme",
+    "homepage": "https://github.com/Accretence/geist-abstraction#readme",
     "peerDependencies": {
         "@geist-ui/core": "^2.3.8",
         "next": "^12.1.6",

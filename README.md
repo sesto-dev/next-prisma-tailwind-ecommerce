@@ -9,7 +9,7 @@ Standardized set of [geist-ui](https://github.com/geist-org/geist-ui) components
 Add this repository as a [git submodule](https://github.blog/2016-02-01-working-with-submodules/) in your root:
 
 ```bash
-git submodule add https://github.com/accretence/geist-components geist-components
+git submodule add https://github.com/accretence/geist-abstraction geist-abstraction
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ git submodule add https://github.com/accretence/geist-components geist-component
 This is an EXTREMELY opinionated layout library built on top of [geist-ui](https://github.com/geist-org/geist-ui) adhering to the design language of [Vercel]() and should only be used if you want to adhere to this design language yourself. You should visit the `Layout` component to see the props it requires.
 
 ```js
-import { Layout } from '../geist-components'
+import { Layout } from '../geist-abstraction'
 
 const Index = () => {
     return <Layout>// Your content</Layout>
