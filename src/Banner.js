@@ -1,6 +1,6 @@
 import { Spacer, Text, useTheme } from '@geist-ui/core'
 
-const Banner = ({ header, small }) => {
+const Banner = ({ large, small }) => {
     const theme = useTheme()
 
     return (
@@ -8,7 +8,7 @@ const Banner = ({ header, small }) => {
             <div className="Banner">
                 <div style={{ marginTop: '1rem', marginBottom: '3rem' }}>
                     <Text h3 mb={0} pb={0}>
-                        {header}
+                        {large}
                     </Text>
                     <Text small>{small}</Text>
                 </div>
@@ -27,11 +27,6 @@ const Banner = ({ header, small }) => {
             </style>
         </>
     )
-}
-
-Banner.defaultProps = {
-    header: 'Header',
-    small: 'Small text as a description for the page.',
 }
 
 export default Banner

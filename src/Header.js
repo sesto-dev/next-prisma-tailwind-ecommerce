@@ -25,7 +25,9 @@ const Header = ({ config, themePreference }) => {
                     </Link>
                 </Text>
                 <div>
-                    <HeaderOptions themePreference={themePreference} />
+                    {themePreference && (
+                        <HeaderOptions themePreference={themePreference} />
+                    )}
                 </div>
             </nav>
             <Submenu config={config} />
@@ -147,6 +149,7 @@ const Submenu = ({ config }) => {
                             <Tabs.Item ml={0} label={'HOME'} value="/" />
                             {config.tabs.map((tab) => (
                                 <Tabs.Item
+                                    key={tab.label}
                                     label={tab.label}
                                     value={tab.value}
                                 />
