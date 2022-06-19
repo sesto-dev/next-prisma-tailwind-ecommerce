@@ -2,14 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-import {
-    useToasts,
-    Text,
-    Button,
-    Link as GeistLink,
-    useTheme,
-    Tabs,
-} from '@geist-ui/core'
+import { useToasts, Text, Button, useTheme, Tabs } from '@geist-ui/core'
 
 const Header = ({ config, themePreference }) => {
     const theme = useTheme()

@@ -8,7 +8,7 @@ const Banner = ({ large, small }) => {
             <div className="Banner">
                 <div style={{ marginTop: '1rem', marginBottom: '3rem' }}>
                     <Text h3 mb={0} pb={0}>
-                        {large}
+                        {large.toUpperCase()}
                     </Text>
                     <Text small>{small}</Text>
                 </div>

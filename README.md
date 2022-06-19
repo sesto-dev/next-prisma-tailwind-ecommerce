@@ -14,7 +14,7 @@ git submodule add https://github.com/accretence/geist-abstraction geist-abstract
 
 ## Usage
 
-This is an EXTREMELY opinionated layout library built on top of [geist-ui](https://github.com/geist-org/geist-ui) adhering to the design language of [Vercel]() and should only be used if you want to adhere to this design language yourself. You should visit the `Layout` component to see the props it requires.
+This is an EXTREMELY opinionated layout library built on top of [geist-ui](https://github.com/geist-org/geist-ui) adhering to the design language of [Vercel](https://vercel.com/) and should only be used if you want to adhere to this design language yourself. You should visit the [Layout](https://github.com/Accretence/geist-abstraction/blob/main/src/Layout.js) component to see the props it requires.
 
 ```js
 import { Layout } from '../geist-abstraction'

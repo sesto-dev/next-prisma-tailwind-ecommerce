@@ -1,8 +1,7 @@
 import Head from 'next/head'
 
-const Helmet = ({ config, title, url, description, image }) => {
+const Helmet = ({ config, title, description, image }) => {
     title = title ? title : config.meta.title
-    url = url ? url : config.meta.url
     description = description ? description : config.meta.description
     image = image ? image : config.meta.image
 
@@ -28,7 +27,7 @@ const Helmet = ({ config, title, url, description, image }) => {
             <meta name="twitter:image" content={image} />
             <meta name="og:image" content={image} />
 
-            <meta name="og:url" content={url} />
+            <meta name="og:url" content={config.meta.url} />
             <meta name="keyword" content={config.meta.keywords} />
         </Head>
     )

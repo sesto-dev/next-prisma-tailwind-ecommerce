@@ -9,11 +9,19 @@ const Layout = ({
     themePreference,
     bannerLarge,
     bannerSmall,
+    metaTitle,
+    metaDescription,
+    metaImage,
     children,
 }) => {
     return (
         <>
-            <Helmet config={config} />
+            <Helmet
+                title={metaTitle}
+                image={metaImage}
+                description={metaDescription}
+                config={config}
+            />
             <Header config={config} themePreference={themePreference} />
             <Banner large={bannerLarge} small={bannerSmall} />
             <Wrapper>{children}</Wrapper>
@@ -28,7 +36,9 @@ Layout.defaultProps = {
     config: {
         meta: {
             title: 'GEIST-ABSTRACTION',
-            keywords: ['geist-ui', 'nextjs', 'reactjs'],
+            url: 'https://example.com',
+            handle: '@example',
+            keywords: 'geist-ui, nextjs, reactjs',
         },
         links: {
             email: 'mailto:example@example.com',
@@ -51,6 +61,7 @@ Layout.defaultProps = {
             },
         ],
     },
+    themePreference: null,
 }
 
 export default Layout
