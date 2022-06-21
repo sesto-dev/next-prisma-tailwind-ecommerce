@@ -1,4 +1,4 @@
-import Banner from './Banner'
+import Crown from './Crown'
 import Footer from './Footer'
 import Header from './Header'
 import Helmet from './Helmet'
@@ -7,8 +7,8 @@ import Wrapper from './Wrapper'
 const Layout = ({
     config,
     themePreference,
-    bannerLarge,
-    bannerSmall,
+    crownLarge,
+    crownSmall,
     metaTitle,
     metaDescription,
     metaImage,
@@ -23,7 +23,7 @@ const Layout = ({
                 description={metaDescription}
             />
             <Header config={config} themePreference={themePreference} />
-            <Banner config={config} large={bannerLarge} small={bannerSmall} />
+            <Crown config={config} large={crownLarge} small={crownSmall} />
             <Wrapper config={config}>{children}</Wrapper>
             <Footer config={config} />
         </>
@@ -31,8 +31,8 @@ const Layout = ({
 }
 
 Layout.defaultProps = {
-    bannerLarge: 'Large Text',
-    bannerSmall: 'Small text as a description for the page.',
+    crownLarge: 'Large Text',
+    crownSmall: 'Small text as a description for the page.',
     config: {
         theme: {
             width: '782pt',

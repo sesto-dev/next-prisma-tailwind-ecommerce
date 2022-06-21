@@ -10,7 +10,9 @@ const Banner = ({ config, large, small }) => {
                     <Text h3 mb={0} pb={0}>
                         {large.toUpperCase()}
                     </Text>
-                    <Text small>{small}</Text>
+                    <Text type="secondary" small>
+                        {small}
+                    </Text>
                 </div>
             </div>
             <Spacer />

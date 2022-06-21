@@ -1,6 +1,4 @@
-<p align="center" height="370">
-<img align="center" height="370" src="https://user-images.githubusercontent.com/11304944/91128466-dfc96c00-e6da-11ea-8b03-a96e6b98667d.png">
-</p>
+![geist-abstraction](https://user-images.githubusercontent.com/45223699/174671838-a258b83a-ac2b-444c-9bbb-f99d52ad898e.jpg)
 
 Standardized set of [geist-ui](https://github.com/geist-org/geist-ui) components, heavily influenced by the amazing [react-dashboard-design](https://github.com/ofekashery/react-dashboard-design) project.
 
