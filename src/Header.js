@@ -40,10 +40,13 @@ const Header = ({ config, themePreference }) => {
                         box-sizing: border-box;
                     }
                     .MenuNavigationTitle a {
-                        color: ${theme.palette.foreground}!important;
+                        color: ${theme.palette.accents_6}!important;
                         font-size: 1.65rem;
                         font-weight: 450;
                         letter-spacing: 0.3rem;
+                    }
+                    .MenuNavigationTitle a:hover {
+                        color: ${theme.palette.foreground}!important;
                     }
                     .MenuNavigation > div {
                         display: flex;

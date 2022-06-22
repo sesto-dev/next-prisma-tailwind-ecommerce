@@ -2,6 +2,7 @@ import { Spacer, Text, useTheme } from '@geist-ui/core'
 
 const Banner = ({ config, large, small }) => {
     const theme = useTheme()
+    const smallComponent = small
 
     return (
         <>
@@ -11,7 +12,7 @@ const Banner = ({ config, large, small }) => {
                         {large.toUpperCase()}
                     </Text>
                     <Text type="secondary" small>
-                        {small}
+                        {smallComponent}
                     </Text>
                 </div>
             </div>

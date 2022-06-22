@@ -1,11 +1,4 @@
-import {
-    Text,
-    Grid,
-    Link as GeistLink,
-    useTheme,
-    Spacer,
-    Divider,
-} from '@geist-ui/core'
+import { Text, Grid, useTheme, Spacer, Divider } from '@geist-ui/core'
 
 const Footer = ({ config }) => {
     const theme = useTheme()
