@@ -7,7 +7,7 @@ const defaultProps = {
             width: '900pt',
         },
         meta: {
-            title: 'GEIST-ABSTRACTION',
+            title: 'NEXT-DASHBOARD-ABSTRACTION',
             image: 'https://i.imgur.com/NitQE9d.jpg',
             url: 'https://example.com',
             handle: '@example',
