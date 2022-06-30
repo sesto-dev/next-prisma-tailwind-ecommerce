@@ -1,0 +1,7 @@
+{
+  "extends": ["next/core-web-vitals", "next"],
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "react/jsx-no-target-blank": "off"
+  }
+}

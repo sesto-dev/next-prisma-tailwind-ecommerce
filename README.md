@@ -1,21 +1,27 @@
-![next-dashboard-abstraction](https://i.imgur.com/hNovO0U.png)
+<a href="http://accretence.com">![next-dashboard](https://i.imgur.com/hNovO0U.png)</a>
 
-This is an EXTREMELY opinionated layout library built on top of [geist-ui](https://github.com/geist-org/geist-ui), adhering to the design language of [Vercel](https://vercel.com/); and heavily influenced by the amazing [react-dashboard-design](https://github.com/ofekashery/react-dashboard-design) project. You should only use this library if you want to adhere to this design language yourself.
+<a href="https://npmjs.com/package/create-next-dashboard">
+   <p align="center">
+   <img src="https://img.shields.io/npm/dw/create-next-dashboard?color=000&style=for-the-badge">
+   </p>
+</a>
 
-## Install
+## Live Demo
 
-Add this repository as a [git submodule](https://github.blog/2016-02-01-working-with-submodules/) in your root:
-
-```bash
-git submodule add https://github.com/accretence/next-dashboard-abstraction
-```
+You can find a live demo at [accretence.com](https://accretence.com)!
 
 ## Usage
 
-You should visit the [`<Layout />`](https://github.com/Accretence/next-dashboard-abstraction/blob/main/src/Layout.js) component to see the props it accepts.
+```bash
+npx create-next-dashboard my-app
+```
+
+After installation is complete run `cd my-app` and `npm run dev`, the app should be running in `localhost:3000`!
+
+You should visit the [`<Layout />`](https://github.com/Accretence/next-dashboard/blob/main/src/Layout.js) component to see the props it accepts.
 
 ```js
-import { Layout } from '../next-dashboard-abstraction'
+import Layout from '../components/Layout'
 
 const Index = () => {
     return <Layout>/* Your content */</Layout>
@@ -24,9 +30,15 @@ const Index = () => {
 export default Index
 ```
 
-## Peer Dependencies
+## About
 
-This package relies on these depencencies to be installed in your root repository:
+Running the `npx` script above should create a Next.js dashboard built using:
+
+-   [create-next-dashboard](https://github.com/accretence/create-next-dashboard) the `npx` script!
+-   [geist-ui](https://github.com/geist-org/geist-ui) which adheres to the design language of [Vercel](https://vercel.com/)!
+-   [react-dashboard-design](https://github.com/ofekashery/react-dashboard-design) as inspiration and much of the initial codebase!
+
+## Dependencies
 
 ```json
    "@geist-ui/core": "^2.3.8",

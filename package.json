@@ -1,15 +1,18 @@
 {
-    "name": "@accretence/next-dashboard-abstraction",
-    "version": "0.2.0",
-    "description": "Standardized Next.js layout & components, currently for personal use.",
-    "type": "module",
-    "main": "index.js",
+    "name": "next-dashboard",
+    "version": "0.0.1",
+    "description": "Standardized Next.js layout & components.",
     "scripts": {
-        "publish": "npm publish --access public"
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "stop": "taskkill -F -IM node.exe",
+        "update": "npx npm-check-updates -u"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Accretence/next-dashboard-abstraction.git"
+        "url": "git+https://github.com/Accretence/next-dashboard.git"
     },
     "keywords": [
         "geist-ui",
@@ -19,12 +22,12 @@
     "author": "@accretence",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/Accretence/next-dashboard-abstraction/issues"
+        "url": "https://github.com/Accretence/next-dashboard/issues"
     },
-    "homepage": "https://github.com/Accretence/next-dashboard-abstraction#readme",
-    "peerDependencies": {
+    "homepage": "https://github.com/Accretence/next-dashboard#readme",
+    "dependencies": {
         "@geist-ui/core": "^2.3.8",
         "next": "^12.1.6",
-        "react": "^18.1.0"
+        "react": "^18.2.0"
     }
 }
