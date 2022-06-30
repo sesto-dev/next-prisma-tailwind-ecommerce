@@ -25,6 +25,7 @@ const Banner = ({ config, large, small }) => {
                         margin: 0 auto;
                         padding: 0 ${theme.layout.pageMargin};
                         box-sizing: border-box;
+                        text-align: justify !important;
                     }
                 `}
             </style>
