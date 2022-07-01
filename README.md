@@ -2,6 +2,7 @@
 
 <a href="https://npmjs.com/package/create-next-dashboard">
    <p align="center">
+   <img src="https://img.shields.io/npm/v/create-next-dashboard?style=for-the-badge&labelColor=000000">
    <img src="https://img.shields.io/npm/dw/create-next-dashboard?color=000&style=for-the-badge">
    </p>
 </a>

@@ -1,11 +1,28 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useCallback, useEffect, useState } from 'react'
 import { GeistProvider, CssBaseline } from '@geist-ui/core'
 
-// Global State
 import { ThemeContext, themes } from '../state/Context'
 
 export default function App({ Component, pageProps }) {
     const [themeType, setThemeType] = useState('light')
+    const router = useRouter()
+    const isProduction = process.env.NODE_ENV === 'production'
+    const googleID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID
+
+    useEffect(() => {
+        if (googleID && isProduction) {
+            const handleRouteChange = (url) => {
+                window.gtag('config', googleID, {
+                    page_path: url,
+                })
+            }
+            router.events.on('routeChangeComplete', handleRouteChange)
+            return () => {
+                router.events.off('routeChangeComplete', handleRouteChange)
+            }
+        }
+    }, [router.events])
 
     useEffect(() => {
         if (typeof window !== 'undefined' && window.localStorage) {

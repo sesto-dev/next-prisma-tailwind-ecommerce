@@ -1,4 +1,3 @@
-import React from 'react'
 import Layout from '../components/Layout'
 import { Grid, Card, useTheme, Text, Spacer, Code } from '@geist-ui/core'
 
