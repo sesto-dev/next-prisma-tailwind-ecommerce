@@ -31,6 +31,10 @@ const Index = () => {
 export default Index
 ```
 
+## Google Analytics
+
+You only need to provide your `googleAnalyticsID` in `main.config.js` file to activate your Google Analytics.
+
 ## About
 
 Running the `npx` script above should create a Next.js dashboard built using:
