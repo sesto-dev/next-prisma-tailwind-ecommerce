@@ -16,6 +16,14 @@ const config = {
         },
     ],
     links: {},
+    provider: {
+        active: true,
+        callbackUrl: `${process.env.NEXT_PUBLIC_URL}/api/auth/callback/google`,
+        id: 'google',
+        name: 'Google',
+        signinUrl: `${process.env.NEXT_PUBLIC_URL}/api/auth/signin/google`,
+        type: 'oauth',
+    },
 }
 
 export default config
