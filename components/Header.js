@@ -2,7 +2,16 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-import { useToasts, Text, Button, useTheme, Tabs } from '@geist-ui/core'
+import { useSession, signIn, signOut } from 'next-auth/react'
+import {
+    useToasts,
+    Text,
+    Button,
+    useTheme,
+    Tabs,
+    Spacer,
+    Popover,
+} from '@geist-ui/core'
 
 const Header = ({ config, themePreference }) => {
     const theme = useTheme()
@@ -61,13 +70,6 @@ const Header = ({ config, themePreference }) => {
 const HeaderOptions = ({ themePreference }) => {
     const prefers = themePreference()
     const theme = useTheme()
-    const {
-        toasts,
-        setToast,
-        removeAll,
-        findToastOneByID,
-        removeToastOneByID,
-    } = useToasts()
 
     const [sticky, setSticky] = useState(false)
 
@@ -85,9 +87,8 @@ const HeaderOptions = ({ themePreference }) => {
                     sticky
                         ? {
                               top: '1.5px',
-                              borderColor: `${theme.palette.accents_2}`,
                           }
-                        : { borderColor: `${theme.palette.accents_2}` }
+                        : {}
                 }
                 aria-label="Toggle Dark mode"
                 ml={0.3}
@@ -103,21 +104,80 @@ const HeaderOptions = ({ themePreference }) => {
             >
                 <Text b>{theme.type === 'dark' ? 'LIGHT' : 'DARK'}</Text>
             </Button>
-
-            <style jsx global>
-                {`
-                    .UserSettingsButton {
-                        border: none;
-                        background: none;
-                        padding: 0;
-                        margin: 0;
-                        appearance: none;
-                        cursor: pointer;
-                    }
-                `}
-            </style>
+            <Account sticky={sticky} />
         </>
     )
+}
+
+const Account = ({ sticky }) => {
+    const theme = useTheme()
+    const { data: session } = useSession()
+    const {
+        toasts,
+        setToast,
+        removeAll,
+        findToastOneByID,
+        removeToastOneByID,
+    } = useToasts()
+
+    const provider = {
+        callbackUrl: `${process.env.NEXT_PUBLIC_URL}/api/auth/callback/google`,
+        id: 'google',
+        name: 'Google',
+        signinUrl: `${process.env.NEXT_PUBLIC_URL}/api/auth/signin/google`,
+        type: 'oauth',
+    }
+
+    if (session) {
+        const content = () => (
+            <>
+                <Popover.Item>
+                    <Button onClick={() => signOut(provider.id)}>Logout</Button>
+                </Popover.Item>
+            </>
+        )
+
+        return (
+            <Popover content={content}>
+                <Button
+                    style={
+                        sticky
+                            ? {
+                                  top: '1.5px',
+                              }
+                            : {}
+                    }
+                    aria-label="Toggle Dark mode"
+                    ml={0.3}
+                    px={1.4}
+                    scale={0.6}
+                >
+                    <Text b>{session['user']['email'].toUpperCase()}</Text>
+                </Button>
+            </Popover>
+        )
+    } else {
+        return (
+            <Button
+                style={
+                    sticky
+                        ? {
+                              top: '1.5px',
+                          }
+                        : {}
+                }
+                ml={0.3}
+                px={1.4}
+                auto
+                scale={0.6}
+                icon={<GoogleIcon />}
+                onClick={() => signIn(provider.id)}
+                key={provider.name}
+            >
+                <Text b>Sign in with {provider.name}</Text>
+            </Button>
+        )
+    }
 }
 
 const Submenu = ({ config }) => {
@@ -231,6 +291,23 @@ const Submenu = ({ config }) => {
                 `}
             </style>
         </>
+    )
+}
+
+const GoogleIcon = () => {
+    const theme = useTheme()
+
+    return (
+        <svg
+            fill={theme.palette.accents_4}
+            width="1024px"
+            height="1024px"
+            viewBox="0 0 1024 1024"
+            xmlns="http://www.w3.org/2000/svg"
+            className="icon"
+        >
+            <path d="M881 442.4H519.7v148.5h206.4c-8.9 48-35.9 88.6-76.6 115.8-34.4 23-78.3 36.6-129.9 36.6-99.9 0-184.4-67.5-214.6-158.2-7.6-23-12-47.6-12-72.9s4.4-49.9 12-72.9c30.3-90.6 114.8-158.1 214.7-158.1 56.3 0 106.8 19.4 146.6 57.4l110-110.1c-66.5-62-153.2-100-256.6-100-149.9 0-279.6 86-342.7 211.4-26 51.8-40.8 110.4-40.8 172.4S151 632.8 177 684.6C240.1 810 369.8 896 519.7 896c103.6 0 190.4-34.4 253.8-93 72.5-66.8 114.4-165.2 114.4-282.1 0-27.2-2.4-53.3-6.9-78.5z" />
+        </svg>
     )
 }
 
