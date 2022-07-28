@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
+import { GoogleIcon } from './SVGs'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import {
     useToasts,
@@ -11,8 +12,6 @@ import {
     Tabs,
     Popover,
 } from '@geist-ui/core'
-import { GoogleIcon } from './SVGs'
-import config from '../main.config'
 
 const Header = ({ config, themePreference }) => {
     const theme = useTheme()
@@ -38,11 +37,14 @@ const Header = ({ config, themePreference }) => {
                 <div>
                     {themePreference && (
                         <ThemeButton
+                            config={config}
                             sticky={sticky}
                             themePreference={themePreference}
                         />
                     )}
-                    {provider.active && <Account sticky={sticky} />}
+                    {provider.active && (
+                        <Account config={config} sticky={sticky} />
+                    )}
                 </div>
             </nav>
             <Submenu config={config} />
@@ -80,7 +82,7 @@ const Header = ({ config, themePreference }) => {
     )
 }
 
-const ThemeButton = ({ sticky, themePreference }) => {
+const ThemeButton = ({ config, sticky, themePreference }) => {
     const prefers = themePreference()
     const theme = useTheme()
 
@@ -112,7 +114,7 @@ const ThemeButton = ({ sticky, themePreference }) => {
     )
 }
 
-const Account = ({ sticky }) => {
+const Account = ({ config, sticky }) => {
     const { provider } = config
     const theme = useTheme()
     const { data: session } = useSession()
