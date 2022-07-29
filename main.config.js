@@ -1,3 +1,5 @@
+const url = 'http://localhost:3000'
+
 const config = {
     analytics: {
         googleAnalyticsID: null,
@@ -8,6 +10,7 @@ const config = {
     },
     meta: {
         title: 'Next.js Dashboard',
+        url,
     },
     tabs: [
         {
@@ -16,12 +19,18 @@ const config = {
         },
     ],
     links: {},
+    popover: [
+        { name: 'Dashboard', link: '/dashboard' },
+        { name: 'Account', link: '/account' },
+        { name: 'Billing', link: '/billing' },
+        { name: 'Pricing', link: '/pricing' },
+    ],
     provider: {
         active: true,
-        callbackUrl: `${process.env.NEXT_PUBLIC_URL}/api/auth/callback/google`,
+        callbackUrl: url + `/api/auth/callback/google`,
         id: 'google',
         name: 'Google',
-        signinUrl: `${process.env.NEXT_PUBLIC_URL}/api/auth/signin/google`,
+        signinUrl: url + `/api/auth/signin/google`,
         type: 'oauth',
     },
 }

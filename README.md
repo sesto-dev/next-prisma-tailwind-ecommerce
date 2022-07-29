@@ -17,7 +17,8 @@ You can find a live demo at [accretence.com](https://accretence.com)!
 npx create-next-dashboard my-app
 ```
 
-After installation is complete run `cd my-app` and `npm run dev`, the app should be running in `localhost:3000`!
+1. Create your `.env` file according to the `sample.env` file provided.
+2. Run `cd my-app` and `npm run dev`, the app should be running in `localhost:3000`!
 
 You should visit the [`<Layout />`](https://github.com/Accretence/next-dashboard/blob/main/src/Layout.js) component to see the props it accepts.
 
@@ -30,6 +31,12 @@ const Index = () => {
 
 export default Index
 ```
+
+3. Fill in the `main.config.js` file with your information according to the props.
+
+## Google OAuth Authentication
+
+You only need to provide your `GOOGLE_OAUTH_ID` and `GOOGLE_OAUTH_SECRET` in your `.env` file to activate Google OAuth Authentication.
 
 ## Google Analytics
 
@@ -48,5 +55,6 @@ Running the `npx` script above should create a Next.js dashboard built using:
 ```json
    "@geist-ui/core": "^2.3.8",
    "next": "^12.1.6",
+   "next-auth": "^4.10.2",
    "react": "^18.1.0"
 ```

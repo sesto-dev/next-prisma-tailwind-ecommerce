@@ -29,7 +29,6 @@
         "@geist-ui/core": "^2.3.8",
         "next": "^12.1.6",
         "next-auth": "^4.10.2",
-        "nodemailer": "^6.7.7",
         "react": "^18.2.0"
     }
 }

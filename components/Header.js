@@ -4,14 +4,7 @@ import Link from 'next/link'
 
 import { GoogleIcon } from './SVGs'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import {
-    useToasts,
-    Text,
-    Button,
-    useTheme,
-    Tabs,
-    Popover,
-} from '@geist-ui/core'
+import { Text, Button, useTheme, Tabs, Popover } from '@geist-ui/core'
 
 const Header = ({ config, themePreference }) => {
     const theme = useTheme()
@@ -118,25 +111,37 @@ const Account = ({ config, sticky }) => {
     const { provider } = config
     const theme = useTheme()
     const { data: session } = useSession()
-    const {
-        toasts,
-        setToast,
-        removeAll,
-        findToastOneByID,
-        removeToastOneByID,
-    } = useToasts()
 
     if (session) {
         const content = () => (
             <>
+                {config.popover &&
+                    config.popover.map((link) => (
+                        <Popover.Item key={link.name}>
+                            <Link href={link.link}>{link.name}</Link>
+                        </Popover.Item>
+                    ))}
+                <Popover.Item line />
                 <Popover.Item>
-                    <Button onClick={() => signOut(provider.id)}>Logout</Button>
+                    <Button scale="0.8" onClick={() => signOut(provider.id)}>
+                        Logout
+                    </Button>
                 </Popover.Item>
+                <style jsx global>
+                    {`
+                        a {
+                            color: ${theme.palette.accents_6};
+                        }
+                        a:hover {
+                            color: ${theme.palette.foreground};
+                        }
+                    `}
+                </style>
             </>
         )
 
         return (
-            <Popover content={content}>
+            <Popover width="100%" content={content}>
                 <Button
                     style={
                         sticky

@@ -4,8 +4,11 @@ import { Grid, Card, useTheme, Text, Spacer, Code } from '@geist-ui/core'
 import { themePreference } from '../state/Context'
 import config from '../main.config'
 
-const Index = () => {
+const About = () => {
     const theme = useTheme()
+    const title = 'About'
+    const description =
+        'This package provides a 1-Line script that sets in motion a barrage of tools and web-services to create a highly-customizable state-of-the-art Next.js PWA, like this one!'
     const links = [
         'http://github.com/accretence/create-next-dashboard',
         'http://github.com/accretence/next-dashboard',
@@ -16,9 +19,9 @@ const Index = () => {
             <Layout
                 config={config}
                 themePreference={themePreference}
-                crownLarge="About"
-                crownSmall="This package provides a 1-Line script that sets in motion a barrage of tools and web-services to create a highly-customizable state-of-the-art Next.js PWA, like this one!"
-                metaTitle="About"
+                crownLarge={title}
+                crownSmall={description}
+                metaTitle={title}
             >
                 <Grid.Container gap={1}>
                     <Grid xs={24}>
@@ -85,4 +88,4 @@ const Index = () => {
     )
 }
 
-export default Index
+export default About
