@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-import { GoogleIcon } from './SVGs'
+import { DarkModeIcon, GoogleIcon, LightModeIcon } from './SVGs'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { Text, Button, useTheme, Tabs, Popover } from '@geist-ui/core'
 
@@ -80,30 +80,25 @@ const ThemeButton = ({ config, sticky, themePreference }) => {
     const theme = useTheme()
 
     return (
-        <>
-            <Button
-                style={
-                    sticky
-                        ? {
-                              top: '1.5px',
-                          }
-                        : {}
-                }
-                aria-label="Toggle Dark mode"
-                ml={0.3}
-                mr={0.5}
-                px={1.4}
-                scale={0.6}
-                auto
-                onClick={() =>
-                    prefers.switchTheme(
-                        theme.type === 'dark' ? 'light' : 'dark'
-                    )
-                }
-            >
-                <Text b>{theme.type === 'dark' ? 'LIGHT' : 'DARK'}</Text>
-            </Button>
-        </>
+        <Button
+            icon={theme.type === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+            style={
+                sticky
+                    ? {
+                          top: '1.5px',
+                      }
+                    : {}
+            }
+            aria-label="Toggle Dark mode"
+            ml={0.3}
+            mr={0.5}
+            px={1}
+            scale={0.6}
+            auto
+            onClick={() =>
+                prefers.switchTheme(theme.type === 'dark' ? 'light' : 'dark')
+            }
+        />
     )
 }
 
@@ -141,7 +136,7 @@ const Account = ({ config, sticky }) => {
         )
 
         return (
-            <Popover width="100%" content={content}>
+            <Popover py={0.5} width="100%" content={content}>
                 <Button
                     style={
                         sticky
