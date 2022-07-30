@@ -22,9 +22,10 @@ const config = {
     backend: {
         routes: {
             login: process.env.NEXT_PUBLIC_API_URL + '/users/login',
+            register: process.env.NEXT_PUBLIC_API_URL + '/users/register',
         },
         axios: {
-            login: {
+            simple: {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -32,10 +33,10 @@ const config = {
         },
     },
     popover: [
-        { name: 'Dashboard', link: '/dashboard' },
-        { name: 'Account', link: '/account' },
-        { name: 'Billing', link: '/billing' },
-        { name: 'Pricing', link: '/pricing' },
+        { label: 'Dashboard', value: '/dashboard' },
+        { label: 'Account', value: '/account' },
+        { label: 'Billing', value: '/billing' },
+        { label: 'Pricing', value: '/pricing' },
     ],
 }
 

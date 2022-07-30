@@ -1,10 +1,26 @@
 import useState from 'react-usestateref'
-import { Button, Grid, Input, Modal, Text, useTheme } from '@geist-ui/core'
+import {
+    useToasts,
+    Description,
+    Button,
+    Grid,
+    Input,
+    Modal,
+    Text,
+    useTheme,
+} from '@geist-ui/core'
 import Link from 'next/link'
 import axios from 'axios'
+import { useContext } from 'react'
+import { UserContext } from '../../state/Context'
+import { LoginIcon, RegisterIcon } from '../SVGs'
+import { useRouter } from 'next/router'
 
 export default function Login({ config, sticky }) {
     const theme = useTheme()
+    const router = useRouter()
+
+    const { user, setUser } = useContext(UserContext)
 
     const [modalVisibility, setModalVisibility] = useState(false)
     const modalHandler = () => setModalVisibility(true)
@@ -17,18 +33,77 @@ export default function Login({ config, sticky }) {
 
     const [password, setPassword, refPassword] = useState('')
 
-    const loginHandler = async (e) => {
-        e.preventDefault()
+    const { setToast } = useToasts()
 
-        const { data } = await axios.post(
-            config.backend.routes.login,
-            {
-                email: refEmail.current,
-                password: refPassword.current,
-            },
-            config.backend.axios.login
-        )
-        console.log(data)
+    const loginHandler = async (e) => {
+        let response
+
+        try {
+            response = await axios.post(
+                config.backend.routes.login,
+                {
+                    email: refEmail.current,
+                    password: refPassword.current,
+                },
+                config.backend.axios.simple
+            )
+        } catch (error) {
+            setToast({
+                text: (
+                    <Description
+                        title={new Date().toUTCString()}
+                        content={error.message}
+                    />
+                ),
+                delay: 5000,
+            })
+        }
+
+        if (response && response.status && response.status == 200) {
+            setToast({
+                text: (
+                    <Description
+                        title={new Date().toUTCString()}
+                        content={'✓ Login Successful'}
+                    />
+                ),
+                delay: 5000,
+            })
+            localStorage.setItem('user', JSON.stringify(response.data))
+            setUser(response.data)
+            router.replace('/dashboard')
+        }
+    }
+
+    const registerHandler = async (e) => {
+        let response
+
+        try {
+            response = await axios.post(
+                config.backend.routes.register,
+                {
+                    email: refEmail.current,
+                    password: refPassword.current,
+                },
+                config.backend.axios.simple
+            )
+        } catch (error) {
+            setToast({
+                text: (
+                    <Description
+                        title={new Date().toUTCString()}
+                        content={error.message}
+                    />
+                ),
+                delay: 5000,
+            })
+        }
+
+        if (response && response.status && response.status == 201) {
+            localStorage.setItem('user', JSON.stringify(response.data))
+            setUser(response.data)
+            router.replace('/auth/welcome')
+        }
     }
 
     return (
@@ -47,6 +122,7 @@ export default function Login({ config, sticky }) {
                     auto
                     scale={0.6}
                     type="secondary"
+                    icon={<LoginIcon />}
                     onClick={modalHandler}
                 >
                     <Text b>LOGIN</Text>
@@ -83,31 +159,37 @@ export default function Login({ config, sticky }) {
                                     width="100%"
                                     type="secondary"
                                     onClick={loginHandler}
+                                    icon={<LoginIcon />}
                                 >
                                     Login
                                 </Button>
                             </Grid>
                             <Grid xs={12}>
-                                <Button ghost width="100%" type="secondary">
+                                <Button
+                                    ghost
+                                    width="100%"
+                                    type="secondary"
+                                    onClick={registerHandler}
+                                    icon={<RegisterIcon />}
+                                >
                                     Register
                                 </Button>
                             </Grid>
                         </Grid.Container>
                         <Link href="/auth/forgot">
-                            <a style={{ fontSize: '0.75rem' }}>
-                                Forgot your password?
-                            </a>
+                            <a className="Peculiar">Forgot your password?</a>
                         </Link>
                     </Modal.Content>
                 </Modal>
             </>
             <style jsx global>
                 {`
-                    a {
+                    .Peculiar {
                         color: ${theme.palette.accents_6}!important;
+                        font-size: 0.75rem;
                     }
-                    a:hover {
-                        color: ${theme.palette.foreground}!important;
+                    .Peculiar:hover {
+                        color: ${theme.palette.code}!important;
                     }
                 `}
             </style>

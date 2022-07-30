@@ -1,15 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useTheme } from '@geist-ui/core'
 
 import Submenu from './Submenu'
 import ThemeButton from './ThemeButton'
 import Title from './Title'
 import Login from './Login'
-import Menu from './Menu'
+import Account from './Account'
+import { UserContext } from '../../state/Context'
 
 export default function Header({ config, themePreference }) {
     const theme = useTheme()
     const [sticky, setSticky] = useState(false)
+    const { user, setUser } = useContext(UserContext)
 
     useEffect(() => {
         const scrollHandler = () =>
@@ -30,8 +32,8 @@ export default function Header({ config, themePreference }) {
                             themePreference={themePreference}
                         />
                     )}
-                    {false ? (
-                        <Menu config={config} sticky={sticky} />
+                    {user ? (
+                        <Account config={config} sticky={sticky} />
                     ) : (
                         <Login config={config} sticky={sticky} />
                     )}

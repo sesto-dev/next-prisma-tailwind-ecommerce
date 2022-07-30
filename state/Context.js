@@ -7,4 +7,6 @@ export const ThemeContext = createContext({
     switchTheme: () => {},
 })
 
+export const UserContext = createContext(null)
+
 export const themePreference = () => useContext(ThemeContext)

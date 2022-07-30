@@ -3,15 +3,31 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { GeistProvider, CssBaseline } from '@geist-ui/core'
 
-import { ThemeContext, themes } from '../state/Context'
+import { UserContext, ThemeContext, themes } from '../state/Context'
 import config from '../main.config'
 
 export default function App({ Component, pageProps }) {
+    const [user, setUser] = useState(null)
     const [themeType, setThemeType] = useState(config.theme.defaultTheme)
     const router = useRouter()
     const isProduction = process.env.NODE_ENV === 'production'
     const googleID = config.analytics.googleAnalyticsID
 
+    const serial = Math.random().toString(36).slice(2)
+    console.log(serial)
+
+    // Authentication
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+            const ls = JSON.parse(window.localStorage.getItem('user'))
+
+            if (ls) {
+                setUser(ls)
+            }
+        }
+    }, [])
+
+    // Google Analytics Route Handling
     useEffect(() => {
         if (googleID && isProduction) {
             const handleRouteChange = (url) => {
@@ -26,6 +42,7 @@ export default function App({ Component, pageProps }) {
         }
     }, [router.events])
 
+    // Theming
     useEffect(() => {
         if (typeof window !== 'undefined' && window.localStorage) {
             document.documentElement.removeAttribute('style')
@@ -46,7 +63,9 @@ export default function App({ Component, pageProps }) {
         <GeistProvider themeType={themeType}>
             <CssBaseline />
             <ThemeContext.Provider value={{ themeType, switchTheme }}>
-                <Component {...pageProps} />
+                <UserContext.Provider value={{ user, setUser }}>
+                    <Component {...pageProps} />
+                </UserContext.Provider>
             </ThemeContext.Provider>
         </GeistProvider>
     )
