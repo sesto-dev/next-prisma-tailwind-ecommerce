@@ -5,7 +5,7 @@ import { Grid, Card, Text, Code } from '@geist-ui/core'
 import { themePreference } from '../state/Context'
 import config from '../main.config'
 
-const Index = () => {
+export default function Index() {
     return (
         <Layout config={config} themePreference={themePreference}>
             <Grid.Container gap={1}>
@@ -23,5 +23,3 @@ const Index = () => {
         </Layout>
     )
 }
-
-export default Index

@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 import { themePreference } from '../state/Context'
 import config from '../main.config'
 
-const Dashboard = () => {
+export default function Dashboard() {
     const title = 'Dashboard'
     const description = 'Dashboard Sample Page'
 
@@ -26,5 +26,3 @@ const Dashboard = () => {
         </Layout>
     )
 }
-
-export default Dashboard

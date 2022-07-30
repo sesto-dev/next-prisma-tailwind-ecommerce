@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 import { themePreference } from '../state/Context'
 import config from '../main.config'
 
-const Account = () => {
+export default function Account() {
     const title = 'Account'
     const description = 'Account Sample Page'
 
@@ -26,5 +26,3 @@ const Account = () => {
         </Layout>
     )
 }
-
-export default Account

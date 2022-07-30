@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 import { themePreference } from '../state/Context'
 import config from '../main.config'
 
-const Billing = () => {
+export default function Billing() {
     const title = 'Billing'
     const description = 'Billing Sample Page'
 
@@ -26,5 +26,3 @@ const Billing = () => {
         </Layout>
     )
 }
-
-export default Billing

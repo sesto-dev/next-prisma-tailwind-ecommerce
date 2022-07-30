@@ -4,7 +4,7 @@ import { Grid, Card, useTheme, Text, Spacer, Code } from '@geist-ui/core'
 import { themePreference } from '../state/Context'
 import config from '../main.config'
 
-const About = () => {
+export default function About() {
     const theme = useTheme()
     const title = 'About'
     const description =
@@ -87,5 +87,3 @@ const About = () => {
         </>
     )
 }
-
-export default About

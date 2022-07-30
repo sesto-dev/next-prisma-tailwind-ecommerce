@@ -1,6 +1,6 @@
 import Crown from './Crown'
 import Footer from './Footer'
-import Header from './Header'
+import Header from './Header/Header'
 import Helmet from './Helmet'
 import Wrapper from './Wrapper'
 

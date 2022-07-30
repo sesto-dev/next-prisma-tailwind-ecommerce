@@ -1,16 +1,12 @@
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 
-import { SessionProvider } from 'next-auth/react'
 import { GeistProvider, CssBaseline } from '@geist-ui/core'
 
 import { ThemeContext, themes } from '../state/Context'
 import config from '../main.config'
 
-export default function App({
-    Component,
-    pageProps: { session, ...pageProps },
-}) {
+export default function App({ Component, pageProps }) {
     const [themeType, setThemeType] = useState(config.theme.defaultTheme)
     const router = useRouter()
     const isProduction = process.env.NODE_ENV === 'production'
@@ -50,9 +46,7 @@ export default function App({
         <GeistProvider themeType={themeType}>
             <CssBaseline />
             <ThemeContext.Provider value={{ themeType, switchTheme }}>
-                <SessionProvider session={session}>
-                    <Component {...pageProps} />
-                </SessionProvider>
+                <Component {...pageProps} />
             </ThemeContext.Provider>
         </GeistProvider>
     )

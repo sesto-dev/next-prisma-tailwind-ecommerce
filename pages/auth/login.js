@@ -4,7 +4,7 @@ import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Context'
 import config from '../../main.config'
 
-const Login = () => {
+export default function Login() {
     const title = 'Login'
     const description = 'Login Sample Page'
 
@@ -19,12 +19,10 @@ const Login = () => {
             <Grid.Container gap={1}>
                 <Grid xs={24}>
                     <Card width="100%">
-                        <Text>Login</Text>
+                        <Text>{description}</Text>
                     </Card>
                 </Grid>
             </Grid.Container>
         </Layout>
     )
 }
-
-export default Login

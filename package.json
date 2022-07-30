@@ -27,8 +27,9 @@
     "homepage": "https://github.com/Accretence/next-dashboard#readme",
     "dependencies": {
         "@geist-ui/core": "^2.3.8",
+        "axios": "^0.27.2",
         "next": "^12.1.6",
-        "next-auth": "^4.10.2",
-        "react": "^18.2.0"
+        "react": "^18.2.0",
+        "react-usestateref": "^1.0.8"
     }
 }

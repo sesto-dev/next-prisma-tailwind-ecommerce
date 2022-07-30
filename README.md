@@ -55,6 +55,5 @@ Running the `npx` script above should create a Next.js dashboard built using:
 ```json
    "@geist-ui/core": "^2.3.8",
    "next": "^12.1.6",
-   "next-auth": "^4.10.2",
    "react": "^18.1.0"
 ```

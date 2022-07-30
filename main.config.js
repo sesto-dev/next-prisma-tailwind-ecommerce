@@ -19,20 +19,24 @@ const config = {
         },
     ],
     links: {},
+    backend: {
+        routes: {
+            login: process.env.NEXT_PUBLIC_API_URL + '/users/login',
+        },
+        axios: {
+            login: {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            },
+        },
+    },
     popover: [
         { name: 'Dashboard', link: '/dashboard' },
         { name: 'Account', link: '/account' },
         { name: 'Billing', link: '/billing' },
         { name: 'Pricing', link: '/pricing' },
     ],
-    provider: {
-        active: true,
-        callbackUrl: url + `/api/auth/callback/google`,
-        id: 'google',
-        name: 'Google',
-        signinUrl: url + `/api/auth/signin/google`,
-        type: 'oauth',
-    },
 }
 
 export default config

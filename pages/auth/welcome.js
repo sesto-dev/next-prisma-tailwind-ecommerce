@@ -1,12 +1,12 @@
 import { Text, Card, Grid } from '@geist-ui/core'
-import Layout from '../components/Layout'
+import Layout from '../../components/Layout'
 
-import { themePreference } from '../state/Context'
-import config from '../main.config'
+import { themePreference } from '../../state/Context'
+import config from '../../main.config'
 
-export default function Pricing() {
-    const title = 'Pricing'
-    const description = 'Pricing Sample Page'
+export default function Welcome() {
+    const title = 'Welcome'
+    const description = 'Welcome Sample Page'
 
     return (
         <Layout
@@ -19,7 +19,7 @@ export default function Pricing() {
             <Grid.Container gap={1}>
                 <Grid xs={24}>
                     <Card width="100%">
-                        <Text>Pricing</Text>
+                        <Text>{description}</Text>
                     </Card>
                 </Grid>
             </Grid.Container>

@@ -4,9 +4,9 @@ import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Context'
 import config from '../../main.config'
 
-const Verify = () => {
-    const title = 'Verify User'
-    const description = 'Verify User Sample Page'
+export default function Forgot() {
+    const title = 'Forgot'
+    const description = 'Forgot Sample Page'
 
     return (
         <Layout
@@ -19,12 +19,10 @@ const Verify = () => {
             <Grid.Container gap={1}>
                 <Grid xs={24}>
                     <Card width="100%">
-                        <Text>Verify User</Text>
+                        <Text>{description}</Text>
                     </Card>
                 </Grid>
             </Grid.Container>
         </Layout>
     )
 }
-
-export default Verify

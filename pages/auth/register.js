@@ -4,9 +4,9 @@ import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Context'
 import config from '../../main.config'
 
-const New = () => {
-    const title = 'New User'
-    const description = 'New User Sample Page'
+export default function Register() {
+    const title = 'Register'
+    const description = 'Register Sample Page'
 
     return (
         <Layout
@@ -19,12 +19,10 @@ const New = () => {
             <Grid.Container gap={1}>
                 <Grid xs={24}>
                     <Card width="100%">
-                        <Text>New User</Text>
+                        <Text>{description}</Text>
                     </Card>
                 </Grid>
             </Grid.Container>
         </Layout>
     )
 }
-
-export default New
