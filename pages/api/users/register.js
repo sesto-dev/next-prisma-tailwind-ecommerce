@@ -1,5 +1,5 @@
 import connectDB from '../../../helpers/connectDB'
-import { generateToken } from '../../../helpers/generateToken'
+import { signJWT } from '../../../helpers/JWT'
 import User from '../../../models/User'
 import bcrypt from 'bcryptjs'
 import { serialize } from 'cookie'
@@ -23,7 +23,7 @@ export default async function Register(req, res) {
     })
 
     if (user) {
-        const token = await generateToken(user._id.toString())
+        const token = await signJWT(user._id.toString())
         const serialised = serialize('AJWT', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
@@ -34,5 +34,7 @@ export default async function Register(req, res) {
         res.setHeader('Set-Cookie', serialised)
         res.status(200).json({ message: 'Success!' })
     } else {
+        res.status(401)
+        throw new Error('Failed to create user.')
     }
 }

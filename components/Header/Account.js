@@ -63,7 +63,6 @@ export default function Account({ config, sticky }) {
                 <Popover.Item>
                     <Button
                         scale="0.8"
-                        type="secondary"
                         onClick={logoutHandler}
                         icon={<LogoutIcon />}
                     >
@@ -84,24 +83,26 @@ export default function Account({ config, sticky }) {
         )
     }
 
-    return (
-        <Popover py={0.5} width="100%" content={popoverContent}>
-            <Button
-                style={
-                    sticky
-                        ? {
-                              top: '1.5px',
-                          }
-                        : {}
-                }
-                ml={0.3}
-                px={1.4}
-                scale={0.6}
-                auto
-                icon={<AvatarIcon />}
-            >
-                <Text b>ACCOUNT</Text>
-            </Button>
-        </Popover>
-    )
+    if (config.authentication) {
+        return (
+            <Popover py={0.5} width="100%" content={popoverContent}>
+                <Button
+                    style={
+                        sticky
+                            ? {
+                                  top: '1.5px',
+                              }
+                            : {}
+                    }
+                    ml={0.3}
+                    px={1.4}
+                    scale={0.6}
+                    auto
+                    icon={<AvatarIcon />}
+                >
+                    <Text b>ACCOUNT</Text>
+                </Button>
+            </Popover>
+        )
+    }
 }

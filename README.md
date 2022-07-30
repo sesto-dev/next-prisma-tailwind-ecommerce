@@ -34,10 +34,6 @@ export default Index
 
 3. Fill in the `main.config.js` file with your information according to the props.
 
-## Google OAuth Authentication
-
-You only need to provide your `GOOGLE_OAUTH_ID` and `GOOGLE_OAUTH_SECRET` in your `.env` file to activate Google OAuth Authentication.
-
 ## Google Analytics
 
 You only need to provide your `googleAnalyticsID` in `main.config.js` file to activate your Google Analytics.

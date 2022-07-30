@@ -19,8 +19,10 @@ const config = {
         },
     ],
     links: {},
+    authentication: true,
     backend: {
         routes: {
+            account: '/api/users/account',
             login: '/api/users/login',
             logout: '/api/users/logout',
             register: '/api/users/register',
