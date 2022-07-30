@@ -1,17 +1,19 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { useTheme } from '@geist-ui/core'
+
+import { useIsAuthenticated } from '../../state/Auth'
 
 import Submenu from './Submenu'
 import ThemeButton from './ThemeButton'
 import Title from './Title'
 import Login from './Login'
 import Account from './Account'
-import { UserContext } from '../../state/Context'
 
 export default function Header({ config, themePreference }) {
+    const isAuthenticated = useIsAuthenticated()
+
     const theme = useTheme()
     const [sticky, setSticky] = useState(false)
-    const { user, setUser } = useContext(UserContext)
 
     useEffect(() => {
         const scrollHandler = () =>
@@ -32,7 +34,7 @@ export default function Header({ config, themePreference }) {
                             themePreference={themePreference}
                         />
                     )}
-                    {user ? (
+                    {isAuthenticated ? (
                         <Account config={config} sticky={sticky} />
                     ) : (
                         <Login config={config} sticky={sticky} />

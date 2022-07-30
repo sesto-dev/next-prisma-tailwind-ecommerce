@@ -1,10 +1,11 @@
 import { Text, Card, Grid } from '@geist-ui/core'
-import Layout from '../components/Layout'
 
-import { themePreference } from '../state/Context'
+import Layout from '../components/Layout'
+import withAuth from '../HOCs/withAuth'
+import { themePreference } from '../state/Theme'
 import config from '../main.config'
 
-export default function Dashboard() {
+export default withAuth(function Dashboard() {
     const title = 'Dashboard'
     const description = 'Dashboard Sample Page'
 
@@ -25,4 +26,4 @@ export default function Dashboard() {
             </Grid.Container>
         </Layout>
     )
-}
+})

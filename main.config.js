@@ -21,8 +21,9 @@ const config = {
     links: {},
     backend: {
         routes: {
-            login: process.env.NEXT_PUBLIC_API_URL + '/users/login',
-            register: process.env.NEXT_PUBLIC_API_URL + '/users/register',
+            login: '/api/users/login',
+            logout: '/api/users/logout',
+            register: '/api/users/register',
         },
         axios: {
             simple: {

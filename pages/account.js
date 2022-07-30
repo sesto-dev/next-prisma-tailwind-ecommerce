@@ -1,7 +1,8 @@
+import { useContext } from 'react'
 import { Text, Card, Grid } from '@geist-ui/core'
 import Layout from '../components/Layout'
 
-import { themePreference } from '../state/Context'
+import { themePreference } from '../state/Theme'
 import config from '../main.config'
 
 export default function Account() {
@@ -19,7 +20,7 @@ export default function Account() {
             <Grid.Container gap={1}>
                 <Grid xs={24}>
                     <Card width="100%">
-                        <Text>Account</Text>
+                        <Text>{user.email}</Text>
                     </Card>
                 </Grid>
             </Grid.Container>

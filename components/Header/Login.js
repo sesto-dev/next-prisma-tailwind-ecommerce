@@ -11,29 +11,25 @@ import {
 } from '@geist-ui/core'
 import Link from 'next/link'
 import axios from 'axios'
-import { useContext } from 'react'
-import { UserContext } from '../../state/Context'
 import { LoginIcon, RegisterIcon } from '../SVGs'
 import { useRouter } from 'next/router'
+import { useAuth } from '../../state/Auth'
 
 export default function Login({ config, sticky }) {
-    const theme = useTheme()
-    const router = useRouter()
-
-    const { user, setUser } = useContext(UserContext)
-
     const [modalVisibility, setModalVisibility] = useState(false)
     const modalHandler = () => setModalVisibility(true)
     const closeHandler = (event) => {
         setModalVisibility(false)
     }
 
-    const [failure, setFailure, refFailure] = useState(false)
+    const { setToast } = useToasts()
+    const theme = useTheme()
+    const router = useRouter()
+    const { setAuthenticated } = useAuth()
+
     const [email, setEmail, refEmail] = useState('')
 
     const [password, setPassword, refPassword] = useState('')
-
-    const { setToast } = useToasts()
 
     const loginHandler = async (e) => {
         let response
@@ -69,8 +65,8 @@ export default function Login({ config, sticky }) {
                 ),
                 delay: 5000,
             })
-            localStorage.setItem('user', JSON.stringify(response.data))
-            setUser(response.data)
+            setAuthenticated(true)
+
             router.replace('/dashboard')
         }
     }
@@ -99,9 +95,8 @@ export default function Login({ config, sticky }) {
             })
         }
 
-        if (response && response.status && response.status == 201) {
-            localStorage.setItem('user', JSON.stringify(response.data))
-            setUser(response.data)
+        if (response && response.status && response.status == 200) {
+            setAuthenticated(true)
             router.replace('/auth/welcome')
         }
     }

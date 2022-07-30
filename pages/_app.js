@@ -1,31 +1,20 @@
+import App from 'next/app'
+
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
-
 import { GeistProvider, CssBaseline } from '@geist-ui/core'
 
-import { UserContext, ThemeContext, themes } from '../state/Context'
+import { ThemeContext, themes } from '../state/Theme'
+import { AuthProvider } from '../state/Auth'
+import cookie from 'cookie'
+
 import config from '../main.config'
 
-export default function App({ Component, pageProps }) {
-    const [user, setUser] = useState(null)
+export default function MyApp({ Component, pageProps, authenticated }) {
     const [themeType, setThemeType] = useState(config.theme.defaultTheme)
     const router = useRouter()
     const isProduction = process.env.NODE_ENV === 'production'
     const googleID = config.analytics.googleAnalyticsID
-
-    const serial = Math.random().toString(36).slice(2)
-    console.log(serial)
-
-    // Authentication
-    useEffect(() => {
-        if (typeof window !== 'undefined' && window.localStorage) {
-            const ls = JSON.parse(window.localStorage.getItem('user'))
-
-            if (ls) {
-                setUser(ls)
-            }
-        }
-    }, [])
 
     // Google Analytics Route Handling
     useEffect(() => {
@@ -63,10 +52,24 @@ export default function App({ Component, pageProps }) {
         <GeistProvider themeType={themeType}>
             <CssBaseline />
             <ThemeContext.Provider value={{ themeType, switchTheme }}>
-                <UserContext.Provider value={{ user, setUser }}>
+                <AuthProvider authenticated={authenticated}>
                     <Component {...pageProps} />
-                </UserContext.Provider>
+                </AuthProvider>
             </ThemeContext.Provider>
         </GeistProvider>
     )
+}
+
+MyApp.getInitialProps = async (appContext) => {
+    let authenticated = false
+    const request = appContext.ctx.req
+
+    if (request) {
+        request.cookies = cookie.parse(request.headers.cookie || '')
+        authenticated = !!request.cookies.AJWT
+    }
+
+    const appProps = await App.getInitialProps(appContext)
+
+    return { ...appProps, authenticated }
 }

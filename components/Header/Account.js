@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useContext } from 'react'
+import axios from 'axios'
 import {
     useToasts,
     Description,
@@ -8,31 +8,43 @@ import {
     Text,
     useTheme,
 } from '@geist-ui/core'
-import { UserContext } from '../../state/Context'
 import { AvatarIcon, LogoutIcon } from '../SVGs'
 import { useRouter } from 'next/router'
+import { useAuth } from '../../state/Auth'
 
 export default function Account({ config, sticky }) {
     const theme = useTheme()
     const router = useRouter()
-
-    const { user, setUser } = useContext(UserContext)
+    const { setAuthenticated } = useAuth()
 
     const { setToast } = useToasts()
 
     const logoutHandler = async (e) => {
-        setToast({
-            text: (
-                <Description
-                    title={new Date().toUTCString()}
-                    content={'✓ Logout Successful'}
-                />
-            ),
-            delay: 5000,
-        })
-        setUser(null)
-        localStorage.setItem('user', null)
-        router.replace('/')
+        const response = await axios.post(config.backend.routes.logout)
+
+        if (response && response.status && response.status == 200) {
+            setAuthenticated(false)
+            router.replace('/')
+            setToast({
+                text: (
+                    <Description
+                        title={new Date().toUTCString()}
+                        content={'✓ Logout Successful'}
+                    />
+                ),
+                delay: 5000,
+            })
+        } else {
+            setToast({
+                text: (
+                    <Description
+                        title={new Date().toUTCString()}
+                        content={error.message}
+                    />
+                ),
+                delay: 5000,
+            })
+        }
     }
 
     const popoverContent = () => {

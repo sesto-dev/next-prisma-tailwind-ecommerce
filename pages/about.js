@@ -1,7 +1,7 @@
 import Layout from '../components/Layout'
 import { Grid, Card, useTheme, Text, Spacer, Code } from '@geist-ui/core'
 
-import { themePreference } from '../state/Context'
+import { themePreference } from '../state/Theme'
 import config from '../main.config'
 
 export default function About() {
