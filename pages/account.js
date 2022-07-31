@@ -51,7 +51,10 @@ export default withAuth(function Account() {
                 <Grid xs={24}>
                     {account && (
                         <Card width="100%">
-                            <Text>{account.email}</Text>
+                            <Description
+                                title="Email"
+                                content={account.email}
+                            />
                         </Card>
                     )}
                 </Grid>

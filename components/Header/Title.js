@@ -1,7 +1,7 @@
 import { Text, useTheme } from '@geist-ui/core'
 import Link from 'next/link'
 
-export default function Title({ config }) {
+export default function ({ config }) {
     const theme = useTheme()
 
     return (

@@ -12,7 +12,7 @@ import { AvatarIcon, LogoutIcon } from '../SVGs'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../state/Auth'
 
-export default function Account({ config, sticky }) {
+export default function ({ config, sticky }) {
     const theme = useTheme()
     const router = useRouter()
     const { setAuthenticated } = useAuth()

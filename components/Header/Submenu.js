@@ -1,7 +1,7 @@
 import { Tabs, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 
-export default function Submenu({ config, sticky }) {
+export default function ({ config, sticky }) {
     const router = useRouter()
     const theme = useTheme()
 

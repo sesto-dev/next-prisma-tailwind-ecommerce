@@ -1,6 +1,6 @@
 import { useTheme } from '@geist-ui/core'
 
-const Wrapper = ({ config, children }) => {
+export default function ({ config, children }) {
     const theme = useTheme()
 
     return (
@@ -27,5 +27,3 @@ const Wrapper = ({ config, children }) => {
         </>
     )
 }
-
-export default Wrapper

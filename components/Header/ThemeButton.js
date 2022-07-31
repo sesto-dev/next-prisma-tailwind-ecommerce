@@ -1,7 +1,7 @@
 import { Button, useTheme } from '@geist-ui/core'
 import { DarkModeIcon, LightModeIcon } from '../SVGs'
 
-export default function ThemeButton({ config, sticky, themePreference }) {
+export default function ({ config, sticky, themePreference }) {
     const prefers = themePreference()
     const theme = useTheme()
 

@@ -1,4 +1,4 @@
-const YouTube = ({ embedId }) => {
+export default function ({ embedId }) {
     return (
         <iframe
             width="100%"
@@ -9,5 +9,3 @@ const YouTube = ({ embedId }) => {
         />
     )
 }
-
-export default YouTube

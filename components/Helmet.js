@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-const Helmet = ({ config, title, description, image }) => {
+export default function ({ config, title, description, image }) {
     title = title ? title : config.meta.title
     description = description ? description : config.meta.description
     image = image ? image : config.meta.image
@@ -32,5 +32,3 @@ const Helmet = ({ config, title, description, image }) => {
         </Head>
     )
 }
-
-export default Helmet

@@ -9,7 +9,7 @@ const config = {
         defaultTheme: 'dark',
     },
     meta: {
-        title: 'Next.js Dashboard',
+        title: 'Next',
         url,
     },
     tabs: [
@@ -17,8 +17,30 @@ const config = {
             label: 'ABOUT',
             value: '/about',
         },
+        {
+            label: 'PRICING',
+            value: '/pricing',
+        },
     ],
     links: {},
+    footer: [
+        [
+            { label: 'Instagram', value: '/instagram' },
+            { label: 'Medium', value: '/medium' },
+        ],
+        [
+            { label: 'Blog', value: '/blog' },
+            { label: 'Tutorials', value: '/tutorials' },
+            { label: 'Documentation', value: '/documentation' },
+            { label: 'Support', value: '/support' },
+        ],
+        [
+            { label: 'About Us', value: '/about' },
+            { label: 'Contact Us', value: '/contact' },
+            { label: 'Terms of Service', value: '/terms' },
+            { label: 'Privacy Policy', value: '/privacy' },
+        ],
+    ],
     authentication: true,
     backend: {
         routes: {
@@ -38,8 +60,6 @@ const config = {
     popover: [
         { label: 'Dashboard', value: '/dashboard' },
         { label: 'Account', value: '/account' },
-        { label: 'Billing', value: '/billing' },
-        { label: 'Pricing', value: '/pricing' },
     ],
 }
 

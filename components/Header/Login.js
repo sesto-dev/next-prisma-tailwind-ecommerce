@@ -15,7 +15,7 @@ import { LoginIcon, RegisterIcon } from '../SVGs'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../state/Auth'
 
-export default function Login({ config, sticky }) {
+export default function ({ config, sticky }) {
     const [modalVisibility, setModalVisibility] = useState(false)
     const modalHandler = () => setModalVisibility(true)
     const closeHandler = (event) => {

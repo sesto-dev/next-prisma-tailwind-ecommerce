@@ -1,6 +1,6 @@
 import { Spacer, Text, useTheme } from '@geist-ui/core'
 
-const Banner = ({ config, large, small }) => {
+export default function ({ config, large, small }) {
     const theme = useTheme()
     const smallComponent = small
 
@@ -32,5 +32,3 @@ const Banner = ({ config, large, small }) => {
         </>
     )
 }
-
-export default Banner

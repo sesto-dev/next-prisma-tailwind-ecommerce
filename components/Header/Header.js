@@ -9,7 +9,7 @@ import Title from './Title'
 import Login from './Login'
 import Account from './Account'
 
-export default function Header({ config, themePreference }) {
+export default function ({ config, themePreference }) {
     const isAuthenticated = useIsAuthenticated()
 
     const theme = useTheme()
