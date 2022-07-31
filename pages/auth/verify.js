@@ -4,7 +4,7 @@ import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
 import config from '../../main.config'
 
-export default function Verify() {
+export default function () {
     const title = 'Verify User'
     const description = 'Verify User Sample Page'
 

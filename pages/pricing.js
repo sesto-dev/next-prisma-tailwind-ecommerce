@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
 import config from '../main.config'
 
-export default function Pricing() {
+export default function () {
     const title = 'Pricing'
     const description = 'Pricing Sample Page'
 

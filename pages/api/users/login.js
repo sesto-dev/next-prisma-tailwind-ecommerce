@@ -4,7 +4,7 @@ import User from '../../../models/User'
 import bcrypt from 'bcryptjs'
 import { serialize } from 'cookie'
 
-export default async function Login(req, res) {
+export default async function (req, res) {
     await connectDB()
     const { email, password } = req.body
 

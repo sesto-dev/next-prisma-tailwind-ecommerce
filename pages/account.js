@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-export default withAuth(function Account() {
+export default withAuth(function () {
     const title = 'Account'
     const description = 'Account Sample Page'
     const router = useRouter()

@@ -4,7 +4,7 @@ import { Grid, Card, useTheme, Text, Spacer, Code } from '@geist-ui/core'
 import { themePreference } from '../state/Theme'
 import config from '../main.config'
 
-export default function About() {
+export default function () {
     const theme = useTheme()
     const title = 'About'
     const description =

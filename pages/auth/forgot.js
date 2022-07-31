@@ -4,7 +4,7 @@ import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
 import config from '../../main.config'
 
-export default function Forgot() {
+export default function () {
     const title = 'Forgot'
     const description = 'Forgot Sample Page'
 

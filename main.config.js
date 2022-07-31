@@ -14,33 +14,42 @@ const config = {
     },
     tabs: [
         {
-            label: 'ABOUT',
+            label: 'About',
             value: '/about',
         },
         {
-            label: 'PRICING',
+            label: 'Pricing',
             value: '/pricing',
+        },
+        {
+            label: 'Billing',
+            value: '/billing',
         },
     ],
     links: {},
-    footer: [
-        [
-            { label: 'Instagram', value: '/instagram' },
-            { label: 'Medium', value: '/medium' },
-        ],
-        [
+    footer: {
+        Blog: [
             { label: 'Blog', value: '/blog' },
             { label: 'Tutorials', value: '/tutorials' },
             { label: 'Documentation', value: '/documentation' },
             { label: 'Support', value: '/support' },
         ],
-        [
-            { label: 'About Us', value: '/about' },
-            { label: 'Contact Us', value: '/contact' },
+        Terms: [
             { label: 'Terms of Service', value: '/terms' },
             { label: 'Privacy Policy', value: '/privacy' },
         ],
-    ],
+        About: [
+            { label: 'About Us', value: '/about' },
+            { label: 'Contact Us', value: '/contact' },
+            { label: 'Pricing', value: '/about' },
+            { label: 'Billing', value: '/contact' },
+        ],
+        Community: [
+            { label: 'Instagram', value: '/instagram' },
+            { label: 'YouTube', value: '/youtube' },
+            { label: 'Medium', value: '/medium' },
+        ],
+    },
     authentication: true,
     backend: {
         routes: {
@@ -57,10 +66,7 @@ const config = {
             },
         },
     },
-    popover: [
-        { label: 'Dashboard', value: '/dashboard' },
-        { label: 'Account', value: '/account' },
-    ],
+    popover: [{ label: 'Account', value: '/account' }],
 }
 
 export default config

@@ -5,7 +5,7 @@ import { Grid, Card, Text, Code } from '@geist-ui/core'
 import { themePreference } from '../state/Theme'
 import config from '../main.config'
 
-export default function Index() {
+export default function () {
     return (
         <Layout config={config} themePreference={themePreference}>
             <Grid.Container gap={1}>

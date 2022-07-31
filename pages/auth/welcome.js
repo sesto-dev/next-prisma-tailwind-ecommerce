@@ -4,7 +4,7 @@ import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
 import config from '../../main.config'
 
-export default function Welcome() {
+export default function () {
     const title = 'Welcome'
     const description = 'Welcome Sample Page'
 

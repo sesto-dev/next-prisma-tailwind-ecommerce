@@ -1,9 +1,11 @@
 import { Tabs, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
+import { useIsAuthenticated } from '../../state/Auth'
 
 export default function ({ config, sticky }) {
     const router = useRouter()
     const theme = useTheme()
+    const isAuthenticated = useIsAuthenticated()
 
     return (
         <>
@@ -14,7 +16,24 @@ export default function ({ config, sticky }) {
                             value={router.pathname}
                             onChange={(route) => router.push(route)}
                         >
-                            <Tabs.Item ml={0} label={'HOME'} value="/" />
+                            {isAuthenticated ? (
+                                <>
+                                    {router.pathname == '/' && (
+                                        <Tabs.Item
+                                            ml={0}
+                                            label={'Home'}
+                                            value="/"
+                                        />
+                                    )}
+                                    <Tabs.Item
+                                        ml={0}
+                                        label={'Dashboard'}
+                                        value="/dashboard"
+                                    />
+                                </>
+                            ) : (
+                                <Tabs.Item ml={0} label={'Home'} value="/" />
+                            )}
                             {config.tabs.map((tab) => (
                                 <Tabs.Item
                                     key={tab.label}

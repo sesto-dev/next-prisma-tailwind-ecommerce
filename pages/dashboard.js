@@ -5,7 +5,7 @@ import withAuth from '../HOCs/withAuth'
 import { themePreference } from '../state/Theme'
 import config from '../main.config'
 
-export default withAuth(function Dashboard() {
+export default withAuth(function () {
     const title = 'Dashboard'
     const description = 'Dashboard Sample Page'
 

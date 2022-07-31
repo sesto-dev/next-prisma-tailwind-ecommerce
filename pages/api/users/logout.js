@@ -1,4 +1,4 @@
-export default (req, res) => {
+export default function (req, res) {
     res.setHeader(
         'Set-Cookie',
         'AJWT=; Max-Age=0; SameSite=Strict; HttpOnly; Path=/'

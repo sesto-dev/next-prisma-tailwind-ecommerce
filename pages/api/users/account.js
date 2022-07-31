@@ -3,7 +3,7 @@ import User from '../../../models/User'
 
 import { verifyJWT } from '../../../helpers/JWT'
 
-export default async function Login(req, res) {
+export default async function (req, res) {
     await connectDB()
 
     const { cookies } = req

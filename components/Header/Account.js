@@ -52,9 +52,13 @@ export default function ({ config, sticky }) {
             <>
                 {config.popover &&
                     config.popover.map((link) => (
-                        <Popover.Item py={0.2} key={link.label}>
+                        <Popover.Item pt={0.8} pb={0.2} key={link.label}>
                             <Link href={link.value}>
-                                <Button scale={0.8} width="100%">
+                                <Button
+                                    type="secondary"
+                                    scale={0.8}
+                                    width="100%"
+                                >
                                     {link.label}
                                 </Button>
                             </Link>
@@ -98,6 +102,7 @@ export default function ({ config, sticky }) {
                     px={1.4}
                     scale={0.6}
                     auto
+                    type="secondary"
                     icon={<AvatarIcon />}
                 >
                     <Text b>ACCOUNT</Text>
