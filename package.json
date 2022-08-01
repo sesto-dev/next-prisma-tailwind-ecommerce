@@ -1,7 +1,16 @@
 {
     "name": "next-dashboard",
-    "version": "0.0.1",
     "description": "Standardized Next.js layout & components.",
+    "author": "@accretence",
+    "license": "MIT",
+    "version": "0.0.32",
+    "keywords": [
+        "geist-ui",
+        "nextjs",
+        "react",
+        "serverless",
+        "mongoose"
+    ],
     "scripts": {
         "dev": "next dev",
         "build": "next build",
@@ -14,13 +23,6 @@
         "type": "git",
         "url": "git+https://github.com/Accretence/next-dashboard.git"
     },
-    "keywords": [
-        "geist-ui",
-        "nextjs",
-        "react"
-    ],
-    "author": "@accretence",
-    "license": "MIT",
     "bugs": {
         "url": "https://github.com/Accretence/next-dashboard/issues"
     },

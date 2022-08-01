@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useToasts, Description, Text, Card, Grid } from '@geist-ui/core'
 import Layout from '../components/Layout'
 
@@ -6,11 +7,11 @@ import config from '../main.config'
 import withAuth from '../HOCs/withAuth'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
 
 export default withAuth(function () {
     const title = 'Account'
     const description = 'Account Sample Page'
+
     const router = useRouter()
     const { setToast } = useToasts()
     const [account, setAccount] = useState({})

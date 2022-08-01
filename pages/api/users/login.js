@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs'
 import { serialize } from 'cookie'
 
 export default async function (req, res) {
-    await connectDB()
+    connectDB()
     const { email, password } = req.body
 
     const user = await User.findOne({ email })

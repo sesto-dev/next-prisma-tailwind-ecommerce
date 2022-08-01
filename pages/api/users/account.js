@@ -4,7 +4,7 @@ import User from '../../../models/User'
 import { verifyJWT } from '../../../helpers/JWT'
 
 export default async function (req, res) {
-    await connectDB()
+    connectDB()
 
     const { cookies } = req
     const jwt = cookies.AJWT

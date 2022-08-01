@@ -28,10 +28,12 @@ export default function ({ config, sticky }) {
     const { setAuthenticated } = useAuth()
 
     const [email, setEmail, refEmail] = useState('')
-
     const [password, setPassword, refPassword] = useState('')
+    const [loading, setLoading, refLoading] = useState(false)
 
     const loginHandler = async (e) => {
+        setLoading(true)
+
         let response
 
         try {
@@ -44,6 +46,7 @@ export default function ({ config, sticky }) {
                 config.backend.axios.simple
             )
         } catch (error) {
+            setLoading(false)
             setToast({
                 text: (
                     <Description
@@ -72,6 +75,8 @@ export default function ({ config, sticky }) {
     }
 
     const registerHandler = async (e) => {
+        setLoading(true)
+
         let response
 
         try {
@@ -84,6 +89,7 @@ export default function ({ config, sticky }) {
                 config.backend.axios.simple
             )
         } catch (error) {
+            setLoading(false)
             setToast({
                 text: (
                     <Description
@@ -152,6 +158,7 @@ export default function ({ config, sticky }) {
                             <Grid.Container mb={0.2} gap={1}>
                                 <Grid xs={12}>
                                     <Button
+                                        loading={loading}
                                         width="100%"
                                         type="secondary"
                                         onClick={loginHandler}
@@ -162,6 +169,7 @@ export default function ({ config, sticky }) {
                                 </Grid>
                                 <Grid xs={12}>
                                     <Button
+                                        loading={loading}
                                         ghost
                                         width="100%"
                                         type="secondary"

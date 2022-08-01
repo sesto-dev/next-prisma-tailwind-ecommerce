@@ -3,9 +3,11 @@ import { signJWT } from '../../../helpers/JWT'
 import User from '../../../models/User'
 import bcrypt from 'bcryptjs'
 import { serialize } from 'cookie'
+import { getVerifyMail } from '../../../helpers/getMail'
+import sendMail from '../../../helpers/sendMail'
 
 export default async function (req, res) {
-    await connectDB()
+    connectDB()
     const { email, password } = req.body
     const userExists = await User.findOne({ email })
 
@@ -31,10 +33,16 @@ export default async function (req, res) {
             maxAge: 60 * 60 * 24 * 30,
             path: '/',
         })
+
         res.setHeader('Set-Cookie', serialised)
         res.status(200).json({ message: 'Success!' })
     } else {
         res.status(401)
         throw new Error('Failed to create user.')
+    }
+
+    if (user) {
+        const mail = await getVerifyMail(email)
+        await sendMail(email, mail)
     }
 }

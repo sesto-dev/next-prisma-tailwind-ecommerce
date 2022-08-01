@@ -17,7 +17,7 @@ You can find a live demo at [accretence.com](https://accretence.com)!
 npx create-next-dashboard my-app
 ```
 
-1. Create your `.env` file according to the `sample.env` file provided.
+1. Create your `.env` file and provide `JWT_SECRET` & `MOGNO_ATLAS_URI` keys.
 2. Run `cd my-app` and `npm run dev`, the app should be running in `localhost:3000`!
 
 You should visit the [`<Layout />`](https://github.com/Accretence/next-dashboard/blob/main/src/Layout.js) component to see the props it accepts.
@@ -25,11 +25,9 @@ You should visit the [`<Layout />`](https://github.com/Accretence/next-dashboard
 ```js
 import Layout from '../components/Layout'
 
-const Index = () => {
+export default function Index() {
     return <Layout>/* Your content */</Layout>
 }
-
-export default Index
 ```
 
 3. Fill in the `main.config.js` file with your information according to the props.
@@ -50,6 +48,13 @@ Running the `npx` script above should create a Next.js dashboard built using:
 
 ```json
    "@geist-ui/core": "^2.3.8",
-   "next": "^12.1.6",
-   "react": "^18.1.0"
+   "axios": "^0.27.2",
+   "bcryptjs": "^2.4.3",
+   "cookie": "^0.5.0",
+   "jose": "^4.8.3",
+   "mongoose": "^6.5.0",
+   "next": "^12.2.3",
+   "nodemailer": "^6.7.7",
+   "react": "^18.2.0",
+   "react-usestateref": "^1.0.8"
 ```
