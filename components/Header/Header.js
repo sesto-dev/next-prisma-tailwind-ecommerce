@@ -52,7 +52,7 @@ export default function ({ config, themePreference }) {
                         max-width: 100%;
                         margin: 0 auto;
                         padding: 0 ${theme.layout.pageMargin};
-                        background-color: ${theme.palette.background};
+
                         font-size: 16px;
                         height: 54px;
                         box-sizing: border-box;

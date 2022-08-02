@@ -3,13 +3,14 @@
     "description": "Standardized Next.js layout & components.",
     "author": "@accretence",
     "license": "MIT",
-    "version": "0.0.32",
+    "version": "0.0.33",
     "keywords": [
         "geist-ui",
         "nextjs",
         "react",
         "serverless",
-        "mongoose"
+        "mongoose",
+        "nodemailer"
     ],
     "scripts": {
         "dev": "next dev",

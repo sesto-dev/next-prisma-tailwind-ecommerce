@@ -10,8 +10,13 @@ export default function ({ config, children }) {
             </div>
             <style jsx global>
                 {`
+                    html,
+                    body {
+                        background-color: ${theme.type == 'light'
+                            ? config.theme.lightBackground
+                            : config.theme.darkBackground}!important;
+                    }
                     .PageWrapper {
-                        background-color: ${theme.palette.accents_1};
                         transform: translateY(-5px);
                     }
                     .PageContent {

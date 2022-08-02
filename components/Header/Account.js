@@ -52,7 +52,7 @@ export default function ({ config, sticky }) {
             <>
                 {config.popover &&
                     config.popover.map((link) => (
-                        <Popover.Item pt={0.8} pb={0.2} key={link.label}>
+                        <Popover.Item pt={1} pb={0.2} key={link.label}>
                             <Link href={link.value}>
                                 <Button
                                     type="secondary"
@@ -91,13 +91,10 @@ export default function ({ config, sticky }) {
         return (
             <Popover py={0.5} width="100%" content={popoverContent}>
                 <Button
-                    style={
-                        sticky
-                            ? {
-                                  top: '1.5px',
-                              }
-                            : {}
-                    }
+                    style={{
+                        backgroundColor: theme.palette.violet,
+                        border: 'none',
+                    }}
                     ml={0.3}
                     px={1.4}
                     scale={0.6}

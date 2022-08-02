@@ -1,5 +1,3 @@
-const url = 'http://localhost:3000'
-
 const config = {
     analytics: {
         googleAnalyticsID: null,
@@ -7,10 +5,12 @@ const config = {
     theme: {
         width: '900pt',
         defaultTheme: 'dark',
+        lightBackground: '#F5F5F5',
+        darkBackground: '#040404',
     },
     meta: {
         title: 'Next',
-        url,
+        url: 'http://localhost:3000',
     },
     tabs: [
         {
