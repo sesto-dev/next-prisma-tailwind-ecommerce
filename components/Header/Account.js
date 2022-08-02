@@ -91,10 +91,6 @@ export default function ({ config, sticky }) {
         return (
             <Popover py={0.5} width="100%" content={popoverContent}>
                 <Button
-                    style={{
-                        backgroundColor: theme.palette.violet,
-                        border: 'none',
-                    }}
                     ml={0.3}
                     px={1.4}
                     scale={0.6}

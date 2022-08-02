@@ -11,14 +11,17 @@ const user = new mongoose.Schema(
             type: String,
             required: true,
         },
+        isVerified: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
     },
     {
         timestamps: true,
     }
 )
 
-mongoose.models = {}
-
-const User = mongoose.model('User', user)
+const User = mongoose.models.User || mongoose.model('User', user)
 
 export default User

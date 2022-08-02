@@ -1,4 +1,4 @@
-import { Text, Card, Grid } from '@geist-ui/core'
+import { Text, Card, Grid, useTheme } from '@geist-ui/core'
 import Layout from '../../components/Layout'
 
 import { themePreference } from '../../state/Theme'
@@ -7,6 +7,8 @@ import config from '../../main.config'
 export default function () {
     const title = 'Verify User'
     const description = 'Verify User Sample Page'
+
+    const theme = useTheme()
 
     return (
         <Layout
@@ -18,7 +20,12 @@ export default function () {
         >
             <Grid.Container gap={1}>
                 <Grid xs={24}>
-                    <Card width="100%">
+                    <Card
+                        style={{
+                            backgroundColor: `${theme.palette.accents_1}`,
+                        }}
+                        width="100%"
+                    >
                         <Text>{description}</Text>
                     </Card>
                 </Grid>

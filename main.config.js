@@ -1,3 +1,5 @@
+const url = 'http://localhost:3000'
+
 const config = {
     analytics: {
         googleAnalyticsID: null,
@@ -10,7 +12,7 @@ const config = {
     },
     meta: {
         title: 'Next',
-        url: 'http://localhost:3000',
+        url,
     },
     tabs: [
         {
@@ -27,6 +29,11 @@ const config = {
         },
     ],
     links: {},
+    urls: {
+        contact: url + '/contact',
+        verify: url + '/auth/verify',
+        unsubscribe: url + '/auth/unsubscribe',
+    },
     footer: {
         Blog: [
             { label: 'Blog', value: '/blog' },

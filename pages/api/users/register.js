@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 import { serialize } from 'cookie'
 import { getVerifyMail } from '../../../helpers/getMail'
 import sendMail from '../../../helpers/sendMail'
+import config from '../../../main.config'
 
 export default async function (req, res) {
     connectDB()
@@ -42,7 +43,7 @@ export default async function (req, res) {
     }
 
     if (user) {
-        const mail = await getVerifyMail(email)
+        const mail = await getVerifyMail(config, email)
         await sendMail(email, mail)
     }
 }

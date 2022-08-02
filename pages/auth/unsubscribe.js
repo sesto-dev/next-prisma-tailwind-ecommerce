@@ -5,8 +5,8 @@ import { themePreference } from '../../state/Theme'
 import config from '../../main.config'
 
 export default function () {
-    const title = 'Welcome'
-    const description = 'Welcome Sample Page'
+    const title = 'Unsubscribe'
+    const description = 'Unsubscribe Sample Page'
 
     const theme = useTheme()
 

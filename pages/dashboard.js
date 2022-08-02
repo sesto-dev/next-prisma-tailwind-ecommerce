@@ -1,4 +1,4 @@
-import { Text, Card, Grid } from '@geist-ui/core'
+import { Text, Card, Grid, useTheme } from '@geist-ui/core'
 
 import Layout from '../components/Layout'
 import withAuth from '../HOCs/withAuth'
@@ -8,6 +8,8 @@ import config from '../main.config'
 export default withAuth(function () {
     const title = 'Dashboard'
     const description = 'Dashboard Sample Page'
+
+    const theme = useTheme()
 
     return (
         <Layout
@@ -19,7 +21,12 @@ export default withAuth(function () {
         >
             <Grid.Container gap={1}>
                 <Grid xs={24}>
-                    <Card width="100%">
+                    <Card
+                        style={{
+                            backgroundColor: `${theme.palette.accents_1}`,
+                        }}
+                        width="100%"
+                    >
                         <Text>Dashboard</Text>
                     </Card>
                 </Grid>

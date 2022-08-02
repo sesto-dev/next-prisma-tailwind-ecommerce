@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useToasts, Description, Text, Card, Grid } from '@geist-ui/core'
+import {
+    useToasts,
+    Description,
+    Text,
+    Card,
+    Grid,
+    useTheme,
+} from '@geist-ui/core'
 import Layout from '../components/Layout'
 
 import { themePreference } from '../state/Theme'
@@ -12,6 +19,7 @@ export default withAuth(function () {
     const title = 'Account'
     const description = 'Account Sample Page'
 
+    const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
     const [account, setAccount] = useState({})
@@ -51,7 +59,12 @@ export default withAuth(function () {
             <Grid.Container gap={1}>
                 <Grid xs={24}>
                     {account && (
-                        <Card width="100%">
+                        <Card
+                            style={{
+                                backgroundColor: `${theme.palette.accents_1}`,
+                            }}
+                            width="100%"
+                        >
                             <Description
                                 title="Email"
                                 content={account.email}
