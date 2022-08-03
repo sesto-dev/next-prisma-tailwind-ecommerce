@@ -630,15 +630,14 @@ export async function getVerifyMail(config, to, code) {
                                                                                                                 font-size: 16px;
                                                                                                                 font-family: inherit;
                                                                                                             "
-                                                                                                            >Order
-                                                                                                            Number: </span
+                                                                                                            >Verification Code: </span
                                                                                                         ><span
                                                                                                             style="
                                                                                                                 font-size: 16px;
                                                                                                                 font-family: inherit;
                                                                                                             "
                                                                                                             ><u
-                                                                                                                >TR3D52019</u
+                                                                                                                >${code}</u
                                                                                                             ></span
                                                                                                         >
                                                                                                     </div>

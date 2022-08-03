@@ -3,6 +3,7 @@ import {
     useToasts,
     Description,
     Text,
+    Loading,
     Card,
     Grid,
     useTheme,
@@ -42,6 +43,10 @@ export default withAuth(function () {
         if (!data || error) router.replace('/')
 
         setAccount(data)
+
+        if (!data.isVerfied) {
+            router.replace('/auth/verify')
+        }
     }
 
     useEffect(() => {
@@ -58,19 +63,21 @@ export default withAuth(function () {
         >
             <Grid.Container gap={1}>
                 <Grid xs={24}>
-                    {account && (
-                        <Card
-                            style={{
-                                backgroundColor: `${theme.palette.accents_1}`,
-                            }}
-                            width="100%"
-                        >
+                    <Card
+                        style={{
+                            backgroundColor: `${theme.palette.accents_1}`,
+                        }}
+                        width="100%"
+                    >
+                        {account ? (
                             <Description
                                 title="Email"
                                 content={account.email}
                             />
-                        </Card>
-                    )}
+                        ) : (
+                            <Loading />
+                        )}
+                    </Card>
                 </Grid>
             </Grid.Container>
         </Layout>

@@ -16,6 +16,9 @@ const user = new mongoose.Schema(
             required: true,
             default: false,
         },
+        verificationCode: {
+            type: String,
+        },
     },
     {
         timestamps: true,

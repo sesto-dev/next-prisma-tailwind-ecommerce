@@ -7,7 +7,7 @@ const config = {
     theme: {
         width: '900pt',
         defaultTheme: 'dark',
-        lightBackground: '#F5F5F5',
+        lightBackground: '#F2F2F2',
         darkBackground: '#040404',
     },
     meta: {
@@ -64,6 +64,7 @@ const config = {
             login: '/api/users/login',
             logout: '/api/users/logout',
             register: '/api/users/register',
+            verify: '/api/users/verify',
         },
         axios: {
             simple: {

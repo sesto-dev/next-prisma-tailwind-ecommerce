@@ -25,6 +25,7 @@ export default function ({ config, sticky }) {
         if (response && response.status && response.status == 200) {
             setAuthenticated(false)
             router.replace('/')
+
             setToast({
                 text: (
                     <Description

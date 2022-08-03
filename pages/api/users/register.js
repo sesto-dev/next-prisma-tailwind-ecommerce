@@ -6,6 +6,7 @@ import { serialize } from 'cookie'
 import { getVerifyMail } from '../../../helpers/getMail'
 import sendMail from '../../../helpers/sendMail'
 import config from '../../../main.config'
+import { generateVoucher } from 'apadana/src/generators'
 
 export default async function (req, res) {
     connectDB()
@@ -20,9 +21,12 @@ export default async function (req, res) {
     const salt = await bcrypt.genSalt(10)
     const salted = await bcrypt.hash(password, salt)
 
+    const verificationCode = await generateVoucher(1)
+
     const user = await User.create({
         email,
         password: salted,
+        verificationCode,
     })
 
     if (user) {
@@ -43,7 +47,7 @@ export default async function (req, res) {
     }
 
     if (user) {
-        const mail = await getVerifyMail(config, email)
+        const mail = await getVerifyMail(config, email, user.verificationCode)
         await sendMail(email, mail)
     }
 }
