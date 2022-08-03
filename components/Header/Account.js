@@ -1,52 +1,15 @@
 import Link from 'next/link'
-import axios from 'axios'
-import {
-    useToasts,
-    Description,
-    Button,
-    Popover,
-    Text,
-    useTheme,
-} from '@geist-ui/core'
+import { useToasts, Button, Popover, Text, useTheme } from '@geist-ui/core'
 import { AvatarIcon, LogoutIcon } from '../SVGs'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../state/Auth'
+import { logoutHandler } from '../../helpers/handlers'
 
 export default function ({ config, sticky }) {
     const theme = useTheme()
     const router = useRouter()
     const { setAuthenticated } = useAuth()
-
     const { setToast } = useToasts()
-
-    const logoutHandler = async (e) => {
-        const response = await axios.post(config.backend.routes.logout)
-
-        if (response && response.status && response.status == 200) {
-            setAuthenticated(false)
-            router.replace('/')
-
-            setToast({
-                text: (
-                    <Description
-                        title={new Date().toUTCString()}
-                        content={'✓ Logout Successful'}
-                    />
-                ),
-                delay: 5000,
-            })
-        } else {
-            setToast({
-                text: (
-                    <Description
-                        title={new Date().toUTCString()}
-                        content={error.message}
-                    />
-                ),
-                delay: 5000,
-            })
-        }
-    }
 
     const popoverContent = () => {
         return (
@@ -68,7 +31,14 @@ export default function ({ config, sticky }) {
                 <Popover.Item>
                     <Button
                         scale="0.8"
-                        onClick={logoutHandler}
+                        onClick={(e) =>
+                            logoutHandler(
+                                config,
+                                setToast,
+                                setAuthenticated,
+                                router
+                            )
+                        }
                         icon={<LogoutIcon />}
                     >
                         Logout

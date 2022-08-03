@@ -1,7 +1,6 @@
 import useState from 'react-usestateref'
 import {
     useToasts,
-    Description,
     Button,
     Grid,
     Input,
@@ -10,10 +9,10 @@ import {
     useTheme,
 } from '@geist-ui/core'
 import Link from 'next/link'
-import axios from 'axios'
 import { LoginIcon, RegisterIcon } from '../SVGs'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../state/Auth'
+import { loginHandler, registerHandler } from '../../helpers/handlers'
 
 export default function ({ config, sticky }) {
     const [modalVisibility, setModalVisibility] = useState(false)
@@ -22,90 +21,14 @@ export default function ({ config, sticky }) {
         setModalVisibility(false)
     }
 
-    const { setToast } = useToasts()
     const theme = useTheme()
     const router = useRouter()
     const { setAuthenticated } = useAuth()
+    const { setToast } = useToasts()
 
     const [email, setEmail, refEmail] = useState('')
     const [password, setPassword, refPassword] = useState('')
     const [loading, setLoading, refLoading] = useState(false)
-
-    const loginHandler = async (e) => {
-        setLoading(true)
-
-        let response
-
-        try {
-            response = await axios.post(
-                config.backend.routes.login,
-                {
-                    email: refEmail.current,
-                    password: refPassword.current,
-                },
-                config.backend.axios.simple
-            )
-        } catch (error) {
-            setLoading(false)
-            setToast({
-                text: (
-                    <Description
-                        title={new Date().toUTCString()}
-                        content={error.message}
-                    />
-                ),
-                delay: 5000,
-            })
-        }
-
-        if (response && response.status && response.status == 200) {
-            setToast({
-                text: (
-                    <Description
-                        title={new Date().toUTCString()}
-                        content={'✓ Login Successful'}
-                    />
-                ),
-                delay: 5000,
-            })
-            setAuthenticated(true)
-
-            router.replace('/dashboard')
-        }
-    }
-
-    const registerHandler = async (e) => {
-        setLoading(true)
-
-        let response
-
-        try {
-            response = await axios.post(
-                config.backend.routes.register,
-                {
-                    email: refEmail.current,
-                    password: refPassword.current,
-                },
-                config.backend.axios.simple
-            )
-        } catch (error) {
-            setLoading(false)
-            setToast({
-                text: (
-                    <Description
-                        title={new Date().toUTCString()}
-                        content={error.message}
-                    />
-                ),
-                delay: 5000,
-            })
-        }
-
-        if (response && response.status && response.status == 200) {
-            setAuthenticated(true)
-            router.replace('/auth/welcome')
-        }
-    }
 
     if (config.authentication) {
         return (
@@ -161,7 +84,17 @@ export default function ({ config, sticky }) {
                                         loading={loading}
                                         width="100%"
                                         type="secondary"
-                                        onClick={loginHandler}
+                                        onClick={(e) =>
+                                            loginHandler(
+                                                config,
+                                                setLoading,
+                                                setToast,
+                                                setAuthenticated,
+                                                router,
+                                                refEmail,
+                                                refPassword
+                                            )
+                                        }
                                         icon={<LoginIcon />}
                                     >
                                         Login
@@ -173,7 +106,17 @@ export default function ({ config, sticky }) {
                                         ghost
                                         width="100%"
                                         type="secondary"
-                                        onClick={registerHandler}
+                                        onClick={(e) =>
+                                            registerHandler(
+                                                config,
+                                                setLoading,
+                                                setToast,
+                                                setAuthenticated,
+                                                router,
+                                                refEmail,
+                                                refPassword
+                                            )
+                                        }
                                         icon={<RegisterIcon />}
                                     >
                                         Register

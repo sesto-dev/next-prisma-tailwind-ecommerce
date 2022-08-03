@@ -1,3 +1,5 @@
+import axios from 'axios'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import {
     useToasts,
@@ -8,13 +10,12 @@ import {
     Grid,
     useTheme,
 } from '@geist-ui/core'
-import Layout from '../components/Layout'
 
+import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
 import config from '../main.config'
 import withAuth from '../HOCs/withAuth'
-import { useRouter } from 'next/router'
-import axios from 'axios'
+import { handleAccountData } from '../helpers/handlers'
 
 export default withAuth(function () {
     const title = 'Account'
@@ -25,32 +26,13 @@ export default withAuth(function () {
     const { setToast } = useToasts()
     const [account, setAccount] = useState({})
 
-    const fetch = async (e) => {
-        const { data, error } = await axios.get(config.backend.routes.account)
-
-        if (error) {
-            setToast({
-                text: (
-                    <Description
-                        title={new Date().toUTCString()}
-                        content={{ error }}
-                    />
-                ),
-                delay: 5000,
-            })
-        }
-
-        if (!data || error) router.replace('/')
-
-        setAccount(data)
-
-        if (!data.isVerfied) {
-            router.replace('/auth/verify')
-        }
+    async function resolve() {
+        const response = await axios.get(config.backend.routes.account)
+        handleAccountData(response, router, setAccount, setToast)
     }
 
     useEffect(() => {
-        fetch()
+        resolve()
     }, [])
 
     return (

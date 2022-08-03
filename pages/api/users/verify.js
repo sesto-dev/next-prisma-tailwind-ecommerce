@@ -5,6 +5,11 @@ import User from '../../../models/User'
 export default async function (req, res) {
     const { code } = req.body
 
+    if (!code) {
+        res.status(401)
+        throw new Error('Fail')
+    }
+
     const decoded = await verifyRequest(req)
 
     connectDB()
