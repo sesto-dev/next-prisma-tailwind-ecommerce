@@ -1,12 +1,11 @@
-import axios from 'axios'
 import useState from 'react-usestateref'
 import { useRouter } from 'next/router'
 import { Button, Grid, useTheme, useToasts, Input } from '@geist-ui/core'
-import Layout from '../../components/Layout'
 
+import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
-import config from '../../main.config'
 import { verifyHandler } from '../../helpers/handlers'
+import config from '../../main.config'
 
 export default function () {
     const title = 'WELCOME'
@@ -29,11 +28,12 @@ export default function () {
             metaTitle={title}
         >
             <Grid.Container gap={1}>
-                <Grid xs={24}>
+                <Grid xs={24} style={{ maxWidth: '100%' }}>
                     <Input
+                        width="220pt"
                         mr={0.5}
-                        label="Code"
                         placeholder="Input your verification code"
+                        type="secondary"
                         value={code}
                         onChange={(e) => {
                             setCode(e.target.value)
