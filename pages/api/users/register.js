@@ -9,6 +9,7 @@ import bakeCookie from '../../../helpers/bakeCookie'
 
 export default async function (req, res) {
     connectDB()
+
     const { email, password } = req.body
     const userExists = await User.findOne({ email })
 

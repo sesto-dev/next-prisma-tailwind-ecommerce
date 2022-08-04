@@ -1,16 +1,18 @@
 {
-    "name": "next-dashboard",
-    "description": "Standardized Next.js layout & components.",
+    "name": "create-next-dashboard",
+    "description": "Set up a smarter web app by running one command.",
     "author": "@accretence",
     "license": "MIT",
-    "version": "0.0.36",
+    "version": "0.0.38",
+    "bin": "npx.js",
     "keywords": [
         "geist-ui",
         "nextjs",
         "react",
         "serverless",
         "mongoose",
-        "nodemailer"
+        "nodemailer",
+        "npx"
     ],
     "scripts": {
         "dev": "next dev",
@@ -22,12 +24,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Accretence/next-dashboard.git"
+        "url": "git+https://github.com/Accretence/create-next-dashboard.git"
     },
     "bugs": {
-        "url": "https://github.com/Accretence/next-dashboard/issues"
+        "url": "https://github.com/Accretence/create-next-dashboard/issues"
     },
-    "homepage": "https://github.com/Accretence/next-dashboard#readme",
+    "homepage": "https://github.com/Accretence/create-next-dashboard#readme",
     "dependencies": {
         "@geist-ui/core": "^2.3.8",
         "apadana": "^0.0.4",

@@ -1,4 +1,4 @@
-<a href="http://accretence.com">![next-dashboard](https://i.imgur.com/hNovO0U.png)</a>
+<a href="http://accretence.com">![create-next-dashboard](https://i.imgur.com/hNovO0U.png)</a>
 
 <a href="https://npmjs.com/package/create-next-dashboard">
    <p align="center">
@@ -6,10 +6,6 @@
    <img src="https://img.shields.io/npm/dw/create-next-dashboard?color=000&style=for-the-badge">
    </p>
 </a>
-
-## Live Demo
-
-You can find a live demo at [accretence.com](https://accretence.com)!
 
 ## Usage
 
@@ -19,9 +15,23 @@ You can find a live demo at [accretence.com](https://accretence.com)!
 npx create-next-dashboard my-app
 ```
 
-2. Create your `.env` file and provide `JWT_SECRET` & `MOGNO_ATLAS_URI` variables.
+2. Create your `.env` file and provide these variables:
+
+```shell
+JWT_SECRET =
+MONGO_ATLAS_URI =
+MAIL_SMTP_HOST =
+MAIL_SMTP_USER =
+MAIL_SMTP_PASS =
+MAIL_SMTP_PORT =
+```
+
 3. Fill in the `main.config.js` file with your preferred information.
 4. Run `cd my-app` and `npm run dev`, the app should be running in `localhost:3000`!
+
+## Sending Emails
+
+You need to provide `SMTP` credentials obtained from your Email provider in the `env` file.
 
 ## Authentication
 
@@ -29,18 +39,15 @@ Authentication is implemented using `httpOnly` cookies served from serverless AP
 
 ## Database
 
-You can spin up a MongoDB database instance using MongoDB Atlas. Provide the `MOGNO_ATLAS_URI` in `.env`.
+You can spin up a MongoDB database instance using [MongoDB Atlas](http://cloud.mongodb.com/). Provide the `MOGNO_ATLAS_URI` in `.env`.
 
 ## Google Analytics
 
 You only need to provide your `googleAnalyticsID` in `main.config.js` file to activate your Google Analytics.
 
-## About
+## Built Upon
 
-Running the `npx` script above should create a Next.js dashboard built using:
-
--   [create-next-dashboard](https://github.com/accretence/create-next-dashboard) the `npx` script to set up a smarter web app by running one command!
--   [geist-ui](https://github.com/geist-org/geist-ui) UI library which adheres to the design language of [Vercel](https://vercel.com/)!
+-   [geist-ui](https://github.com/geist-org/geist-ui) as UI library which adheres to the design language of [Vercel](https://vercel.com/)!
 -   [react-dashboard-design](https://github.com/ofekashery/react-dashboard-design) as inspiration and much of the initial codebase!
 -   [nextjs-client-auth-architectures](https://github.com/justincy/nextjs-client-auth-architectures) as the route protection architecture!
 
