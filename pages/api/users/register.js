@@ -26,7 +26,7 @@ export default async function (req, res) {
     const user = await User.create({
         email,
         password: salted,
-        verification_code: code,
+        email_verification_code: code,
     })
 
     if (user) {

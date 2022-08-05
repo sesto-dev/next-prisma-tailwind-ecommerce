@@ -77,7 +77,6 @@ export default function ({ config, sticky }) {
                                     setPassword(e.target.value)
                                 }}
                             />
-
                             <Grid.Container mb={0.2} gap={1}>
                                 <Grid xs={12}>
                                     <Button
@@ -123,7 +122,7 @@ export default function ({ config, sticky }) {
                                     </Button>
                                 </Grid>
                             </Grid.Container>
-                            <Link href="/auth/forgot">
+                            <Link href="/auth/reset">
                                 <a className="Peculiar">
                                     Forgot your password?
                                 </a>

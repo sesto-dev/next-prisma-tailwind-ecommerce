@@ -32,6 +32,7 @@ const config = {
     urls: {
         contact: url + '/contact',
         verify: url + '/auth/verify',
+        reset: url + '/auth/reset',
         unsubscribe: url + '/auth/unsubscribe',
     },
     footer: {
@@ -65,6 +66,10 @@ const config = {
             logout: '/api/users/logout',
             register: '/api/users/register',
             verify: '/api/users/verify',
+            unsubscribe: '/api/users/unsubscribe',
+            subscribe: '/api/users/subscribe',
+            forgot: '/api/users/forgot',
+            reset: '/api/users/reset',
         },
         axios: {
             simple: {

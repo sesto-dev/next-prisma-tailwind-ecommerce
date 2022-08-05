@@ -12,10 +12,8 @@ export async function loginHandler(
 ) {
     setLoading(true)
 
-    let response
-
     try {
-        response = await axios.post(
+        const response = await axios.post(
             config.backend.routes.login,
             {
                 email: refEmail.current,
@@ -23,15 +21,15 @@ export async function loginHandler(
             },
             config.backend.axios.simple
         )
+
+        if (response && response.status && response.status == 200) {
+            burnToast(setToast, '✓ Login Successful')
+            setAuthenticated(true)
+            router.replace('/dashboard')
+        }
     } catch (error) {
         setLoading(false)
         burnToast(setToast, error.message)
-    }
-
-    if (response && response.status && response.status == 200) {
-        burnToast(setToast, '✓ Login Successful')
-        setAuthenticated(true)
-        router.replace('/dashboard')
     }
 }
 
@@ -46,10 +44,8 @@ export async function registerHandler(
 ) {
     setLoading(true)
 
-    let response
-
     try {
-        response = await axios.post(
+        const response = await axios.post(
             config.backend.routes.register,
             {
                 email: refEmail.current,
@@ -57,14 +53,14 @@ export async function registerHandler(
             },
             config.backend.axios.simple
         )
+
+        if (response && response.status && response.status == 200) {
+            setAuthenticated(true)
+            router.replace('/auth/verify')
+        }
     } catch (error) {
         setLoading(false)
         burnToast(setToast, error.message)
-    }
-
-    if (response && response.status && response.status == 200) {
-        setAuthenticated(true)
-        router.replace('/auth/verify')
     }
 }
 
@@ -77,24 +73,22 @@ export async function verifyHandler(
 ) {
     setLoading(true)
 
-    let response
-
     try {
-        response = await axios.post(
+        const response = await axios.post(
             config.backend.routes.verify,
             {
                 code: refCode.current,
             },
             config.backend.axios.simple
         )
+
+        if (response && response.status && response.status == 200) {
+            burnToast(setToast, '✓ Email Verification Successful')
+            router.replace('/dashboard')
+        }
     } catch (error) {
         setLoading(false)
         burnToast(setToast, error.message)
-    }
-
-    if (response && response.status && response.status == 200) {
-        burnToast(setToast, '✓ Email Verification Successful')
-        router.replace('/dashboard')
     }
 }
 
@@ -104,13 +98,15 @@ export async function logoutHandler(
     setAuthenticated,
     router
 ) {
-    const response = await axios.post(config.backend.routes.logout)
+    try {
+        const response = await axios.post(config.backend.routes.logout)
 
-    if (response && response.status && response.status == 200) {
-        setAuthenticated(false)
-        router.replace('/')
-        burnToast(setToast, '✓ Logout Successful')
-    } else {
+        if (response && response.status && response.status == 200) {
+            setAuthenticated(false)
+            router.replace('/')
+            burnToast(setToast, '✓ Logout Successful')
+        }
+    } catch (error) {
         burnToast(setToast, error.message)
     }
 }
@@ -139,4 +135,95 @@ export async function handleAccountData(
     }
 
     setAccount(data)
+}
+
+export async function unsubscribeHandler(config, setLoading, setToast) {
+    setLoading(true)
+
+    try {
+        const response = await axios.post(config.backend.routes.unsubscribe)
+
+        if (response && response.status && response.status == 200) {
+            router.replace('/dashboard')
+            burnToast(setToast, '✓ Successfully Unsubscribed...')
+        }
+    } catch (error) {
+        setLoading(false)
+        burnToast(setToast, error.message)
+    }
+}
+
+export async function subscribeHandler(config, setLoading, setToast) {
+    setLoading(true)
+
+    try {
+        const response = await axios.post(config.backend.routes.subscribe)
+
+        if (response && response.status && response.status == 200) {
+            router.replace('/dashboard')
+            burnToast(setToast, '✓ Successfully Subscribed...')
+        }
+    } catch (error) {
+        setLoading(false)
+        burnToast(setToast, error.message)
+    }
+}
+
+export async function forgotHandler(
+    config,
+    refEmail,
+    setLoading,
+    setToast,
+    setNextStage
+) {
+    setLoading(true)
+
+    try {
+        const response = await axios.post(
+            config.backend.routes.forgot,
+            {
+                email: refEmail.current,
+            },
+            config.backend.axios.simple
+        )
+
+        if (response && response.status && response.status == 200) {
+            setLoading(false)
+            setNextStage(true)
+            burnToast(setToast, '✓ Successfully Requested Verification Code...')
+        }
+    } catch (error) {
+        setLoading(false)
+        burnToast(setToast, error.message)
+    }
+}
+
+export async function resetHandler(
+    config,
+    refCode,
+    refPassword,
+    setLoading,
+    setToast,
+    router
+) {
+    setLoading(true)
+
+    try {
+        const response = await axios.post(
+            config.backend.routes.reset,
+            {
+                code: refCode.current,
+                password: refPassword.current,
+            },
+            config.backend.axios.simple
+        )
+
+        if (response && response.status && response.status == 200) {
+            router.replace('/')
+            burnToast(setToast, '✓ Successfully Reset Password...')
+        }
+    } catch (error) {
+        setLoading(false)
+        burnToast(setToast, error.message)
+    }
 }

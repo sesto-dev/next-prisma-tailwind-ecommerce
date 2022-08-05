@@ -8,9 +8,9 @@ import { verifyHandler } from '../../helpers/handlers'
 import config from '../../main.config'
 
 export default function () {
-    const title = 'WELCOME'
+    const title = 'Verify Email Address'
     const description =
-        'Verify your email address using the verification email sent to your email address.'
+        'Verify your email address using the verification code sent to your email address.'
 
     const theme = useTheme()
     const router = useRouter()
@@ -28,7 +28,7 @@ export default function () {
             metaTitle={title}
         >
             <Grid.Container gap={1}>
-                <Grid xs={24} style={{ maxWidth: '100%' }}>
+                <Grid xs={24}>
                     <Input
                         width="220pt"
                         mr={0.5}

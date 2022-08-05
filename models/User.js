@@ -21,7 +21,10 @@ const user = new mongoose.Schema(
             required: true,
             default: true,
         },
-        verification_code: {
+        email_verification_code: {
+            type: String,
+        },
+        reset_password_code: {
             type: String,
         },
     },
