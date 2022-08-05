@@ -16,7 +16,12 @@ const user = new mongoose.Schema(
             required: true,
             default: false,
         },
-        verificationCode: {
+        isSubscribed: {
+            type: Boolean,
+            required: true,
+            default: true,
+        },
+        verification_code: {
             type: String,
         },
     },

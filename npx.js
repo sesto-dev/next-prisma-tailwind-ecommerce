@@ -11,11 +11,10 @@ const runCommand = (command) => {
     return true
 }
 
+const sourceRepo = 'https://github.com/accretence/next-dashboard'
 const repoName = process.argv[2]
 
-const checkedOut = runCommand(
-    `git clone --depth 1 https://github.com/accretence/next-dashboard ${repoName}`
-)
+const checkedOut = runCommand(`git clone --depth 1 ${sourceRepo} ${repoName}`)
 if (!checkedOut) process.exit(-1)
 
 const installedDeps = runCommand(`cd ${repoName} && npm install`)

@@ -9,10 +9,7 @@ export default function () {
     const title = 'About'
     const description =
         'This package provides a 1-Line script that sets in motion a barrage of tools and web-services to create a highly-customizable state-of-the-art Next.js PWA, like this one!'
-    const links = [
-        'http://github.com/accretence/create-next-dashboard',
-        'http://github.com/accretence/next-dashboard',
-    ]
+    const links = ['http://github.com/accretence/create-next-dashboard']
 
     return (
         <>

@@ -17,7 +17,7 @@ export default async function (req, res) {
     const user = await User.findById(decoded.id)
 
     if (user && !user.isVerified) {
-        if (code == user.verificationCode) {
+        if (code == user.verification_code) {
             user.isVerified = true
             await user.save()
 

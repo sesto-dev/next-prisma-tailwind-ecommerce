@@ -31,7 +31,7 @@ MAIL_SMTP_PORT =
 
 ## Sending Emails
 
-You need to provide `SMTP` credentials obtained from your Email provider in the `env` file.
+You need to provide `SMTP` credentials obtained from your Email provider in `.env`.
 
 ## Authentication
 
@@ -55,6 +55,7 @@ You only need to provide your `googleAnalyticsID` in `main.config.js` file to ac
 
 ```json
    "@geist-ui/core": "^2.3.8",
+   "angra": "^0.0.2",
    "apadana": "^0.0.4",
    "axios": "^0.27.2",
    "bcryptjs": "^2.4.3",
@@ -62,7 +63,6 @@ You only need to provide your `googleAnalyticsID` in `main.config.js` file to ac
    "jose": "^4.8.3",
    "mongoose": "^6.5.0",
    "next": "^12.2.3",
-   "nodemailer": "^6.7.7",
    "react": "^18.2.0",
    "react-usestateref": "^1.0.8"
 ```
