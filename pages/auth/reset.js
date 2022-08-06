@@ -32,86 +32,86 @@ export default function () {
                 metaTitle={title}
             >
                 <Grid.Container gap={1}>
-                    <Grid xs={24}>
-                        <Input
-                            width="300pt"
-                            label="email"
-                            placeholder="Input your email address."
-                            type="secondary"
-                            value={email}
-                            disabled={nextStage}
-                            onChange={(e) => {
-                                setEmail(e.target.value)
-                            }}
-                        />
-                    </Grid>
-                    {!nextStage && (
-                        <Grid xs={24}>
-                            <Button
-                                width="300pt"
-                                loading={loading}
+                    <Grid xs={24} md={12}>
+                        <div style={{ display: 'block' }}>
+                            <Input
+                                width="100%"
+                                mb={0.5}
+                                label="email"
+                                placeholder="Input your email address."
                                 type="secondary"
-                                onClick={(e) =>
-                                    forgotHandler(
-                                        config,
-                                        refEmail,
-                                        setLoading,
-                                        setToast,
-                                        setNextStage
-                                    )
-                                }
-                            >
-                                <b>SUBMIT EMAIL</b>
-                            </Button>
-                        </Grid>
-                    )}
-                    {nextStage && (
-                        <>
-                            <Grid xs={24}>
-                                <Input
-                                    width="300pt"
-                                    label="code"
-                                    placeholder="Input your verification code."
-                                    type="secondary"
-                                    value={code}
-                                    onChange={(e) => {
-                                        setCode(e.target.value)
-                                    }}
-                                />
-                            </Grid>
-                            <Grid xs={24}>
-                                <Input
-                                    width="300pt"
-                                    label="password"
-                                    placeholder="Input your new password."
-                                    type="secondary"
-                                    value={password}
-                                    onChange={(e) => {
-                                        setPassword(e.target.value)
-                                    }}
-                                />
-                            </Grid>
-                            <Grid xs={24}>
+                                value={email}
+                                disabled={nextStage}
+                                onChange={(e) => {
+                                    setEmail(e.target.value)
+                                }}
+                            />
+                            {!nextStage && (
                                 <Button
-                                    width="300pt"
+                                    width="100%"
+                                    mb={0.5}
                                     loading={loading}
                                     type="secondary"
                                     onClick={(e) =>
-                                        resetHandler(
+                                        forgotHandler(
                                             config,
-                                            refCode,
-                                            refPassword,
+                                            refEmail,
                                             setLoading,
                                             setToast,
-                                            router
+                                            setNextStage
                                         )
                                     }
                                 >
-                                    <b>SUBMIT NEW PASSWORD</b>
+                                    <b>SUBMIT EMAIL</b>
                                 </Button>
-                            </Grid>
-                        </>
-                    )}
+                            )}
+                            {nextStage && (
+                                <>
+                                    <Input
+                                        width="100%"
+                                        mb={0.5}
+                                        label="code"
+                                        placeholder="Input your verification code."
+                                        type="secondary"
+                                        value={code}
+                                        onChange={(e) => {
+                                            setCode(e.target.value)
+                                        }}
+                                    />
+
+                                    <Input
+                                        width="100%"
+                                        mb={0.5}
+                                        label="password"
+                                        placeholder="Input your new password."
+                                        type="secondary"
+                                        value={password}
+                                        onChange={(e) => {
+                                            setPassword(e.target.value)
+                                        }}
+                                    />
+
+                                    <Button
+                                        width="100%"
+                                        loading={loading}
+                                        type="secondary"
+                                        onClick={(e) =>
+                                            resetHandler(
+                                                config,
+                                                refCode,
+                                                refPassword,
+                                                setLoading,
+                                                setToast,
+                                                router
+                                            )
+                                        }
+                                    >
+                                        <b>SUBMIT NEW PASSWORD</b>
+                                    </Button>
+                                </>
+                            )}
+                        </div>
+                    </Grid>
                 </Grid.Container>
             </Layout>
         </>

@@ -32,14 +32,12 @@ export default async function (req, res) {
     if (user) {
         const serialized = await bakeCookie(user)
 
+        await sendVerifyMail(config, email, code)
+
         res.setHeader('Set-Cookie', serialized)
         res.status(200).json({ message: 'Success!' })
     } else {
         res.status(401)
         throw new Error('Failed to create user.')
-    }
-
-    if (user) {
-        await sendVerifyMail(config, email, code)
     }
 }

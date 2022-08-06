@@ -18,6 +18,7 @@ export default async function (req, res) {
 
     if (user && !user.isVerified) {
         if (code == user.email_verification_code) {
+            user.email_verification_code = ''
             user.isVerified = true
             await user.save()
 
