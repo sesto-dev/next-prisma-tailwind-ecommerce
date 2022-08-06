@@ -15,7 +15,7 @@ export default async function (req, res) {
         const serialized = await bakeCookie(user)
 
         res.setHeader('Set-Cookie', serialized)
-        res.status(200)
+        res.status(200).json('Success!')
     } else {
         res.status(401).send('Invalid email or password')
     }

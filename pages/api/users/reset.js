@@ -23,7 +23,7 @@ export default async function (req, res) {
 
             await sendResetPassword(config, user.email, code)
 
-            res.status(200)
+            res.status(200).json('Success!')
         } catch (error) {
             res.status(401).send('Please try again later!')
         }

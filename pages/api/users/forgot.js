@@ -20,11 +20,11 @@ export default async function (req, res) {
 
             await sendForgotPassword(config, email, code)
 
-            res.status(200)
+            res.status(200).json('Success!')
         } catch (error) {
             res.status(401).send('Please try again later.')
         }
     } else {
-        res.status(200)
+        res.status(200).json('Success!')
     }
 }

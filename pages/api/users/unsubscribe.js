@@ -15,7 +15,7 @@ export default async function (req, res) {
             user.isSubscribed = false
             await user.save()
 
-            res.status(200)
+            res.status(200).json('Success!')
         } catch (error) {
             res.status(401).send('Please try again later!')
         }

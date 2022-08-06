@@ -34,7 +34,7 @@ export default async function (req, res) {
             await sendVerifyMail(config, email, email_verification_code)
 
             res.setHeader('Set-Cookie', serialized)
-            res.status(200)
+            res.status(200).json('Success!')
         } else {
             res.status(401).send('Failed to create user.')
         }

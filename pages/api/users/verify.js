@@ -22,7 +22,7 @@ export default async function (req, res) {
             user.isVerified = true
             await user.save()
 
-            res.status(200)
+            res.status(200).json('Success!')
         } else {
             res.status(401).send('Wrong Verification Code!')
         }
