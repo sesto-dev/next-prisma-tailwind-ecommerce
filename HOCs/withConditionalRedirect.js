@@ -44,7 +44,7 @@ export default function withConditionalRedirect({
         if (!isBrowser() && ctx.res) {
             if (serverCondition(ctx)) {
                 ctx.res.writeHead(302, { Location: location })
-                ctx.res.end()
+                ctx.res.json('Success!')
             }
         }
 
