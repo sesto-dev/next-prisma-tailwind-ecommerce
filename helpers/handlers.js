@@ -29,7 +29,10 @@ export async function loginHandler(
         }
     } catch (error) {
         setLoading(false)
-        burnToast(setToast, error.message)
+        burnToast(
+            setToast,
+            error.response.data ? error.response.data : error.message
+        )
     }
 }
 
@@ -60,7 +63,10 @@ export async function registerHandler(
         }
     } catch (error) {
         setLoading(false)
-        burnToast(setToast, error.message)
+        burnToast(
+            setToast,
+            error.response.data ? error.response.data : error.message
+        )
     }
 }
 
@@ -88,7 +94,10 @@ export async function verifyHandler(
         }
     } catch (error) {
         setLoading(false)
-        burnToast(setToast, error.message)
+        burnToast(
+            setToast,
+            error.response.data ? error.response.data : error.message
+        )
     }
 }
 
@@ -107,7 +116,10 @@ export async function logoutHandler(
             burnToast(setToast, '✓ Logout Successful')
         }
     } catch (error) {
-        burnToast(setToast, error.message)
+        burnToast(
+            setToast,
+            error.response.data ? error.response.data : error.message
+        )
     }
 }
 
@@ -121,7 +133,10 @@ export async function handleAccountData(
 
     if (error) {
         router.replace('/')
-        burnToast(setToast, error.message)
+        burnToast(
+            setToast,
+            error.response.data ? error.response.data : error.message
+        )
     }
 
     if (!data) {
@@ -149,7 +164,10 @@ export async function unsubscribeHandler(config, setLoading, setToast) {
         }
     } catch (error) {
         setLoading(false)
-        burnToast(setToast, error.message)
+        burnToast(
+            setToast,
+            error.response.data ? error.response.data : error.message
+        )
     }
 }
 
@@ -165,7 +183,10 @@ export async function subscribeHandler(config, setLoading, setToast) {
         }
     } catch (error) {
         setLoading(false)
-        burnToast(setToast, error.message)
+        burnToast(
+            setToast,
+            error.response.data ? error.response.data : error.message
+        )
     }
 }
 
@@ -194,7 +215,10 @@ export async function forgotHandler(
         }
     } catch (error) {
         setLoading(false)
-        burnToast(setToast, error.message)
+        burnToast(
+            setToast,
+            error.response.data ? error.response.data : error.message
+        )
     }
 }
 
@@ -224,6 +248,9 @@ export async function resetHandler(
         }
     } catch (error) {
         setLoading(false)
-        burnToast(setToast, error.message)
+        burnToast(
+            setToast,
+            error.response.data ? error.response.data : error.message
+        )
     }
 }

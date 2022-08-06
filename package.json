@@ -3,7 +3,7 @@
     "description": "Set up a smarter web app by running one command.",
     "author": "@accretence",
     "license": "MIT",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "bin": "npx.js",
     "keywords": [
         "geist-ui",

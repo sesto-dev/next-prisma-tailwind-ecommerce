@@ -22,12 +22,11 @@ export default async function (req, res) {
 
             await sendResetPassword(config, user.email, code)
 
-            res.status(200).json({ message: 'Success' })
+            res.status(200)
         } catch (error) {
-            res.status(401).json({ message: error.message })
+            res.status(401).send('Please try again later!')
         }
     } else {
-        res.status(401)
-        throw new Error('Incorrect Code.')
+        res.status(401).send('Incorrect code.')
     }
 }

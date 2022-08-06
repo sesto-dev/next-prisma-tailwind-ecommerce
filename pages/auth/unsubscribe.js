@@ -3,8 +3,8 @@ import { Button, Grid, useTheme, useToasts } from '@geist-ui/core'
 
 import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
-import config from '../../main.config'
 import { unsubscribeHandler } from '../../helpers/handlers'
+import config from '../../main.config'
 
 export default function () {
     const title = 'Unsubscribe'

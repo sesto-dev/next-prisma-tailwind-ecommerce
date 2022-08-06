@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import Layout from '../components/Layout'
 import { Grid, Card, Text, Code, useTheme } from '@geist-ui/core'
 
+import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
 import config from '../main.config'
 

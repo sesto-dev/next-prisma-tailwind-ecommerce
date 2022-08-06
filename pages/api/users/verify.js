@@ -6,8 +6,7 @@ export default async function (req, res) {
     const { code } = req.body
 
     if (!code) {
-        res.status(401)
-        throw new Error('Fail')
+        res.status(401).send('Fail')
     }
 
     const decoded = await verifyRequest(req)
@@ -22,13 +21,11 @@ export default async function (req, res) {
             user.isVerified = true
             await user.save()
 
-            res.status(200).json({ message: 'Success!' })
+            res.status(200)
         } else {
-            res.status(401)
-            throw new Error('Wrong Verification Code!')
+            res.status(401).send('Wrong Verification Code!')
         }
     } else {
-        res.status(401)
-        throw new Error('Fail')
+        res.status(401).send('Fail')
     }
 }

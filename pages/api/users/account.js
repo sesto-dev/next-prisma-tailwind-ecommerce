@@ -12,7 +12,6 @@ export default async function (req, res) {
     if (user) {
         res.status(200).json({ email: user.email, isVerified: user.isVerified })
     } else {
-        res.status(401)
-        throw new Error('Fail')
+        res.status(401).send('Fail')
     }
 }

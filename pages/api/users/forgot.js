@@ -10,21 +10,20 @@ export default async function (req, res) {
 
     const { email } = req.body
     const user = await User.findOne({ email })
-    const code = await generateVoucher(1)
 
     if (user) {
         try {
+            const code = await generateVoucher(1)
             user.reset_password_code = code
             await user.save()
 
             await sendForgotPassword(config, email, code)
 
-            res.status(200).json({ message: 'Success' })
+            res.status(200)
         } catch (error) {
-            res.status(401).json({ message: error.message })
+            res.status(401).send('Please try again later.')
         }
     } else {
-        res.status(401)
-        throw new Error('User not found.')
+        res.status(200)
     }
 }

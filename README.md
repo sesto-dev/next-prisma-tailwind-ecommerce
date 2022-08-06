@@ -29,6 +29,10 @@ MAIL_SMTP_PORT =
 3. Fill in the `main.config.js` file with your preferred information.
 4. Run `cd my-app` and `npm run dev`, the app should be running in `localhost:3000`!
 
+## Deployment
+
+Refer to [Next.js Deployment Documentation](https://nextjs.org/docs/deployment) to find the best deployment strategy for you.
+
 ## Sending Emails
 
 You need to provide `SMTP` credentials obtained from your Email provider in `.env`.

@@ -1,43 +1,41 @@
+import bcrypt from 'bcryptjs'
+import { generateVoucher } from 'apadana/src/generators'
+import { sendVerifyMail } from 'angra'
+
 import connectDB from '../../../helpers/connectDB'
 import User from '../../../models/User'
-import bcrypt from 'bcryptjs'
-
 import config from '../../../main.config'
-import { generateVoucher } from 'apadana/src/generators'
 import bakeCookie from '../../../helpers/bakeCookie'
-import { sendVerifyMail } from 'angra'
 
 export default async function (req, res) {
     connectDB()
 
     const { email, password } = req.body
-    const userExists = await User.findOne({ email })
+    const exists = await User.findOne({ email })
 
-    if (userExists) {
-        res.status(400)
-        throw new Error('User already exists')
-    }
-
-    const salt = await bcrypt.genSalt(10)
-    const salted = await bcrypt.hash(password, salt)
-
-    const code = await generateVoucher(1)
-
-    const user = await User.create({
-        email,
-        password: salted,
-        email_verification_code: code,
-    })
-
-    if (user) {
-        const serialized = await bakeCookie(user)
-
-        await sendVerifyMail(config, email, code)
-
-        res.setHeader('Set-Cookie', serialized)
-        res.status(200).json({ message: 'Success!' })
+    if (exists) {
+        res.status(400).send('Email is already registered!')
     } else {
-        res.status(401)
-        throw new Error('Failed to create user.')
+        const salt = await bcrypt.genSalt(10)
+        const salted = await bcrypt.hash(password, salt)
+
+        const email_verification_code = await generateVoucher(1)
+
+        const user = await User.create({
+            email,
+            password: salted,
+            email_verification_code,
+        })
+
+        if (user) {
+            const serialized = await bakeCookie(user)
+
+            await sendVerifyMail(config, email, email_verification_code)
+
+            res.setHeader('Set-Cookie', serialized)
+            res.status(200)
+        } else {
+            res.status(401).send('Failed to create user.')
+        }
     }
 }

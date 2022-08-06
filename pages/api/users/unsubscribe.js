@@ -14,12 +14,11 @@ export default async function (req, res) {
             user.isSubscribed = false
             await user.save()
 
-            res.status(200).json({ message: 'Successfully unsubscribed...' })
+            res.status(200)
         } catch (error) {
-            res.status(401).json({ message: error.message })
+            res.status(401).send('Please try again later!')
         }
     } else {
-        res.status(401)
-        throw new Error('Fail')
+        res.status(401).send('Please try again later!')
     }
 }
