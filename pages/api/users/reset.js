@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import { sendResetPassword } from 'angra'
 
 import connectDB from '../../../helpers/connectDB'
+
 import User from '../../../models/User'
 import config from '../../../main.config'
 

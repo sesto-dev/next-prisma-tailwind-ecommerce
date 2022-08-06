@@ -1,5 +1,6 @@
 import connectDB from '../../../helpers/connectDB'
 import verifyRequest from '../../../helpers/verifyRequest'
+
 import User from '../../../models/User'
 
 export default async function (req, res) {

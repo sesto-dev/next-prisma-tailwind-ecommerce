@@ -1,7 +1,9 @@
-import connectDB from '../../../helpers/connectDB'
-import User from '../../../models/User'
 import bcrypt from 'bcryptjs'
+
+import connectDB from '../../../helpers/connectDB'
 import bakeCookie from '../../../helpers/bakeCookie'
+
+import User from '../../../models/User'
 
 export default async function (req, res) {
     connectDB()

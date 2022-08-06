@@ -1,6 +1,6 @@
 import { Text, Card, Grid, useTheme } from '@geist-ui/core'
-import Layout from '../components/Layout'
 
+import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
 import config from '../main.config'
 

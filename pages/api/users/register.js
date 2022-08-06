@@ -3,9 +3,10 @@ import { generateVoucher } from 'apadana/src/generators'
 import { sendVerifyMail } from 'angra'
 
 import connectDB from '../../../helpers/connectDB'
+import bakeCookie from '../../../helpers/bakeCookie'
+
 import User from '../../../models/User'
 import config from '../../../main.config'
-import bakeCookie from '../../../helpers/bakeCookie'
 
 export default async function (req, res) {
     connectDB()

@@ -5,6 +5,7 @@ import { Button, Grid, useTheme, useToasts, Input } from '@geist-ui/core'
 import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
 import { verifyHandler } from '../../helpers/handlers'
+
 import config from '../../main.config'
 
 export default function () {

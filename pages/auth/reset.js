@@ -4,8 +4,9 @@ import { Button, Grid, useTheme, useToasts, Input } from '@geist-ui/core'
 
 import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
-import config from '../../main.config'
 import { forgotHandler, resetHandler } from '../../helpers/handlers'
+
+import config from '../../main.config'
 
 export default function () {
     const title = 'Reset Password'

@@ -2,8 +2,9 @@ import { sendForgotPassword } from 'angra'
 import { generateVoucher } from 'apadana/src/generators'
 
 import connectDB from '../../../helpers/connectDB'
-import config from '../../../main.config'
+
 import User from '../../../models/User'
+import config from '../../../main.config'
 
 export default async function (req, res) {
     connectDB()
