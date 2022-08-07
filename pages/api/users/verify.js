@@ -7,10 +7,10 @@ export default async function (req, res) {
     const { code } = req.body
 
     if (!code) {
-        res.status(401).send('Fail')
+        res.status(401).send('Input error!')
     }
 
-    const decoded = await verifyRequest(req)
+    const decoded = await verifyRequest(req, res)
 
     connectDB()
 

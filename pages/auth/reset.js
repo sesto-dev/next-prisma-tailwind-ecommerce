@@ -7,6 +7,7 @@ import { themePreference } from '../../state/Theme'
 import { forgotHandler, resetHandler } from '../../helpers/handlers'
 
 import config from '../../main.config'
+import isEmail from '../../helpers/isEmail'
 
 export default function () {
     const title = 'Reset Password'
@@ -44,7 +45,7 @@ export default function () {
                                 value={email}
                                 disabled={nextStage}
                                 onChange={(e) => {
-                                    setEmail(e.target.value)
+                                    setEmail(e.target.value.trim())
                                 }}
                             />
                             {!nextStage && (
@@ -52,6 +53,10 @@ export default function () {
                                     width="100%"
                                     mb={0.5}
                                     loading={loading}
+                                    disabled={
+                                        !refEmail.current ||
+                                        !isEmail(refEmail.current)
+                                    }
                                     type="secondary"
                                     onClick={(e) =>
                                         forgotHandler(
@@ -76,7 +81,7 @@ export default function () {
                                         type="secondary"
                                         value={code}
                                         onChange={(e) => {
-                                            setCode(e.target.value)
+                                            setCode(e.target.value.trim())
                                         }}
                                     />
 
@@ -88,13 +93,17 @@ export default function () {
                                         type="secondary"
                                         value={password}
                                         onChange={(e) => {
-                                            setPassword(e.target.value)
+                                            setPassword(e.target.value.trim())
                                         }}
                                     />
 
                                     <Button
                                         width="100%"
                                         loading={loading}
+                                        disabled={
+                                            !refCode.current ||
+                                            !refPassword.current
+                                        }
                                         type="secondary"
                                         onClick={(e) =>
                                             resetHandler(

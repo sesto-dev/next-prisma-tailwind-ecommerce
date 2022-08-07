@@ -7,23 +7,31 @@ import User from '../../../models/User'
 import config from '../../../main.config'
 
 export default async function (req, res) {
-    connectDB()
-
     const { code, password } = req.body
+
+    if (!code || !password) res.status(400).send('Input error!')
+
+    connectDB()
     const user = await User.findOne({ reset_password_code: code })
 
     if (user) {
         try {
-            const salt = await bcrypt.genSalt(10)
-            const salted = await bcrypt.hash(password, salt)
+            if (await bcrypt.compare(password, user.password)) {
+                res.status(400).send(
+                    'New password cannot be the same as the old password!'
+                )
+            } else {
+                const salt = await bcrypt.genSalt(10)
+                const salted = await bcrypt.hash(password, salt)
 
-            user.reset_password_code = ''
-            user.password = salted
-            await user.save()
+                user.reset_password_code = ''
+                user.password = salted
+                await user.save()
 
-            await sendResetPassword(config, user.email, code)
+                await sendResetPassword(config, user.email, code)
 
-            res.status(200).json('Success!')
+                res.status(200).json('Success!')
+            }
         } catch (error) {
             res.status(401).send('Please try again later!')
         }

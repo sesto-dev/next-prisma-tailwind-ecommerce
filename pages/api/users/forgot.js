@@ -5,11 +5,16 @@ import connectDB from '../../../helpers/connectDB'
 
 import User from '../../../models/User'
 import config from '../../../main.config'
+import isEmail from '../../../helpers/isEmail'
 
 export default async function (req, res) {
+    const { email } = req.body
+
+    if (!email) res.status(400).send('Input error!')
+    if (!isEmail(email)) res.status(400).send('Input error!')
+
     connectDB()
 
-    const { email } = req.body
     const user = await User.findOne({ email })
 
     if (user) {

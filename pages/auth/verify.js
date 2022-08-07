@@ -37,11 +37,12 @@ export default function () {
                         type="secondary"
                         value={code}
                         onChange={(e) => {
-                            setCode(e.target.value)
+                            setCode(e.target.value.trim())
                         }}
                     />
                     <Button
                         loading={loading}
+                        disabled={!refCode.current}
                         scale={0.7}
                         type="secondary"
                         onClick={(e) =>

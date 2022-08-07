@@ -4,7 +4,7 @@ import verifyRequest from '../../../helpers/verifyRequest'
 import User from '../../../models/User'
 
 export default async function (req, res) {
-    const decoded = await verifyRequest(req)
+    const decoded = await verifyRequest(req, res)
 
     connectDB()
 

@@ -1,18 +1,19 @@
 import useState from 'react-usestateref'
+import Link from 'next/link'
 import {
     useToasts,
     Button,
-    Grid,
+    Tabs,
     Input,
     Modal,
     Text,
     useTheme,
 } from '@geist-ui/core'
-import Link from 'next/link'
 import { LoginIcon, RegisterIcon } from '../SVGs'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../state/Auth'
 import { loginHandler, registerHandler } from '../../helpers/handlers'
+import isEmail from '../../helpers/isEmail'
 
 export default function ({ config, sticky }) {
     const [modalVisibility, setModalVisibility] = useState(false)
@@ -28,6 +29,8 @@ export default function ({ config, sticky }) {
 
     const [email, setEmail, refEmail] = useState('')
     const [password, setPassword, refPassword] = useState('')
+    const [confirmPassword, setConfirmPassword, refConfirmPassword] =
+        useState('')
     const [loading, setLoading, refLoading] = useState(false)
 
     if (config.authentication) {
@@ -57,31 +60,65 @@ export default function ({ config, sticky }) {
                         visible={modalVisibility}
                         onClose={closeHandler}
                     >
-                        <Modal.Content>
-                            <Input
-                                label="email"
-                                placeholder="Input your email."
-                                width="100%"
-                                value={email}
-                                onChange={(e) => {
-                                    setEmail(e.target.value)
-                                }}
-                            />
-                            <Input.Password
-                                label="password"
-                                placeholder="Input your password."
-                                width="100%"
-                                my={1}
-                                value={password}
-                                onChange={(e) => {
-                                    setPassword(e.target.value)
-                                }}
-                            />
-                            <Grid.Container mb={0.2} gap={1}>
-                                <Grid xs={12}>
+                        <Modal.Content pt={0.2}>
+                            <Tabs mb={0.7} initialValue="login">
+                                <Tabs.Item mb={1} label="Login" value="login">
+                                    <Input
+                                        label="email"
+                                        placeholder="Input your email."
+                                        width="100%"
+                                        value={email}
+                                        type={
+                                            refEmail.current == ''
+                                                ? 'default'
+                                                : isEmail(refEmail.current)
+                                                ? 'default'
+                                                : 'error'
+                                        }
+                                        onChange={(e) => {
+                                            setEmail(e.target.value.trim())
+                                        }}
+                                    />
+                                    {!refEmail.current == '' &&
+                                        !isEmail(refEmail.current) && (
+                                            <Text small type="error">
+                                                Incorrect email address!
+                                            </Text>
+                                        )}
+                                    <Input.Password
+                                        label="password"
+                                        placeholder="Input your password."
+                                        width="100%"
+                                        mt={1}
+                                        value={password}
+                                        type={
+                                            refPassword.current == ''
+                                                ? 'default'
+                                                : refPassword.current.length > 7
+                                                ? 'default'
+                                                : 'error'
+                                        }
+                                        onChange={(e) => {
+                                            setPassword(e.target.value.trim())
+                                        }}
+                                    />
+                                    {!refPassword.current == '' &&
+                                        refPassword.current.length < 8 && (
+                                            <Text small type="error">
+                                                Password must be at least 8
+                                                characters!
+                                            </Text>
+                                        )}
                                     <Button
                                         loading={loading}
+                                        disabled={
+                                            !refEmail.current ||
+                                            !refPassword.current ||
+                                            !isEmail(refEmail.current) ||
+                                            refPassword.current.length < 8
+                                        }
                                         width="100%"
+                                        mt={1}
                                         type="secondary"
                                         onClick={(e) =>
                                             loginHandler(
@@ -98,12 +135,103 @@ export default function ({ config, sticky }) {
                                     >
                                         Login
                                     </Button>
-                                </Grid>
-                                <Grid xs={12}>
+                                </Tabs.Item>
+                                <Tabs.Item
+                                    mb={1}
+                                    label="Register"
+                                    value="register"
+                                >
+                                    <Input
+                                        label="email"
+                                        placeholder="Input your email."
+                                        width="100%"
+                                        value={email}
+                                        type={
+                                            refEmail.current == ''
+                                                ? 'default'
+                                                : isEmail(refEmail.current)
+                                                ? 'default'
+                                                : 'error'
+                                        }
+                                        onChange={(e) => {
+                                            setEmail(e.target.value.trim())
+                                        }}
+                                    />
+                                    <Input.Password
+                                        label="password"
+                                        placeholder="Input your password."
+                                        type={
+                                            refPassword.current == ''
+                                                ? 'default'
+                                                : refPassword.current.length > 7
+                                                ? 'default'
+                                                : 'error'
+                                        }
+                                        width="100%"
+                                        mt={1}
+                                        value={password}
+                                        onChange={(e) => {
+                                            setPassword(e.target.value.trim())
+                                        }}
+                                    />
+                                    {!refPassword.current == '' &&
+                                        refPassword.current.length < 8 && (
+                                            <Text small type="error">
+                                                Password must be at least 8
+                                                characters!
+                                            </Text>
+                                        )}
+                                    <Input.Password
+                                        label="password"
+                                        placeholder="Confirm your password."
+                                        type={
+                                            refConfirmPassword.current == ''
+                                                ? 'default'
+                                                : refConfirmPassword.current
+                                                      .length > 7 &&
+                                                  refConfirmPassword.current ==
+                                                      refPassword.current
+                                                ? 'default'
+                                                : 'error'
+                                        }
+                                        width="100%"
+                                        mt={1}
+                                        value={confirmPassword}
+                                        onChange={(e) => {
+                                            setConfirmPassword(
+                                                e.target.value.trim()
+                                            )
+                                        }}
+                                    />
+                                    {!refConfirmPassword.current == '' &&
+                                        refConfirmPassword.current.length <
+                                            8 && (
+                                            <Text small type="error">
+                                                Password must be at least 8
+                                                characters!{' '}
+                                            </Text>
+                                        )}
+                                    {!refConfirmPassword.current == '' &&
+                                        refConfirmPassword.current !=
+                                            refPassword.current && (
+                                            <Text small type="error">
+                                                Passwords don't match!
+                                            </Text>
+                                        )}
                                     <Button
                                         loading={loading}
-                                        ghost
+                                        disabled={
+                                            !refEmail.current ||
+                                            !refPassword.current ||
+                                            refConfirmPassword.current !=
+                                                refPassword.current ||
+                                            !isEmail(refEmail.current) ||
+                                            refPassword.current.length < 8 ||
+                                            refConfirmPassword.current.length <
+                                                8
+                                        }
                                         width="100%"
+                                        mt={1}
                                         type="secondary"
                                         onClick={(e) =>
                                             registerHandler(
@@ -120,8 +248,8 @@ export default function ({ config, sticky }) {
                                     >
                                         Register
                                     </Button>
-                                </Grid>
-                            </Grid.Container>
+                                </Tabs.Item>
+                            </Tabs>
                             <Link href="/auth/reset">
                                 <a className="Peculiar">
                                     Forgot your password?

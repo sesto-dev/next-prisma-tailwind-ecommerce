@@ -3,7 +3,7 @@
     "description": "Set up a smarter web app by running one command.",
     "author": "@accretence",
     "license": "MIT",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "bin": "npx.js",
     "keywords": [
         "geist-ui",
@@ -31,7 +31,7 @@
     "homepage": "https://github.com/Accretence/create-next-dashboard#readme",
     "dependencies": {
         "@geist-ui/core": "^2.3.8",
-        "angra": "^0.2.5",
+        "angra": "^0.3.8",
         "apadana": "^0.0.4",
         "axios": "^0.27.2",
         "bcryptjs": "^2.4.3",
