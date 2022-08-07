@@ -10,6 +10,7 @@ export default async function (req, res) {
     const { code, password } = req.body
 
     if (!code || !password) res.status(400).send('Input error!')
+    if (password.length < 8) res.status(400).send('Input error!')
 
     connectDB()
     const user = await User.findOne({ reset_password_code: code })

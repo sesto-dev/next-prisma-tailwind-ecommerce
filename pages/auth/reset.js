@@ -1,6 +1,6 @@
 import useState from 'react-usestateref'
 import { useRouter } from 'next/router'
-import { Button, Grid, useTheme, useToasts, Input } from '@geist-ui/core'
+import { Button, Grid, useTheme, useToasts, Input, Text } from '@geist-ui/core'
 
 import isEmail from '../../helpers/isEmail'
 import Layout from '../../components/Layout'
@@ -37,21 +37,31 @@ export default function () {
                     <Grid xs={24} md={12}>
                         <div style={{ display: 'block' }}>
                             <Input
-                                width="100%"
-                                mb={0.5}
                                 label="email"
-                                placeholder="Input your email address."
-                                type="secondary"
+                                placeholder="Input your email."
+                                width="100%"
                                 value={email}
-                                disabled={nextStage}
+                                type={
+                                    refEmail.current == ''
+                                        ? 'default'
+                                        : isEmail(refEmail.current)
+                                        ? 'default'
+                                        : 'error'
+                                }
                                 onChange={(e) => {
                                     setEmail(e.target.value.trim())
                                 }}
                             />
+                            {!refEmail.current == '' &&
+                                !isEmail(refEmail.current) && (
+                                    <Text small type="error">
+                                        Incorrect email address!
+                                    </Text>
+                                )}
                             {!nextStage && (
                                 <Button
                                     width="100%"
-                                    mb={0.5}
+                                    mt={1}
                                     loading={loading}
                                     disabled={
                                         !refEmail.current ||
@@ -84,25 +94,30 @@ export default function () {
                                             setCode(e.target.value.trim())
                                         }}
                                     />
-
                                     <Input
                                         width="100%"
                                         mb={0.5}
                                         label="password"
                                         placeholder="Input your new password."
-                                        type="secondary"
+                                        type={
+                                            refPassword.current == ''
+                                                ? 'default'
+                                                : refPassword.current.length > 7
+                                                ? 'default'
+                                                : 'error'
+                                        }
                                         value={password}
                                         onChange={(e) => {
                                             setPassword(e.target.value.trim())
                                         }}
                                     />
-
                                     <Button
                                         width="100%"
                                         loading={loading}
                                         disabled={
                                             !refCode.current ||
-                                            !refPassword.current
+                                            !refPassword.current ||
+                                            refPassword.current.length < 8
                                         }
                                         type="secondary"
                                         onClick={(e) =>
