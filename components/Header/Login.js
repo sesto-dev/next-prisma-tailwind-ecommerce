@@ -79,12 +79,6 @@ export default function ({ config, sticky }) {
                                             setEmail(e.target.value.trim())
                                         }}
                                     />
-                                    {!refEmail.current == '' &&
-                                        !isEmail(refEmail.current) && (
-                                            <Text small type="error">
-                                                Incorrect email address!
-                                            </Text>
-                                        )}
                                     <Input.Password
                                         label="password"
                                         placeholder="Input your password."
@@ -102,13 +96,6 @@ export default function ({ config, sticky }) {
                                             setPassword(e.target.value.trim())
                                         }}
                                     />
-                                    {!refPassword.current == '' &&
-                                        refPassword.current.length < 8 && (
-                                            <Text small type="error">
-                                                Password must be at least 8
-                                                characters!
-                                            </Text>
-                                        )}
                                     <Button
                                         loading={loading}
                                         disabled={
@@ -150,13 +137,19 @@ export default function ({ config, sticky }) {
                                             refEmail.current == ''
                                                 ? 'default'
                                                 : isEmail(refEmail.current)
-                                                ? 'default'
+                                                ? 'success'
                                                 : 'error'
                                         }
                                         onChange={(e) => {
                                             setEmail(e.target.value.trim())
                                         }}
                                     />
+                                    {!refEmail.current == '' &&
+                                        !isEmail(refEmail.current) && (
+                                            <Text small type="error">
+                                                Incorrect email address!
+                                            </Text>
+                                        )}
                                     <Input.Password
                                         label="password"
                                         placeholder="Input your password."
@@ -164,7 +157,7 @@ export default function ({ config, sticky }) {
                                             refPassword.current == ''
                                                 ? 'default'
                                                 : refPassword.current.length > 7
-                                                ? 'default'
+                                                ? 'success'
                                                 : 'error'
                                         }
                                         width="100%"
@@ -191,7 +184,7 @@ export default function ({ config, sticky }) {
                                                       .length > 7 &&
                                                   refConfirmPassword.current ==
                                                       refPassword.current
-                                                ? 'default'
+                                                ? 'success'
                                                 : 'error'
                                         }
                                         width="100%"

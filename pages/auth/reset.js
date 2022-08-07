@@ -45,7 +45,7 @@ export default function () {
                                     refEmail.current == ''
                                         ? 'default'
                                         : isEmail(refEmail.current)
-                                        ? 'default'
+                                        ? 'success'
                                         : 'error'
                                 }
                                 onChange={(e) => {
@@ -85,7 +85,7 @@ export default function () {
                                 <>
                                     <Input
                                         width="100%"
-                                        mb={0.5}
+                                        mt={1}
                                         label="code"
                                         placeholder="Input your verification code."
                                         type="secondary"
@@ -96,14 +96,14 @@ export default function () {
                                     />
                                     <Input
                                         width="100%"
-                                        mb={0.5}
+                                        mt={1}
                                         label="password"
                                         placeholder="Input your new password."
                                         type={
                                             refPassword.current == ''
                                                 ? 'default'
                                                 : refPassword.current.length > 7
-                                                ? 'default'
+                                                ? 'success'
                                                 : 'error'
                                         }
                                         value={password}
@@ -113,6 +113,7 @@ export default function () {
                                     />
                                     <Button
                                         width="100%"
+                                        mt={1}
                                         loading={loading}
                                         disabled={
                                             !refCode.current ||
