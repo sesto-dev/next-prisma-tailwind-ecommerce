@@ -2,9 +2,9 @@ import bcrypt from 'bcryptjs'
 
 import connectDB from '../../../helpers/connectDB'
 import bakeCookie from '../../../helpers/bakeCookie'
+import isEmail from '../../../helpers/isEmail'
 
 import User from '../../../models/User'
-import isEmail from '../../../helpers/isEmail'
 
 export default async function (req, res) {
     const { email, password } = req.body

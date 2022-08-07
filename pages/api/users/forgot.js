@@ -2,10 +2,10 @@ import { sendForgotPassword } from 'angra'
 import { generateVoucher } from 'apadana/src/generators'
 
 import connectDB from '../../../helpers/connectDB'
+import isEmail from '../../../helpers/isEmail'
 
 import User from '../../../models/User'
 import config from '../../../main.config'
-import isEmail from '../../../helpers/isEmail'
 
 export default async function (req, res) {
     const { email } = req.body

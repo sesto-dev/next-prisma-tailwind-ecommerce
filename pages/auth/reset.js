@@ -2,12 +2,12 @@ import useState from 'react-usestateref'
 import { useRouter } from 'next/router'
 import { Button, Grid, useTheme, useToasts, Input } from '@geist-ui/core'
 
+import isEmail from '../../helpers/isEmail'
 import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
 import { forgotHandler, resetHandler } from '../../helpers/handlers'
 
 import config from '../../main.config'
-import isEmail from '../../helpers/isEmail'
 
 export default function () {
     const title = 'Reset Password'

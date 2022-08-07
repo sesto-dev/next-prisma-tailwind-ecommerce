@@ -4,16 +4,17 @@ import { sendVerifyMail } from 'angra'
 
 import connectDB from '../../../helpers/connectDB'
 import bakeCookie from '../../../helpers/bakeCookie'
+import isEmail from '../../../helpers/isEmail'
 
 import User from '../../../models/User'
 import config from '../../../main.config'
-import isEmail from '../../../helpers/isEmail'
 
 export default async function (req, res) {
     const { email, password } = req.body
 
     if (!email || !password) res.status(400).send('Input error!')
-    if (!isEmail(email)) res.status(400).send('Input error!')
+    if (!isEmail(email) || password.length < 8)
+        res.status(400).send('Input error!')
 
     connectDB()
     const exists = await User.findOne({ email })
