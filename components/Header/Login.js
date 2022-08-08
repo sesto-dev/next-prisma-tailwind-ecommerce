@@ -62,7 +62,16 @@ export default function ({ config, sticky }) {
                     >
                         <Modal.Content pt={0.2}>
                             <Tabs mb={0.7} initialValue="login">
-                                <Tabs.Item mb={1} label="Login" value="login">
+                                <Tabs.Item
+                                    mb={1}
+                                    label={
+                                        <>
+                                            <LoginIcon />
+                                            Login
+                                        </>
+                                    }
+                                    value="login"
+                                >
                                     <Input
                                         label="email"
                                         placeholder="Input your email."
@@ -125,7 +134,12 @@ export default function ({ config, sticky }) {
                                 </Tabs.Item>
                                 <Tabs.Item
                                     mb={1}
-                                    label="Register"
+                                    label={
+                                        <>
+                                            <RegisterIcon />
+                                            Register
+                                        </>
+                                    }
                                     value="register"
                                 >
                                     <Input

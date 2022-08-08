@@ -7,9 +7,9 @@
    </p>
 </a>
 
-## Usage
+## NPX Command
 
-1. Setup a local deployment using this command:
+1. Setup a local deployment using this `npx` command:
 
 ```bash
 npx create-next-dashboard my-app
@@ -20,10 +20,7 @@ npx create-next-dashboard my-app
 ```shell
 JWT_SECRET =
 MONGO_ATLAS_URI =
-MAIL_SMTP_HOST =
-MAIL_SMTP_USER =
-MAIL_SMTP_PASS =
-MAIL_SMTP_PORT =
+NEXT_PUBLIC_URL = 'http://localhost:3000'
 ```
 
 3. Fill in the `main.config.js` file with your preferred information.
@@ -35,7 +32,27 @@ Refer to [Next.js Deployment Documentation](https://nextjs.org/docs/deployment) 
 
 ## Sending Emails
 
-You need to provide `SMTP` credentials obtained from your Email provider in `.env`.
+Composing and sending Email Templates is handled using [Angra](https://github.com/accretence/angra). You just need to provide `SMTP` credentials obtained from your Email provider in `.env`.
+
+```shell
+MAIL_SMTP_HOST =
+MAIL_SMTP_USER =
+MAIL_SMTP_PASS =
+MAIL_SMTP_PORT =
+MAIL_SMTP_SECURE = // Boolean
+MAIL_SMTP_TLS_REJECT_UNAUTHORIZED = // Boolean
+MAIL_SMTP_TLS_CIPHER =
+MAIL_SMTP_SERVICE =
+MAIL_SMTP_VERBOSE = // Boolean, Nodemailer will log details if true
+```
+
+Not all of these parameters are required. For example if you're using Gmail you only need these parameters:
+
+```shell
+MAIL_SMTP_USER = // Your Gmail Address
+MAIL_SMTP_PASS = // Google App Password
+MAIL_SMTP_SERVICE = 'Gmail'
+```
 
 ## Authentication
 
