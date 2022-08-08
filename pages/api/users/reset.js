@@ -29,7 +29,11 @@ export default async function (req, res) {
                 user.password = salted
                 await user.save()
 
-                await sendResetPassword(config, user.email, code)
+                await sendResetPassword(
+                    config.meta.title,
+                    user.email,
+                    config.urls.unsubscribe
+                )
 
                 res.status(200).json('Success!')
             }

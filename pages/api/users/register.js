@@ -36,7 +36,13 @@ export default async function (req, res) {
         if (user) {
             const serialized = await bakeCookie(user)
 
-            await sendVerifyMail(config, email, email_verification_code)
+            await sendVerifyMail(
+                config.meta.title,
+                email,
+                email_verification_code,
+                config.urls.verify,
+                config.urls.unsubscribe
+            )
 
             res.setHeader('Set-Cookie', serialized)
             res.status(200).json('Success!')

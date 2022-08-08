@@ -28,7 +28,7 @@ const config = {
             value: '/billing',
         },
     ],
-    links: {},
+    social: {},
     urls: {
         contact: url + '/contact',
         verify: url + '/auth/verify',

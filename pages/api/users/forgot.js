@@ -23,7 +23,13 @@ export default async function (req, res) {
             user.reset_password_code = code
             await user.save()
 
-            await sendForgotPassword(config, email, code)
+            await sendForgotPassword(
+                config.meta.title,
+                email,
+                code,
+                config.urls.reset,
+                config.urls.unsubscribe
+            )
 
             res.status(200).json('Success!')
         } catch (error) {
