@@ -1,6 +1,6 @@
 import Link from 'next/link'
-
 import { Text, Grid, useTheme } from '@geist-ui/core'
+import { useRouter } from 'next/router'
 
 export default function ({ config }) {
     const theme = useTheme()
@@ -26,8 +26,7 @@ export default function ({ config }) {
                                 style={{ fontSize: '0.7rem' }}
                                 type="secondary"
                             >
-                                Copyright &copy; {new Date().getFullYear()}{' '}
-                                {config.meta.title}. All rights reserved.
+                                <Copyright config={config} />
                             </Text>
                         </Grid>
                         <Links config={config} />
@@ -61,6 +60,8 @@ export default function ({ config }) {
 }
 
 function Links({ config }) {
+    const { locale } = useRouter()
+
     return (
         <>
             <>
@@ -75,11 +76,14 @@ function Links({ config }) {
                                 md={4}
                                 key={Math.random()}
                             >
-                                <Text h5 small style={{ fontSize: '1rem' }}>
+                                <Text h5 b small style={{ fontSize: '1rem' }}>
                                     {category}
                                 </Text>
                                 {element.map((foo) => (
-                                    <Link key={foo.label} href={foo.value}>
+                                    <Link
+                                        key={foo['label'][locale]}
+                                        href={foo.value}
+                                    >
                                         <a>
                                             <Text
                                                 mr={4}
@@ -88,7 +92,7 @@ function Links({ config }) {
                                                 small
                                                 style={{ fontSize: '1rem' }}
                                             >
-                                                {foo.label}
+                                                {foo['label'][locale]}
                                             </Text>
                                         </a>
                                     </Link>
@@ -106,4 +110,19 @@ function Links({ config }) {
             </style>
         </>
     )
+}
+
+const Copyright = ({ config }) => {
+    const { locale } = useRouter()
+
+    switch (locale) {
+        case 'en':
+            return `Copyright © ${new Date().getFullYear()} ${
+                config.meta.title
+            }. All rights reserved.`
+        case 'ja':
+            return `著作権 © ${new Date().getFullYear()} ${
+                config.meta.title
+            }. 全著作権所有.`
+    }
 }

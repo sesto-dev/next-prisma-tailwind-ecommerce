@@ -4,6 +4,7 @@ import { useIsAuthenticated } from '../../state/Auth'
 
 export default function ({ config, sticky }) {
     const router = useRouter()
+    const { locale } = router
     const theme = useTheme()
     const isAuthenticated = useIsAuthenticated()
 
@@ -21,23 +22,27 @@ export default function ({ config, sticky }) {
                                     {router.pathname == '/' && (
                                         <Tabs.Item
                                             ml={0}
-                                            label={'Home'}
+                                            label={i18n['Home'][locale]}
                                             value="/"
                                         />
                                     )}
                                     <Tabs.Item
                                         ml={0}
-                                        label={'Dashboard'}
+                                        label={i18n['Dashboard'][locale]}
                                         value="/dashboard"
                                     />
                                 </>
                             ) : (
-                                <Tabs.Item ml={0} label={'Home'} value="/" />
-                            )}
-                            {config.tabs.map((tab) => (
                                 <Tabs.Item
-                                    key={tab.label}
-                                    label={tab.label}
+                                    ml={0}
+                                    label={i18n['Home'][locale]}
+                                    value="/"
+                                />
+                            )}
+                            {config['submenu'].map((tab) => (
+                                <Tabs.Item
+                                    key={tab['label'][locale]}
+                                    label={tab['label'][locale]}
                                     value={tab.value}
                                 />
                             ))}
@@ -118,4 +123,15 @@ export default function ({ config, sticky }) {
             </style>
         </>
     )
+}
+
+const i18n = {
+    Home: {
+        en: 'Home',
+        ja: '表題',
+    },
+    Dashboard: {
+        en: 'Dashboard',
+        ja: '前板',
+    },
 }

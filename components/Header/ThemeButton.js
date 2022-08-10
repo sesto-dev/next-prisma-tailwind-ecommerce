@@ -16,10 +16,8 @@ export default function ({ config, sticky, themePreference }) {
                     : {}
             }
             aria-label="Toggle Dark mode"
-            ml={0.3}
-            mr={0.5}
             px={1}
-            scale={0.6}
+            scale={0.7}
             auto
             onClick={() =>
                 prefers.switchTheme(theme.type === 'dark' ? 'light' : 'dark')

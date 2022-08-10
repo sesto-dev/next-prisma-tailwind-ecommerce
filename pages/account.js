@@ -18,12 +18,14 @@ import withAuth from '../HOCs/withAuth'
 import { handleAccountData } from '../helpers/handlers'
 
 export default withAuth(function () {
-    const title = 'Account'
-    const description = 'Account Sample Page'
-
     const theme = useTheme()
     const router = useRouter()
+    const { locale = 'en' } = router
     const { setToast } = useToasts()
+
+    const title = i18n['title'][locale]
+    const description = i18n['description'][locale]
+
     const [account, setAccount] = useState({})
 
     async function resolve() {
@@ -65,3 +67,14 @@ export default withAuth(function () {
         </Layout>
     )
 })
+
+const i18n = {
+    title: {
+        en: 'Account',
+        ja: '口座',
+    },
+    description: {
+        en: 'Account Sample Page',
+        ja: 'アカウントのサンプルページ',
+    },
+}

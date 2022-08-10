@@ -1,14 +1,17 @@
+import { useRouter } from 'next/router'
 import { Text, Card, Grid, useTheme } from '@geist-ui/core'
 
 import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
+
 import config from '../main.config'
 
 export default function () {
-    const title = 'Pricing'
-    const description = 'Pricing Sample Page'
-
     const theme = useTheme()
+    const { locale = 'en' } = useRouter()
+
+    const title = i18n['title'][locale]
+    const description = i18n['description'][locale]
 
     return (
         <Layout
@@ -26,10 +29,21 @@ export default function () {
                         }}
                         width="100%"
                     >
-                        <Text>Pricing</Text>
+                        <Text>{title}</Text>
                     </Card>
                 </Grid>
             </Grid.Container>
         </Layout>
     )
+}
+
+const i18n = {
+    title: {
+        en: 'Pricing',
+        ja: '価格',
+    },
+    description: {
+        en: 'Pricing Sample Page',
+        ja: '料金サンプルページ',
+    },
 }

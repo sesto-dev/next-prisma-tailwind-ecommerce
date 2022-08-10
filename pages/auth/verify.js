@@ -9,13 +9,13 @@ import { verifyHandler } from '../../helpers/handlers'
 import config from '../../main.config'
 
 export default function () {
-    const title = 'Verify Email Address'
-    const description =
-        'Verify your email address using the verification code sent to your email address.'
-
     const theme = useTheme()
     const router = useRouter()
+    const { locale } = router
     const { setToast } = useToasts()
+
+    const title = i18n['title'][locale]
+    const description = i18n['description'][locale]
 
     const [loading, setLoading] = useState(false)
     const [code, setCode, refCode] = useState('')
@@ -61,4 +61,15 @@ export default function () {
             </Grid.Container>
         </Layout>
     )
+}
+
+const i18n = {
+    title: {
+        en: 'Verify Email Address',
+        ja: '',
+    },
+    description: {
+        en: 'Verify your email address using the verification code sent to your email address.',
+        ja: 'メール アドレスに送信された確認コードを使用して、メール アドレスを確認します。',
+    },
 }

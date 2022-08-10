@@ -10,22 +10,27 @@ const config = {
         lightBackground: '#F2F2F2',
         darkBackground: '#040404',
     },
+    layout: {
+        authentication: true,
+    },
     meta: {
         title: 'Next',
         url,
     },
-    tabs: [
+    submenu: [
         {
-            label: 'About',
+            label: {
+                en: 'About',
+                ja: '約',
+            },
             value: '/about',
         },
         {
-            label: 'Pricing',
+            label: {
+                en: 'Pricing',
+                ja: '価格',
+            },
             value: '/pricing',
-        },
-        {
-            label: 'Billing',
-            value: '/billing',
         },
     ],
     urls: {
@@ -36,28 +41,98 @@ const config = {
     },
     footer: {
         Blog: [
-            { label: 'Blog', value: '/blog' },
-            { label: 'Tutorials', value: '/tutorials' },
-            { label: 'Documentation', value: '/documentation' },
-            { label: 'Support', value: '/support' },
+            {
+                label: {
+                    en: 'Blog',
+                    ja: 'ブログ',
+                },
+                value: '/blog',
+            },
+            {
+                label: {
+                    en: 'Tutorials',
+                    ja: 'チュートリアル',
+                },
+                value: '/tutorials',
+            },
+            {
+                label: {
+                    en: 'Documentation',
+                    ja: 'ドキュメンテーション',
+                },
+                value: '/documentation',
+            },
+            {
+                label: {
+                    en: 'Support',
+                    ja: 'サポート',
+                },
+                value: '/support',
+            },
         ],
         Terms: [
-            { label: 'Terms of Service', value: '/terms' },
-            { label: 'Privacy Policy', value: '/privacy' },
+            {
+                label: {
+                    en: 'Terms of Service',
+                    ja: '利用規約',
+                },
+                value: '/terms',
+            },
+            {
+                label: {
+                    en: 'Privacy Policy',
+                    ja: 'プライバシーポリシー',
+                },
+                value: '/privacy',
+            },
         ],
         About: [
-            { label: 'About Us', value: '/about' },
-            { label: 'Contact Us', value: '/contact' },
-            { label: 'Pricing', value: '/about' },
-            { label: 'Billing', value: '/contact' },
+            {
+                label: {
+                    en: 'About',
+                    ja: '約',
+                },
+                value: '/about',
+            },
+            {
+                label: {
+                    en: 'Contact',
+                    ja: 'コンタクト',
+                },
+                value: '/contact',
+            },
+            {
+                label: {
+                    en: 'Pricing',
+                    ja: '価格',
+                },
+                value: '/pricing',
+            },
         ],
-        Community: [
-            { label: 'Instagram', value: '/instagram' },
-            { label: 'YouTube', value: '/youtube' },
-            { label: 'Medium', value: '/medium' },
+        Social: [
+            {
+                label: {
+                    en: 'Instagram',
+                    ja: 'インスタグラム',
+                },
+                value: '/instagram',
+            },
+            {
+                label: {
+                    en: 'YouTube',
+                    ja: 'ユーチューブ',
+                },
+                value: '/youtube',
+            },
+            {
+                label: {
+                    en: 'Medium',
+                    ja: '中くらい',
+                },
+                value: '/medium',
+            },
         ],
     },
-    authentication: true,
     backend: {
         routes: {
             account: '/api/users/account',

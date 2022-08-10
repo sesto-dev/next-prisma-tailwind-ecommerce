@@ -1,14 +1,17 @@
-import Layout from '../components/Layout'
+import { useRouter } from 'next/router'
 import { Grid, Card, useTheme, Text, Spacer, Code } from '@geist-ui/core'
 
 import { themePreference } from '../state/Theme'
+import Layout from '../components/Layout'
 import config from '../main.config'
 
 export default function () {
     const theme = useTheme()
-    const title = 'About'
-    const description =
-        'This package provides a 1-Line script that sets in motion a barrage of tools and web-services to create a highly-customizable state-of-the-art Next.js PWA, like this one!'
+    const { locale = 'en' } = useRouter()
+
+    const title = i18n['title'][locale]
+    const description = i18n['description'][locale]
+
     const links = ['http://github.com/accretence/create-next-dashboard']
 
     return (
@@ -83,4 +86,15 @@ export default function () {
             </style>
         </>
     )
+}
+
+const i18n = {
+    title: {
+        en: 'About',
+        ja: '約',
+    },
+    description: {
+        en: 'This package provides a 1-Line script that sets in motion a barrage of tools and web-services to create a highly-customizable state-of-the-art Next.js PWA, like this one!',
+        ja: 'このパッケージは、このような高度にカスタマイズ可能な最先端の Next.js PWA を作成するための一連のツールと Web サービスを起動する 1 行のスクリプトを提供します!',
+    },
 }

@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react'
 import { useTheme } from '@geist-ui/core'
+import { useRouter } from 'next/router'
 
 import { useIsAuthenticated } from '../../state/Auth'
 
 import Submenu from './Submenu'
 import ThemeButton from './ThemeButton'
 import Title from './Title'
+import Language from './Language'
 import Login from './Login'
 import Account from './Account'
 
 export default function ({ config, themePreference }) {
+    const theme = useTheme()
+    const { locale, locales } = useRouter()
     const isAuthenticated = useIsAuthenticated()
 
-    const theme = useTheme()
     const [sticky, setSticky] = useState(false)
 
     useEffect(() => {
@@ -34,11 +37,16 @@ export default function ({ config, themePreference }) {
                             themePreference={themePreference}
                         />
                     )}
-                    {isAuthenticated ? (
-                        <Account config={config} sticky={sticky} />
-                    ) : (
-                        <Login config={config} sticky={sticky} />
+                    {locale && locales && (
+                        <Language config={config} sticky={sticky} />
                     )}
+                    {config &&
+                        config.layout.authentication &&
+                        (isAuthenticated ? (
+                            <Account config={config} sticky={sticky} />
+                        ) : (
+                            <Login config={config} sticky={sticky} />
+                        ))}
                 </div>
             </nav>
             <Submenu config={config} sticky={sticky} />
@@ -60,6 +68,9 @@ export default function ({ config, themePreference }) {
                     .Navigation > div {
                         display: flex;
                         align-items: center;
+                    }
+                    .btn-dropdown {
+                        margin-left: 0.5rem;
                     }
                 `}
             </style>

@@ -10,14 +10,15 @@ import { themePreference } from '../state/Theme'
 import config from '../main.config'
 
 export default withAuth(function () {
-    const title = 'Dashboard'
-    const description = 'Dashboard Sample Page'
-
     const theme = useTheme()
     const router = useRouter()
+    const { locale = 'en' } = router
     const { setToast } = useToasts()
 
     const [account, setAccount] = useState({})
+
+    const title = i18n['title'][locale]
+    const description = i18n['description'][locale]
 
     async function resolve() {
         const response = await axios.get(config.backend.routes.account)
@@ -51,3 +52,14 @@ export default withAuth(function () {
         </Layout>
     )
 })
+
+const i18n = {
+    title: {
+        en: 'Dashboard',
+        ja: '前板',
+    },
+    description: {
+        en: 'Dashboard Sample Page',
+        ja: 'ダッシュボードのサンプル ページ',
+    },
+}

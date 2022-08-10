@@ -10,13 +10,13 @@ import { forgotHandler, resetHandler } from '../../helpers/handlers'
 import config from '../../main.config'
 
 export default function () {
-    const title = 'Reset Password'
-    const description =
-        'Reset your password using the verification code sent to your email address.'
-
     const theme = useTheme()
     const router = useRouter()
+    const { locale } = router
     const { setToast } = useToasts()
+
+    const title = i18n['title'][locale]
+    const description = i18n['description'][locale]
 
     const [loading, setLoading] = useState(false)
     const [nextStage, setNextStage] = useState(false)
@@ -142,4 +142,15 @@ export default function () {
             </Layout>
         </>
     )
+}
+
+const i18n = {
+    title: {
+        en: 'Reset Password',
+        ja: 'パスワードを再設定する',
+    },
+    description: {
+        en: 'Reset your password using the verification code sent to your email address.',
+        ja: 'メールアドレスに送信された確認コードを使用してパスワードをリセットしてください。',
+    },
 }

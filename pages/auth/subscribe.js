@@ -45,11 +45,11 @@ export default function () {
 
 const i18n = {
     title: {
-        en: 'Unsubscribe',
-        ja: '登録解除',
+        en: 'Subscribe',
+        ja: '申し込む',
     },
     description: {
-        en: 'For security purposes, you should be logged-in in order to unsubscribe.',
-        ja: 'セキュリティ上の理由から、登録を解除するにはログインする必要があります。',
+        en: 'For security purposes, you should be logged-in in order to subscribe.',
+        ja: 'セキュリティ上の理由から、購読するにはログインする必要があります。',
     },
 }
