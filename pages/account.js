@@ -13,9 +13,11 @@ import {
 
 import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
-import config from '../main.config'
 import withAuth from '../HOCs/withAuth'
 import { handleAccountData } from '../helpers/handlers'
+
+import config from '../main.config'
+import i18n from '../i18n'
 
 export default withAuth(function () {
     const theme = useTheme()
@@ -23,8 +25,9 @@ export default withAuth(function () {
     const { locale = 'en' } = router
     const { setToast } = useToasts()
 
-    const title = i18n['title'][locale]
-    const description = i18n['description'][locale]
+    const page = i18n['root']['account']
+    const title = page['title'][locale]
+    const description = page['description'][locale]
 
     const [account, setAccount] = useState({})
 
@@ -40,6 +43,7 @@ export default withAuth(function () {
     return (
         <Layout
             config={config}
+            i18n={i18n}
             themePreference={themePreference}
             crownLarge={title}
             crownSmall={description}
@@ -67,14 +71,3 @@ export default withAuth(function () {
         </Layout>
     )
 })
-
-const i18n = {
-    title: {
-        en: 'Account',
-        ja: '口座',
-    },
-    description: {
-        en: 'Account Sample Page',
-        ja: 'アカウントのサンプルページ',
-    },
-}

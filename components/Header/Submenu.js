@@ -1,55 +1,64 @@
 import { Tabs, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
-import { useIsAuthenticated } from '../../state/Auth'
 
-export default function ({ config, sticky }) {
+import isLocaleRTL from '../../helpers/isLocaleRTL'
+
+export default function ({ config, i18n, sticky }) {
     const router = useRouter()
-    const { locale } = router
+    const { locale = 'en' } = router
     const theme = useTheme()
-    const isAuthenticated = useIsAuthenticated()
+
+    const submenu = i18n['components']['header']['submenu']
 
     return (
         <>
-            <nav className="SubmenuWrapper">
-                <div className={`Submenu ${sticky ? 'SubmenuSticky' : ''}`}>
-                    <div className="SubmenuInner">
-                        <Tabs
-                            value={router.pathname}
-                            onChange={(route) => router.push(route)}
-                        >
-                            {isAuthenticated ? (
-                                <>
-                                    {router.pathname == '/' && (
+            {config && i18n && submenu && (
+                <nav className="SubmenuWrapper">
+                    <div className={`Submenu ${sticky ? 'SubmenuSticky' : ''}`}>
+                        <div className="SubmenuInner">
+                            <Tabs
+                                value={router.pathname}
+                                onChange={(route) => router.push(route)}
+                            >
+                                {isLocaleRTL(locale) ? (
+                                    <>
+                                        {submenu['tabs']
+                                            .slice(0)
+                                            .reverse()
+                                            .map((tab) => (
+                                                <Tabs.Item
+                                                    key={tab['label'][locale]}
+                                                    label={tab['label'][locale]}
+                                                    value={tab.value}
+                                                />
+                                            ))}
                                         <Tabs.Item
                                             ml={0}
-                                            label={i18n['Home'][locale]}
+                                            label={submenu['home'][locale]}
                                             value="/"
                                         />
-                                    )}
-                                    <Tabs.Item
-                                        ml={0}
-                                        label={i18n['Dashboard'][locale]}
-                                        value="/dashboard"
-                                    />
-                                </>
-                            ) : (
-                                <Tabs.Item
-                                    ml={0}
-                                    label={i18n['Home'][locale]}
-                                    value="/"
-                                />
-                            )}
-                            {config['submenu'].map((tab) => (
-                                <Tabs.Item
-                                    key={tab['label'][locale]}
-                                    label={tab['label'][locale]}
-                                    value={tab.value}
-                                />
-                            ))}
-                        </Tabs>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Tabs.Item
+                                            ml={0}
+                                            label={submenu['home'][locale]}
+                                            value="/"
+                                        />
+                                        {submenu['tabs'].map((tab) => (
+                                            <Tabs.Item
+                                                key={tab['label'][locale]}
+                                                label={tab['label'][locale]}
+                                                value={tab.value}
+                                            />
+                                        ))}
+                                    </>
+                                )}
+                            </Tabs>
+                        </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            )}
             <style jsx global>
                 {`
                     .scroll-container {
@@ -91,8 +100,9 @@ export default function ({ config, sticky }) {
                         -webkit-overflow-scrolling: touch;
                         scrollbar-width: none;
                         box-sizing: border-box;
-                        align-items: center;
-                        justify-content: space-between;
+                        justify-content: ${isLocaleRTL(locale)
+                            ? 'end'
+                            : 'space-between'};
                     }
                     .SubmenuInner::-webkit-scrollbar {
                         display: none;
@@ -123,15 +133,4 @@ export default function ({ config, sticky }) {
             </style>
         </>
     )
-}
-
-const i18n = {
-    Home: {
-        en: 'Home',
-        ja: '表題',
-    },
-    Dashboard: {
-        en: 'Dashboard',
-        ja: '前板',
-    },
 }

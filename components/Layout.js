@@ -8,6 +8,7 @@ import defaultProps from '../default.props'
 
 const Layout = ({
     config,
+    i18n,
     themePreference,
     crownLarge,
     crownSmall,
@@ -20,14 +21,24 @@ const Layout = ({
         <>
             <Helmet
                 config={config}
+                i18n={i18n}
                 title={metaTitle}
                 image={metaImage}
                 description={metaDescription}
             />
-            <Header config={config} themePreference={themePreference} />
-            <Crown config={config} large={crownLarge} small={crownSmall} />
+            <Header
+                config={config}
+                i18n={i18n}
+                themePreference={themePreference}
+            />
+            <Crown
+                config={config}
+                i18n={i18n}
+                large={crownLarge}
+                small={crownSmall}
+            />
             <Wrapper config={config}>{children}</Wrapper>
-            <Footer config={config} />
+            <Footer config={config} i18n={i18n} />
         </>
     )
 }

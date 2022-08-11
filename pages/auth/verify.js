@@ -7,15 +7,16 @@ import { themePreference } from '../../state/Theme'
 import { verifyHandler } from '../../helpers/handlers'
 
 import config from '../../main.config'
+import i18n from '../../i18n'
 
 export default function () {
     const theme = useTheme()
     const router = useRouter()
-    const { locale } = router
+    const { locale = 'en' } = router
     const { setToast } = useToasts()
 
-    const title = i18n['title'][locale]
-    const description = i18n['description'][locale]
+    const title = i18n['auth']['verify']['title'][locale]
+    const description = i18n['auth']['verify']['description'][locale]
 
     const [loading, setLoading] = useState(false)
     const [code, setCode, refCode] = useState('')
@@ -23,6 +24,7 @@ export default function () {
     return (
         <Layout
             config={config}
+            i18n={i18n}
             themePreference={themePreference}
             crownLarge={title}
             crownSmall={description}
@@ -61,15 +63,4 @@ export default function () {
             </Grid.Container>
         </Layout>
     )
-}
-
-const i18n = {
-    title: {
-        en: 'Verify Email Address',
-        ja: '',
-    },
-    description: {
-        en: 'Verify your email address using the verification code sent to your email address.',
-        ja: 'メール アドレスに送信された確認コードを使用して、メール アドレスを確認します。',
-    },
 }

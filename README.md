@@ -9,13 +9,15 @@
 
 ## NPX Command
 
-1. Setup a local deployment using this `npx` command:
+Setup a local deployment using this `npx` command:
 
 ```bash
 npx create-next-dashboard my-app
 ```
 
-2. Create your `.env` file and provide these variables:
+## Usage
+
+1. Create your `.env` file and provide these variables:
 
 ```shell
 JWT_SECRET =
@@ -23,16 +25,8 @@ MONGO_ATLAS_URI =
 NEXT_PUBLIC_URL = 'http://localhost:3000'
 ```
 
-3. Fill in the `main.config.js` file with your preferred information.
-4. Run `cd my-app` and `npm run dev`, the app should be running in `localhost:3000`!
-
-## Deployment
-
-Refer to [Next.js Deployment Documentation](https://nextjs.org/docs/deployment) to find the best deployment strategy for you.
-
-## Sending Emails
-
-Composing and sending Email Templates is handled using [Angra](https://github.com/accretence/angra). You just need to provide `SMTP` credentials obtained from your Email provider in `.env`.
+2. Fill in the `main.config.js` file with your preferred information.
+3. Composing and sending Email templates is handled using [Angra](https://github.com/accretence/angra). You just need to provide `SMTP` credentials obtained from your Email provider in `.env`.
 
 ```shell
 MAIL_SMTP_HOST =
@@ -54,6 +48,12 @@ MAIL_SMTP_PASS = // Google App Password
 MAIL_SMTP_SERVICE = 'Gmail'
 ```
 
+4. Run `cd my-app` and `npm run dev`, the app should be running in `localhost:3000`!
+
+## Deployment
+
+Refer to [Next.js Deployment Documentation](https://nextjs.org/docs/deployment) to find the best deployment strategy for you.
+
 ## Authentication
 
 Authentication is implemented using `httpOnly` cookies served from serverless API functions.
@@ -65,6 +65,12 @@ You can spin up a MongoDB database instance using [MongoDB Atlas](http://cloud.m
 ## Google Analytics
 
 You only need to provide your `googleAnalyticsID` in `main.config.js` file to activate your Google Analytics.
+
+## i18n
+
+You can provide the list of languages in `next.config.js` file. There are `i18n` objects constructed in every page file that have `en` & `ja` translations available by default, you need to add your language translation as a key-pair value to these objects. There is also an i18n key in `main.config.js` file where you can provide translations for UI components.
+
+If you want to disable i18n and remove the select language dropdown in the Header, you only need to remove the `i18n` key from `next.config.js`.
 
 ## Built Upon
 

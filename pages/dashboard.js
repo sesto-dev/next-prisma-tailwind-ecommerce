@@ -7,7 +7,9 @@ import { Text, Card, Grid, useTheme, useToasts, Loading } from '@geist-ui/core'
 import Layout from '../components/Layout'
 import withAuth from '../HOCs/withAuth'
 import { themePreference } from '../state/Theme'
+
 import config from '../main.config'
+import i18n from '../i18n'
 
 export default withAuth(function () {
     const theme = useTheme()
@@ -17,8 +19,9 @@ export default withAuth(function () {
 
     const [account, setAccount] = useState({})
 
-    const title = i18n['title'][locale]
-    const description = i18n['description'][locale]
+    const page = i18n['root']['dashboard']
+    const title = page['title'][locale]
+    const description = page['description'][locale]
 
     async function resolve() {
         const response = await axios.get(config.backend.routes.account)
@@ -32,6 +35,7 @@ export default withAuth(function () {
     return (
         <Layout
             config={config}
+            i18n={i18n}
             themePreference={themePreference}
             crownLarge={title}
             crownSmall={description}
@@ -52,14 +56,3 @@ export default withAuth(function () {
         </Layout>
     )
 })
-
-const i18n = {
-    title: {
-        en: 'Dashboard',
-        ja: '前板',
-    },
-    description: {
-        en: 'Dashboard Sample Page',
-        ja: 'ダッシュボードのサンプル ページ',
-    },
-}

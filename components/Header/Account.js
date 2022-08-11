@@ -1,44 +1,48 @@
 import Link from 'next/link'
-import {
-    ButtonDropdown,
-    useToasts,
-    Button,
-    Popover,
-    Text,
-    useTheme,
-} from '@geist-ui/core'
-import { AvatarIcon, LogoutIcon } from '../SVGs'
+import { ButtonDropdown, useToasts, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
+
 import { useAuth } from '../../state/Auth'
 import { logoutHandler } from '../../helpers/handlers'
 
-export default function ({ config, sticky }) {
+export default function ({ config, i18n, sticky }) {
     const theme = useTheme()
     const router = useRouter()
+    const { locale = 'en' } = router
     const { setAuthenticated } = useAuth()
     const { setToast } = useToasts()
 
+    const account = i18n['components']['header']['account']
+
     return (
-        <ButtonDropdown scale={0.63} auto>
-            <ButtonDropdown.Item main>
-                <b>ACCOUNT</b>
-            </ButtonDropdown.Item>
-            {config.popover &&
-                config.popover.map((link) => (
-                    <ButtonDropdown.Item key={link.label}>
-                        <Link href={link.value}>
-                            <b>{link.label}</b>
-                        </Link>
+        <>
+            {account && (
+                <ButtonDropdown scale={0.63} auto>
+                    <ButtonDropdown.Item main>
+                        <b>{account['text'][locale]}</b>
                     </ButtonDropdown.Item>
-                ))}
-            <ButtonDropdown.Item
-                type="secondary"
-                onClick={(e) =>
-                    logoutHandler(config, setToast, setAuthenticated, router)
-                }
-            >
-                <b>Logout</b>
-            </ButtonDropdown.Item>
-        </ButtonDropdown>
+                    {account['links'].map((link) => (
+                        <ButtonDropdown.Item key={link['label'][locale]}>
+                            <Link href={link.value}>
+                                <b>{link['label'][locale]}</b>
+                            </Link>
+                        </ButtonDropdown.Item>
+                    ))}
+                    <ButtonDropdown.Item
+                        type="secondary"
+                        onClick={(e) =>
+                            logoutHandler(
+                                config,
+                                setToast,
+                                setAuthenticated,
+                                router
+                            )
+                        }
+                    >
+                        <b>{account['logout'][locale]}</b>
+                    </ButtonDropdown.Item>
+                </ButtonDropdown>
+            )}
+        </>
     )
 }

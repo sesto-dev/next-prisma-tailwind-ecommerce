@@ -1,8 +1,13 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
-export default function ({ config, title, description, image }) {
-    title = title ? title : config.meta.title
-    description = description ? description : config.meta.description
+export default function ({ config, i18n, title, description, image }) {
+    const { locale } = useRouter()
+
+    title = title ? title : i18n['meta']['title'][locale]
+    description = description
+        ? description
+        : i18n['meta']['description'][locale]
     image = image ? image : config.meta.image
 
     return (

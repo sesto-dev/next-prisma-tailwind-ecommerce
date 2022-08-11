@@ -1,45 +1,91 @@
 import Link from 'next/link'
 import { Text, Grid, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
+import isLocaleRTL from '../helpers/isLocaleRTL'
 
-export default function ({ config }) {
+export default function ({ config, i18n }) {
     const theme = useTheme()
+    const { locale } = useRouter()
+
+    const footer = i18n['components']['footer']
 
     return (
         <>
-            <footer>
-                <div className="FooterWrapper">
-                    <Grid.Container gap={1} my={2}>
-                        <Grid
-                            px={0}
-                            style={{ display: 'block' }}
-                            xs={24}
-                            md={8}
-                            mb={2}
-                        >
-                            <Text h4 my={0}>
-                                {config['meta']['title'].toUpperCase()}
-                            </Text>
-                            <Text
-                                mt={0}
-                                small
-                                style={{ fontSize: '0.7rem' }}
-                                type="secondary"
-                            >
-                                <Copyright config={config} />
-                            </Text>
-                        </Grid>
-                        <Links config={config} />
-                    </Grid.Container>
-                </div>
-            </footer>
+            {footer && (
+                <footer>
+                    <div className="FooterWrapper">
+                        <Grid.Container gap={1} my={2}>
+                            {isLocaleRTL(locale) ? (
+                                <>
+                                    <Links config={config} footer={footer} />
+                                    <Grid
+                                        px={0}
+                                        style={{ display: 'block' }}
+                                        xs={24}
+                                        md={8}
+                                        mb={2}
+                                    >
+                                        <Text
+                                            h4
+                                            my={0}
+                                            style={{
+                                                textAlign: 'start',
+                                                direction: 'rtl',
+                                            }}
+                                        >
+                                            {footer['title'][
+                                                locale
+                                            ].toUpperCase()}
+                                        </Text>
+                                        <Text
+                                            mt={0}
+                                            style={{
+                                                fontSize: '0.7rem',
+                                                textAlign: 'right',
+                                                direction: 'rtl',
+                                            }}
+                                            type="secondary"
+                                        >
+                                            {footer['copyright'][locale]}
+                                        </Text>
+                                    </Grid>
+                                </>
+                            ) : (
+                                <>
+                                    <Grid
+                                        px={0}
+                                        style={{ display: 'block' }}
+                                        xs={24}
+                                        md={8}
+                                        mb={2}
+                                    >
+                                        <Text h4 my={0}>
+                                            {footer['title'][
+                                                locale
+                                            ].toUpperCase()}
+                                        </Text>
+                                        <Text
+                                            mt={0}
+                                            small
+                                            style={{ fontSize: '0.7rem' }}
+                                            type="secondary"
+                                        >
+                                            {footer['copyright'][locale]}
+                                        </Text>
+                                    </Grid>
+                                    <Links config={config} footer={footer} />
+                                </>
+                            )}
+                        </Grid.Container>
+                    </div>
+                </footer>
+            )}
             <style jsx global>
                 {`
                     footer {
                         border-top: 1px solid ${theme.palette.border};
                     }
                     .FooterWrapper {
-                        align-items: start;
                         width: ${config.theme.width};
                         max-width: 100%;
                         margin: 0 auto;
@@ -59,40 +105,56 @@ export default function ({ config }) {
     )
 }
 
-function Links({ config }) {
+function Links({ config, footer }) {
     const { locale } = useRouter()
 
     return (
         <>
             <>
-                {config &&
-                    Object.keys(config['footer']).map((category) => {
-                        const element = config['footer'][category]
-
+                {footer &&
+                    footer.links.map((category) => {
                         return (
                             <Grid
-                                style={{ display: 'block' }}
+                                style={{
+                                    display: 'block',
+                                }}
                                 xs={12}
                                 md={4}
                                 key={Math.random()}
                             >
-                                <Text h5 b small style={{ fontSize: '1rem' }}>
-                                    {category}
+                                <Text
+                                    h5
+                                    b
+                                    small
+                                    style={{
+                                        fontSize: '1rem',
+                                        textAlign: isLocaleRTL(locale)
+                                            ? 'start'
+                                            : 'end',
+                                    }}
+                                >
+                                    {category[locale]}
                                 </Text>
-                                {element.map((foo) => (
+                                {category['links'].map((link) => (
                                     <Link
-                                        key={foo['label'][locale]}
-                                        href={foo.value}
+                                        key={link['label'][locale]}
+                                        href={link.value}
                                     >
                                         <a>
                                             <Text
-                                                mr={4}
                                                 px={0}
                                                 h5
                                                 small
-                                                style={{ fontSize: '1rem' }}
+                                                style={{
+                                                    fontSize: '1rem',
+                                                    textAlign: isLocaleRTL(
+                                                        locale
+                                                    )
+                                                        ? 'start'
+                                                        : 'end',
+                                                }}
                                             >
-                                                {foo['label'][locale]}
+                                                {link['label'][locale]}
                                             </Text>
                                         </a>
                                     </Link>
@@ -110,19 +172,4 @@ function Links({ config }) {
             </style>
         </>
     )
-}
-
-const Copyright = ({ config }) => {
-    const { locale } = useRouter()
-
-    switch (locale) {
-        case 'en':
-            return `Copyright © ${new Date().getFullYear()} ${
-                config.meta.title
-            }. All rights reserved.`
-        case 'ja':
-            return `著作権 © ${new Date().getFullYear()} ${
-                config.meta.title
-            }. 全著作権所有.`
-    }
 }

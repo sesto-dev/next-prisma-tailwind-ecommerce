@@ -1,26 +1,31 @@
 import { Text, useTheme } from '@geist-ui/core'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
-export default function ({ config }) {
+export default function ({ config, i18n }) {
     const theme = useTheme()
+    const { locale } = useRouter()
 
     return (
         <>
-            <Text mt={1.5} className="MenuNavigationTitle">
-                <Link className="MenuNavigationTitle" href="/">
-                    {config['meta']['title'].toUpperCase()}
-                </Link>
-            </Text>
+            {i18n && (
+                <>
+                    <Text mt={1.5} className="MenuNavigationTitle">
+                        <Link className="MenuNavigationTitle" href="/">
+                            {i18n['components']['header']['title'][
+                                locale
+                            ].toUpperCase()}
+                        </Link>
+                    </Text>
+                </>
+            )}
             <style jsx global>
                 {`
                     .MenuNavigationTitle a {
-                        color: ${theme.palette.accents_5}!important;
-                        font-size: 1.65rem;
-                        font-weight: 450;
-                        letter-spacing: 0.3rem;
-                    }
-                    .MenuNavigationTitle a:hover {
                         color: ${theme.palette.foreground}!important;
+                        font-size: 1.7rem;
+                        font-weight: 600;
+                        letter-spacing: ${locale == 'en' ? '0.3rem' : 0};
                     }
                 `}
             </style>

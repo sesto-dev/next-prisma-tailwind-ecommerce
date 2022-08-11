@@ -8,15 +8,17 @@ import { themePreference } from '../../state/Theme'
 import { forgotHandler, resetHandler } from '../../helpers/handlers'
 
 import config from '../../main.config'
+import i18n from '../../i18n'
 
 export default function () {
     const theme = useTheme()
     const router = useRouter()
-    const { locale } = router
+    const { locale = 'en' } = router
     const { setToast } = useToasts()
 
-    const title = i18n['title'][locale]
-    const description = i18n['description'][locale]
+    const page = i18n['auth']['reset']
+    const title = page['title'][locale]
+    const description = page['description'][locale]
 
     const [loading, setLoading] = useState(false)
     const [nextStage, setNextStage] = useState(false)
@@ -28,6 +30,7 @@ export default function () {
         <>
             <Layout
                 config={config}
+                i18n={i18n}
                 themePreference={themePreference}
                 crownLarge={title}
                 crownSmall={description}
@@ -142,15 +145,4 @@ export default function () {
             </Layout>
         </>
     )
-}
-
-const i18n = {
-    title: {
-        en: 'Reset Password',
-        ja: 'パスワードを再設定する',
-    },
-    description: {
-        en: 'Reset your password using the verification code sent to your email address.',
-        ja: 'メールアドレスに送信された確認コードを使用してパスワードをリセットしてください。',
-    },
 }

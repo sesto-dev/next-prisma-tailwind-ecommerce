@@ -7,20 +7,23 @@ import { themePreference } from '../../state/Theme'
 import { unsubscribeHandler } from '../../helpers/handlers'
 
 import config from '../../main.config'
+import i18n from '../../i18n'
 
 export default function () {
     const theme = useTheme()
-    const { locale } = useRouter()
+    const { locale = 'en' } = useRouter()
     const { setToast } = useToasts()
 
-    const title = i18n['title'][locale]
-    const description = i18n['description'][locale]
+    const page = i18n['auth']['subscribe']
+    const title = page['title'][locale]
+    const description = page['description'][locale]
 
     const [loading, setLoading] = useState(false)
 
     return (
         <Layout
             config={config}
+            i18n={i18n}
             themePreference={themePreference}
             crownLarge={title}
             crownSmall={description}
@@ -41,15 +44,4 @@ export default function () {
             </Grid.Container>
         </Layout>
     )
-}
-
-const i18n = {
-    title: {
-        en: 'Subscribe',
-        ja: '申し込む',
-    },
-    description: {
-        en: 'For security purposes, you should be logged-in in order to subscribe.',
-        ja: 'セキュリティ上の理由から、購読するにはログインする必要があります。',
-    },
 }
