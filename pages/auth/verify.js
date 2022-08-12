@@ -5,7 +5,7 @@ import { Button, Grid, useTheme, useToasts, Input } from '@geist-ui/core'
 import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
 import { verifyHandler } from '../../helpers/handlers'
-import { isLocaleRTL } from '../../helpers/RTL'
+import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
 
 import config from '../../main.config'
 import i18n from '../../i18n.content'
@@ -79,6 +79,10 @@ export default function () {
             </Layout>
             <style jsx global>
                 {`
+                    input::placeholder {
+                        text-align: ${isLocaleRTL(locale) ? 'right' : 'left'};
+                        direction: ${getLocaleDirection(locale)} !important;
+                    }
                     .avanti > .item {
                         justify-content: ${isLocaleRTL(locale)
                             ? 'end'

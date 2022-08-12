@@ -7,7 +7,7 @@ export default {
     theme: {
         width: '900pt',
         defaultTheme: 'dark',
-        lightBackground: '#F2F2F2',
+        lightBackground: '#F5F5F5',
         darkBackground: '#040404',
     },
     layout: {

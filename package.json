@@ -3,7 +3,7 @@
     "description": "Set up a full-stack Next.js dashboard by running one NPX command.",
     "author": "@accretence",
     "license": "MIT",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "bin": "npx.js",
     "keywords": [
         "geist-ui",
