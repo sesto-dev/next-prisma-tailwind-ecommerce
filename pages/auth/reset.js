@@ -97,7 +97,8 @@ export default function () {
                                                 refEmail,
                                                 setLoading,
                                                 setToast,
-                                                setNextStage
+                                                setNextStage,
+                                                i18n['toasts']['forgot'][locale]
                                             )
                                         }
                                     >
@@ -201,7 +202,8 @@ export default function () {
                                                 refPassword,
                                                 setLoading,
                                                 setToast,
-                                                router
+                                                router,
+                                                i18n['toasts']['reset'][locale]
                                             )
                                         }
                                     >

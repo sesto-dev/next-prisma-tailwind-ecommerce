@@ -25,7 +25,14 @@ export default withAuth(function () {
 
     async function resolve() {
         const response = await axios.get(config.backend.routes.account)
-        handleAccountData(response, router, setAccount, setToast)
+        handleAccountData(
+            response,
+            router,
+            setAccount,
+            setToast,
+            i18n['toasts']['noDataReceived'][locale],
+            i18n['toasts']['notVerified'][locale]
+        )
     }
 
     useEffect(() => {

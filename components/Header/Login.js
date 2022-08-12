@@ -157,7 +157,10 @@ export default function ({ config, i18n, sticky }) {
                                                     setAuthenticated,
                                                     router,
                                                     refEmail,
-                                                    refPassword
+                                                    refPassword,
+                                                    i18n['toasts']['login'][
+                                                        locale
+                                                    ]
                                                 )
                                             }
                                             icon={<LoginIcon />}

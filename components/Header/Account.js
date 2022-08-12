@@ -35,7 +35,8 @@ export default function ({ config, i18n, sticky }) {
                                 config,
                                 setToast,
                                 setAuthenticated,
-                                router
+                                router,
+                                i18n['toasts']['logout'][locale]
                             )
                         }
                     >

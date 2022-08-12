@@ -39,7 +39,12 @@ export default function () {
                             loading={loading}
                             type="secondary"
                             onClick={(e) =>
-                                unsubscribeHandler(config, setLoading, setToast)
+                                unsubscribeHandler(
+                                    config,
+                                    setLoading,
+                                    setToast,
+                                    i18n['toasts']['unsubscribe'][locale]
+                                )
                             }
                         >
                             {title}

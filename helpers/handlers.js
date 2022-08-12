@@ -8,7 +8,8 @@ export async function loginHandler(
     setAuthenticated,
     router,
     refEmail,
-    refPassword
+    refPassword,
+    toast
 ) {
     setLoading(true)
 
@@ -23,7 +24,7 @@ export async function loginHandler(
         )
 
         if (response && response.status && response.status == 200) {
-            burnToast(setToast, '✓ Login Successful')
+            burnToast(setToast, toast)
             setAuthenticated(true)
             router.replace('/dashboard')
         }
@@ -79,7 +80,8 @@ export async function verifyHandler(
     setLoading,
     setToast,
     router,
-    refCode
+    refCode,
+    toast
 ) {
     setLoading(true)
 
@@ -93,7 +95,7 @@ export async function verifyHandler(
         )
 
         if (response && response.status && response.status == 200) {
-            burnToast(setToast, '✓ Email Verification Successful')
+            burnToast(setToast, toast)
             router.replace('/dashboard')
         }
     } catch (error) {
@@ -111,7 +113,8 @@ export async function logoutHandler(
     config,
     setToast,
     setAuthenticated,
-    router
+    router,
+    toast
 ) {
     try {
         const response = await axios.post(config.backend.routes.logout)
@@ -119,7 +122,7 @@ export async function logoutHandler(
         if (response && response.status && response.status == 200) {
             setAuthenticated(false)
             router.replace('/')
-            burnToast(setToast, '✓ Logout Successful')
+            burnToast(setToast, toast)
         }
     } catch (error) {
         burnToast(
@@ -135,7 +138,9 @@ export async function handleAccountData(
     response,
     router,
     setAccount,
-    setToast
+    setToast,
+    noDataToast,
+    notVerifiedToast
 ) {
     const { data, error } = response
 
@@ -151,18 +156,18 @@ export async function handleAccountData(
 
     if (!data) {
         router.replace('/')
-        burnToast(setToast, 'No data received.')
+        burnToast(setToast, noDataToast)
     }
 
     if (!data.isVerified) {
         router.replace('/auth/verify')
-        burnToast(setToast, 'Please verify your email first.')
+        burnToast(setToast, notVerifiedToast)
     }
 
     setAccount(data)
 }
 
-export async function unsubscribeHandler(config, setLoading, setToast) {
+export async function unsubscribeHandler(config, setLoading, setToast, toast) {
     setLoading(true)
 
     try {
@@ -170,7 +175,7 @@ export async function unsubscribeHandler(config, setLoading, setToast) {
 
         if (response && response.status && response.status == 200) {
             router.replace('/dashboard')
-            burnToast(setToast, '✓ Successfully Unsubscribed...')
+            burnToast(setToast, toast)
         }
     } catch (error) {
         setLoading(false)
@@ -183,7 +188,7 @@ export async function unsubscribeHandler(config, setLoading, setToast) {
     }
 }
 
-export async function subscribeHandler(config, setLoading, setToast) {
+export async function subscribeHandler(config, setLoading, setToast, toast) {
     setLoading(true)
 
     try {
@@ -191,7 +196,7 @@ export async function subscribeHandler(config, setLoading, setToast) {
 
         if (response && response.status && response.status == 200) {
             router.replace('/dashboard')
-            burnToast(setToast, '✓ Successfully Subscribed...')
+            burnToast(setToast, toast)
         }
     } catch (error) {
         setLoading(false)
@@ -209,7 +214,8 @@ export async function forgotHandler(
     refEmail,
     setLoading,
     setToast,
-    setNextStage
+    setNextStage,
+    toast
 ) {
     setLoading(true)
 
@@ -225,7 +231,7 @@ export async function forgotHandler(
         if (response && response.status && response.status == 200) {
             setLoading(false)
             setNextStage(true)
-            burnToast(setToast, '✓ Successfully Requested Verification Code...')
+            burnToast(setToast, toast)
         }
     } catch (error) {
         setLoading(false)
@@ -244,7 +250,8 @@ export async function resetHandler(
     refPassword,
     setLoading,
     setToast,
-    router
+    router,
+    toast
 ) {
     setLoading(true)
 
@@ -260,7 +267,7 @@ export async function resetHandler(
 
         if (response && response.status && response.status == 200) {
             router.replace('/')
-            burnToast(setToast, '✓ Successfully Reset Password...')
+            burnToast(setToast, toast)
         }
     } catch (error) {
         setLoading(false)

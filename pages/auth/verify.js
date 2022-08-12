@@ -67,7 +67,8 @@ export default function () {
                                     setLoading,
                                     setToast,
                                     router,
-                                    refCode
+                                    refCode,
+                                    i18n['toasts']['verify'][locale]
                                 )
                             }
                         >

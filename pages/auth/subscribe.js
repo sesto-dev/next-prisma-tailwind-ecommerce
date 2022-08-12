@@ -4,7 +4,7 @@ import { Button, Grid, useTheme, useToasts } from '@geist-ui/core'
 
 import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
-import { unsubscribeHandler } from '../../helpers/handlers'
+import { subscribeHandler } from '../../helpers/handlers'
 import { isLocaleRTL } from '../../helpers/RTL'
 import { useIsAuthenticated } from '../../state/Auth'
 
@@ -40,7 +40,12 @@ export default function () {
                             loading={loading}
                             type="secondary"
                             onClick={(e) =>
-                                unsubscribeHandler(config, setLoading, setToast)
+                                subscribeHandler(
+                                    config,
+                                    setLoading,
+                                    setToast,
+                                    i18n['toasts']['subscribe'][locale]
+                                )
                             }
                         >
                             {title}

@@ -100,6 +100,53 @@ export default {
             fa: 'ثبت',
         },
     },
+    toasts: {
+        login: {
+            en: '✓ Login Successful',
+            ja: '',
+            fa: 'ورود موفقیت آمیز ✓',
+        },
+        logout: {
+            en: '✓ Logout Successful',
+            ja: '',
+            fa: 'خروج موفقیت آمیز ✓',
+        },
+        subscribe: {
+            en: '✓ Subscribe Successful',
+            ja: '',
+            fa: 'عضویت ایمیل موفقیت آمیز ✓',
+        },
+        unsubscribe: {
+            en: '✓ Unsubscribe Successful',
+            ja: '',
+            fa: 'حذف عضویت ایمیل موفقیت آمیز ✓',
+        },
+        verify: {
+            en: '✓ Email Verification Successful',
+            ja: '',
+            fa: 'تایید ایمیل موفقیت آمیز ✓',
+        },
+        forgot: {
+            en: '✓ Successfully Requested Verification Code...',
+            ja: '',
+            fa: 'درخواست کد تایید موفقیت آمیز ✓',
+        },
+        reset: {
+            en: '✓ Successfully Reset Password...',
+            ja: '',
+            fa: 'تغییر پسوورد موفقیت آمیز ✓',
+        },
+        noDataReceived: {
+            en: 'No data received',
+            ja: '',
+            fa: 'اطلاعاتی دریافت نشد',
+        },
+        notVerified: {
+            en: 'Your account is not verified.',
+            ja: '',
+            fa: 'اکانت شما تایید نشده است',
+        },
+    },
     components: {
         header: {
             submenu: {
