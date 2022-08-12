@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { Text, Grid, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
-import isLocaleRTL from '../helpers/isLocaleRTL'
+import { isLocaleRTL, getLocaleDirection } from '../helpers/RTL'
 
 export default function ({ config, i18n }) {
     const theme = useTheme()
-    const { locale } = useRouter()
+    const { locale = 'en' } = useRouter()
 
     const footer = i18n['components']['footer']
 
@@ -106,7 +106,7 @@ export default function ({ config, i18n }) {
 }
 
 function Links({ config, footer }) {
-    const { locale } = useRouter()
+    const { locale = 'en' } = useRouter()
 
     return (
         <>
@@ -125,12 +125,10 @@ function Links({ config, footer }) {
                                 <Text
                                     h5
                                     b
-                                    small
                                     style={{
-                                        fontSize: '1rem',
-                                        textAlign: isLocaleRTL(locale)
-                                            ? 'start'
-                                            : 'end',
+                                        fontSize: '0.8rem',
+                                        direction: getLocaleDirection(locale),
+                                        textAlign: 'end',
                                     }}
                                 >
                                     {category[locale]}
@@ -143,15 +141,13 @@ function Links({ config, footer }) {
                                         <a>
                                             <Text
                                                 px={0}
-                                                h5
-                                                small
                                                 style={{
-                                                    fontSize: '1rem',
-                                                    textAlign: isLocaleRTL(
-                                                        locale
-                                                    )
-                                                        ? 'start'
-                                                        : 'end',
+                                                    fontSize: '0.8rem',
+                                                    direction:
+                                                        getLocaleDirection(
+                                                            locale
+                                                        ),
+                                                    textAlign: 'end',
                                                 }}
                                             >
                                                 {link['label'][locale]}

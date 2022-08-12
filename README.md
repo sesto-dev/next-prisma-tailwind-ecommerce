@@ -48,7 +48,7 @@ MAIL_SMTP_PASS = // Google App Password
 MAIL_SMTP_SERVICE = 'Gmail'
 ```
 
-4. Run `cd my-app` and `npm run dev`, the app should be running in `localhost:3000`!
+4. Run `npm run dev`, the app should be running in `localhost:3000`!
 
 ## Deployment
 
@@ -68,9 +68,9 @@ You only need to provide your `googleAnalyticsID` in `main.config.js` file to ac
 
 ## i18n
 
-You can provide the list of languages in `next.config.js` file. There are `i18n` objects constructed in every page file that have `en` & `ja` translations available by default, you need to add your language translation as a key-pair value to these objects. There is also an i18n key in `main.config.js` file where you can provide translations for UI components.
+You provide the list of languages you are willing to support in `next.config.js` file. All of the i18n content is located in the `i18n.content.js` file in root directory.
 
-If you want to disable i18n and remove the select language dropdown in the Header, you only need to remove the `i18n` key from `next.config.js`.
+If you want to disable i18n & the select language dropdown in the Header, you only need to remove the `i18n` key from `next.config.js`. In this case the `en` content from the `i18n.config.js` file will be served as default.
 
 ## Built Upon
 

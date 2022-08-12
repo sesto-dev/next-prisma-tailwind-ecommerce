@@ -2,12 +2,12 @@ import Link from 'next/link'
 import { Grid, Card, Text, Code, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 
-import isLocaleRTL from '../helpers/isLocaleRTL'
 import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
+import { getLocaleDirection } from '../helpers/RTL'
 
 import config from '../main.config'
-import i18n from '../i18n'
+import i18n from '../i18n.content'
 
 export default function () {
     const theme = useTheme()
@@ -37,7 +37,7 @@ export default function () {
                         <Text
                             type="secondary"
                             style={{
-                                direction: isLocaleRTL(locale) ? 'rtl' : 'ltr',
+                                direction: getLocaleDirection(locale),
                             }}
                         >
                             {page['content'][locale]}

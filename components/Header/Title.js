@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 export default function ({ config, i18n }) {
     const theme = useTheme()
-    const { locale } = useRouter()
+    const { locale = 'en' } = useRouter()
 
     return (
         <>

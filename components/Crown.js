@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router'
 import { Spacer, Text, useTheme } from '@geist-ui/core'
 
-import isLocaleRTL from '../helpers/isLocaleRTL'
+import { isLocaleRTL, getLocaleDirection } from '../helpers/RTL'
 
 export default function ({ config, large, small }) {
     const theme = useTheme()
-    const { locale } = useRouter()
+    const { locale = 'en' } = useRouter()
     const smallComponent = small
 
     return (
@@ -17,7 +17,7 @@ export default function ({ config, large, small }) {
                         mb={0}
                         pb={0}
                         style={{
-                            direction: isLocaleRTL(locale) ? 'rtl' : 'ltr',
+                            direction: getLocaleDirection(locale),
                         }}
                     >
                         {large.toUpperCase()}
@@ -27,7 +27,7 @@ export default function ({ config, large, small }) {
                         type="secondary"
                         style={{
                             fontSize: '0.85rem',
-                            direction: isLocaleRTL(locale) ? 'rtl' : 'ltr',
+                            direction: getLocaleDirection(locale),
                         }}
                     >
                         {smallComponent}

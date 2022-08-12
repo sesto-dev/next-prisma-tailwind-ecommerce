@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 export default function ({ config, i18n, title, description, image }) {
-    const { locale } = useRouter()
+    const { locale = 'en' } = useRouter()
 
     title = title ? title : i18n['meta']['title'][locale]
     description = description

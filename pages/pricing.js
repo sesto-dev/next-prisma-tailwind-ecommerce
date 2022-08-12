@@ -5,8 +5,8 @@ import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
 
 import config from '../main.config'
-import i18n from '../i18n'
-import isLocaleRTL from '../helpers/isLocaleRTL'
+import i18n from '../i18n.content'
+import { isLocaleRTL, getLocaleDirection } from '../helpers/RTL'
 
 export default function () {
     const theme = useTheme()
@@ -35,7 +35,7 @@ export default function () {
                     >
                         <Text
                             style={{
-                                direction: isLocaleRTL(locale) ? 'rtl' : 'ltr',
+                                direction: getLocaleDirection(locale),
                             }}
                         >
                             {title}

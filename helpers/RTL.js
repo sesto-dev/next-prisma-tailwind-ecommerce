@@ -1,4 +1,4 @@
-export default function (locale) {
+export function isLocaleRTL(locale) {
     const RTLs = new Set([
         'ar',
         'arc',
@@ -17,4 +17,8 @@ export default function (locale) {
     if (RTLs.has(locale)) return true
 
     return false
+}
+
+export function getLocaleDirection(locale) {
+    return isLocaleRTL(locale) ? 'rtl' : 'ltr'
 }

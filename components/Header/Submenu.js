@@ -1,7 +1,7 @@
 import { Tabs, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 
-import isLocaleRTL from '../../helpers/isLocaleRTL'
+import { isLocaleRTL } from '../../helpers/RTL'
 
 export default function ({ config, i18n, sticky }) {
     const router = useRouter()
@@ -92,7 +92,6 @@ export default function ({ config, i18n, sticky }) {
                         margin: 0 auto;
                         padding: 0 ${theme.layout.pageMargin};
                         height: 50px;
-                        box-sizing: border-box;
                         overflow-y: hidden;
                         overflow-x: auto;
                         overflow: -moz-scrollbars-none;

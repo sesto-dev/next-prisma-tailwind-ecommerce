@@ -11,7 +11,7 @@ import Language from './Language'
 import Login from './Login'
 import Account from './Account'
 
-import isLocaleRTL from '../../helpers/isLocaleRTL'
+import { isLocaleRTL } from '../../helpers/RTL'
 
 export default function ({ config, i18n, themePreference }) {
     const theme = useTheme()

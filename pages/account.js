@@ -17,7 +17,7 @@ import withAuth from '../HOCs/withAuth'
 import { handleAccountData } from '../helpers/handlers'
 
 import config from '../main.config'
-import i18n from '../i18n'
+import i18n from '../i18n.content'
 
 export default withAuth(function () {
     const theme = useTheme()

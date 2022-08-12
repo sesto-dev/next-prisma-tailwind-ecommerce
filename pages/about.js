@@ -5,8 +5,8 @@ import { themePreference } from '../state/Theme'
 import Layout from '../components/Layout'
 
 import config from '../main.config'
-import i18n from '../i18n'
-import isLocaleRTL from '../helpers/isLocaleRTL'
+import i18n from '../i18n.content'
+import { getLocaleDirection } from '../helpers/RTL'
 
 export default function () {
     const theme = useTheme()
@@ -44,9 +44,8 @@ export default function () {
                                         type="secondary"
                                         style={{
                                             fontSize: '0.9rem',
-                                            direction: isLocaleRTL(locale)
-                                                ? 'rtl'
-                                                : 'ltr',
+                                            direction:
+                                                getLocaleDirection(locale),
                                         }}
                                     >
                                         {page['content'][locale]}

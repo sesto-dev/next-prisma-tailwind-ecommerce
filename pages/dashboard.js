@@ -9,7 +9,7 @@ import withAuth from '../HOCs/withAuth'
 import { themePreference } from '../state/Theme'
 
 import config from '../main.config'
-import i18n from '../i18n'
+import i18n from '../i18n.content'
 
 export default withAuth(function () {
     const theme = useTheme()
