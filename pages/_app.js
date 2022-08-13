@@ -1,14 +1,13 @@
+import cookie from 'cookie'
 import App from 'next/app'
-
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { GeistProvider, CssBaseline } from '@geist-ui/core'
 
 import { ThemeContext, themes } from '../state/Theme'
 import { AuthProvider } from '../state/Auth'
-import cookie from 'cookie'
 
-import config from '../main.config'
+import config from '../config/main.config'
 
 export default function MyApp({ Component, pageProps, authenticated }) {
     const [themeType, setThemeType] = useState(config.theme.defaultTheme)

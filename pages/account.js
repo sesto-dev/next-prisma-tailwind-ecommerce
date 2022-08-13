@@ -16,8 +16,8 @@ import { themePreference } from '../state/Theme'
 import withAuth from '../HOCs/withAuth'
 import { handleAccountData } from '../helpers/handlers'
 
-import config from '../main.config'
-import i18n from '../i18n.content'
+import config from '../config/main.config'
+import i18n from '../config/i18n.config'
 
 export default withAuth(function () {
     const theme = useTheme()

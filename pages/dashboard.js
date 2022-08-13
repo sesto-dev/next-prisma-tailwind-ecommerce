@@ -8,8 +8,8 @@ import Layout from '../components/Layout'
 import withAuth from '../HOCs/withAuth'
 import { themePreference } from '../state/Theme'
 
-import config from '../main.config'
-import i18n from '../i18n.content'
+import config from '../config/main.config'
+import i18n from '../config/i18n.config'
 
 export default withAuth(function () {
     const theme = useTheme()

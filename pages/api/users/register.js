@@ -7,7 +7,7 @@ import bakeCookie from '../../../helpers/bakeCookie'
 import isEmail from '../../../helpers/isEmail'
 
 import User from '../../../models/User'
-import config from '../../../main.config'
+import config from '../../../config/main.config'
 
 export default async function (req, res) {
     const { email, password } = req.body

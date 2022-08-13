@@ -5,7 +5,7 @@ import connectDB from '../../../helpers/connectDB'
 import isEmail from '../../../helpers/isEmail'
 
 import User from '../../../models/User'
-import config from '../../../main.config'
+import config from '../../../config/main.config'
 
 export default async function (req, res) {
     const { email } = req.body

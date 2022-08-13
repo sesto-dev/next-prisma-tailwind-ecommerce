@@ -4,7 +4,7 @@ import Header from './Header/Header'
 import Helmet from './Helmet'
 import Wrapper from './Wrapper'
 
-import defaultProps from '../default.props'
+import defaultProps from '../config/props.config'
 
 const Layout = ({
     config,

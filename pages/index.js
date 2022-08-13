@@ -6,8 +6,8 @@ import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
 import { getLocaleDirection } from '../helpers/RTL'
 
-import config from '../main.config'
-import i18n from '../i18n.content'
+import config from '../config/main.config'
+import i18n from '../config/i18n.config'
 
 export default function () {
     const theme = useTheme()

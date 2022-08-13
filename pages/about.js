@@ -4,8 +4,8 @@ import { Grid, Card, useTheme, Text, Spacer, Code } from '@geist-ui/core'
 import { themePreference } from '../state/Theme'
 import Layout from '../components/Layout'
 
-import config from '../main.config'
-import i18n from '../i18n.content'
+import config from '../config/main.config'
+import i18n from '../config/i18n.config'
 import { getLocaleDirection } from '../helpers/RTL'
 
 export default function () {
