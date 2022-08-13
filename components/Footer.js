@@ -232,7 +232,11 @@ function MobileLinks({ config, footer }) {
                 {footer &&
                     footer.links.map((category) => {
                         return (
-                            <Collapse width="100%" title={category[locale]}>
+                            <Collapse
+                                width="100%"
+                                title={category[locale]}
+                                key={category[locale]}
+                            >
                                 {category['links'].map((link) => (
                                     <Link
                                         key={link['label'][locale]}

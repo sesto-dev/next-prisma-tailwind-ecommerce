@@ -3,7 +3,7 @@ import { ButtonDropdown, useToasts, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 
 import { useAuth } from '../../state/Auth'
-import { logoutHandler } from '../../helpers/handlers'
+import { logoutHandler } from '../../helpers/handlers/authHandlers'
 
 export default function ({ config, i18n }) {
     const theme = useTheme()

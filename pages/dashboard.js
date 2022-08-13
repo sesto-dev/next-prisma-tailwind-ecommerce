@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { handleAccountData } from '../helpers/handlers'
+import { handleAccountData } from '../helpers/handlers/accountHandlers'
 import { Text, Card, Grid, useTheme, useToasts, Loading } from '@geist-ui/core'
 
 import Layout from '../components/Layout'

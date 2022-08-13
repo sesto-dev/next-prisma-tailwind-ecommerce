@@ -4,7 +4,7 @@ import { Button, Grid, useTheme, useToasts, Input } from '@geist-ui/core'
 
 import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
-import { verifyHandler } from '../../helpers/handlers'
+import { verifyHandler } from '../../helpers/handlers/authHandlers'
 import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
 
 import config from '../../config/main.config'

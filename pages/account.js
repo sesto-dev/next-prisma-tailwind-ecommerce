@@ -14,7 +14,7 @@ import {
 import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
 import withAuth from '../HOCs/withAuth'
-import { handleAccountData } from '../helpers/handlers'
+import { handleAccountData } from '../helpers/handlers/accountHandlers'
 
 import config from '../config/main.config'
 import i18n from '../config/i18n.config'

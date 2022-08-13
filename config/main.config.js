@@ -35,6 +35,7 @@ export default {
             subscribe: '/api/users/subscribe',
             forgot: '/api/users/forgot',
             reset: '/api/users/reset',
+            products: '/api/products/list',
         },
         axios: {
             simple: {

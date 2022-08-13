@@ -17,7 +17,12 @@ const product = mongoose.Schema(
         },
         brand: {
             type: String,
-            required: true,
+        },
+        publisher: {
+            type: String,
+        },
+        developer: {
+            type: String,
         },
         category: {
             type: String,

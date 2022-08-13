@@ -13,7 +13,10 @@ import {
 
 import { LoginIcon, RegisterIcon } from '../SVGs'
 import { useAuth } from '../../state/Auth'
-import { loginHandler, registerHandler } from '../../helpers/handlers'
+import {
+    loginHandler,
+    registerHandler,
+} from '../../helpers/handlers/authHandlers'
 import isEmail from '../../helpers/isEmail'
 import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
 
