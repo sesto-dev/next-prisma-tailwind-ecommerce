@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 export default function ({ config, i18n }) {
     const theme = useTheme()
-    const { locale = 'en' } = useRouter()
+    const { locale = config.defaultLocale } = useRouter()
 
     return (
         <>
@@ -23,7 +23,7 @@ export default function ({ config, i18n }) {
                 {`
                     .MenuNavigationTitle a {
                         color: ${theme.palette.foreground}!important;
-                        font-size: 1.7rem;
+                        font-size: 2rem;
                         font-weight: 600;
                         letter-spacing: ${locale == 'en' ? '0.3rem' : 0};
                     }

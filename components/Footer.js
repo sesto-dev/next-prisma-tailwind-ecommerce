@@ -1,11 +1,11 @@
 import Link from 'next/link'
-import { Text, Grid, useTheme } from '@geist-ui/core'
+import { Text, Grid, useTheme, Collapse } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 import { isLocaleRTL, getLocaleDirection } from '../helpers/RTL'
 
 export default function ({ config, i18n }) {
     const theme = useTheme()
-    const { locale = 'en' } = useRouter()
+    const { locale = config.defaultLocale } = useRouter()
 
     const footer = i18n['components']['footer']
 
@@ -14,68 +14,43 @@ export default function ({ config, i18n }) {
             {footer && (
                 <footer>
                     <div className="FooterWrapper">
-                        <Grid.Container gap={1} my={2}>
-                            {isLocaleRTL(locale) ? (
-                                <>
-                                    <Links config={config} footer={footer} />
-                                    <Grid
-                                        px={0}
-                                        style={{ display: 'block' }}
-                                        xs={24}
-                                        md={8}
-                                        mb={2}
+                        <Grid.Container>
+                            <Grid xs={24} md={0}>
+                                <Mobile config={config} footer={footer} />
+                            </Grid>
+                            <Grid xs={0} md={24}>
+                                <Desktop config={config} footer={footer} />
+                            </Grid>
+                            <Grid xs={24} md={0}>
+                                <div
+                                    style={{
+                                        display: 'block',
+                                        justifyItems: 'right',
+                                    }}
+                                >
+                                    <Text
+                                        h4
+                                        my={0}
+                                        style={{
+                                            textAlign: 'end',
+                                            direction: 'rtl',
+                                        }}
                                     >
-                                        <Text
-                                            h4
-                                            my={0}
-                                            style={{
-                                                textAlign: 'start',
-                                                direction: 'rtl',
-                                            }}
-                                        >
-                                            {footer['title'][
-                                                locale
-                                            ].toUpperCase()}
-                                        </Text>
-                                        <Text
-                                            mt={0}
-                                            style={{
-                                                fontSize: '0.7rem',
-                                                textAlign: 'right',
-                                                direction: 'rtl',
-                                            }}
-                                            type="secondary"
-                                        >
-                                            {footer['copyright'][locale]}
-                                        </Text>
-                                    </Grid>
-                                </>
-                            ) : (
-                                <>
-                                    <Grid
-                                        px={0}
-                                        style={{ display: 'block' }}
-                                        xs={24}
-                                        md={8}
-                                        mb={2}
+                                        {footer['title'][locale].toUpperCase()}
+                                    </Text>
+                                    <Text
+                                        mt={0}
+                                        style={{
+                                            fontSize: '0.7rem',
+                                            textAlign: 'right',
+                                            direction: 'rtl',
+                                        }}
+                                        type="secondary"
                                     >
-                                        <Text h4 my={0}>
-                                            {footer['title'][
-                                                locale
-                                            ].toUpperCase()}
-                                        </Text>
-                                        <Text
-                                            mt={0}
-                                            small
-                                            style={{ fontSize: '0.7rem' }}
-                                            type="secondary"
-                                        >
-                                            {footer['copyright'][locale]}
-                                        </Text>
-                                    </Grid>
-                                    <Links config={config} footer={footer} />
-                                </>
-                            )}
+                                        {footer['copyright'][locale]}
+                                    </Text>
+                                </div>
+                            </Grid>
                         </Grid.Container>
                     </div>
                 </footer>
@@ -105,8 +80,74 @@ export default function ({ config, i18n }) {
     )
 }
 
-function Links({ config, footer }) {
-    const { locale = 'en' } = useRouter()
+function Desktop({ config, footer }) {
+    const { locale = config.defaultLocale } = useRouter()
+
+    return (
+        <Grid.Container gap={1} my={2}>
+            {isLocaleRTL(locale) ? (
+                <>
+                    <DesktopLinks config={config} footer={footer} />
+                    <Grid
+                        px={0}
+                        style={{ display: 'block' }}
+                        xs={24}
+                        md={8}
+                        mb={2}
+                    >
+                        <Text
+                            h4
+                            my={0}
+                            style={{
+                                textAlign: 'start',
+                                direction: 'rtl',
+                            }}
+                        >
+                            {footer['title'][locale].toUpperCase()}
+                        </Text>
+                        <Text
+                            mt={0}
+                            style={{
+                                fontSize: '0.7rem',
+                                textAlign: 'right',
+                                direction: 'rtl',
+                            }}
+                            type="secondary"
+                        >
+                            {footer['copyright'][locale]}
+                        </Text>
+                    </Grid>
+                </>
+            ) : (
+                <>
+                    <Grid
+                        px={0}
+                        style={{ display: 'block' }}
+                        xs={24}
+                        md={8}
+                        mb={2}
+                    >
+                        <Text h4 my={0}>
+                            {footer['title'][locale].toUpperCase()}
+                        </Text>
+                        <Text
+                            mt={0}
+                            small
+                            style={{ fontSize: '0.7rem' }}
+                            type="secondary"
+                        >
+                            {footer['copyright'][locale]}
+                        </Text>
+                    </Grid>
+                    <DesktopLinks config={config} footer={footer} />
+                </>
+            )}
+        </Grid.Container>
+    )
+}
+
+function DesktopLinks({ config, footer }) {
+    const { locale = config.defaultLocale } = useRouter()
 
     return (
         <>
@@ -163,6 +204,68 @@ function Links({ config, footer }) {
                 {`
                     h5 {
                         white-space: nowrap;
+                    }
+                `}
+            </style>
+        </>
+    )
+}
+
+function Mobile({ config, footer }) {
+    const { locale = config.defaultLocale } = useRouter()
+
+    return (
+        <>
+            <Collapse.Group width="100%" mt={1} mb={2}>
+                <MobileLinks config={config} footer={footer} />
+            </Collapse.Group>
+        </>
+    )
+}
+
+function MobileLinks({ config, footer }) {
+    const { locale = config.defaultLocale } = useRouter()
+
+    return (
+        <>
+            <>
+                {footer &&
+                    footer.links.map((category) => {
+                        return (
+                            <Collapse width="100%" title={category[locale]}>
+                                {category['links'].map((link) => (
+                                    <Link
+                                        key={link['label'][locale]}
+                                        href={link.value}
+                                    >
+                                        <a>
+                                            <Text
+                                                px={0}
+                                                style={{
+                                                    fontSize: '0.8rem',
+                                                    direction:
+                                                        getLocaleDirection(
+                                                            locale
+                                                        ),
+                                                    textAlign: 'end',
+                                                }}
+                                            >
+                                                {link['label'][locale]}
+                                            </Text>
+                                        </a>
+                                    </Link>
+                                ))}
+                            </Collapse>
+                        )
+                    })}
+            </>
+            <style jsx global>
+                {`
+                    .collapse > .view > .title > h3 {
+                        font-size: 1rem !important;
+                    }
+                    .collapse {
+                        border-top: none !important;
                     }
                 `}
             </style>

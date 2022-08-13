@@ -12,10 +12,11 @@ import Login from './Login'
 import Account from './Account'
 
 import { isLocaleRTL } from '../../helpers/RTL'
+import Cart from './Cart'
 
 export default function ({ config, i18n, themePreference }) {
     const theme = useTheme()
-    const { locale, locales } = useRouter()
+    const { locale = config.defaultLocale, locales } = useRouter()
     const isAuthenticated = useIsAuthenticated()
 
     const [sticky, setSticky] = useState(false)
@@ -34,37 +35,36 @@ export default function ({ config, i18n, themePreference }) {
                     <nav className="Navigation">
                         {isLocaleRTL(locale) ? (
                             <>
-                                <div>
-                                    {themePreference && (
-                                        <ThemeButton
-                                            config={config}
-                                            i18n={i18n}
-                                            sticky={sticky}
-                                            themePreference={themePreference}
-                                        />
+                                <div style={{ marginTop: '1rem' }}>
+                                    {locales && (
+                                        <Language config={config} i18n={i18n} />
                                     )}
-                                    {locale && locales && (
-                                        <Language
-                                            config={config}
-                                            i18n={i18n}
-                                            sticky={sticky}
-                                        />
-                                    )}
-                                    {config &&
-                                        config.layout.authentication &&
+
+                                    {config.layout.authentication &&
                                         (isAuthenticated ? (
-                                            <Account
-                                                config={config}
-                                                i18n={i18n}
-                                                sticky={sticky}
-                                            />
+                                            <>
+                                                <Account
+                                                    config={config}
+                                                    i18n={i18n}
+                                                />
+                                                <Cart
+                                                    config={config}
+                                                    i18n={i18n}
+                                                />
+                                            </>
                                         ) : (
                                             <Login
                                                 config={config}
                                                 i18n={i18n}
-                                                sticky={sticky}
                                             />
                                         ))}
+                                    {themePreference && (
+                                        <ThemeButton
+                                            config={config}
+                                            i18n={i18n}
+                                            themePreference={themePreference}
+                                        />
+                                    )}
                                 </div>
                                 <Title config={config} i18n={i18n} />
                             </>
@@ -76,32 +76,30 @@ export default function ({ config, i18n, themePreference }) {
                                         <ThemeButton
                                             config={config}
                                             i18n={i18n}
-                                            sticky={sticky}
                                             themePreference={themePreference}
                                         />
                                     )}
-                                    {locale && locales && (
-                                        <Language
-                                            config={config}
-                                            i18n={i18n}
-                                            sticky={sticky}
-                                        />
-                                    )}
-                                    {config &&
-                                        config.layout.authentication &&
+                                    {config.layout.authentication &&
                                         (isAuthenticated ? (
-                                            <Account
-                                                config={config}
-                                                i18n={i18n}
-                                                sticky={sticky}
-                                            />
+                                            <>
+                                                <Cart
+                                                    config={config}
+                                                    i18n={i18n}
+                                                />
+                                                <Account
+                                                    config={config}
+                                                    i18n={i18n}
+                                                />
+                                            </>
                                         ) : (
                                             <Login
                                                 config={config}
                                                 i18n={i18n}
-                                                sticky={sticky}
                                             />
                                         ))}
+                                    {locales && (
+                                        <Language config={config} i18n={i18n} />
+                                    )}
                                 </div>
                             </>
                         )}
@@ -116,10 +114,8 @@ export default function ({ config, i18n, themePreference }) {
                                 width: ${config.theme.width};
                                 max-width: 100%;
                                 margin: 0 auto;
-                                padding: 0 ${theme.layout.pageMargin};
-
-                                font-size: 16px;
-                                height: 54px;
+                                padding: 1.5rem ${theme.layout.pageMargin};
+                                height: 60px;
                                 box-sizing: border-box;
                             }
                             .Navigation > div {
@@ -127,7 +123,12 @@ export default function ({ config, i18n, themePreference }) {
                                 align-items: center;
                             }
                             .btn-dropdown {
-                                margin-left: 0.5rem;
+                                margin-left: ${isLocaleRTL(locale)
+                                    ? ''
+                                    : '0.5rem'};
+                                margin-right: ${isLocaleRTL(locale)
+                                    ? '0.5rem'
+                                    : ''};
                             }
                         `}
                     </style>

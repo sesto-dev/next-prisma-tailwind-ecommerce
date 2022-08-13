@@ -13,7 +13,7 @@ import i18n from '../../i18n.content'
 
 export default function () {
     const theme = useTheme()
-    const { locale = 'en' } = useRouter()
+    const { locale = config.defaultLocale } = useRouter()
     const { setToast } = useToasts()
     const isAuthenticated = useIsAuthenticated()
 

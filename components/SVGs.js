@@ -130,3 +130,19 @@ export const RegisterIcon = () => {
         </svg>
     )
 }
+
+export const CartIcon = () => {
+    return (
+        <svg
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            viewBox="2 2 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M4 7H20M4 7V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18V7M4 7L6 3H18L20 7M15 11C15 12.6569 13.6569 14 12 14C10.3431 14 9 12.6569 9 11" />
+        </svg>
+    )
+}

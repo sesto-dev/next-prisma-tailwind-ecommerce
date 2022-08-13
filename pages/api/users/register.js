@@ -26,11 +26,13 @@ export default async function (req, res) {
         const salted = await bcrypt.hash(password, salt)
 
         const email_verification_code = await generateVoucher(1)
+        const referral_code = await generateVoucher(3)
 
         const user = await User.create({
             email,
             password: salted,
             email_verification_code,
+            referral_code,
         })
 
         if (user) {

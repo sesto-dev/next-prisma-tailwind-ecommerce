@@ -5,7 +5,7 @@ import { isLocaleRTL } from '../../helpers/RTL'
 
 export default function ({ config, i18n, sticky }) {
     const router = useRouter()
-    const { locale = 'en' } = router
+    const { locale = config.defaultLocale } = router
     const theme = useTheme()
 
     const submenu = i18n['components']['header']['submenu']

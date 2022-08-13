@@ -1,7 +1,13 @@
 import mongoose from 'mongoose'
 
-const user = new mongoose.Schema(
+const user = mongoose.Schema(
     {
+        name: {
+            type: String,
+        },
+        credit: {
+            type: Number,
+        },
         email: {
             type: String,
             required: true,
@@ -10,6 +16,16 @@ const user = new mongoose.Schema(
         password: {
             type: String,
             required: true,
+        },
+        isAdmin: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        isPremium: {
+            type: Boolean,
+            required: true,
+            default: false,
         },
         isVerified: {
             type: Boolean,
@@ -20,6 +36,16 @@ const user = new mongoose.Schema(
             type: Boolean,
             required: true,
             default: true,
+        },
+        isKYC: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        referral_code: {
+            type: String,
+            required: true,
+            unique: true,
         },
         email_verification_code: {
             type: String,

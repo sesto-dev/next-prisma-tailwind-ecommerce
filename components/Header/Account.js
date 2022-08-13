@@ -5,10 +5,10 @@ import { useRouter } from 'next/router'
 import { useAuth } from '../../state/Auth'
 import { logoutHandler } from '../../helpers/handlers'
 
-export default function ({ config, i18n, sticky }) {
+export default function ({ config, i18n }) {
     const theme = useTheme()
     const router = useRouter()
-    const { locale = 'en' } = router
+    const { locale = config.defaultLocale } = router
     const { setAuthenticated } = useAuth()
     const { setToast } = useToasts()
 

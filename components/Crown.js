@@ -5,7 +5,7 @@ import { isLocaleRTL, getLocaleDirection } from '../helpers/RTL'
 
 export default function ({ config, large, small }) {
     const theme = useTheme()
-    const { locale = 'en' } = useRouter()
+    const { locale = config.defaultLocale } = useRouter()
     const smallComponent = small
 
     return (

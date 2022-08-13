@@ -10,7 +10,7 @@ import { isLocaleRTL, getLocaleDirection } from '../helpers/RTL'
 
 export default function () {
     const theme = useTheme()
-    const { locale = 'en' } = useRouter()
+    const { locale = config.defaultLocale } = useRouter()
 
     const page = i18n['root']['contact']
     const title = page['title'][locale]

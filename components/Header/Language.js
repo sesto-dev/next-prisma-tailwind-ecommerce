@@ -1,10 +1,16 @@
 import { ButtonDropdown, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 
-export default function ({ config, sticky }) {
+export default function ({ config }) {
     const theme = useTheme()
     const router = useRouter()
-    const { locale, locales, pathname, asPath, query } = router
+    const {
+        locale = config.defaultLocale,
+        locales,
+        pathname,
+        asPath,
+        query,
+    } = router
 
     const changeLanguage = (loc) => {
         router.push({ pathname, query }, asPath, { locale: loc })

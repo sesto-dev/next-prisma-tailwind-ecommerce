@@ -14,7 +14,7 @@ import i18n from '../../i18n.content'
 export default function () {
     const theme = useTheme()
     const router = useRouter()
-    const { locale = 'en' } = router
+    const { locale = config.defaultLocale } = router
     const { setToast } = useToasts()
 
     const page = i18n['auth']['reset']

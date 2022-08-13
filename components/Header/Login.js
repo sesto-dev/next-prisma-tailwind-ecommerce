@@ -17,7 +17,7 @@ import { loginHandler, registerHandler } from '../../helpers/handlers'
 import isEmail from '../../helpers/isEmail'
 import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
 
-export default function ({ config, i18n, sticky }) {
+export default function ({ config, i18n }) {
     const [modalVisibility, setModalVisibility] = useState(false)
     const modalHandler = () => setModalVisibility(true)
     const closeHandler = (event) => {
@@ -26,7 +26,7 @@ export default function ({ config, i18n, sticky }) {
 
     const theme = useTheme()
     const router = useRouter()
-    const { locale = 'en' } = router
+    const { locale = config.defaultLocale } = router
     const { setAuthenticated } = useAuth()
     const { setToast } = useToasts()
 
