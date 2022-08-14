@@ -11,9 +11,9 @@ import {
     useTheme,
 } from '@geist-ui/core'
 
+import withAuth from '../HOCs/withAuth'
 import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
-import withAuth from '../HOCs/withAuth'
 import { handleAccountData } from '../helpers/handlers/accountHandlers'
 
 import config from '../config/main.config'
@@ -25,9 +25,9 @@ export default withAuth(function () {
     const { locale = config.defaultLocale } = router
     const { setToast } = useToasts()
 
-    const page = i18n['root']['account']
-    const title = page['title'][locale]
-    const description = page['description'][locale]
+    const folio = i18n['root']['account']
+    const title = folio['title'][locale]
+    const description = folio['description'][locale]
 
     const [account, setAccount] = useState({})
 

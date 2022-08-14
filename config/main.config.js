@@ -8,7 +8,7 @@ export default {
     theme: {
         width: '900pt',
         defaultTheme: 'dark',
-        lightBackground: '#F5F5F5',
+        lightBackground: '#F0F0F0',
         darkBackground: '#040404',
     },
     layout: {
@@ -35,7 +35,7 @@ export default {
             subscribe: '/api/users/subscribe',
             forgot: '/api/users/forgot',
             reset: '/api/users/reset',
-            products: '/api/products/list',
+            products: '/api/products',
         },
         axios: {
             simple: {

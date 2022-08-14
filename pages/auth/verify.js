@@ -16,9 +16,9 @@ export default function () {
     const { locale = config.defaultLocale } = router
     const { setToast } = useToasts()
 
-    const page = i18n['auth']['verify']
-    const title = page['title'][locale]
-    const description = page['description'][locale]
+    const folio = i18n['auth']['verify']
+    const title = folio['title'][locale]
+    const description = folio['description'][locale]
 
     const [loading, setLoading] = useState(false)
     const [code, setCode, refCode] = useState('')

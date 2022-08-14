@@ -12,9 +12,9 @@ export default function () {
     const theme = useTheme()
     const { locale = config.defaultLocale } = useRouter()
 
-    const page = i18n['root']['contact']
-    const title = page['title'][locale]
-    const description = page['description'][locale]
+    const folio = i18n['root']['contact']
+    const title = folio['title'][locale]
+    const description = folio['description'][locale]
 
     return (
         <Layout

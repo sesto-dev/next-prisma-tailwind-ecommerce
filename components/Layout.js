@@ -15,6 +15,7 @@ const Layout = ({
     metaTitle,
     metaDescription,
     metaImage,
+    crown,
     children,
 }) => {
     return (
@@ -34,6 +35,7 @@ const Layout = ({
             <Crown
                 config={config}
                 i18n={i18n}
+                crown={crown}
                 large={crownLarge}
                 small={crownSmall}
             />

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { Text, Card, Grid, useTheme } from '@geist-ui/core'
 
+import withAuth from '../HOCs/withAuth'
 import Layout from '../components/Layout'
 import { themePreference } from '../state/Theme'
 
@@ -8,13 +9,13 @@ import config from '../config/main.config'
 import i18n from '../config/i18n.config'
 import { isLocaleRTL, getLocaleDirection } from '../helpers/RTL'
 
-export default function () {
+export default withAuth(function () {
     const theme = useTheme()
     const { locale = config.defaultLocale } = useRouter()
 
-    const page = i18n['root']['cart']
-    const title = page['title'][locale]
-    const description = page['description'][locale]
+    const folio = i18n['root']['cart']
+    const title = folio['title'][locale]
+    const description = folio['description'][locale]
 
     return (
         <Layout
@@ -45,4 +46,4 @@ export default function () {
             </Grid.Container>
         </Layout>
     )
-}
+})

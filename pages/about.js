@@ -12,9 +12,9 @@ export default function () {
     const theme = useTheme()
     const { locale = config.defaultLocale } = useRouter()
 
-    const page = i18n['root']['about']
-    const title = page['title'][locale]
-    const description = page['description'][locale]
+    const folio = i18n['root']['about']
+    const title = folio['title'][locale]
+    const description = folio['description'][locale]
 
     const links = ['http://github.com/accretence/create-next-dashboard']
 
@@ -38,7 +38,7 @@ export default function () {
                             padding={2}
                             width="100%"
                         >
-                            {page && (
+                            {folio && (
                                 <>
                                     <Text
                                         type="secondary"
@@ -48,7 +48,7 @@ export default function () {
                                                 getLocaleDirection(locale),
                                         }}
                                     >
-                                        {page['content'][locale]}
+                                        {folio['content'][locale]}
                                     </Text>
                                     <Spacer />
                                     <Grid.Container gap={1}>

@@ -17,9 +17,9 @@ export default function () {
     const { setToast } = useToasts()
     const isAuthenticated = useIsAuthenticated()
 
-    const page = i18n['auth']['subscribe']
-    const title = page['title'][locale]
-    const description = page['description'][locale]
+    const folio = i18n['auth']['subscribe']
+    const title = folio['title'][locale]
+    const description = folio['description'][locale]
 
     const [loading, setLoading] = useState(false)
 

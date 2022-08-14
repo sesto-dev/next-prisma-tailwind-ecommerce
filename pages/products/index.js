@@ -1,9 +1,11 @@
+import Link from 'next/link'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import {
     useToasts,
-    Description,
+    Button,
+    Display,
     Image,
     Text,
     Loading,
@@ -14,11 +16,11 @@ import {
 
 import Layout from '../../components/Layout'
 import { themePreference } from '../../state/Theme'
-import { handleProductData } from '../../helpers/handlers/productHandlers'
-import ProductCard from '../../components/ProductCard'
+import { handleProductsData } from '../../helpers/handlers/productHandlers'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
+import { CartIcon } from '../../components/SVGs'
 
 export default function () {
     const theme = useTheme()
@@ -26,20 +28,22 @@ export default function () {
     const { locale = config.defaultLocale } = router
     const { setToast } = useToasts()
 
-    const pageData = i18n['root']['products']
-    const title = pageData['title'][locale]
-    const description = pageData['description'][locale]
+    const folio = i18n['root']['products']
+    const title = folio['title'][locale]
+    const description = folio['description'][locale]
 
-    const [page, setPage] = useState(null)
+    const [keyword, setKeyword] = useState(null)
+    const [pageNumber, setPageNumber] = useState(1)
     const [pages, setPages] = useState(null)
     const [products, setProducts] = useState({})
 
     async function resolve() {
         const response = await axios.get(config.backend.routes.products)
-        handleProductData(
+
+        handleProductsData(
             response,
             router,
-            setPage,
+            setPageNumber,
             setPages,
             setProducts,
             setToast,
@@ -56,20 +60,17 @@ export default function () {
             config={config}
             i18n={i18n}
             themePreference={themePreference}
-            crownLarge={title}
-            crownSmall={description}
+            crown={false}
             metaTitle={title}
         >
             <Grid.Container gap={1}>
                 <Grid xs={24}>
-                    <Card
-                        style={{
-                            backgroundColor: `${theme.palette.accents_1}`,
-                        }}
-                        width="100%"
-                    >
-                        {page && pages && products ? (
-                            <Grid.Container gap={1}>
+                    <Card width="100%">Categories</Card>
+                </Grid>
+                <Grid xs={24}>
+                    <Grid.Container gap={1}>
+                        {pageNumber && pages && products ? (
+                            <>
                                 {products.map((product) => {
                                     console.log(product)
                                     return (
@@ -80,34 +81,73 @@ export default function () {
                                             md={8}
                                             xl={6}
                                         >
-                                            <Card width="100%">
-                                                <Image
-                                                    height="20rem"
-                                                    src={product.image}
-                                                    style={{
-                                                        objectFit: 'cover',
-                                                    }}
-                                                />
-                                                <Text b mb={0}>
-                                                    {product.name},{' '}
-                                                </Text>
-                                                <Text
-                                                    small
-                                                    style={{
-                                                        color: `${theme.palette.accents_6}`,
-                                                    }}
-                                                >
-                                                    {product.description}
-                                                </Text>
-                                            </Card>
+                                            <Link
+                                                href={`/products/${product._id}`}
+                                            >
+                                                <a>
+                                                    <Card
+                                                        hoverable
+                                                        width="100%"
+                                                        height="100%"
+                                                    >
+                                                        <Image
+                                                            height="20rem"
+                                                            src={product.image}
+                                                            style={{
+                                                                objectFit:
+                                                                    'cover',
+                                                            }}
+                                                        />
+                                                        <Text b mb={0}>
+                                                            {product.name},{' '}
+                                                        </Text>
+                                                        <Text
+                                                            small
+                                                            style={{
+                                                                color: `${theme.palette.accents_6}`,
+                                                            }}
+                                                        >
+                                                            {
+                                                                product.description
+                                                            }
+                                                        </Text>
+                                                        <Button
+                                                            mt={1}
+                                                            width="100%"
+                                                            icon={<CartIcon />}
+                                                        >
+                                                            ${product.price}
+                                                        </Button>
+                                                    </Card>
+                                                </a>
+                                            </Link>
                                         </Grid>
                                     )
                                 })}
-                            </Grid.Container>
+                            </>
                         ) : (
-                            <Loading />
+                            <>
+                                {[...Array(10)].map((x, i) => (
+                                    <Grid
+                                        key={Math.random()}
+                                        xs={24}
+                                        sm={12}
+                                        md={8}
+                                        xl={6}
+                                    >
+                                        <Card
+                                            shadow
+                                            width="100%"
+                                            height="20rem"
+                                            py="8rem"
+                                        >
+                                            <Loading />
+                                        </Card>
+                                    </Grid>
+                                ))}
+                            </>
                         )}
-                    </Card>
+                    </Grid.Container>
                 </Grid>
             </Grid.Container>
         </Layout>

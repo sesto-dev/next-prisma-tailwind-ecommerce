@@ -7,7 +7,7 @@ const meta = {
     title,
     description: {
         en: 'Small text as a description for the page.',
-        fa: 'متن نمونه استفاده شده در صفحه مربوطه.',
+        fa: 'متن استفاده شده در صفحه مربوطه.',
     },
 }
 
@@ -345,8 +345,8 @@ const root = {
             fa: 'خانه',
         },
         description: {
-            en: 'Index Sample Page',
-            fa: 'صفحه نمونه خانه',
+            en: 'Index Page',
+            fa: 'صفحه خانه',
         },
         content: {
             en: 'This page is designed to showcase the simplicity of the Layout component. Please visit the About page which displays a more substantial usecase.',
@@ -359,8 +359,18 @@ const root = {
             fa: 'سبد خرید',
         },
         description: {
-            en: 'Cart Sample Page',
-            fa: 'صفحه نمونه سبد خرید',
+            en: 'Cart Page',
+            fa: 'صفحه سبد خرید',
+        },
+    },
+    product: {
+        title: {
+            en: 'Product',
+            fa: 'محصول',
+        },
+        description: {
+            en: 'Product Page',
+            fa: 'صفحه محصول',
         },
     },
     products: {
@@ -369,8 +379,8 @@ const root = {
             fa: 'محصولات',
         },
         description: {
-            en: 'Products Sample Page',
-            fa: 'صفحه نمونه محصولات',
+            en: 'Products Page',
+            fa: 'صفحه محصولات',
         },
     },
     pricing: {
@@ -379,8 +389,8 @@ const root = {
             fa: 'قیمت گذاری',
         },
         description: {
-            en: 'Pricing Sample Page',
-            fa: 'صفحه نمونه قیمت گذاری',
+            en: 'Pricing Page',
+            fa: 'صفحه قیمت گذاری',
         },
     },
     dashboard: {
@@ -389,8 +399,8 @@ const root = {
             fa: 'داشبورد',
         },
         description: {
-            en: 'Dashboard Sample Page',
-            fa: 'صفحه نمونه داشبورد',
+            en: 'Dashboard Page',
+            fa: 'صفحه داشبورد',
         },
     },
     account: {
@@ -399,8 +409,8 @@ const root = {
             fa: 'حساب کاربری',
         },
         description: {
-            en: 'Account Sample Page',
-            fa: 'صفحه نمونه حساب کاربری',
+            en: 'Account Page',
+            fa: 'صفحه حساب کاربری',
         },
     },
     about: {

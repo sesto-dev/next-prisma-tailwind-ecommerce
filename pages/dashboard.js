@@ -19,9 +19,9 @@ export default withAuth(function () {
 
     const [account, setAccount] = useState({})
 
-    const page = i18n['root']['dashboard']
-    const title = page['title'][locale]
-    const description = page['description'][locale]
+    const folio = i18n['root']['dashboard']
+    const title = folio['title'][locale]
+    const description = folio['description'][locale]
 
     async function resolve() {
         const response = await axios.get(config.backend.routes.account)

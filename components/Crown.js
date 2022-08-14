@@ -3,35 +3,38 @@ import { Spacer, Text, useTheme } from '@geist-ui/core'
 
 import { isLocaleRTL, getLocaleDirection } from '../helpers/RTL'
 
-export default function ({ config, large, small }) {
+export default function ({ config, i18n, crown = true, large, small }) {
     const theme = useTheme()
     const { locale = config.defaultLocale } = useRouter()
     const smallComponent = small
-
     return (
         <>
             <div className="Banner">
                 <div style={{ marginTop: '1rem', marginBottom: '3rem' }}>
-                    <Text
-                        h3
-                        mb={0}
-                        pb={0}
-                        style={{
-                            direction: getLocaleDirection(locale),
-                        }}
-                    >
-                        {large.toUpperCase()}
-                    </Text>
-                    <Text
-                        mt={0.2}
-                        type="secondary"
-                        style={{
-                            fontSize: '0.85rem',
-                            direction: getLocaleDirection(locale),
-                        }}
-                    >
-                        {smallComponent}
-                    </Text>
+                    {crown && (
+                        <>
+                            <Text
+                                h3
+                                mb={0}
+                                pb={0}
+                                style={{
+                                    direction: getLocaleDirection(locale),
+                                }}
+                            >
+                                {large.toUpperCase()}
+                            </Text>
+                            <Text
+                                mt={0.2}
+                                type="secondary"
+                                style={{
+                                    fontSize: '0.85rem',
+                                    direction: getLocaleDirection(locale),
+                                }}
+                            >
+                                {smallComponent}
+                            </Text>
+                        </>
+                    )}
                 </div>
             </div>
             <Spacer />

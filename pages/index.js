@@ -13,9 +13,9 @@ export default function () {
     const theme = useTheme()
     const { locale = config.defaultLocale } = useRouter()
 
-    const page = i18n['root']['index']
-    const title = page['title'][locale]
-    const description = page['description'][locale]
+    const folio = i18n['root']['index']
+    const title = folio['title'][locale]
+    const description = folio['description'][locale]
 
     return (
         <Layout
@@ -40,7 +40,7 @@ export default function () {
                                 direction: getLocaleDirection(locale),
                             }}
                         >
-                            {page['content'][locale]}
+                            {folio['content'][locale]}
                         </Text>
                     </Card>
                 </Grid>
