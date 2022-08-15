@@ -60,6 +60,8 @@ export async function handleProductData(
         burnToast(setToast, noDataToast)
     }
 
+    console.log(data)
+
     setTitle(data.name)
     setImage(data.image)
     setProduct(data)

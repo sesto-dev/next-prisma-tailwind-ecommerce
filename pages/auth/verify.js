@@ -50,6 +50,7 @@ export default function () {
                             width="220pt"
                             value={code}
                             scale={0.9}
+                            type="secondary"
                             onChange={(e) => {
                                 setCode(e.target.value.trim())
                             }}

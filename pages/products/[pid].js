@@ -1,10 +1,14 @@
 import axios from 'axios'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import {
     useToasts,
+    Collapse,
     Description,
+    Breadcrumbs,
     Button,
+    Badge,
     Image,
     Text,
     Loading,
@@ -21,11 +25,10 @@ import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
 import { CartIcon } from '../../components/SVGs'
 
-export default function () {
+export default function ({ pid }) {
     const theme = useTheme()
     const router = useRouter()
     const { locale = config.defaultLocale } = router
-    const { pid } = router.query
     const { setToast } = useToasts()
 
     const folio = i18n['root']['product']
@@ -55,57 +58,157 @@ export default function () {
     }, [])
 
     return (
-        <Layout
-            config={config}
-            i18n={i18n}
-            useThemeProvider={useThemeProvider}
-            crown={false}
-            metaTitle={title}
-            metaDescription={description}
-        >
-            <Grid.Container gap={1}>
-                <Grid xs={24}>
+        <>
+            <Layout
+                config={config}
+                i18n={i18n}
+                useThemeProvider={useThemeProvider}
+                crown={false}
+                metaTitle={title}
+                metaDescription={description}
+            >
+                <Grid.Container gap={1}>
                     {product ? (
-                        <Card
-                            style={{
-                                backgroundColor: `${theme.palette.accents_1}`,
-                            }}
-                            width="100%"
-                        >
-                            <Image
-                                height="50vh"
-                                src={product.image}
-                                style={{
-                                    objectFit: 'cover',
-                                }}
-                            />
-                            <Description
-                                mt={1}
-                                title="Title"
-                                content={
-                                    <Text mt={0.7} h3>
+                        <>
+                            <Grid xs={24}>
+                                <Breadcrumbs mb={1}>
+                                    <Link href="/">
+                                        <a>
+                                            <Breadcrumbs.Item>
+                                                Home
+                                            </Breadcrumbs.Item>
+                                        </a>
+                                    </Link>
+                                    <Link href="/products">
+                                        <a>
+                                            <Breadcrumbs.Item>
+                                                Products
+                                            </Breadcrumbs.Item>
+                                        </a>
+                                    </Link>
+                                    <Breadcrumbs.Item>
+                                        {product.name}
+                                    </Breadcrumbs.Item>
+                                </Breadcrumbs>
+                            </Grid>
+                            <Grid xs={24} md={9}>
+                                <Card
+                                    style={{
+                                        backgroundColor: `${theme.palette.accents_1}`,
+                                    }}
+                                    width="100%"
+                                    height="100%"
+                                >
+                                    <Image
+                                        height="50vh"
+                                        src={product.image}
+                                        style={{
+                                            objectFit: 'cover',
+                                        }}
+                                    />
+                                    <Text
+                                        mb={0.2}
+                                        style={{ fontSize: '1.3rem' }}
+                                    >
                                         {product.name}
                                     </Text>
-                                }
-                            />
-                            <Description
-                                mt={1}
-                                title="Description"
-                                content={<Text>{product.description}</Text>}
-                            />
-                        </Card>
+                                    <Text small type="secondary">
+                                        {product.description}
+                                    </Text>
+                                </Card>
+                            </Grid>
+                            <Grid xs={24} md={15}>
+                                <Card
+                                    style={{
+                                        backgroundColor: `${theme.palette.accents_1}`,
+                                    }}
+                                    width="100%"
+                                    height="100%"
+                                >
+                                    <Text
+                                        mb={0.2}
+                                        style={{ fontSize: '1.5rem' }}
+                                    >
+                                        {product.name}
+                                    </Text>
+                                    <Text small type="secondary">
+                                        {product.description}
+                                    </Text>
+                                </Card>
+                            </Grid>
+                            <Grid xs={24}>
+                                <Card
+                                    style={{
+                                        backgroundColor: `${theme.palette.accents_1}`,
+                                    }}
+                                >
+                                    <Collapse.Group>
+                                        <Collapse
+                                            title="Question A"
+                                            initialVisible
+                                        >
+                                            <Text>
+                                                Lorem ipsum dolor sit amet,
+                                                consectetur adipiscing elit, sed
+                                                do eiusmod tempor incididunt ut
+                                                labore et dolore magna aliqua.
+                                                Ut enim ad minim veniam, quis
+                                                nostrud exercitation ullamco
+                                                laboris nisi ut aliquip ex ea
+                                                commodo consequat.
+                                            </Text>
+                                        </Collapse>
+                                        <Collapse
+                                            style={{ borderBottom: 'none' }}
+                                            title="Question B"
+                                        >
+                                            <Text>
+                                                Lorem ipsum dolor sit amet,
+                                                consectetur adipiscing elit, sed
+                                                do eiusmod tempor incididunt ut
+                                                labore et dolore magna aliqua.
+                                                Ut enim ad minim veniam, quis
+                                                nostrud exercitation ullamco
+                                                laboris nisi ut aliquip ex ea
+                                                commodo consequat.
+                                            </Text>
+                                        </Collapse>
+                                    </Collapse.Group>
+                                </Card>
+                            </Grid>
+                        </>
                     ) : (
-                        <Card
-                            style={{
-                                backgroundColor: `${theme.palette.accents_1}`,
-                            }}
-                            width="100%"
-                        >
-                            <Loading />
-                        </Card>
+                        <Grid xs={24}>
+                            <Card
+                                style={{
+                                    backgroundColor: `${theme.palette.accents_1}`,
+                                }}
+                                width="100%"
+                            >
+                                <Loading />
+                            </Card>
+                        </Grid>
                     )}
-                </Grid>
-            </Grid.Container>
-        </Layout>
+                </Grid.Container>
+            </Layout>
+            <style jsx global>
+                {`
+                    a {
+                        color: ${theme.palette.accents_3} !important;
+                    }
+                    a:hover {
+                        color: ${theme.palette.foreground} !important;
+                    }
+                `}
+            </style>
+        </>
     )
+}
+
+export async function getServerSideProps(context) {
+    const { pid } = context.query
+
+    return {
+        props: { pid }, // will be passed to the page component as props
+    }
 }

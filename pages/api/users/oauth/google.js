@@ -8,6 +8,7 @@ import connectDB from '../../../../helpers/connectDB'
 import { bakeAJWT } from '../../../../helpers/bakeCookies'
 
 import User from '../../../../models/User'
+import config from '../../../../config/main.config'
 
 export default async function (req, res) {
     const { id_token, access_token } = await getTokens({ code: req.query.code })
@@ -26,12 +27,44 @@ export default async function (req, res) {
     const exists = await User.findOne({ email })
 
     if (exists) {
-        const AJWT = await bakeAJWT(exists)
+        const AJWT = await bakeAJWT(exists, 'Lax')
         res.setHeader('Set-Cookie', AJWT)
+        res.redirect(302, '/')
     } else {
-    }
+        const salt = await bcrypt.genSalt(10)
+        const salted = await bcrypt.hash(password, salt)
 
-    res.redirect(302, '/contact')
+        const email_verification_code = await generateVoucher(1)
+        const referral_code = await generateVoucher(3)
+
+        const user = await User.create({
+            email,
+            password: salted,
+            email_verification_code: verified_email
+                ? email_verification_code
+                : null,
+            referral_code,
+            isVerified: verified_email ? true : false,
+        })
+
+        if (user) {
+            const AJWT = await bakeAJWT(user, 'Lax')
+
+            if (!verified_email)
+                await sendVerifyMail(
+                    config.meta.title,
+                    email,
+                    email_verification_code,
+                    config.urls.verify,
+                    config.urls.unsubscribe
+                )
+
+            res.setHeader('Set-Cookie', AJWT)
+            res.redirect(302, '/')
+        } else {
+            res.redirect(302, '/auth/error')
+        }
+    }
 }
 
 async function getTokens({ code }) {

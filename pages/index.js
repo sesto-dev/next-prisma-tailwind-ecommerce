@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import * as cookie from 'cookie'
 import { Grid, Card, Text, Code, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 
@@ -11,12 +10,12 @@ import { useAuth } from '../state/Auth'
 import config from '../config/main.config'
 import i18n from '../config/i18n.config'
 
-export default function () {
+export default function ({ auth }) {
     const theme = useTheme()
     const { locale = config.defaultLocale } = useRouter()
     const { isAuthenticated, setLocalAuthentication } = useAuth()
 
-    // setLocalAuthentication(auth)
+    setLocalAuthentication(auth)
 
     const folio = i18n['root']['index']
     const title = folio['title'][locale]
@@ -54,22 +53,10 @@ export default function () {
     )
 }
 
-// export async function getServerSideProps(context) {
-//     let cookies = context.req.headers.cookie
+export async function getServerSideProps(ctx) {
+    const { AJWT } = ctx.req.cookies
 
-//     if (typeof cookies !== 'string') {
-//         console.log('No Cookies!')
-
-//         return {
-//             props: { auth: false },
-//         }
-//     } else {
-//         const { AJWT } = cookie.parse(cookies)
-
-//         console.log('AJWT found!')
-
-//         return {
-//             props: { auth: AJWT ? true : false },
-//         }
-//     }
-// }
+    return {
+        props: { auth: AJWT ? true : false },
+    }
+}

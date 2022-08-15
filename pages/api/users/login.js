@@ -17,7 +17,7 @@ export default async function (req, res) {
     const user = await User.findOne({ email })
 
     if (user && (await bcrypt.compare(password, user.password))) {
-        const AJWT = await bakeAJWT(user)
+        const AJWT = await bakeAJWT(user, 'Strict')
 
         res.setHeader('Set-Cookie', AJWT)
         res.status(200).json('Success!')

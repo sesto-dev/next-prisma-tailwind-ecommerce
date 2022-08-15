@@ -20,8 +20,8 @@ import {
     registerHandler,
 } from '../../helpers/handlers/authHandlers'
 import isEmail from '../../helpers/isEmail'
-import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
 import getGoogleURL from '../../helpers/getGoogleURL'
+import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
 
 export default function ({ config, i18n }) {
     const [modalVisibility, setModalVisibility] = useState(false)
@@ -49,7 +49,7 @@ export default function ({ config, i18n }) {
             {config && i18n && buttons && (
                 <>
                     <Button
-                        ml={0.8}
+                        ml={isLocaleRTL(locale) ? 0.1 : 0.7}
                         px={1.4}
                         auto
                         scale={0.7}
@@ -64,7 +64,7 @@ export default function ({ config, i18n }) {
                         visible={modalVisibility}
                         onClose={closeHandler}
                     >
-                        <Modal.Content pt={0.5} pb={1}>
+                        <Modal.Content pt={0.5} pb={2.5}>
                             <Collapse.Group>
                                 <Collapse
                                     title={
@@ -395,7 +395,7 @@ export default function ({ config, i18n }) {
                                     </Button>
                                 </Collapse>
                             </Collapse.Group>
-                            {/* <Divider mt={1} mb={3}>
+                            <Divider mt={1} mb={3}>
                                 OR
                             </Divider>
                             <a href={getGoogleURL()}>
@@ -407,7 +407,7 @@ export default function ({ config, i18n }) {
                                 >
                                     Sign in with Google
                                 </Button>
-                            </a> */}
+                            </a>
                         </Modal.Content>
                     </Modal>
                 </>

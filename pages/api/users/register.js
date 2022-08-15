@@ -36,7 +36,7 @@ export default async function (req, res) {
         })
 
         if (user) {
-            const AJWT = await bakeAJWT(user)
+            const AJWT = await bakeAJWT(user, 'Strict')
 
             await sendVerifyMail(
                 config.meta.title,

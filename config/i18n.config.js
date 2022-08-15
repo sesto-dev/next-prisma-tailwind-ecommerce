@@ -68,11 +68,11 @@ const inputs = {
 
 const buttons = {
     login: {
-        en: 'Login',
+        en: 'LOGIN',
         fa: 'ورود',
     },
     register: {
-        en: 'Register',
+        en: 'REGISTER',
         fa: 'ثبت نام',
     },
     forgot: {
@@ -80,7 +80,7 @@ const buttons = {
         fa: 'رمز خود را فراموش کرده اید؟',
     },
     submit: {
-        en: 'Submit',
+        en: 'SUBMIT',
         fa: 'ثبت',
     },
 }
@@ -155,20 +155,20 @@ const components = {
                 fa: 'حساب کاربری',
             },
             logout: {
-                en: 'Logout',
+                en: 'LOGOUT',
                 fa: 'خروج',
             },
             links: [
                 {
                     label: {
-                        en: 'Account',
+                        en: 'ACCOUNT',
                         fa: 'حساب کاربری',
                     },
                     value: '/account',
                 },
                 {
                     label: {
-                        en: 'Dashboard',
+                        en: 'DASHBOARD',
                         fa: 'داشبورد',
                     },
                     value: '/dashboard',
