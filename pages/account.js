@@ -11,15 +11,14 @@ import {
     useTheme,
 } from '@geist-ui/core'
 
-import withAuth from '../HOCs/withAuth'
 import Layout from '../components/Layout'
-import { themePreference } from '../state/Theme'
+import { useThemeProvider } from '../state/Theme'
 import { handleAccountData } from '../helpers/handlers/accountHandlers'
 
 import config from '../config/main.config'
 import i18n from '../config/i18n.config'
 
-export default withAuth(function () {
+export default function () {
     const theme = useTheme()
     const router = useRouter()
     const { locale = config.defaultLocale } = router
@@ -51,7 +50,7 @@ export default withAuth(function () {
         <Layout
             config={config}
             i18n={i18n}
-            themePreference={themePreference}
+            useThemeProvider={useThemeProvider}
             crownLarge={title}
             crownSmall={description}
             metaTitle={title}
@@ -77,4 +76,4 @@ export default withAuth(function () {
             </Grid.Container>
         </Layout>
     )
-})
+}

@@ -14,7 +14,7 @@ import {
 } from '@geist-ui/core'
 
 import Layout from '../../components/Layout'
-import { themePreference } from '../../state/Theme'
+import { useThemeProvider } from '../../state/Theme'
 import { handleProductData } from '../../helpers/handlers/productHandlers'
 
 import config from '../../config/main.config'
@@ -58,7 +58,7 @@ export default function () {
         <Layout
             config={config}
             i18n={i18n}
-            themePreference={themePreference}
+            useThemeProvider={useThemeProvider}
             crown={false}
             metaTitle={title}
             metaDescription={description}

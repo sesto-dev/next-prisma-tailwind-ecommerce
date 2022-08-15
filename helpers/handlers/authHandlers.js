@@ -1,16 +1,16 @@
 import axios from 'axios'
 import burnToast from '../burnToast'
 
-export async function loginHandler(
+export async function loginHandler({
     config,
     setLoading,
     setToast,
-    setAuthenticated,
+    setLocalAuthentication,
     router,
     refEmail,
     refPassword,
-    toast
-) {
+    toast,
+}) {
     setLoading(true)
 
     try {
@@ -25,7 +25,7 @@ export async function loginHandler(
 
         if (response && response.status && response.status == 200) {
             burnToast(setToast, toast)
-            setAuthenticated(true)
+            setLocalAuthentication(true)
             router.replace('/dashboard')
         }
     } catch (error) {
@@ -39,15 +39,15 @@ export async function loginHandler(
     }
 }
 
-export async function registerHandler(
+export async function registerHandler({
     config,
     setLoading,
     setToast,
-    setAuthenticated,
+    setLocalAuthentication,
     router,
     refEmail,
-    refPassword
-) {
+    refPassword,
+}) {
     setLoading(true)
 
     try {
@@ -61,7 +61,7 @@ export async function registerHandler(
         )
 
         if (response && response.status && response.status == 200) {
-            setAuthenticated(true)
+            setLocalAuthentication(true)
             router.replace('/auth/verify')
         }
     } catch (error) {
@@ -109,18 +109,18 @@ export async function verifyHandler(
     }
 }
 
-export async function logoutHandler(
+export async function logoutHandler({
     config,
     setToast,
-    setAuthenticated,
+    setLocalAuthentication,
     router,
-    toast
-) {
+    toast,
+}) {
     try {
         const response = await axios.post(config.backend.routes.logout)
 
         if (response && response.status && response.status == 200) {
-            setAuthenticated(false)
+            setLocalAuthentication(false)
             router.replace('/')
             burnToast(setToast, toast)
         }

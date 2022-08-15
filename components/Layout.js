@@ -9,7 +9,7 @@ import defaultProps from '../config/props.config'
 const Layout = ({
     config,
     i18n,
-    themePreference,
+    useThemeProvider,
     crownLarge,
     crownSmall,
     metaTitle,
@@ -30,7 +30,7 @@ const Layout = ({
             <Header
                 config={config}
                 i18n={i18n}
-                themePreference={themePreference}
+                useThemeProvider={useThemeProvider}
             />
             <Crown
                 config={config}

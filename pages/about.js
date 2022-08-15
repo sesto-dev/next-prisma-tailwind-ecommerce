@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { Grid, Card, useTheme, Text, Spacer, Code } from '@geist-ui/core'
 
-import { themePreference } from '../state/Theme'
+import { useThemeProvider } from '../state/Theme'
 import Layout from '../components/Layout'
 
 import config from '../config/main.config'
@@ -23,7 +23,7 @@ export default function () {
             <Layout
                 config={config}
                 i18n={i18n}
-                themePreference={themePreference}
+                useThemeProvider={useThemeProvider}
                 crownLarge={title}
                 crownSmall={description}
                 metaTitle={title}

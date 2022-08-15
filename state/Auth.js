@@ -1,23 +1,37 @@
-import React from 'react'
+import {
+    createContext,
+    useContext,
+    useState,
+    useEffect,
+    useCallback,
+} from 'react'
 
-const AuthContext = React.createContext({
+const AuthContext = createContext({
     isAuthenticated: false,
-    setAuthenticated: () => {},
+    setLocalAuthentication: () => {},
 })
 
-/**
- * The initial value of `isAuthenticated` comes from the `authenticated`
- * prop which gets set by _app. We store that value in state and ignore
- * the prop from then on. The value can be changed by calling the
- * `setAuthenticated()` method in the context.
- */
-export const AuthProvider = ({ children, authenticated }) => {
-    const [isAuthenticated, setAuthenticated] = React.useState(authenticated)
+export const AuthProvider = ({ children }) => {
+    const [isAuthenticated, setAuthenticated] = useState(false)
+
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+            const authentication = window.localStorage.getItem('authentication')
+            setAuthenticated(authentication)
+        }
+    }, [])
+
+    const setLocalAuthentication = useCallback((authentication) => {
+        setAuthenticated(authentication)
+        if (typeof window !== 'undefined' && window.localStorage)
+            window.localStorage.setItem('authentication', authentication)
+    }, [])
+
     return (
         <AuthContext.Provider
             value={{
                 isAuthenticated,
-                setAuthenticated,
+                setLocalAuthentication,
             }}
         >
             {children}
@@ -26,7 +40,7 @@ export const AuthProvider = ({ children, authenticated }) => {
 }
 
 export function useAuth() {
-    const context = React.useContext(AuthContext)
+    const context = useContext(AuthContext)
     if (context === undefined) {
         throw new Error('useAuth must be used within an AuthProvider')
     }

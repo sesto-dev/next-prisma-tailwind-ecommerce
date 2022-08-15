@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react'
 import { useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 
-import { useIsAuthenticated } from '../../state/Auth'
-
 import Submenu from './Submenu'
 import ThemeButton from './ThemeButton'
 import Title from './Title'
@@ -13,11 +11,13 @@ import Account from './Account'
 
 import { isLocaleRTL } from '../../helpers/RTL'
 import Cart from './Cart'
+import { useAuth } from '../../state/Auth'
 
-export default function ({ config, i18n, themePreference }) {
+export default function ({ config, i18n, useThemeProvider }) {
+    const { isAuthenticated } = useAuth()
+
     const theme = useTheme()
     const { locale = config.defaultLocale, locales } = useRouter()
-    const isAuthenticated = useIsAuthenticated()
 
     const [sticky, setSticky] = useState(false)
 
@@ -58,11 +58,11 @@ export default function ({ config, i18n, themePreference }) {
                                                 i18n={i18n}
                                             />
                                         ))}
-                                    {themePreference && (
+                                    {useThemeProvider && (
                                         <ThemeButton
                                             config={config}
                                             i18n={i18n}
-                                            themePreference={themePreference}
+                                            useThemeProvider={useThemeProvider}
                                         />
                                     )}
                                 </div>
@@ -72,11 +72,11 @@ export default function ({ config, i18n, themePreference }) {
                             <>
                                 <Title config={config} i18n={i18n} />
                                 <div>
-                                    {themePreference && (
+                                    {useThemeProvider && (
                                         <ThemeButton
                                             config={config}
                                             i18n={i18n}
-                                            themePreference={themePreference}
+                                            useThemeProvider={useThemeProvider}
                                         />
                                     )}
                                     {config.layout.authentication &&

@@ -3,10 +3,9 @@ import { useRouter } from 'next/router'
 import { Button, Grid, useTheme, useToasts } from '@geist-ui/core'
 
 import Layout from '../../components/Layout'
-import { themePreference } from '../../state/Theme'
+import { useThemeProvider } from '../../state/Theme'
 import { unsubscribeHandler } from '../../helpers/handlers/authHandlers'
 import { isLocaleRTL } from '../../helpers/RTL'
-import { useIsAuthenticated } from '../../state/Auth'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
@@ -15,7 +14,6 @@ export default function () {
     const theme = useTheme()
     const { locale = config.defaultLocale } = useRouter()
     const { setToast } = useToasts()
-    const isAuthenticated = useIsAuthenticated()
 
     const title = i18n['auth']['unsubscribe']['title'][locale]
     const description = i18n['auth']['unsubscribe']['description'][locale]
@@ -27,7 +25,7 @@ export default function () {
             <Layout
                 config={config}
                 i18n={i18n}
-                themePreference={themePreference}
+                useThemeProvider={useThemeProvider}
                 crownLarge={title}
                 crownSmall={description}
                 metaTitle={title}
@@ -35,7 +33,7 @@ export default function () {
                 <Grid.Container gap={1} className="avanti">
                     <Grid xs={24}>
                         <Button
-                            disabled={!isAuthenticated}
+                            disabled={!auth}
                             loading={loading}
                             type="secondary"
                             onClick={(e) =>

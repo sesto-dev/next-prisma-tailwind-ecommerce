@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 
 import connectDB from '../../../helpers/connectDB'
-import bakeCookie from '../../../helpers/bakeCookie'
+import { bakeAJWT } from '../../../helpers/bakeCookies'
 import isEmail from '../../../helpers/isEmail'
 
 import User from '../../../models/User'
@@ -17,9 +17,9 @@ export default async function (req, res) {
     const user = await User.findOne({ email })
 
     if (user && (await bcrypt.compare(password, user.password))) {
-        const serialized = await bakeCookie(user)
+        const AJWT = await bakeAJWT(user)
 
-        res.setHeader('Set-Cookie', serialized)
+        res.setHeader('Set-Cookie', AJWT)
         res.status(200).json('Success!')
     } else {
         res.status(401).send('Invalid email or password')

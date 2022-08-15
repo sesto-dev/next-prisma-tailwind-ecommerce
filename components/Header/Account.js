@@ -9,8 +9,8 @@ export default function ({ config, i18n }) {
     const theme = useTheme()
     const router = useRouter()
     const { locale = config.defaultLocale } = router
-    const { setAuthenticated } = useAuth()
     const { setToast } = useToasts()
+    const { setLocalAuthentication } = useAuth()
 
     const account = i18n['components']['header']['account']
 
@@ -31,13 +31,13 @@ export default function ({ config, i18n }) {
                     <ButtonDropdown.Item
                         type="secondary"
                         onClick={(e) =>
-                            logoutHandler(
+                            logoutHandler({
                                 config,
                                 setToast,
-                                setAuthenticated,
+                                setLocalAuthentication,
                                 router,
-                                i18n['toasts']['logout'][locale]
-                            )
+                                toast: i18n['toasts']['logout'][locale],
+                            })
                         }
                     >
                         <b>{account['logout'][locale]}</b>

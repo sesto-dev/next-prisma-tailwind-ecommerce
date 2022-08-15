@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { Button, Grid, useTheme, useToasts, Input } from '@geist-ui/core'
 
 import Layout from '../../components/Layout'
-import { themePreference } from '../../state/Theme'
+import { useThemeProvider } from '../../state/Theme'
 import { verifyHandler } from '../../helpers/handlers/authHandlers'
 import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
 
@@ -28,7 +28,7 @@ export default function () {
             <Layout
                 config={config}
                 i18n={i18n}
-                themePreference={themePreference}
+                useThemeProvider={useThemeProvider}
                 crownLarge={title}
                 crownSmall={description}
                 metaTitle={title}

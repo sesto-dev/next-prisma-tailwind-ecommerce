@@ -4,8 +4,8 @@ import { useRouter } from 'next/router'
 import { isLocaleRTL } from '../../helpers/RTL'
 import { DarkModeIcon, LightModeIcon } from '../SVGs'
 
-export default function ({ config, themePreference }) {
-    const prefers = themePreference()
+export default function ({ config, useThemeProvider }) {
+    const themeProvider = useThemeProvider()
     const { locale = config.defaultLocale, locales } = useRouter()
     const theme = useTheme()
 
@@ -18,7 +18,9 @@ export default function ({ config, themePreference }) {
             scale={0.7}
             auto
             onClick={() =>
-                prefers.switchTheme(theme.type === 'dark' ? 'light' : 'dark')
+                themeProvider.setLocalTheme(
+                    theme.type === 'dark' ? 'light' : 'dark'
+                )
             }
         />
     )

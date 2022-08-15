@@ -4,7 +4,7 @@ import { Button, Grid, useTheme, useToasts, Input, Text } from '@geist-ui/core'
 
 import isEmail from '../../helpers/isEmail'
 import Layout from '../../components/Layout'
-import { themePreference } from '../../state/Theme'
+import { useThemeProvider } from '../../state/Theme'
 import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
 import {
     forgotHandler,
@@ -37,7 +37,7 @@ export default function () {
                     <Layout
                         config={config}
                         i18n={i18n}
-                        themePreference={themePreference}
+                        useThemeProvider={useThemeProvider}
                         crownLarge={title}
                         crownSmall={description}
                         metaTitle={title}

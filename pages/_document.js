@@ -4,7 +4,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 import config from '../config/main.config'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const googleID = config.analytics.googleAnalyticsID
+const googleID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID
 
 const gtag = `https://www.googletagmanager.com/gtag/js?id=${googleID}`
 const gscript = {

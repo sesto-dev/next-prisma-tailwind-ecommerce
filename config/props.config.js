@@ -1,7 +1,7 @@
 const defaultProps = {
     crownLarge: 'Large Text',
     crownSmall: 'Small text as a description for the page.',
-    themePreference: null,
+    useThemeProvider: null,
     config: {
         theme: {
             width: '900pt',

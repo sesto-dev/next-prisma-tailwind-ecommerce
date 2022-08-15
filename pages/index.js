@@ -3,7 +3,7 @@ import { Grid, Card, Text, Code, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 
 import Layout from '../components/Layout'
-import { themePreference } from '../state/Theme'
+import { useThemeProvider } from '../state/Theme'
 import { getLocaleDirection } from '../helpers/RTL'
 
 import config from '../config/main.config'
@@ -21,7 +21,7 @@ export default function () {
         <Layout
             config={config}
             i18n={i18n}
-            themePreference={themePreference}
+            useThemeProvider={useThemeProvider}
             crownLarge={title}
             crownSmall={description}
             metaTitle={title}

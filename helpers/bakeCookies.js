@@ -1,7 +1,7 @@
 import { signJWT } from './JWT'
 import { serialize } from 'cookie'
 
-export default async function (user) {
+export async function bakeAJWT(user) {
     const token = await signJWT(user._id.toString())
     return serialize('AJWT', token, {
         httpOnly: true,

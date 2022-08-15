@@ -2,9 +2,6 @@ const url = process.env.NEXT_PUBLIC_URL
 
 export default {
     defaultLocale: 'en',
-    analytics: {
-        googleAnalyticsID: null,
-    },
     theme: {
         width: '900pt',
         defaultTheme: 'dark',

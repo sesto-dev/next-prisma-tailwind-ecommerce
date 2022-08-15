@@ -64,16 +64,10 @@ You can spin up a MongoDB database instance using [MongoDB Atlas](http://cloud.m
 
 ## Google Analytics
 
-You only need to provide your `googleAnalyticsID` in `main.config.js` file to activate your Google Analytics.
+You only need to provide your `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` in `.env` file to activate your Google Analytics.
 
 ## i18n
 
 You provide the list of languages you are willing to support in `next.config.js` file. All of the i18n content is located in the `i18n.content.js` file in root directory.
 
 If you want to disable i18n & the select language dropdown in the Header, you only need to remove the `i18n` key from `next.config.js`. In this case the `en` content from the `i18n.config.js` file will be served as default.
-
-## Built Upon
-
--   [geist-ui](https://github.com/geist-org/geist-ui) as UI library which adheres to the design language of [Vercel](https://vercel.com/)!
--   [react-dashboard-design](https://github.com/ofekashery/react-dashboard-design) as inspiration and much of the initial codebase!
--   [nextjs-client-auth-architectures](https://github.com/justincy/nextjs-client-auth-architectures) as the route protection architecture!

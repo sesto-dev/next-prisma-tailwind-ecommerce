@@ -3,7 +3,7 @@ import { generateVoucher } from 'apadana/src/generators'
 import { sendVerifyMail } from 'angra'
 
 import connectDB from '../../../helpers/connectDB'
-import bakeCookie from '../../../helpers/bakeCookie'
+import { bakeAJWT } from '../../../helpers/bakeCookies'
 import isEmail from '../../../helpers/isEmail'
 
 import User from '../../../models/User'
@@ -36,7 +36,7 @@ export default async function (req, res) {
         })
 
         if (user) {
-            const serialized = await bakeCookie(user)
+            const AJWT = await bakeAJWT(user)
 
             await sendVerifyMail(
                 config.meta.title,
@@ -46,7 +46,7 @@ export default async function (req, res) {
                 config.urls.unsubscribe
             )
 
-            res.setHeader('Set-Cookie', serialized)
+            res.setHeader('Set-Cookie', AJWT)
             res.status(200).json('Success!')
         } else {
             res.status(401).send('Failed to create user.')
