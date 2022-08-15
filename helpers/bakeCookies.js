@@ -11,3 +11,13 @@ export async function bakeAJWT(user) {
         path: '/',
     })
 }
+
+export async function bakeAUTH() {
+    return serialize('AUTH', 'true', {
+        httpOnly: false,
+        secure: process.env.NODE_ENV !== 'development',
+        sameSite: 'strict',
+        maxAge: 60 * 60 * 24 * 30,
+        path: '/',
+    })
+}

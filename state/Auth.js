@@ -17,14 +17,15 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (typeof window !== 'undefined' && window.localStorage) {
             const authentication = window.localStorage.getItem('authentication')
-            setAuthenticated(authentication)
+            setAuthenticated(authentication === 'true' ? true : false)
         }
     }, [])
 
     const setLocalAuthentication = useCallback((authentication) => {
-        setAuthenticated(authentication)
-        if (typeof window !== 'undefined' && window.localStorage)
+        if (typeof window !== 'undefined' && window.localStorage) {
             window.localStorage.setItem('authentication', authentication)
+            setAuthenticated(authentication)
+        }
     }, [])
 
     return (

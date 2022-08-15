@@ -22,8 +22,6 @@ export async function handleProductsData(
         )
     }
 
-    console.log(data)
-
     const { page, pages, products } = data
 
     if (!data || !products || !page || !pages) {
@@ -61,8 +59,6 @@ export async function handleProductData(
         router.replace('/')
         burnToast(setToast, noDataToast)
     }
-
-    console.log(data)
 
     setTitle(data.name)
     setImage(data.image)

@@ -72,7 +72,6 @@ export default function () {
                         {pageNumber && pages && products ? (
                             <>
                                 {products.map((product) => {
-                                    console.log(product)
                                     return (
                                         <Grid
                                             key={product._id}

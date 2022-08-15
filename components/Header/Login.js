@@ -21,6 +21,7 @@ import {
 } from '../../helpers/handlers/authHandlers'
 import isEmail from '../../helpers/isEmail'
 import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
+import getGoogleURL from '../../helpers/getGoogleURL'
 
 export default function ({ config, i18n }) {
     const [modalVisibility, setModalVisibility] = useState(false)
@@ -63,11 +64,17 @@ export default function ({ config, i18n }) {
                         visible={modalVisibility}
                         onClose={closeHandler}
                     >
-                        <Modal.Content pt={0.5} pb={2.5}>
+                        <Modal.Content pt={0.5} pb={1}>
                             <Collapse.Group>
                                 <Collapse
                                     title={
-                                        <Text h5 my={0}>
+                                        <Text
+                                            style={{
+                                                fontSize: '1rem',
+                                                fontWeight: '600',
+                                            }}
+                                            my={0}
+                                        >
                                             Login
                                         </Text>
                                     }
@@ -191,7 +198,13 @@ export default function ({ config, i18n }) {
                                     id="Register"
                                     style={{ borderBottom: 'none' }}
                                     title={
-                                        <Text h5 my={0}>
+                                        <Text
+                                            style={{
+                                                fontSize: '1rem',
+                                                fontWeight: '600',
+                                            }}
+                                            my={0}
+                                        >
                                             Register
                                         </Text>
                                     }
@@ -382,17 +395,19 @@ export default function ({ config, i18n }) {
                                     </Button>
                                 </Collapse>
                             </Collapse.Group>
-                            <Divider mt={1} mb={3}>
+                            {/* <Divider mt={1} mb={3}>
                                 OR
                             </Divider>
-                            <Button
-                                icon={<GoogleIcon />}
-                                type="secondary"
-                                width="100%"
-                                onClick={() => {}}
-                            >
-                                Sign in with Google
-                            </Button>
+                            <a href={getGoogleURL()}>
+                                <Button
+                                    icon={<GoogleIcon />}
+                                    type="secondary"
+                                    width="100%"
+                                    onClick={() => {}}
+                                >
+                                    Sign in with Google
+                                </Button>
+                            </a> */}
                         </Modal.Content>
                     </Modal>
                 </>
