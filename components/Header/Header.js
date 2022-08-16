@@ -12,7 +12,7 @@ import Account from './Account'
 import { isLocaleRTL } from '../../helpers/RTL'
 import Cart from './Cart'
 import { useAuth } from '../../state/Auth'
-import { MenuIcon } from '../SVGs'
+import { MenuIcon, SearchIcon } from '../SVGs'
 
 export default function ({ config, i18n, useThemeProvider }) {
     const { isAuthenticated } = useAuth()
@@ -38,9 +38,11 @@ export default function ({ config, i18n, useThemeProvider }) {
     const Menu = () => (
         <>
             <Button
+                type="secondary"
+                style={{ border: 'none' }}
+                ghost
                 auto
                 onClick={() => draw()}
-                scale={0.8}
                 icon={<MenuIcon />}
             />
             <Drawer
@@ -121,6 +123,13 @@ export default function ({ config, i18n, useThemeProvider }) {
                             </>
                         ) : (
                             <>
+                                <Button
+                                    type="secondary"
+                                    ghost
+                                    style={{ border: 'none' }}
+                                    auto
+                                    icon={<SearchIcon />}
+                                />
                                 <Title config={config} i18n={i18n} />
                                 <div style={{ marginTop: '0.3rem' }}>
                                     <Grid.Container>

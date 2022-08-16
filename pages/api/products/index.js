@@ -2,10 +2,10 @@ import connectDB from '../../../helpers/connectDB'
 import Product from '../../../models/Product'
 
 export default async function (req, res) {
-    connectDB()
-
     const pageSize = 15
-    const page = Number(req.query.pageNumber) || 1
+    const { page = 1 } = req.body
+
+    connectDB()
 
     const keyword = req.query.keyword
         ? {

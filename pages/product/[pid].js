@@ -71,7 +71,7 @@ export default function ({ pid }) {
                     {product ? (
                         <>
                             <Grid xs={24}>
-                                <Breadcrumbs mb={1}>
+                                <Breadcrumbs className="Bread" mb={1}>
                                     <Link href="/">
                                         <a>
                                             <Breadcrumbs.Item>
@@ -198,6 +198,12 @@ export default function ({ pid }) {
                     }
                     a:hover {
                         color: ${theme.palette.foreground} !important;
+                    }
+                    .Bread > a {
+                        white-space: nowrap;
+                    }
+                    .Bread > span {
+                        white-space: nowrap;
                     }
                 `}
             </style>

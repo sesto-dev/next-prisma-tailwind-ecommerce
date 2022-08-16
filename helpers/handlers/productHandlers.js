@@ -1,15 +1,14 @@
 import axios from 'axios'
 import burnToast from '../burnToast'
 
-export async function handleProductsData(
+export async function handleProductsData({
     response,
     router,
-    setPage,
     setPages,
     setProducts,
     setToast,
-    noDataToast
-) {
+    toast,
+}) {
     const { data, error } = response
 
     if (error) {
@@ -26,10 +25,9 @@ export async function handleProductsData(
 
     if (!data || !products || !page || !pages) {
         router.replace('/')
-        burnToast(setToast, noDataToast)
+        burnToast(setToast, toast)
     }
 
-    setPage(page)
     setPages(pages)
     setProducts(products)
 }
@@ -59,8 +57,6 @@ export async function handleProductData(
         router.replace('/')
         burnToast(setToast, noDataToast)
     }
-
-    console.log(data)
 
     setTitle(data.name)
     setImage(data.image)
