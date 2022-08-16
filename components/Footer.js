@@ -20,8 +20,8 @@ export default function ({ config, i18n }) {
                 h4
                 my={0}
                 style={{
-                    textAlign: 'end',
-                    direction: 'rtl',
+                    textAlign: 'left',
+                    direction: isLocaleRTL(locale) ? 'rtl' : 'ltr',
                 }}
             >
                 {footer['title'][locale].toUpperCase()}
@@ -31,7 +31,7 @@ export default function ({ config, i18n }) {
                 style={{
                     fontSize: '0.7rem',
                     textAlign: 'right',
-                    direction: 'rtl',
+                    direction: isLocaleRTL(locale) ? 'rtl' : 'ltr',
                 }}
                 type="secondary"
             >
@@ -277,6 +277,9 @@ function MobileLinks({ config, footer }) {
                         font-size: 1rem !important;
                         font-weight: 400 !important;
                         color: ${theme.palette.accents_6};
+                    }
+                    .collapse > .view > .title > svg {
+                        color: ${theme.palette.accents_6}!important;
                     }
                     .collapse {
                         border-top: none !important;

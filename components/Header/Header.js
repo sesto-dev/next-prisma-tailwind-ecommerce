@@ -50,7 +50,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                 width="60%"
             >
                 <Drawer.Content>
-                    {isLocaleRTL(locale) ? <RTL /> : <LTR />}
+                    <LTR />
                 </Drawer.Content>
             </Drawer>
         </>
@@ -58,6 +58,7 @@ export default function ({ config, i18n, useThemeProvider }) {
 
     const LTR = () => (
         <>
+            {locales && <Language config={config} i18n={i18n} />}
             {useThemeProvider && (
                 <ThemeButton
                     config={config}
@@ -74,13 +75,11 @@ export default function ({ config, i18n, useThemeProvider }) {
                 ) : (
                     <Login config={config} i18n={i18n} />
                 ))}
-            {locales && <Language config={config} i18n={i18n} />}
         </>
     )
 
     const RTL = () => (
         <>
-            {locales && <Language config={config} i18n={i18n} />}
             {config.layout.authentication &&
                 (isAuthenticated ? (
                     <>
@@ -97,6 +96,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                     useThemeProvider={useThemeProvider}
                 />
             )}
+            {locales && <Language config={config} i18n={i18n} />}
         </>
     )
 

@@ -25,13 +25,12 @@ export default function ({ config, i18n }) {
             <Grid xs={24} sm={0}>
                 <Link href="/cart">
                     <Button
-                        icon={<CartIcon />}
                         aria-label="Shopping Cart"
                         mb={1}
                         width="100%"
                         onClick={() => {}}
                     >
-                        Shopping Cart
+                        <b>CART</b>
                     </Button>
                 </Link>
             </Grid>

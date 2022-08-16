@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 
 import { useAuth } from '../../state/Auth'
 import { logoutHandler } from '../../helpers/handlers/authHandlers'
+import { AvatarIcon } from '../SVGs'
 
 export default function ({ config, i18n }) {
     const theme = useTheme()
@@ -67,7 +68,7 @@ export default function ({ config, i18n }) {
                                 >
                                     <a>
                                         <Button mb={1} width="100%">
-                                            {link['label'][locale]}
+                                            <b>{link['label'][locale]}</b>
                                         </Button>
                                     </a>
                                 </Link>

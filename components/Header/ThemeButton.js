@@ -1,4 +1,4 @@
-import { Grid, Button, useTheme } from '@geist-ui/core'
+import { Grid, ButtonGroup, Button, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 
 import { isLocaleRTL } from '../../helpers/RTL'
@@ -33,26 +33,30 @@ export default function ({ config, useThemeProvider }) {
                 />
             </Grid>
             <Grid xs={24} sm={0}>
-                <Button
-                    icon={
-                        theme.type === 'dark' ? (
-                            <LightModeIcon />
-                        ) : (
-                            <DarkModeIcon />
-                        )
-                    }
-                    aria-label="Toggle Theme"
-                    width="100%"
-                    mb={1}
-                    onClick={() =>
-                        themeProvider.setLocalTheme(
-                            theme.type === 'dark' ? 'light' : 'dark'
-                        )
-                    }
-                >
-                    {theme.type === 'dark' ? 'Light Mode' : 'Dark Mode'}
-                </Button>
+                <ButtonGroup mx={0} mb={3} width="100%">
+                    <Button
+                        disabled={theme.type === 'dark'}
+                        icon={<DarkModeIcon />}
+                        aria-label="Toggle Dark Mode"
+                        width="100%"
+                        onClick={() => themeProvider.setLocalTheme('dark')}
+                    />
+                    <Button
+                        disabled={theme.type === 'light'}
+                        icon={<LightModeIcon />}
+                        aria-label="Toggle Light Mode"
+                        width="100%"
+                        onClick={() => themeProvider.setLocalTheme('light')}
+                    />
+                </ButtonGroup>
             </Grid>
+            <style jsx global>
+                {`
+                    .btn-group > button {
+                        width: 100% !important;
+                    }
+                `}
+            </style>
         </Grid.Container>
     )
 }
