@@ -1,6 +1,5 @@
 import querystring from 'querystring'
 import axios from 'axios'
-import bcrypt from 'bcryptjs'
 import { generateVoucher } from 'apadana/src/generators'
 import { sendVerifyMail } from 'angra'
 
@@ -31,15 +30,11 @@ export default async function (req, res) {
         res.setHeader('Set-Cookie', AJWT)
         res.redirect(302, '/')
     } else {
-        const salt = await bcrypt.genSalt(10)
-        const salted = await bcrypt.hash(password, salt)
-
         const email_verification_code = await generateVoucher(1)
         const referral_code = await generateVoucher(3)
 
         const user = await User.create({
             email,
-            password: salted,
             email_verification_code: verified_email
                 ? email_verification_code
                 : null,

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Button, useTheme } from '@geist-ui/core'
+import { Grid, Button, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 
 import { CartIcon } from '../SVGs'
@@ -10,16 +10,31 @@ export default function ({ config, i18n }) {
     const { locale = config.defaultLocale, locales } = useRouter()
 
     return (
-        <Link href="/cart">
-            <Button
-                icon={<CartIcon />}
-                aria-label="Toggle Dark mode"
-                ml={!isLocaleRTL(locale) && 0.6}
-                px={1}
-                scale={0.7}
-                auto
-                onClick={() => {}}
-            />
-        </Link>
+        <Grid.Container>
+            <Grid xs={0} sm={24}>
+                <Link href="/cart">
+                    <Button
+                        icon={<CartIcon />}
+                        aria-label="Shopping Cart"
+                        ml={!isLocaleRTL(locale) && 0.6}
+                        scale={0.7}
+                        auto
+                    />
+                </Link>
+            </Grid>
+            <Grid xs={24} sm={0}>
+                <Link href="/cart">
+                    <Button
+                        icon={<CartIcon />}
+                        aria-label="Shopping Cart"
+                        mb={1}
+                        width="100%"
+                        onClick={() => {}}
+                    >
+                        Shopping Cart
+                    </Button>
+                </Link>
+            </Grid>
+        </Grid.Container>
     )
 }

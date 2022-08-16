@@ -1,4 +1,4 @@
-import { ButtonDropdown, useTheme } from '@geist-ui/core'
+import { Grid, ButtonDropdown, useTheme } from '@geist-ui/core'
 import { useRouter } from 'next/router'
 
 export default function ({ config }) {
@@ -19,20 +19,51 @@ export default function ({ config }) {
     return (
         <>
             {locale && locales && (
-                <ButtonDropdown scale={0.63} auto>
-                    <ButtonDropdown.Item main>
-                        <b>{locale.toUpperCase()}</b>
-                    </ButtonDropdown.Item>
-                    {locales.map((loc) => (
-                        <ButtonDropdown.Item
-                            key={loc}
-                            onClick={() => changeLanguage(loc)}
+                <Grid.Container>
+                    <Grid xs={0} sm={24}>
+                        <ButtonDropdown
+                            className="MainDropdown"
+                            scale={0.63}
+                            auto
                         >
-                            <b>{loc.toUpperCase()}</b>
-                        </ButtonDropdown.Item>
-                    ))}
-                </ButtonDropdown>
+                            <ButtonDropdown.Item main>
+                                <b>{locale.toUpperCase()}</b>
+                            </ButtonDropdown.Item>
+                            {locales.map((loc) => (
+                                <ButtonDropdown.Item
+                                    key={loc}
+                                    onClick={() => changeLanguage(loc)}
+                                >
+                                    <b>{loc.toUpperCase()}</b>
+                                </ButtonDropdown.Item>
+                            ))}
+                        </ButtonDropdown>
+                    </Grid>
+                    <Grid xs={24} sm={0}>
+                        <ButtonDropdown className="LanguageDrawerDropdown">
+                            <ButtonDropdown.Item main>
+                                <b>{locale.toUpperCase()}</b>
+                            </ButtonDropdown.Item>
+                            {locales.map((loc) => (
+                                <ButtonDropdown.Item
+                                    key={loc}
+                                    onClick={() => changeLanguage(loc)}
+                                >
+                                    <b>{loc.toUpperCase()}</b>
+                                </ButtonDropdown.Item>
+                            ))}
+                        </ButtonDropdown>
+                    </Grid>
+                </Grid.Container>
             )}
+            <style jsx global>
+                {`
+                    .LanguageDrawerDropdown {
+                        width: 100% !important;
+                        margin-bottom: 1rem;
+                    }
+                `}
+            </style>
         </>
     )
 }

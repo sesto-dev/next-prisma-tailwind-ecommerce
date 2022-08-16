@@ -9,6 +9,37 @@ export default function ({ config, i18n }) {
 
     const footer = i18n['components']['footer']
 
+    const Copyright = () => (
+        <div
+            style={{
+                display: 'block',
+                justifyItems: 'right',
+            }}
+        >
+            <Text
+                h4
+                my={0}
+                style={{
+                    textAlign: 'end',
+                    direction: 'rtl',
+                }}
+            >
+                {footer['title'][locale].toUpperCase()}
+            </Text>
+            <Text
+                mt={0}
+                style={{
+                    fontSize: '0.7rem',
+                    textAlign: 'right',
+                    direction: 'rtl',
+                }}
+                type="secondary"
+            >
+                {footer['copyright'][locale]}
+            </Text>
+        </div>
+    )
+
     return (
         <>
             {footer && (
@@ -22,34 +53,7 @@ export default function ({ config, i18n }) {
                                 <Desktop config={config} footer={footer} />
                             </Grid>
                             <Grid xs={24} md={0}>
-                                <div
-                                    style={{
-                                        display: 'block',
-                                        justifyItems: 'right',
-                                    }}
-                                >
-                                    <Text
-                                        h4
-                                        my={0}
-                                        style={{
-                                            textAlign: 'end',
-                                            direction: 'rtl',
-                                        }}
-                                    >
-                                        {footer['title'][locale].toUpperCase()}
-                                    </Text>
-                                    <Text
-                                        mt={0}
-                                        style={{
-                                            fontSize: '0.7rem',
-                                            textAlign: 'right',
-                                            direction: 'rtl',
-                                        }}
-                                        type="secondary"
-                                    >
-                                        {footer['copyright'][locale]}
-                                    </Text>
-                                </div>
+                                <Copyright />
                             </Grid>
                         </Grid.Container>
                     </div>
@@ -167,7 +171,6 @@ function DesktopLinks({ config, footer }) {
                                     h5
                                     b
                                     style={{
-                                        fontSize: '0.8rem',
                                         direction: getLocaleDirection(locale),
                                         textAlign: 'end',
                                     }}
@@ -224,6 +227,8 @@ function Mobile({ config, footer }) {
 }
 
 function MobileLinks({ config, footer }) {
+    const theme = useTheme()
+
     const { locale = config.defaultLocale } = useRouter()
 
     return (
@@ -246,12 +251,15 @@ function MobileLinks({ config, footer }) {
                                             <Text
                                                 px={0}
                                                 style={{
-                                                    fontSize: '0.8rem',
                                                     direction:
                                                         getLocaleDirection(
                                                             locale
                                                         ),
-                                                    textAlign: 'end',
+                                                    textAlign: isLocaleRTL(
+                                                        locale
+                                                    )
+                                                        ? 'end'
+                                                        : 'start',
                                                 }}
                                             >
                                                 {link['label'][locale]}
@@ -267,6 +275,8 @@ function MobileLinks({ config, footer }) {
                 {`
                     .collapse > .view > .title > h3 {
                         font-size: 1rem !important;
+                        font-weight: 400 !important;
+                        color: ${theme.palette.accents_6};
                     }
                     .collapse {
                         border-top: none !important;
