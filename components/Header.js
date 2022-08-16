@@ -1,68 +1,81 @@
-import useState from 'react-usestateref'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import useState from 'react-usestateref'
+import { useEffect } from 'react'
 import {
-    useToasts,
-    Collapse,
-    Divider,
-    Button,
-    Tabs,
-    Input,
     Modal,
+    Collapse,
+    Input,
+    Divider,
+    Tabs,
     Text,
     useTheme,
+    Drawer,
+    Button,
+    useToasts,
 } from '@geist-ui/core'
+import { useRouter } from 'next/router'
 
-import { useAuth } from '../../state/Auth'
-import { GoogleIcon, LoginIcon, RegisterIcon } from '../SVGs'
+import { getLocaleDirection, isLocaleRTL } from '../helpers/RTL'
+import { useAuth } from '../state/Auth'
 import {
-    loginHandler,
-    registerHandler,
-} from '../../helpers/handlers/authHandlers'
-import isEmail from '../../helpers/isEmail'
-import getGoogleURL from '../../helpers/getGoogleURL'
-import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
+    LightModeIcon,
+    DarkModeIcon,
+    MenuIcon,
+    SearchIcon,
+    LanguageIcon,
+    RegisterIcon,
+    CartIcon,
+    UserIcon,
+    GoogleIcon,
+    LoginIcon,
+} from './SVGs'
+import useWindowSize from '../hooks/useWindowSize'
+import getGoogleURL from '../helpers/getGoogleURL'
 
-export default function ({ config, i18n }) {
-    const [modalVisibility, setModalVisibility] = useState(false)
-    const modalHandler = () => setModalVisibility(true)
-    const closeHandler = (event) => {
-        setModalVisibility(false)
-    }
-
+export default function ({ config, i18n, useThemeProvider }) {
+    const { isAuthenticated, setLocalAuthentication } = useAuth()
     const theme = useTheme()
+    const themeProvider = useThemeProvider()
+    const { width, height } = useWindowSize()
     const router = useRouter()
-    const { locale = config.defaultLocale } = router
     const { setToast } = useToasts()
-    const { setLocalAuthentication } = useAuth()
 
-    const buttons = i18n['buttons']
+    const {
+        locale = config.defaultLocale,
+        locales,
+        pathname,
+        asPath,
+        query,
+    } = router
 
-    const [email, setEmail, refEmail] = useState('')
-    const [password, setPassword, refPassword] = useState('')
-    const [confirmPassword, setConfirmPassword, refConfirmPassword] =
-        useState('')
-    const [loading, setLoading, refLoading] = useState(false)
+    const [sticky, setSticky] = useState(false)
+    const [drawerVis, setDrawerVis] = useState(false)
+    const [placement, setPlacement] = useState('')
+    const [modalVis, setModalVis] = useState(false)
 
-    return (
-        <>
-            {config && i18n && buttons && (
-                <>
-                    <Button
-                        ml={isLocaleRTL(locale) ? 0.1 : 0.7}
-                        px={1.4}
-                        auto
-                        scale={0.7}
-                        type="secondary"
-                        icon={<LoginIcon />}
-                        onClick={modalHandler}
-                    >
-                        <Text b>{buttons['login'][locale].toUpperCase()}</Text>
-                    </Button>
+    useEffect(() => {
+        const scrollHandler = () =>
+            setSticky(document.documentElement.scrollTop > 54)
+        document.addEventListener('scroll', scrollHandler)
+        return () => document.removeEventListener('scroll', scrollHandler)
+    }, [setSticky])
+
+    const LoginModal = () => {
+        const buttons = i18n['buttons']
+
+        const [email, setEmail, refEmail] = useState('')
+        const [password, setPassword, refPassword] = useState('')
+        const [confirmPassword, setConfirmPassword, refConfirmPassword] =
+            useState('')
+        const [loading, setLoading, refLoading] = useState(false)
+
+        return (
+            <>
+                {config && i18n && buttons && (
                     <Modal
                         py={0.2}
-                        visible={modalVisibility}
-                        onClose={closeHandler}
+                        visible={modalVis}
+                        onClose={() => setModalVis(false)}
                     >
                         <Modal.Content pt={0.5} pb={2.5}>
                             <Collapse.Group>
@@ -410,23 +423,359 @@ export default function ({ config, i18n }) {
                             </a>
                         </Modal.Content>
                     </Modal>
+                )}
+                <style jsx global>
+                    {`
+                        input::placeholder {
+                            text-align: ${isLocaleRTL(locale)
+                                ? 'right'
+                                : 'left'};
+                            direction: ${getLocaleDirection(locale)} !important;
+                        }
+                        .Peculiar {
+                            color: ${theme.palette.accents_6}!important;
+                            font-size: 0.75rem;
+                        }
+                        .Peculiar:hover {
+                            color: ${theme.palette.code}!important;
+                        }
+                    `}
+                </style>
+            </>
+        )
+    }
+
+    const loopLanguages = () => {
+        router.push({ pathname, query }, asPath, {
+            locale: locales[(locales.indexOf(locale) + 1) % locales.length],
+        })
+    }
+
+    const drawDrawer = () => {
+        setPlacement('left')
+        setDrawerVis(true)
+    }
+
+    const Title = () => (
+        <>
+            {i18n && (
+                <>
+                    <Text mt={1.5} className="MenuNavigationTitle">
+                        <Link className="MenuNavigationTitle" href="/">
+                            {i18n['components']['header']['title'][
+                                locale
+                            ].toUpperCase()}
+                        </Link>
+                    </Text>
                 </>
             )}
             <style jsx global>
                 {`
-                    input::placeholder {
-                        text-align: ${isLocaleRTL(locale) ? 'right' : 'left'};
-                        direction: ${getLocaleDirection(locale)} !important;
-                    }
-                    .Peculiar {
-                        color: ${theme.palette.accents_6}!important;
-                        font-size: 0.75rem;
-                    }
-                    .Peculiar:hover {
-                        color: ${theme.palette.code}!important;
+                    .MenuNavigationTitle a {
+                        color: ${theme.palette.foreground}!important;
+                        font-size: 2rem;
+                        font-weight: 600;
+                        letter-spacing: ${locale == 'en' ? '0.3rem' : 0};
                     }
                 `}
             </style>
         </>
     )
+
+    const Submenu = () => {
+        const submenu = i18n['components']['header']['submenu']
+
+        return (
+            <>
+                {config && i18n && submenu && (
+                    <nav className="SubmenuWrapper">
+                        <div
+                            className={`Submenu ${
+                                sticky ? 'SubmenuSticky' : ''
+                            }`}
+                        >
+                            <div className="SubmenuInner">
+                                <Tabs
+                                    value={router.pathname}
+                                    onChange={(route) => router.push(route)}
+                                >
+                                    {isLocaleRTL(locale) ? (
+                                        <>
+                                            {submenu['tabs']
+                                                .slice(0)
+                                                .reverse()
+                                                .map((tab) => (
+                                                    <Tabs.Item
+                                                        key={
+                                                            tab['label'][locale]
+                                                        }
+                                                        label={
+                                                            tab['label'][locale]
+                                                        }
+                                                        value={tab.value}
+                                                    />
+                                                ))}
+                                            <Tabs.Item
+                                                ml={0}
+                                                label={submenu['home'][locale]}
+                                                value="/"
+                                            />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Tabs.Item
+                                                ml={0}
+                                                label={submenu['home'][locale]}
+                                                value="/"
+                                            />
+                                            {submenu['tabs'].map((tab) => (
+                                                <Tabs.Item
+                                                    key={tab['label'][locale]}
+                                                    label={tab['label'][locale]}
+                                                    value={tab.value}
+                                                />
+                                            ))}
+                                        </>
+                                    )}
+                                </Tabs>
+                            </div>
+                        </div>
+                    </nav>
+                )}
+                <style jsx global>
+                    {`
+                        .scroll-container {
+                            padding-left: 0px !important;
+                            border: none !important;
+                        }
+                        .SubmenuWrapper {
+                            height: 50px;
+                            position: relative;
+                            overflow: hidden;
+                            box-shadow: inset 0 -1px ${theme.palette.border};
+                        }
+                        .SubmenuSticky {
+                            transition: box-shadow 1s ease;
+                        }
+                        .SubmenuSticky {
+                            position: fixed;
+                            z-index: 1100;
+                            top: 0;
+                            right: 0;
+                            left: 0;
+                            background: ${theme.palette.background};
+                            box-shadow: ${theme.type === 'dark'
+                                ? `inset 0 -1px ${theme.palette.border}`
+                                : 'rgba(0, 0, 0, 0.1) 0 0 15px 0'};
+                        }
+                        .SubmenuInner {
+                            display: flex;
+                            width: ${config.theme.width};
+                            max-width: 100%;
+                            margin: 0 auto;
+                            padding: 0 ${theme.layout.pageMargin};
+                            height: 50px;
+                            overflow-y: hidden;
+                            overflow-x: auto;
+                            overflow: -moz-scrollbars-none;
+                            -ms-overflow-style: none;
+                            -webkit-overflow-scrolling: touch;
+                            scrollbar-width: none;
+                            box-sizing: border-box;
+                            justify-content: ${isLocaleRTL(locale)
+                                ? 'end'
+                                : 'space-between'};
+                        }
+                        .SubmenuInner::-webkit-scrollbar {
+                            display: none;
+                        }
+                        .SubmenuInner .content {
+                            display: none;
+                        }
+                        .SubmenuInner .tabs,
+                        .SubmenuInner header {
+                            height: 100%;
+                            border: none !important;
+                        }
+                        .SubmenuInner .tab {
+                            height: calc(100% - 2px);
+                            padding-top: 0;
+                            padding-bottom: 0;
+                            color: ${theme.palette.accents_5};
+                            font-size: 0.825rem;
+                        }
+                        .SubmenuInner .tab:hover {
+                            color: ${theme.palette.foreground};
+                        }
+                        .SubmenuInner .active {
+                            color: ${theme.palette.foreground};
+                            border: none !important;
+                        }
+                    `}
+                </style>
+            </>
+        )
+    }
+
+    const Binder = ({ children }) => (
+        <>
+            {config && i18n && (
+                <>
+                    <nav className="Navigation">{children}</nav>
+                    <Submenu config={config} i18n={i18n} sticky={sticky} />
+                    <style jsx global>
+                        {`
+                            .Navigation {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                width: ${config.theme.width};
+                                max-width: 100%;
+                                margin: 0 auto;
+                                padding: 1.5rem ${theme.layout.pageMargin};
+                                height: 55px;
+                                box-sizing: border-box;
+                            }
+                            .Navigation > div {
+                                display: flex;
+                                align-items: center;
+                            }
+                            .MainDropdown {
+                                margin-left: ${isLocaleRTL(locale)
+                                    ? ''
+                                    : '0.5rem'};
+                                margin-right: ${isLocaleRTL(locale)
+                                    ? '0.5rem'
+                                    : ''};
+                            }
+                            .MainDropdown > button {
+                                white-space: nowrap;
+                            }
+                        `}
+                    </style>
+                </>
+            )}
+        </>
+    )
+
+    const TabletNav = () => (
+        <>
+            <div>
+                <Button
+                    type="secondary"
+                    ghost
+                    style={{ border: 'none' }}
+                    auto
+                    icon={<SearchIcon />}
+                />
+                {themeProvider && (
+                    <Button
+                        icon={
+                            theme.type === 'dark' ? (
+                                <LightModeIcon />
+                            ) : (
+                                <DarkModeIcon />
+                            )
+                        }
+                        aria-label="Toggle Theme"
+                        mx={0.5}
+                        type="secondary"
+                        ghost
+                        style={{ border: 'none' }}
+                        auto
+                        onClick={() =>
+                            themeProvider.setLocalTheme(
+                                theme.type === 'dark' ? 'light' : 'dark'
+                            )
+                        }
+                    />
+                )}
+                {locales && (
+                    <Button
+                        type="secondary"
+                        ghost
+                        auto
+                        style={{ border: 'none' }}
+                        icon={<LanguageIcon />}
+                        onClick={() => loopLanguages()}
+                    />
+                )}
+            </div>
+            <Title config={config} i18n={i18n} />
+            <div>
+                {isAuthenticated ? (
+                    <>
+                        <Link href="/cart">
+                            <Button
+                                icon={<CartIcon />}
+                                aria-label="Shopping Cart"
+                                mx={0.5}
+                                type="secondary"
+                                ghost
+                                style={{ border: 'none' }}
+                                auto
+                            />
+                        </Link>
+                        <Link href="/user">
+                            <Button
+                                icon={<UserIcon />}
+                                aria-label="Toggle Theme"
+                                type="secondary"
+                                ghost
+                                style={{ border: 'none' }}
+                                auto
+                            />
+                        </Link>
+                    </>
+                ) : (
+                    <>
+                        <Button
+                            icon={<LoginIcon />}
+                            aria-label="Login Button"
+                            type="secondary"
+                            style={{ border: 'none' }}
+                            auto
+                            onClick={(e) => setModalVis(true)}
+                        >
+                            <b>Login</b>
+                        </Button>
+                        <LoginModal />
+                    </>
+                )}
+            </div>
+        </>
+    )
+
+    const PhoneNav = () => (
+        <>
+            <Button
+                type="secondary"
+                ghost
+                style={{ border: 'none' }}
+                auto
+                icon={<SearchIcon />}
+            />
+            <Title config={config} i18n={i18n} />
+            <Button
+                type="secondary"
+                ghost
+                style={{ border: 'none' }}
+                auto
+                icon={<MenuIcon />}
+                onClick={() => drawDrawer()}
+            />
+            <Drawer
+                visible={drawerVis}
+                onClose={() => setDrawerVis(false)}
+                placement={placement}
+                width="60%"
+            >
+                <Drawer.Content>
+                    <Button />
+                </Drawer.Content>
+            </Drawer>
+        </>
+    )
+
+    return <Binder>{width > 650 ? <TabletNav /> : <PhoneNav />}</Binder>
 }
