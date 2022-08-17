@@ -1,14 +1,13 @@
-import axios from 'axios'
-import burnToast from '../burnToast'
+import burnToast from '../helpers/burnToast'
 
-export async function handleAccountData(
+export async function handleUserData({
     response,
     router,
-    setAccount,
+    setUser,
     setToast,
     noDataToast,
-    notVerifiedToast
-) {
+    notVerifiedToast,
+}) {
     const { data, error } = response
 
     if (error) {
@@ -31,5 +30,5 @@ export async function handleAccountData(
         burnToast(setToast, notVerifiedToast)
     }
 
-    setAccount(data)
+    setUser(data)
 }

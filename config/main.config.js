@@ -23,7 +23,7 @@ export default {
     },
     backend: {
         routes: {
-            account: '/api/users/account',
+            user: '/api/users/user',
             login: '/api/users/login',
             logout: '/api/users/logout',
             register: '/api/users/register',

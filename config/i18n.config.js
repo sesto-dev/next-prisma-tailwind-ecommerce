@@ -126,55 +126,27 @@ const toasts = {
 
 const components = {
     header: {
-        submenu: {
-            home: {
-                en: 'Home',
-                fa: 'خانه',
+        submenu: [
+            {
+                label: { en: 'Home', fa: 'خانه' },
+                value: '/',
             },
-            tabs: [
-                {
-                    label: {
-                        en: 'Products',
-                        fa: 'محصولات',
-                    },
-                    value: '/products',
+            {
+                label: {
+                    en: 'Products',
+                    fa: 'محصولات',
                 },
-                {
-                    label: {
-                        en: 'About',
-                        fa: 'درباره ما',
-                    },
-                    value: '/about',
+                value: '/products',
+            },
+            {
+                label: {
+                    en: 'About',
+                    fa: 'درباره ما',
                 },
-            ],
-        },
+                value: '/about',
+            },
+        ],
         title,
-        account: {
-            text: {
-                en: 'ACCOUNT',
-                fa: 'حساب کاربری',
-            },
-            logout: {
-                en: 'LOGOUT',
-                fa: 'خروج',
-            },
-            links: [
-                {
-                    label: {
-                        en: 'ACCOUNT',
-                        fa: 'حساب کاربری',
-                    },
-                    value: '/account',
-                },
-                {
-                    label: {
-                        en: 'DASHBOARD',
-                        fa: 'داشبورد',
-                    },
-                    value: '/dashboard',
-                },
-            ],
-        },
     },
     footer: {
         copyright: {
@@ -403,13 +375,13 @@ const root = {
             fa: 'صفحه داشبورد',
         },
     },
-    account: {
+    user: {
         title: {
-            en: 'Account',
+            en: 'User',
             fa: 'حساب کاربری',
         },
         description: {
-            en: 'Account Page',
+            en: 'User Page',
             fa: 'صفحه حساب کاربری',
         },
     },

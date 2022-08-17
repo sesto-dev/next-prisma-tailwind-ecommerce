@@ -19,11 +19,10 @@ import {
 
 import Layout from '../../components/Layout'
 import { useThemeProvider } from '../../state/Theme'
-import { handleProductData } from '../../helpers/handlers/productHandlers'
+import { handleProductData } from '../../handlers/productHandlers'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
-import { CartIcon } from '../../components/SVGs'
 
 export default function ({ pid }) {
     const theme = useTheme()
@@ -63,7 +62,6 @@ export default function ({ pid }) {
                 config={config}
                 i18n={i18n}
                 useThemeProvider={useThemeProvider}
-                crown={false}
                 metaTitle={title}
                 metaDescription={description}
             >

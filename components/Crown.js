@@ -3,7 +3,7 @@ import { Spacer, Text, useTheme } from '@geist-ui/core'
 
 import { isLocaleRTL, getLocaleDirection } from '../helpers/RTL'
 
-export default function ({ config, i18n, crown = true, large, small }) {
+export default function ({ config, i18n, large, small }) {
     const theme = useTheme()
     const { locale = config.defaultLocale } = useRouter()
     const smallComponent = small
@@ -11,7 +11,7 @@ export default function ({ config, i18n, crown = true, large, small }) {
         <>
             <div className="Banner">
                 <div style={{ marginTop: '1rem', marginBottom: '3rem' }}>
-                    {crown && (
+                    {large && small && (
                         <>
                             <Text
                                 h3

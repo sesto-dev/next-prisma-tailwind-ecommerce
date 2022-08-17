@@ -5,7 +5,7 @@ const user = mongoose.Schema(
         name: {
             type: String,
         },
-        credit: {
+        wallet: {
             type: Number,
         },
         email: {
@@ -16,6 +16,12 @@ const user = mongoose.Schema(
         password: {
             type: String,
         },
+        cart: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product',
+            },
+        ],
         isAdmin: {
             type: Boolean,
             required: true,

@@ -33,6 +33,7 @@
     "homepage": "https://github.com/Accretence/create-next-dashboard#readme",
     "dependencies": {
         "@geist-ui/core": "^2.3.8",
+        "@geist-ui/icons": "^1.0.2",
         "angra": "^0.4.6",
         "apadana": "^0.0.4",
         "axios": "^0.27.2",

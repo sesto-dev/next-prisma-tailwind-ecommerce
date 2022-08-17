@@ -11,7 +11,16 @@ export default async function (req, res) {
     const user = await User.findById(decoded.id)
 
     if (user) {
-        res.status(200).json({ email: user.email, isVerified: user.isVerified })
+        const { name, email, cart, wallet, referral_code, isVerified } = user
+
+        res.status(200).json({
+            name,
+            email,
+            cart,
+            wallet,
+            referral_code,
+            isVerified,
+        })
     } else {
         res.status(401).send('Fail')
     }

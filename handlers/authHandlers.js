@@ -1,5 +1,5 @@
 import axios from 'axios'
-import burnToast from '../burnToast'
+import burnToast from '../helpers/burnToast'
 
 export async function loginHandler({
     config,

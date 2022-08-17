@@ -21,8 +21,6 @@ export default function () {
             config={config}
             i18n={i18n}
             useThemeProvider={useThemeProvider}
-            crownLarge={title}
-            crownSmall={description}
             metaTitle={title}
         >
             <Grid.Container gap={1}>

@@ -34,6 +34,7 @@ export default async function (req, res) {
         const referral_code = await generateVoucher(3)
 
         const user = await User.create({
+            name: name ? name : null,
             email,
             email_verification_code: verified_email
                 ? email_verification_code

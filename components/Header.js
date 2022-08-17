@@ -17,28 +17,31 @@ import { useRouter } from 'next/router'
 
 import { getLocaleDirection, isLocaleRTL } from '../helpers/RTL'
 import { useAuth } from '../state/Auth'
+import { GoogleIcon } from './SVGs'
 import {
-    LightModeIcon,
-    DarkModeIcon,
-    MenuIcon,
-    SearchIcon,
-    LanguageIcon,
-    RegisterIcon,
-    CartIcon,
-    UserIcon,
-    GoogleIcon,
-    LoginIcon,
-} from './SVGs'
+    Sun,
+    Moon,
+    LogIn,
+    LogOut,
+    User,
+    UserPlus,
+    Power,
+    ShoppingCart,
+    Menu,
+    Search,
+    Globe,
+} from '@geist-ui/icons'
+
 import useWindowSize from '../hooks/useWindowSize'
 import getGoogleURL from '../helpers/getGoogleURL'
 
 export default function ({ config, i18n, useThemeProvider }) {
-    const { isAuthenticated, setLocalAuthentication } = useAuth()
     const theme = useTheme()
     const themeProvider = useThemeProvider()
     const { width, height } = useWindowSize()
     const router = useRouter()
     const { setToast } = useToasts()
+    const { isAuthenticated, setLocalAuthentication } = useAuth()
 
     const {
         locale = config.defaultLocale,
@@ -59,6 +62,17 @@ export default function ({ config, i18n, useThemeProvider }) {
         document.addEventListener('scroll', scrollHandler)
         return () => document.removeEventListener('scroll', scrollHandler)
     }, [setSticky])
+
+    function loopLanguages() {
+        router.push({ pathname, query }, asPath, {
+            locale: locales[(locales.indexOf(locale) + 1) % locales.length],
+        })
+    }
+
+    function drawDrawer() {
+        setPlacement('left')
+        setDrawerVis(true)
+    }
 
     const LoginModal = () => {
         const buttons = i18n['buttons']
@@ -183,7 +197,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                                                 ],
                                             })
                                         }
-                                        icon={<LoginIcon />}
+                                        icon={<LogIn />}
                                     >
                                         {buttons['login'][locale]}
                                     </Button>
@@ -402,7 +416,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                                                 refPassword,
                                             })
                                         }
-                                        icon={<RegisterIcon />}
+                                        icon={<UserPlus />}
                                     >
                                         {buttons['register'][locale]}
                                     </Button>
@@ -416,6 +430,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                                     icon={<GoogleIcon />}
                                     type="secondary"
                                     width="100%"
+                                    mt={0.8}
                                     onClick={() => {}}
                                 >
                                     Sign in with Google
@@ -445,17 +460,6 @@ export default function ({ config, i18n, useThemeProvider }) {
         )
     }
 
-    const loopLanguages = () => {
-        router.push({ pathname, query }, asPath, {
-            locale: locales[(locales.indexOf(locale) + 1) % locales.length],
-        })
-    }
-
-    const drawDrawer = () => {
-        setPlacement('left')
-        setDrawerVis(true)
-    }
-
     const Title = () => (
         <>
             {i18n && (
@@ -473,7 +477,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                 {`
                     .MenuNavigationTitle a {
                         color: ${theme.palette.foreground}!important;
-                        font-size: 2rem;
+                        font-size: 2.2rem;
                         font-weight: 600;
                         letter-spacing: ${locale == 'en' ? '0.3rem' : 0};
                     }
@@ -499,44 +503,13 @@ export default function ({ config, i18n, useThemeProvider }) {
                                     value={router.pathname}
                                     onChange={(route) => router.push(route)}
                                 >
-                                    {isLocaleRTL(locale) ? (
-                                        <>
-                                            {submenu['tabs']
-                                                .slice(0)
-                                                .reverse()
-                                                .map((tab) => (
-                                                    <Tabs.Item
-                                                        key={
-                                                            tab['label'][locale]
-                                                        }
-                                                        label={
-                                                            tab['label'][locale]
-                                                        }
-                                                        value={tab.value}
-                                                    />
-                                                ))}
-                                            <Tabs.Item
-                                                ml={0}
-                                                label={submenu['home'][locale]}
-                                                value="/"
-                                            />
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Tabs.Item
-                                                ml={0}
-                                                label={submenu['home'][locale]}
-                                                value="/"
-                                            />
-                                            {submenu['tabs'].map((tab) => (
-                                                <Tabs.Item
-                                                    key={tab['label'][locale]}
-                                                    label={tab['label'][locale]}
-                                                    value={tab.value}
-                                                />
-                                            ))}
-                                        </>
-                                    )}
+                                    {submenu.map((tab) => (
+                                        <Tabs.Item
+                                            key={tab['label'][locale]}
+                                            label={tab['label'][locale]}
+                                            value={tab.value}
+                                        />
+                                    ))}
                                 </Tabs>
                             </div>
                         </div>
@@ -617,6 +590,196 @@ export default function ({ config, i18n, useThemeProvider }) {
         )
     }
 
+    const TabletNav = () => (
+        <>
+            <div>
+                <Button
+                    type="secondary"
+                    ghost
+                    style={{ border: 'none' }}
+                    auto
+                    icon={<Search />}
+                />
+                {themeProvider && (
+                    <Button
+                        icon={theme.type === 'dark' ? <Sun /> : <Moon />}
+                        aria-label="Toggle Theme"
+                        mx={0.5}
+                        type="secondary"
+                        ghost
+                        style={{ border: 'none' }}
+                        auto
+                        onClick={() =>
+                            themeProvider.setLocalTheme(
+                                theme.type === 'dark' ? 'light' : 'dark'
+                            )
+                        }
+                    />
+                )}
+                {locales && (
+                    <Button
+                        type="secondary"
+                        ghost
+                        auto
+                        style={{ border: 'none' }}
+                        icon={<Globe />}
+                        onClick={() => loopLanguages()}
+                    />
+                )}
+            </div>
+            <Title config={config} i18n={i18n} />
+            <div>
+                {isAuthenticated ? (
+                    <>
+                        <Link href="/cart">
+                            <Button
+                                icon={<ShoppingCart />}
+                                aria-label="Shopping Cart"
+                                mx={0.5}
+                                type="secondary"
+                                ghost
+                                style={{ border: 'none' }}
+                                auto
+                            />
+                        </Link>
+                        <Link href="/user">
+                            <Button
+                                icon={<User />}
+                                aria-label="Toggle Theme"
+                                type="secondary"
+                                ghost
+                                style={{ border: 'none' }}
+                                auto
+                            />
+                        </Link>
+                    </>
+                ) : (
+                    <>
+                        <Button
+                            icon={<LogIn />}
+                            aria-label="Login Button"
+                            type="secondary"
+                            style={{ border: 'none' }}
+                            auto
+                            onClick={(e) => setModalVis(true)}
+                        />
+                        <LoginModal />
+                    </>
+                )}
+            </div>
+        </>
+    )
+
+    const DesktopNav = () => (
+        <>
+            <Title config={config} i18n={i18n} />
+            <div>
+                <Button
+                    type="secondary"
+                    ghost
+                    style={{ border: 'none' }}
+                    auto
+                    icon={<Search />}
+                />
+                {themeProvider && (
+                    <Button
+                        icon={theme.type === 'dark' ? <Sun /> : <Moon />}
+                        aria-label="Toggle Theme"
+                        mx={0.5}
+                        type="secondary"
+                        ghost
+                        style={{ border: 'none' }}
+                        auto
+                        onClick={() =>
+                            themeProvider.setLocalTheme(
+                                theme.type === 'dark' ? 'light' : 'dark'
+                            )
+                        }
+                    />
+                )}
+                {locales && (
+                    <Button
+                        type="secondary"
+                        ghost
+                        auto
+                        style={{ border: 'none' }}
+                        icon={<Globe />}
+                        onClick={() => loopLanguages()}
+                    />
+                )}
+                {isAuthenticated ? (
+                    <>
+                        <Link href="/cart">
+                            <Button
+                                icon={<ShoppingCart />}
+                                aria-label="Shopping Cart"
+                                mx={0.5}
+                                type="secondary"
+                                ghost
+                                style={{ border: 'none' }}
+                                auto
+                            />
+                        </Link>
+                        <Link href="/user">
+                            <Button
+                                icon={<User />}
+                                aria-label="Toggle Theme"
+                                type="secondary"
+                                ghost
+                                style={{ border: 'none' }}
+                                auto
+                            />
+                        </Link>
+                    </>
+                ) : (
+                    <>
+                        <Button
+                            icon={<LogIn />}
+                            aria-label="Login Button"
+                            type="secondary"
+                            ml="0.5"
+                            style={{ border: 'none' }}
+                            auto
+                            onClick={(e) => setModalVis(true)}
+                        />
+                        <LoginModal />
+                    </>
+                )}
+            </div>
+        </>
+    )
+
+    const PhoneNav = () => (
+        <>
+            <Button
+                type="secondary"
+                ghost
+                style={{ border: 'none' }}
+                auto
+                icon={<Search />}
+            />
+            <Title config={config} i18n={i18n} />
+            <Button
+                type="secondary"
+                ghost
+                style={{ border: 'none' }}
+                auto
+                icon={<Menu />}
+                onClick={() => drawDrawer()}
+            />
+            <Drawer
+                visible={drawerVis}
+                onClose={() => setDrawerVis(false)}
+                placement={placement}
+                width="60%"
+            >
+                <Drawer.Content>
+                    <Button />
+                </Drawer.Content>
+            </Drawer>
+        </>
+    )
+
     const Binder = ({ children }) => (
         <>
             {config && i18n && (
@@ -632,7 +795,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                                 width: ${config.theme.width};
                                 max-width: 100%;
                                 margin: 0 auto;
-                                padding: 1.5rem ${theme.layout.pageMargin};
+                                padding: 2rem ${theme.layout.pageMargin};
                                 height: 55px;
                                 box-sizing: border-box;
                             }
@@ -658,124 +821,17 @@ export default function ({ config, i18n, useThemeProvider }) {
         </>
     )
 
-    const TabletNav = () => (
-        <>
-            <div>
-                <Button
-                    type="secondary"
-                    ghost
-                    style={{ border: 'none' }}
-                    auto
-                    icon={<SearchIcon />}
-                />
-                {themeProvider && (
-                    <Button
-                        icon={
-                            theme.type === 'dark' ? (
-                                <LightModeIcon />
-                            ) : (
-                                <DarkModeIcon />
-                            )
-                        }
-                        aria-label="Toggle Theme"
-                        mx={0.5}
-                        type="secondary"
-                        ghost
-                        style={{ border: 'none' }}
-                        auto
-                        onClick={() =>
-                            themeProvider.setLocalTheme(
-                                theme.type === 'dark' ? 'light' : 'dark'
-                            )
-                        }
-                    />
-                )}
-                {locales && (
-                    <Button
-                        type="secondary"
-                        ghost
-                        auto
-                        style={{ border: 'none' }}
-                        icon={<LanguageIcon />}
-                        onClick={() => loopLanguages()}
-                    />
-                )}
-            </div>
-            <Title config={config} i18n={i18n} />
-            <div>
-                {isAuthenticated ? (
-                    <>
-                        <Link href="/cart">
-                            <Button
-                                icon={<CartIcon />}
-                                aria-label="Shopping Cart"
-                                mx={0.5}
-                                type="secondary"
-                                ghost
-                                style={{ border: 'none' }}
-                                auto
-                            />
-                        </Link>
-                        <Link href="/user">
-                            <Button
-                                icon={<UserIcon />}
-                                aria-label="Toggle Theme"
-                                type="secondary"
-                                ghost
-                                style={{ border: 'none' }}
-                                auto
-                            />
-                        </Link>
-                    </>
+    return (
+        <Binder>
+            {width > 650 ? (
+                width > 1280 ? (
+                    <DesktopNav />
                 ) : (
-                    <>
-                        <Button
-                            icon={<LoginIcon />}
-                            aria-label="Login Button"
-                            type="secondary"
-                            style={{ border: 'none' }}
-                            auto
-                            onClick={(e) => setModalVis(true)}
-                        >
-                            <b>Login</b>
-                        </Button>
-                        <LoginModal />
-                    </>
-                )}
-            </div>
-        </>
+                    <TabletNav />
+                )
+            ) : (
+                <PhoneNav />
+            )}
+        </Binder>
     )
-
-    const PhoneNav = () => (
-        <>
-            <Button
-                type="secondary"
-                ghost
-                style={{ border: 'none' }}
-                auto
-                icon={<SearchIcon />}
-            />
-            <Title config={config} i18n={i18n} />
-            <Button
-                type="secondary"
-                ghost
-                style={{ border: 'none' }}
-                auto
-                icon={<MenuIcon />}
-                onClick={() => drawDrawer()}
-            />
-            <Drawer
-                visible={drawerVis}
-                onClose={() => setDrawerVis(false)}
-                placement={placement}
-                width="60%"
-            >
-                <Drawer.Content>
-                    <Button />
-                </Drawer.Content>
-            </Drawer>
-        </>
-    )
-
-    return <Binder>{width > 650 ? <TabletNav /> : <PhoneNav />}</Binder>
 }

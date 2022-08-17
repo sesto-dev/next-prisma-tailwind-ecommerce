@@ -18,28 +18,19 @@ import {
 } from '@geist-ui/core'
 import Layout from '../../components/Layout'
 import { useThemeProvider } from '../../state/Theme'
-import { handleProductsData } from '../../helpers/handlers/productHandlers'
+import { handleProductsData } from '../../handlers/productHandlers'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
-import {
-    CartIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
-} from '../../components/SVGs'
+
+import { ShoppingCart, ChevronLeft, ChevronRight } from '@geist-ui/icons'
 
 export default function ({ page, category, tags, sort }) {
     const theme = useTheme()
     const router = useRouter()
-    const {
-        locale = config.defaultLocale,
-        locales,
-        pathname,
-        asPath,
-        query,
-    } = router
-
     const { setToast } = useToasts()
+
+    const { locale = config.defaultLocale } = router
 
     const folio = i18n['root']['products']
     const title = folio['title'][locale]
@@ -72,7 +63,7 @@ export default function ({ page, category, tags, sort }) {
         resolve()
     }, [router])
 
-    const handler = (val) => console.log(val)
+    const handler = (val) => {}
 
     const Paginated = () => (
         <Card
@@ -100,10 +91,10 @@ export default function ({ page, category, tags, sort }) {
                     }}
                 >
                     <Pagination.Next>
-                        <ChevronRightIcon />
+                        <ChevronRight />
                     </Pagination.Next>
                     <Pagination.Previous>
-                        <ChevronLeftIcon />
+                        <ChevronLeft />
                     </Pagination.Previous>
                 </Pagination>
             </center>
@@ -115,7 +106,6 @@ export default function ({ page, category, tags, sort }) {
             config={config}
             i18n={i18n}
             useThemeProvider={useThemeProvider}
-            crown={false}
             metaTitle={title}
         >
             <Grid.Container gap={1}>
@@ -233,7 +223,9 @@ export default function ({ page, category, tags, sort }) {
                                                         <Button
                                                             mt={1}
                                                             width="100%"
-                                                            icon={<CartIcon />}
+                                                            icon={
+                                                                <ShoppingCart />
+                                                            }
                                                             style={{
                                                                 backgroundColor:
                                                                     theme
