@@ -26,6 +26,8 @@ import { LogOut } from '@geist-ui/icons'
 
 import { useAuth } from '../state/Auth'
 import useWindowSize from '../hooks/useWindowSize'
+import getGoogleURL from '../helpers/getGoogleURL'
+import { GoogleIcon } from '../components/SVGs'
 
 export default function () {
     const theme = useTheme()
@@ -150,15 +152,31 @@ export default function () {
                                         </Fieldset.Subtitle>
                                     </Fieldset>
                                     <Fieldset label="integrations">
-                                        <Fieldset.Title>
-                                            HTTP is stateless
-                                        </Fieldset.Title>
-                                        <Fieldset.Subtitle>
-                                            HTTP is stateless: there is no link
-                                            between two requests being
-                                            successively carried out on the same
-                                            connection.{' '}
-                                        </Fieldset.Subtitle>
+                                        {user.integrations &&
+                                        user.integrations.google.id ? (
+                                            <Button
+                                                icon={<GoogleIcon />}
+                                                disabled
+                                                type="secondary"
+                                                width="100%"
+                                                mt={0.8}
+                                                onClick={() => {}}
+                                            >
+                                                Integrated with Google
+                                            </Button>
+                                        ) : (
+                                            <a href={getGoogleURL()}>
+                                                <Button
+                                                    icon={<GoogleIcon />}
+                                                    type="secondary"
+                                                    width="100%"
+                                                    mt={0.8}
+                                                    onClick={() => {}}
+                                                >
+                                                    Integrate with Google
+                                                </Button>
+                                            </a>
+                                        )}
                                     </Fieldset>
                                 </Fieldset.Group>
                             </Grid>

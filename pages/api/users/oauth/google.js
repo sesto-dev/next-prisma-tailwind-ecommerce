@@ -26,16 +26,14 @@ export default async function (req, res) {
     const exists = await User.findOne({ email })
 
     if (exists) {
-        if (!exists.integration || !exists.integration.google) {
-            exists.integration = {
-                google: {
-                    id,
-                    email,
-                    verified_email,
-                    name,
-                    picture,
-                    locale,
-                },
+        if (!exists.integrations.google.id) {
+            exists.integrations.google = {
+                id,
+                email,
+                verified_email,
+                name,
+                picture,
+                locale,
             }
 
             if (!exists.name) exists.name = name

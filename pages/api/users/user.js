@@ -16,9 +16,11 @@ export default async function (req, res) {
             email,
             cart,
             wallet,
+            phone,
             referral_code,
             isEmailVerified,
             isPhoneVerified,
+            integrations,
         } = user
 
         res.status(200).json({
@@ -26,9 +28,11 @@ export default async function (req, res) {
             email,
             cart,
             wallet,
+            phone,
             referral_code,
             isEmailVerified,
             isPhoneVerified,
+            integrations,
         })
     } else {
         res.status(401).send('Fail')
