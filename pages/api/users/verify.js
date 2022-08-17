@@ -16,10 +16,10 @@ export default async function (req, res) {
 
     const user = await User.findById(decoded.id)
 
-    if (user && !user.isVerified) {
+    if (user && !user.isEmailVerified) {
         if (code == user.email_verification_code) {
             user.email_verification_code = ''
-            user.isVerified = true
+            user.isEmailVerified = true
             await user.save()
 
             res.status(200).json('Success!')

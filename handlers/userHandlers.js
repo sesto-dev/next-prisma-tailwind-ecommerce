@@ -25,7 +25,7 @@ export async function handleUserData({
         burnToast(setToast, noDataToast)
     }
 
-    if (!data.isVerified) {
+    if (!data.isEmailVerified) {
         router.replace('/auth/verify')
         burnToast(setToast, notVerifiedToast)
     }

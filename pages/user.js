@@ -12,6 +12,7 @@ import {
     Grid,
     useTheme,
     Fieldset,
+    Snippet,
 } from '@geist-ui/core'
 
 import Layout from '../components/Layout'
@@ -24,13 +25,16 @@ import i18n from '../config/i18n.config'
 import { LogOut } from '@geist-ui/icons'
 
 import { useAuth } from '../state/Auth'
+import useWindowSize from '../hooks/useWindowSize'
 
 export default function () {
     const theme = useTheme()
     const router = useRouter()
-    const { locale = config.defaultLocale } = router
     const { setToast } = useToasts()
     const { setLocalAuthentication } = useAuth()
+    const { width, height } = useWindowSize()
+
+    const { locale = config.defaultLocale } = router
 
     const folio = i18n['root']['user']
     const title = folio['title'][locale]
@@ -77,28 +81,38 @@ export default function () {
                                         {user.name && (
                                             <Description
                                                 title="Name"
-                                                content={user.name}
+                                                content={
+                                                    <Text font="1.1rem">
+                                                        {user.name}
+                                                    </Text>
+                                                }
                                                 mb={1}
                                             />
                                         )}
                                         <Description
                                             title="Email"
-                                            content={user.email}
+                                            content={
+                                                <Text font="1.1rem">
+                                                    {user.email}
+                                                </Text>
+                                            }
                                             mb={1}
                                         />
                                         <Description
                                             title="Referral Code"
-                                            content={user.referral_code}
+                                            content={
+                                                <Snippet
+                                                    toastText="👍 Copied!"
+                                                    toastType="default"
+                                                    text={user.referral_code}
+                                                />
+                                            }
+                                            mb={1}
                                         />
                                         <Divider mt={3} mb={2} />
                                         <Button
                                             icon={<LogOut />}
-                                            scale={0.9}
                                             type="secondary"
-                                            ghost
-                                            style={{
-                                                border: `1px solid ${theme.palette.accents_2}`,
-                                            }}
                                             px={2}
                                             onClick={(e) =>
                                                 logoutHandler({
@@ -111,7 +125,8 @@ export default function () {
                                                     ][locale],
                                                 })
                                             }
-                                            auto
+                                            width={width < 650 && '100%'}
+                                            auto={width > 650}
                                         >
                                             <b>LOGOUT</b>
                                         </Button>
@@ -122,18 +137,8 @@ export default function () {
                                             make this protocol easy to extend
                                             and experiment with.
                                         </Fieldset.Subtitle>
-                                        <Fieldset.Footer>
-                                            HTTP Knowledge Base
-                                            <Button
-                                                auto
-                                                scale={1 / 3}
-                                                font="12px"
-                                            >
-                                                Actions
-                                            </Button>
-                                        </Fieldset.Footer>
                                     </Fieldset>
-                                    <Fieldset label="wallet">
+                                    <Fieldset label="referrals">
                                         <Fieldset.Title>
                                             HTTP is stateless
                                         </Fieldset.Title>
@@ -143,16 +148,17 @@ export default function () {
                                             successively carried out on the same
                                             connection.{' '}
                                         </Fieldset.Subtitle>
-                                        <Fieldset.Footer>
-                                            HTTP Knowledge Base
-                                            <Button
-                                                auto
-                                                scale={1 / 3}
-                                                font="12px"
-                                            >
-                                                Actions
-                                            </Button>
-                                        </Fieldset.Footer>
+                                    </Fieldset>
+                                    <Fieldset label="integrations">
+                                        <Fieldset.Title>
+                                            HTTP is stateless
+                                        </Fieldset.Title>
+                                        <Fieldset.Subtitle>
+                                            HTTP is stateless: there is no link
+                                            between two requests being
+                                            successively carried out on the same
+                                            connection.{' '}
+                                        </Fieldset.Subtitle>
                                     </Fieldset>
                                 </Fieldset.Group>
                             </Grid>

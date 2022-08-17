@@ -26,7 +26,7 @@ export async function loginHandler({
         if (response && response.status && response.status == 200) {
             burnToast(setToast, toast)
             setLocalAuthentication(true)
-            router.replace('/dashboard')
+            router.replace('/user')
         }
     } catch (error) {
         setLoading(false)
@@ -96,7 +96,7 @@ export async function verifyHandler(
 
         if (response && response.status && response.status == 200) {
             burnToast(setToast, toast)
-            router.replace('/dashboard')
+            router.replace('/user')
         }
     } catch (error) {
         setLoading(false)
@@ -141,7 +141,7 @@ export async function unsubscribeHandler(config, setLoading, setToast, toast) {
         const response = await axios.post(config.backend.routes.unsubscribe)
 
         if (response && response.status && response.status == 200) {
-            router.replace('/dashboard')
+            router.replace('/user')
             burnToast(setToast, toast)
         }
     } catch (error) {
@@ -162,7 +162,7 @@ export async function subscribeHandler(config, setLoading, setToast, toast) {
         const response = await axios.post(config.backend.routes.subscribe)
 
         if (response && response.status && response.status == 200) {
-            router.replace('/dashboard')
+            router.replace('/user')
             burnToast(setToast, toast)
         }
     } catch (error) {

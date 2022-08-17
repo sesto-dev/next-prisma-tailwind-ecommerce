@@ -10,6 +10,7 @@ import {
     Text,
     useTheme,
     Drawer,
+    ButtonGroup,
     Button,
     useToasts,
 } from '@geist-ui/core'
@@ -34,6 +35,8 @@ import {
 
 import useWindowSize from '../hooks/useWindowSize'
 import getGoogleURL from '../helpers/getGoogleURL'
+import isEmail from '../helpers/isEmail'
+import { registerHandler, loginHandler } from '../handlers/authHandlers'
 
 export default function ({ config, i18n, useThemeProvider }) {
     const theme = useTheme()
@@ -774,9 +777,90 @@ export default function ({ config, i18n, useThemeProvider }) {
                 width="60%"
             >
                 <Drawer.Content>
-                    <Button />
+                    {
+                        <ButtonGroup
+                            type="secondary"
+                            mx={0}
+                            mb={2}
+                            width="100%"
+                        >
+                            <Button
+                                disabled={theme.type === 'dark'}
+                                icon={<Moon />}
+                                scale={1.3}
+                                aria-label="Toggle Dark Mode"
+                                onClick={() =>
+                                    themeProvider.setLocalTheme('dark')
+                                }
+                            />
+                            <Button
+                                disabled={theme.type === 'light'}
+                                icon={<Sun />}
+                                scale={1.3}
+                                aria-label="Toggle Light Mode"
+                                onClick={() =>
+                                    themeProvider.setLocalTheme('light')
+                                }
+                            />
+                        </ButtonGroup>
+                    }
+                    {locales && (
+                        <Button
+                            type="secondary"
+                            width="100%"
+                            scale={1.5}
+                            mb={0.5}
+                            icon={<Globe />}
+                            onClick={() => loopLanguages()}
+                        />
+                    )}
+                    {isAuthenticated ? (
+                        <>
+                            <Link href="/cart">
+                                <Button
+                                    icon={<ShoppingCart />}
+                                    aria-label="Shopping Cart"
+                                    type="secondary"
+                                    width="100%"
+                                    scale={1.5}
+                                    mb={0.5}
+                                    style={{ border: 'none' }}
+                                />
+                            </Link>
+                            <Link href="/user">
+                                <Button
+                                    icon={<User />}
+                                    aria-label="Toggle Theme"
+                                    type="secondary"
+                                    width="100%"
+                                    scale={1.5}
+                                    style={{ border: 'none' }}
+                                />
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Button
+                                icon={<LogIn />}
+                                aria-label="Login Button"
+                                type="secondary"
+                                style={{ border: 'none' }}
+                                width="100%"
+                                scale={1.5}
+                                onClick={(e) => setModalVis(true)}
+                            />
+                            <LoginModal />
+                        </>
+                    )}
                 </Drawer.Content>
             </Drawer>
+            <style jsx global>
+                {`
+                    .btn-group > button {
+                        width: 100% !important;
+                    }
+                `}
+            </style>
         </>
     )
 

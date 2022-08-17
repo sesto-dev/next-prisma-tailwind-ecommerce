@@ -13,6 +13,7 @@ const user = mongoose.Schema(
             required: true,
             unique: true,
         },
+        phone: { type: String },
         password: {
             type: String,
         },
@@ -22,6 +23,28 @@ const user = mongoose.Schema(
                 ref: 'Product',
             },
         ],
+        integrations: {
+            google: {
+                id: {
+                    type: String,
+                },
+                email: {
+                    type: String,
+                },
+                verified_email: {
+                    type: Boolean,
+                },
+                name: {
+                    type: String,
+                },
+                picture: {
+                    type: String,
+                },
+                locale: {
+                    type: String,
+                },
+            },
+        },
         isAdmin: {
             type: Boolean,
             required: true,
@@ -32,7 +55,12 @@ const user = mongoose.Schema(
             required: true,
             default: false,
         },
-        isVerified: {
+        isEmailVerified: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        isPhoneVerified: {
             type: Boolean,
             required: true,
             default: false,

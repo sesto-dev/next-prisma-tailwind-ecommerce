@@ -14,7 +14,7 @@ export default async function (req, res) {
 
     if (!access_token) res.redirect(502, '/')
 
-    const { id, email, verified_email, name } = await getUser({
+    const { id, email, verified_email, name, picture, locale } = await getUser({
         id_token,
         access_token,
     })
@@ -26,6 +26,25 @@ export default async function (req, res) {
     const exists = await User.findOne({ email })
 
     if (exists) {
+        if (!exists.integration || !exists.integration.google) {
+            exists.integration = {
+                google: {
+                    id,
+                    email,
+                    verified_email,
+                    name,
+                    picture,
+                    locale,
+                },
+            }
+
+            if (!exists.name) exists.name = name
+            if (exists.email == email && verified_email)
+                exists.isEmailVerified = true
+
+            await exists.save()
+        }
+
         const AJWT = await bakeAJWT(exists, 'Lax')
         res.setHeader('Set-Cookie', AJWT)
         res.redirect(302, '/')
@@ -34,13 +53,21 @@ export default async function (req, res) {
         const referral_code = await generateVoucher(3)
 
         const user = await User.create({
-            name: name ? name : null,
+            name: name && name,
             email,
-            email_verification_code: verified_email
-                ? email_verification_code
-                : null,
+            email_verification_code: verified_email && email_verification_code,
             referral_code,
-            isVerified: verified_email ? true : false,
+            isEmailVerified: verified_email,
+            integrations: {
+                google: {
+                    id,
+                    email,
+                    verified_email,
+                    name,
+                    picture,
+                    locale,
+                },
+            },
         })
 
         if (user) {
