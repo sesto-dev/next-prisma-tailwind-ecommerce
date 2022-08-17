@@ -15,19 +15,42 @@ mongoose.connect(process.env.MONGO_ATLAS_URI, {
 
 const importData = async () => {
     try {
+        let userIDs = [],
+            orders = []
+
         await Order.deleteMany()
         await User.deleteMany()
         await Product.deleteMany()
 
         const createdUsers = await User.insertMany(users)
+        createdUsers.map((cu) => userIDs.push(cu._id))
 
-        const adminUser = createdUsers[0]._id
+        const createdProducts = await Product.insertMany(products)
 
-        const sampleProducts = products.map((product) => {
-            return { ...product, user: adminUser }
-        })
+        for (let i = 0; i < getRandInt(10, 100); i++) {
+            const order = {
+                user: userIDs[getRandInt(0, userIDs.length)],
+                products: (() => {
+                    const orderProducts = []
+                    for (let j = 0; j < getRandInt(1, 5); j++) {
+                        orderProducts.push(
+                            createdProducts[
+                                getRandInt(0, createdProducts.length)
+                            ]
+                        )
+                    }
+                    return orderProducts
+                })(),
+                referral:
+                    getRandInt(1, 100) % 2 &&
+                    createdUsers[getRandInt(0, createdUsers.length)][
+                        'referral_code'
+                    ],
+            }
+            orders.push(order)
+        }
 
-        await Product.insertMany(sampleProducts)
+        const createdOrders = await Order.insertMany(orders)
 
         console.log('Data Imported!')
         process.exit()
@@ -55,4 +78,8 @@ if (process.argv[2] === '-d') {
     destroyData()
 } else {
     importData()
+}
+
+function getRandInt(min, max) {
+    return Math.floor(Math.random() * (max - min) + min)
 }

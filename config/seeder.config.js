@@ -225,20 +225,20 @@ const products = [
 const users = [
     {
         name: 'Admin User',
-        email: 'admin@example.com',
+        email: 'admin@test.com',
         password: bcrypt.hashSync('12345678', 10),
         referral_code: 'ABCDE-FGHIJ-KLMNO',
         isAdmin: true,
     },
     {
         name: 'John Doe',
-        email: 'john@example.com',
+        email: 'test@test.com',
         password: bcrypt.hashSync('12345678', 10),
         referral_code: 'PQRST-UVWXY-ZABCD',
     },
     {
         name: 'Jane Doe',
-        email: 'jane@example.com',
+        email: 'test2@test.com',
         password: bcrypt.hashSync('12345678', 10),
         referral_code: 'EFGHI-JKLMN-OPQRS',
     },

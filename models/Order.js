@@ -13,10 +13,6 @@ const order = mongoose.Schema(
                 ref: 'Product',
             },
         ],
-        paymentMethod: {
-            type: String,
-            required: true,
-        },
         paymentResult: {
             id: { type: String },
             status: { type: String },
