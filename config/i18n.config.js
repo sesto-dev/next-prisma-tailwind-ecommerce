@@ -146,6 +146,13 @@ const components = {
                     },
                     value: '/about',
                 },
+                {
+                    label: {
+                        en: 'Contact',
+                        fa: 'تماس با ما',
+                    },
+                    value: '/contact',
+                },
             ],
             protected: [
                 {

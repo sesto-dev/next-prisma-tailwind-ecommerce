@@ -30,12 +30,14 @@ import { useThemeProvider } from '../state/Theme'
 import config from '../config/main.config'
 import i18n from '../config/i18n.config'
 
-export default function () {
+export default function ({ auth }) {
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
     const { setLocalAuthentication } = useAuth()
     const { width, height } = useWindowSize()
+
+    setLocalAuthentication(auth)
 
     const { locale = config.defaultLocale } = router
 
@@ -130,37 +132,36 @@ export default function () {
     )
 
     const Integrations = ({ user }) => (
-        <>
-            {user.integrations && user.integrations.google.id ? (
-                <Button
-                    icon={<GoogleIcon color={theme.palette.code} />}
-                    disabled
-                    type="secondary"
-                    auto={width > 650}
-                    width={width < 650 && '100%'}
-                    style={{
-                        border: `1px solid ${theme.palette.code}`,
-                        color: theme.palette.code,
-                    }}
-                    mt={0.8}
-                    onClick={() => {}}
-                >
-                    Integrated with Google
-                </Button>
-            ) : (
-                <a href={getGoogleURL()}>
+        <Grid.Container width="100%" gap={1}>
+            <Grid width="100%" xs={24} sm={12} md={8}>
+                {user.integrations && user.integrations.google.id ? (
                     <Button
-                        icon={<GoogleIcon />}
+                        icon={<GoogleIcon color={theme.palette.code} />}
+                        disabled
                         type="secondary"
                         width="100%"
-                        mt={0.8}
+                        style={{
+                            border: `1px solid ${theme.palette.code}`,
+                            color: theme.palette.code,
+                        }}
                         onClick={() => {}}
                     >
-                        Integrate with Google
+                        Integrated with Google
                     </Button>
-                </a>
-            )}
-        </>
+                ) : (
+                    <a style={{ width: '100%' }} href={getGoogleURL()}>
+                        <Button
+                            icon={<GoogleIcon />}
+                            type="secondary"
+                            width="100%"
+                            onClick={() => {}}
+                        >
+                            Integrate with Google
+                        </Button>
+                    </a>
+                )}
+            </Grid>
+        </Grid.Container>
     )
 
     const Logout = () => (
@@ -268,4 +269,12 @@ export default function () {
             </style>
         </>
     )
+}
+
+export async function getServerSideProps(ctx) {
+    const { AJWT } = ctx.req.cookies
+
+    return {
+        props: { auth: AJWT ? true : false },
+    }
 }

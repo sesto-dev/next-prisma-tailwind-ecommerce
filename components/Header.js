@@ -500,6 +500,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                         >
                             <div className="SubmenuInner">
                                 <Tabs
+                                    align="center"
                                     value={router.pathname}
                                     onChange={(route) => router.push(route)}
                                 >
@@ -543,7 +544,8 @@ export default function ({ config, i18n, useThemeProvider }) {
                         .SubmenuSticky {
                             position: fixed;
                             z-index: 1100;
-                            top: 0;
+                            top: ${width > 650 && 0};
+                            bottom: ${width < 650 && 0};
                             right: 0;
                             left: 0;
                             background: ${theme.palette.background};
@@ -552,7 +554,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                                 : 'rgba(0, 0, 0, 0.1) 0 0 15px 0'};
                         }
                         .SubmenuInner {
-                            display: flex;
+                            display: ${width > 650 && 'flex'};
                             width: ${config.theme.width};
                             max-width: 100%;
                             margin: 0 auto;
@@ -565,9 +567,6 @@ export default function ({ config, i18n, useThemeProvider }) {
                             -webkit-overflow-scrolling: touch;
                             scrollbar-width: none;
                             box-sizing: border-box;
-                            justify-content: ${isLocaleRTL(locale)
-                                ? 'end'
-                                : 'space-between'};
                         }
                         .SubmenuInner::-webkit-scrollbar {
                             display: none;
@@ -669,85 +668,6 @@ export default function ({ config, i18n, useThemeProvider }) {
                             icon={<LogIn />}
                             aria-label="Login Button"
                             type="secondary"
-                            style={{ border: 'none' }}
-                            auto
-                            onClick={(e) => setModalVis(true)}
-                        />
-                        <LoginModal />
-                    </>
-                )}
-            </div>
-        </>
-    )
-
-    const DesktopNav = () => (
-        <>
-            <Title config={config} i18n={i18n} />
-            <div>
-                <Button
-                    type="secondary"
-                    ghost
-                    style={{ border: 'none' }}
-                    auto
-                    icon={<Search />}
-                />
-                {themeProvider && (
-                    <Button
-                        icon={theme.type === 'dark' ? <Sun /> : <Moon />}
-                        aria-label="Toggle Theme"
-                        mx={0.5}
-                        type="secondary"
-                        ghost
-                        style={{ border: 'none' }}
-                        auto
-                        onClick={() =>
-                            themeProvider.setLocalTheme(
-                                theme.type === 'dark' ? 'light' : 'dark'
-                            )
-                        }
-                    />
-                )}
-                {locales && (
-                    <Button
-                        type="secondary"
-                        ghost
-                        auto
-                        style={{ border: 'none' }}
-                        icon={<Globe />}
-                        onClick={() => loopLanguages()}
-                    />
-                )}
-                {isAuthenticated ? (
-                    <>
-                        <Link href="/cart">
-                            <Button
-                                icon={<ShoppingCart />}
-                                aria-label="Shopping Cart"
-                                mx={0.5}
-                                type="secondary"
-                                ghost
-                                style={{ border: 'none' }}
-                                auto
-                            />
-                        </Link>
-                        <Link href="/user">
-                            <Button
-                                icon={<User />}
-                                aria-label="Toggle Theme"
-                                type="secondary"
-                                ghost
-                                style={{ border: 'none' }}
-                                auto
-                            />
-                        </Link>
-                    </>
-                ) : (
-                    <>
-                        <Button
-                            icon={<LogIn />}
-                            aria-label="Login Button"
-                            type="secondary"
-                            ml="0.5"
                             style={{ border: 'none' }}
                             auto
                             onClick={(e) => setModalVis(true)}
@@ -912,17 +832,5 @@ export default function ({ config, i18n, useThemeProvider }) {
         </>
     )
 
-    return (
-        <Binder>
-            {width > 650 ? (
-                width > 1280 ? (
-                    <DesktopNav />
-                ) : (
-                    <TabletNav />
-                )
-            ) : (
-                <PhoneNav />
-            )}
-        </Binder>
-    )
+    return <Binder>{width > 650 ? <TabletNav /> : <PhoneNav />}</Binder>
 }
