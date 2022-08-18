@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import useState from 'react-usestateref'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import {
     Modal,
@@ -14,25 +15,21 @@ import {
     Button,
     useToasts,
 } from '@geist-ui/core'
-import { useRouter } from 'next/router'
-
-import { getLocaleDirection, isLocaleRTL } from '../helpers/RTL'
-import { useAuth } from '../state/Auth'
-import { GoogleIcon } from './SVGs'
 import {
     Sun,
     Moon,
     LogIn,
-    LogOut,
     User,
     UserPlus,
-    Power,
     ShoppingCart,
     Menu,
     Search,
     Globe,
 } from '@geist-ui/icons'
 
+import { getLocaleDirection, isLocaleRTL } from '../helpers/RTL'
+import { useAuth } from '../state/Auth'
+import { GoogleIcon } from './SVGs'
 import useWindowSize from '../hooks/useWindowSize'
 import getGoogleURL from '../helpers/getGoogleURL'
 import isEmail from '../helpers/isEmail'
@@ -506,13 +503,23 @@ export default function ({ config, i18n, useThemeProvider }) {
                                     value={router.pathname}
                                     onChange={(route) => router.push(route)}
                                 >
-                                    {submenu.map((tab) => (
-                                        <Tabs.Item
-                                            key={tab['label'][locale]}
-                                            label={tab['label'][locale]}
-                                            value={tab.value}
-                                        />
-                                    ))}
+                                    {submenu.unprotected.map((tab) => {
+                                        return (
+                                            <Tabs.Item
+                                                key={tab['label'][locale]}
+                                                label={tab['label'][locale]}
+                                                value={tab.value}
+                                            />
+                                        )
+                                    })}
+                                    {isAuthenticated &&
+                                        submenu.protected.map((tab) => (
+                                            <Tabs.Item
+                                                key={tab['label'][locale]}
+                                                label={tab['label'][locale]}
+                                                value={tab.value}
+                                            />
+                                        ))}
                                 </Tabs>
                             </div>
                         </div>
@@ -578,7 +585,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                             padding-top: 0;
                             padding-bottom: 0;
                             color: ${theme.palette.accents_5};
-                            font-size: 0.825rem;
+                            font-size: 0.9rem !important;
                         }
                         .SubmenuInner .tab:hover {
                             color: ${theme.palette.foreground};

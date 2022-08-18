@@ -41,11 +41,13 @@ const importData = async () => {
                     }
                     return orderProducts
                 })(),
+                totalPrice: getRandInt(130000, 3000000),
                 referral:
-                    getRandInt(1, 100) % 2 &&
-                    createdUsers[getRandInt(0, createdUsers.length)][
-                        'referral_code'
-                    ],
+                    getRandInt(1, 100) % 2
+                        ? createdUsers[getRandInt(0, createdUsers.length)][
+                              'referral_code'
+                          ]
+                        : null,
             }
             orders.push(order)
         }

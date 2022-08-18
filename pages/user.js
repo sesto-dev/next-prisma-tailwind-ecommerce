@@ -1,6 +1,8 @@
 import axios from 'axios'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { LogOut } from '@geist-ui/icons'
 import {
     useToasts,
     Description,
@@ -11,23 +13,22 @@ import {
     Card,
     Grid,
     useTheme,
-    Fieldset,
+    Collapse,
     Snippet,
+    Table,
 } from '@geist-ui/core'
 
 import Layout from '../components/Layout'
-import { useThemeProvider } from '../state/Theme'
+import { GoogleIcon } from '../components/SVGs'
 import { handleUserData } from '../handlers/userHandlers'
 import { logoutHandler } from '../handlers/authHandlers'
+import getGoogleURL from '../helpers/getGoogleURL'
+import useWindowSize from '../hooks/useWindowSize'
+import { useAuth } from '../state/Auth'
+import { useThemeProvider } from '../state/Theme'
 
 import config from '../config/main.config'
 import i18n from '../config/i18n.config'
-import { LogOut } from '@geist-ui/icons'
-
-import { useAuth } from '../state/Auth'
-import useWindowSize from '../hooks/useWindowSize'
-import getGoogleURL from '../helpers/getGoogleURL'
-import { GoogleIcon } from '../components/SVGs'
 
 export default function () {
     const theme = useTheme()
@@ -60,7 +61,129 @@ export default function () {
         resolve()
     }, [])
 
-    const handler = (v) => {}
+    const UserInfo = ({ user }) => (
+        <Grid.Container gap={1}>
+            <Grid xs={24} md={12}>
+                {user.name && (
+                    <Description
+                        width="100%"
+                        title="Name"
+                        content={
+                            <Text width="100%" mt={0} blockquote font="1rem">
+                                {user.name}
+                            </Text>
+                        }
+                    />
+                )}
+            </Grid>
+            <Grid xs={24} md={12}>
+                <Description
+                    width="100%"
+                    title="Email"
+                    content={
+                        <Text width="100%" mt={0} blockquote font="1rem">
+                            {user.email}
+                        </Text>
+                    }
+                />
+            </Grid>
+            <Grid xs={24} md={12}>
+                <Description
+                    width="100%"
+                    title="Referral Code"
+                    content={
+                        <Snippet
+                            font="1rem"
+                            toastText="✓ Referral-Code copied!"
+                            toastType="default"
+                            text={user.referral_code}
+                        />
+                    }
+                />
+            </Grid>
+        </Grid.Container>
+    )
+
+    const Orders = ({ user }) => (
+        <Card width="100%">
+            {user.orders && (
+                <Table data={user.orders}>
+                    <Table.Column prop="link" label="Link" width={150} />
+                    <Table.Column prop="createdAt" label="Date" />
+                    <Table.Column prop="totalPrice" label="Price" />
+                    <Table.Column prop="isPaid" label="Paid" />
+                    <Table.Column prop="isDelivered" label="Delivered" />
+                </Table>
+            )}
+        </Card>
+    )
+
+    const Referrals = ({ user }) => (
+        <Card width="100%">
+            {user.referrals && (
+                <Table data={user.referrals}>
+                    <Table.Column prop="createdAt" label="Date" />
+                    <Table.Column prop="totalPrice" label="Price" />
+                </Table>
+            )}
+        </Card>
+    )
+
+    const Integrations = ({ user }) => (
+        <>
+            {user.integrations && user.integrations.google.id ? (
+                <Button
+                    icon={<GoogleIcon color={theme.palette.code} />}
+                    disabled
+                    type="secondary"
+                    auto={width > 650}
+                    width={width < 650 && '100%'}
+                    style={{
+                        border: `1px solid ${theme.palette.code}`,
+                        color: theme.palette.code,
+                    }}
+                    mt={0.8}
+                    onClick={() => {}}
+                >
+                    Integrated with Google
+                </Button>
+            ) : (
+                <a href={getGoogleURL()}>
+                    <Button
+                        icon={<GoogleIcon />}
+                        type="secondary"
+                        width="100%"
+                        mt={0.8}
+                        onClick={() => {}}
+                    >
+                        Integrate with Google
+                    </Button>
+                </a>
+            )}
+        </>
+    )
+
+    const Logout = () => (
+        <Button
+            icon={<LogOut />}
+            scale={1.2}
+            type="secondary"
+            px={2}
+            onClick={(e) =>
+                logoutHandler({
+                    config,
+                    setToast,
+                    setLocalAuthentication,
+                    router,
+                    toast: i18n['toasts']['logout'][locale],
+                })
+            }
+            width={width < 650 && '100%'}
+            auto={width > 650}
+        >
+            <b>LOGOUT</b>
+        </Button>
+    )
 
     return (
         <>
@@ -74,111 +197,48 @@ export default function () {
                     {user ? (
                         <>
                             <Grid width="100%" xs={24}>
-                                <Fieldset.Group
+                                <Card
                                     width="100%"
-                                    value="user"
-                                    onChange={handler}
+                                    style={{
+                                        backgroundColor:
+                                            theme.palette.accents_1,
+                                    }}
                                 >
-                                    <Fieldset label="user info" value="user">
-                                        {user.name && (
-                                            <Description
-                                                title="Name"
-                                                content={
-                                                    <Text font="1.1rem">
-                                                        {user.name}
-                                                    </Text>
-                                                }
-                                                mb={1}
-                                            />
-                                        )}
-                                        <Description
-                                            title="Email"
-                                            content={
-                                                <Text font="1.1rem">
-                                                    {user.email}
-                                                </Text>
-                                            }
-                                            mb={1}
-                                        />
-                                        <Description
-                                            title="Referral Code"
-                                            content={
-                                                <Snippet
-                                                    toastText="👍 Copied!"
-                                                    toastType="default"
-                                                    text={user.referral_code}
-                                                />
-                                            }
-                                            mb={1}
-                                        />
-                                        <Divider mt={3} mb={2} />
-                                        <Button
-                                            icon={<LogOut />}
-                                            type="secondary"
-                                            px={2}
-                                            onClick={(e) =>
-                                                logoutHandler({
-                                                    config,
-                                                    setToast,
-                                                    setLocalAuthentication,
-                                                    router,
-                                                    toast: i18n['toasts'][
-                                                        'logout'
-                                                    ][locale],
-                                                })
-                                            }
-                                            width={width < 650 && '100%'}
-                                            auto={width > 650}
+                                    <Collapse.Group>
+                                        <Collapse
+                                            title="User Info"
+                                            subtitle="Basic information you have provided."
                                         >
-                                            <b>LOGOUT</b>
-                                        </Button>
-                                    </Fieldset>
-                                    <Fieldset label="orders">
-                                        <Fieldset.Subtitle>
-                                            Introduced in HTTP/1.0, HTTP headers
-                                            make this protocol easy to extend
-                                            and experiment with.
-                                        </Fieldset.Subtitle>
-                                    </Fieldset>
-                                    <Fieldset label="referrals">
-                                        <Fieldset.Title>
-                                            HTTP is stateless
-                                        </Fieldset.Title>
-                                        <Fieldset.Subtitle>
-                                            HTTP is stateless: there is no link
-                                            between two requests being
-                                            successively carried out on the same
-                                            connection.{' '}
-                                        </Fieldset.Subtitle>
-                                    </Fieldset>
-                                    <Fieldset label="integrations">
-                                        {user.integrations &&
-                                        user.integrations.google.id ? (
-                                            <Button
-                                                icon={<GoogleIcon />}
-                                                disabled
-                                                type="secondary"
-                                                width="100%"
-                                                mt={0.8}
-                                                onClick={() => {}}
-                                            >
-                                                Integrated with Google
-                                            </Button>
-                                        ) : (
-                                            <a href={getGoogleURL()}>
-                                                <Button
-                                                    icon={<GoogleIcon />}
-                                                    type="secondary"
-                                                    width="100%"
-                                                    mt={0.8}
-                                                    onClick={() => {}}
-                                                >
-                                                    Integrate with Google
-                                                </Button>
-                                            </a>
-                                        )}
-                                    </Fieldset>
-                                </Fieldset.Group>
+                                            <UserInfo user={user} />
+                                        </Collapse>
+                                        <Collapse
+                                            title="Orders"
+                                            subtitle="Your order history."
+                                        >
+                                            <Orders user={user} />
+                                        </Collapse>
+                                        <Collapse
+                                            title="Referrals"
+                                            subtitle="Your referral history."
+                                        >
+                                            <Referrals user={user} />
+                                        </Collapse>
+                                        <Collapse
+                                            title="Integrations"
+                                            subtitle="Your integrations with different third-party services."
+                                        >
+                                            <Integrations user={user} />
+                                        </Collapse>
+
+                                        <Collapse
+                                            title="Logout"
+                                            subtitle="Where you can log out."
+                                            style={{ borderBottom: 'none' }}
+                                        >
+                                            <Logout />
+                                        </Collapse>
+                                    </Collapse.Group>
+                                </Card>
                             </Grid>
                         </>
                     ) : (
@@ -197,6 +257,12 @@ export default function () {
                     }
                     .group-content > .fieldset > .content {
                         background-color: ${theme.palette.accents_1};
+                    }
+                    tbody > tr:last-child > td {
+                        border-bottom: none !important;
+                    }
+                    a {
+                        color: ${theme.palette.code}!important;
                     }
                 `}
             </style>

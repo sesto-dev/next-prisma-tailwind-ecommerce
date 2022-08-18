@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import burnToast from '../helpers/burnToast'
 
 export async function handleUserData({
@@ -29,6 +30,20 @@ export async function handleUserData({
         router.replace('/auth/verify')
         burnToast(setToast, notVerifiedToast)
     }
+
+    const orders = data.orders
+    const pOrders = orders.map((order) => {
+        return {
+            ...order,
+            link: (
+                <Link
+                    href={`/order/${order.id}`}
+                >{`Order #${order.index}`}</Link>
+            ),
+        }
+    })
+
+    data.orders = pOrders
 
     setUser(data)
 }

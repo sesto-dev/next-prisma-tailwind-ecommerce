@@ -126,26 +126,41 @@ const toasts = {
 
 const components = {
     header: {
-        submenu: [
-            {
-                label: { en: 'Home', fa: 'خانه' },
-                value: '/',
-            },
-            {
-                label: {
-                    en: 'Products',
-                    fa: 'محصولات',
+        submenu: {
+            unprotected: [
+                {
+                    label: { en: 'Home', fa: 'خانه' },
+                    value: '/',
                 },
-                value: '/products',
-            },
-            {
-                label: {
-                    en: 'About',
-                    fa: 'درباره ما',
+                {
+                    label: {
+                        en: 'Products',
+                        fa: 'محصولات',
+                    },
+                    value: '/products',
                 },
-                value: '/about',
-            },
-        ],
+                {
+                    label: {
+                        en: 'About',
+                        fa: 'درباره ما',
+                    },
+                    value: '/about',
+                },
+            ],
+            protected: [
+                {
+                    label: { en: 'Cart', fa: 'سبد خرید' },
+                    value: '/cart',
+                },
+                {
+                    label: {
+                        en: 'User',
+                        fa: 'حساب کاربر',
+                    },
+                    value: '/user',
+                },
+            ],
+        },
         title,
     },
     footer: {

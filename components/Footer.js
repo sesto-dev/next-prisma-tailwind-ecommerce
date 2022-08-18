@@ -273,12 +273,26 @@ function MobileLinks({ config, footer }) {
             </>
             <style jsx global>
                 {`
-                    .collapse > .view > .title > h3 {
+                    .FooterWrapper
+                        > .item
+                        > .item
+                        > .collapse-group
+                        > .collapse
+                        > .view
+                        > .title
+                        > h3 {
                         font-size: 1rem !important;
                         font-weight: 400 !important;
                         color: ${theme.palette.accents_6};
                     }
-                    .collapse > .view > .title > svg {
+                    .FooterWrapper
+                        > .item
+                        > .item
+                        > .collapse-group
+                        > .collapse
+                        > .view
+                        > .title
+                        > svg {
                         color: ${theme.palette.accents_6}!important;
                     }
                     .collapse {

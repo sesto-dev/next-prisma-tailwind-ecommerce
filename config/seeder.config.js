@@ -229,18 +229,21 @@ const users = [
         password: bcrypt.hashSync('12345678', 10),
         referral_code: 'ABCDE-FGHIJ-KLMNO',
         isAdmin: true,
+        isEmailVerified: true,
     },
     {
         name: 'John Doe',
         email: 'test@test.com',
         password: bcrypt.hashSync('12345678', 10),
         referral_code: 'PQRST-UVWXY-ZABCD',
+        isEmailVerified: true,
     },
     {
         name: 'Jane Doe',
         email: 'test2@test.com',
         password: bcrypt.hashSync('12345678', 10),
         referral_code: 'EFGHI-JKLMN-OPQRS',
+        isEmailVerified: true,
     },
 ]
 
