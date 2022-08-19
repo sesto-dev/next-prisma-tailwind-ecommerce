@@ -7,7 +7,7 @@ export async function handleProductsData({
     setPages,
     setProducts,
     setToast,
-    toast,
+    noDataToast,
 }) {
     const { data, error } = response
 
@@ -25,22 +25,22 @@ export async function handleProductsData({
 
     if (!data || !products || !page || !pages) {
         router.replace('/')
-        burnToast(setToast, toast)
+        burnToast(setToast, noDataToast)
     }
 
     setPages(pages)
     setProducts(products)
 }
 
-export async function handleProductData(
+export async function handleProductData({
     response,
     router,
     setTitle,
     setImage,
     setProduct,
     setToast,
-    noDataToast
-) {
+    noDataToast,
+}) {
     const { data, error } = response
 
     if (error) {

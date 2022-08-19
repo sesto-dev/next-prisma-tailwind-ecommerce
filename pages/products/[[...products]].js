@@ -37,7 +37,7 @@ export default function ({ page, category, tags, sort }) {
     const description = folio['description'][locale]
 
     const [keyword, setKeyword] = useState(null)
-    const [pages, setPages] = useState(10)
+    const [pages, setPages] = useState(null)
     const [products, setProducts] = useState(null)
 
     async function resolve() {
@@ -55,7 +55,7 @@ export default function ({ page, category, tags, sort }) {
             setPages,
             setProducts,
             setToast,
-            toast: i18n['toasts']['noDataReceived'][locale],
+            noDataToast: i18n['toasts']['noData'][locale],
         })
     }
 
@@ -74,31 +74,84 @@ export default function ({ page, category, tags, sort }) {
             width="100%"
         >
             <center>
-                <Pagination
-                    width="100%"
-                    count={pages}
-                    initialPage={page}
-                    limit={6}
-                    onChange={(num) => {
-                        if (num === page) {
-                            return
-                        }
+                {pages ? (
+                    <Pagination
+                        width="100%"
+                        count={pages}
+                        initialPage={page}
+                        limit={6}
+                        onChange={(num) => {
+                            if (num === page) {
+                                return
+                            }
 
-                        const sp = new URLSearchParams(router.query)
-                        sp.set('page', num.toString())
-                        const pgname = router.pathname
-                        void router.push(`${pgname}?${sp.toString()}`)
-                    }}
-                >
-                    <Pagination.Next>
-                        <ChevronRight />
-                    </Pagination.Next>
-                    <Pagination.Previous>
-                        <ChevronLeft />
-                    </Pagination.Previous>
-                </Pagination>
+                            const searchParamas = new URLSearchParams(
+                                router.query
+                            )
+                            searchParamas.set('page', num.toString())
+                            void router.push(
+                                `${router.pathname}?${searchParamas.toString()}`
+                            )
+                        }}
+                    >
+                        <Pagination.Next>
+                            <ChevronRight />
+                        </Pagination.Next>
+                        <Pagination.Previous>
+                            <ChevronLeft />
+                        </Pagination.Previous>
+                    </Pagination>
+                ) : (
+                    <Loading mt={0.4} />
+                )}
             </center>
         </Card>
+    )
+
+    const Product = ({ product }) => (
+        <Grid key={product._id} xs={24} sm={12} md={8} xl={6}>
+            <Link href={`/product/${product._id}`}>
+                <a>
+                    <Card
+                        hoverable
+                        width="100%"
+                        height="100%"
+                        style={{
+                            backgroundColor: theme.palette.accents_1,
+                        }}
+                    >
+                        <Image
+                            height="20rem"
+                            src={product.image}
+                            style={{
+                                objectFit: 'cover',
+                            }}
+                        />
+                        <Text b mb={0}>
+                            {product.name},{' '}
+                        </Text>
+                        <Text
+                            small
+                            style={{
+                                color: `${theme.palette.accents_6}`,
+                            }}
+                        >
+                            {product.description}
+                        </Text>
+                        <Button
+                            mt={1}
+                            width="100%"
+                            icon={<ShoppingCart />}
+                            style={{
+                                backgroundColor: theme.palette.accents_1,
+                            }}
+                        >
+                            ${product.price}
+                        </Button>
+                    </Card>
+                </a>
+            </Link>
+        </Grid>
     )
 
     return (
@@ -176,71 +229,9 @@ export default function ({ page, category, tags, sort }) {
                     <Grid.Container gap={1.5}>
                         {products ? (
                             <>
-                                {products.map((product) => {
-                                    return (
-                                        <Grid
-                                            key={product._id}
-                                            xs={24}
-                                            sm={12}
-                                            md={8}
-                                            xl={6}
-                                        >
-                                            <Link
-                                                href={`/product/${product._id}`}
-                                            >
-                                                <a>
-                                                    <Card
-                                                        hoverable
-                                                        width="100%"
-                                                        height="100%"
-                                                        style={{
-                                                            backgroundColor:
-                                                                theme.palette
-                                                                    .accents_1,
-                                                        }}
-                                                    >
-                                                        <Image
-                                                            height="20rem"
-                                                            src={product.image}
-                                                            style={{
-                                                                objectFit:
-                                                                    'cover',
-                                                            }}
-                                                        />
-                                                        <Text b mb={0}>
-                                                            {product.name},{' '}
-                                                        </Text>
-                                                        <Text
-                                                            small
-                                                            style={{
-                                                                color: `${theme.palette.accents_6}`,
-                                                            }}
-                                                        >
-                                                            {
-                                                                product.description
-                                                            }
-                                                        </Text>
-                                                        <Button
-                                                            mt={1}
-                                                            width="100%"
-                                                            icon={
-                                                                <ShoppingCart />
-                                                            }
-                                                            style={{
-                                                                backgroundColor:
-                                                                    theme
-                                                                        .palette
-                                                                        .accents_1,
-                                                            }}
-                                                        >
-                                                            ${product.price}
-                                                        </Button>
-                                                    </Card>
-                                                </a>
-                                            </Link>
-                                        </Grid>
-                                    )
-                                })}
+                                {products.map((product) => (
+                                    <Product product={product} />
+                                ))}
                                 <Grid xs={24}>
                                     <Divider h={1.5} my={2} width="100%" />
                                 </Grid>

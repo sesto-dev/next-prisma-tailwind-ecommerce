@@ -51,6 +51,10 @@ export default function ({ config, i18n, useThemeProvider }) {
         query,
     } = router
 
+    function getPosition(string, subString, index) {
+        return string.split(subString, index).join(subString).length
+    }
+
     const [sticky, setSticky] = useState(false)
     const [drawerVis, setDrawerVis] = useState(false)
     const [placement, setPlacement] = useState('')
@@ -63,11 +67,7 @@ export default function ({ config, i18n, useThemeProvider }) {
         return () => document.removeEventListener('scroll', scrollHandler)
     }, [setSticky])
 
-    function loopLanguages() {
-        router.push({ pathname, query }, asPath, {
-            locale: locales[(locales.indexOf(locale) + 1) % locales.length],
-        })
-    }
+    const matchedURL = router['pathname'].match(/(?:^\/)?[^/]+/g)
 
     function drawDrawer() {
         setPlacement('left')
@@ -501,7 +501,11 @@ export default function ({ config, i18n, useThemeProvider }) {
                             <div className="SubmenuInner">
                                 <Tabs
                                     align="center"
-                                    value={router.pathname}
+                                    value={
+                                        matchedURL
+                                            ? matchedURL[0]
+                                            : router.pathname
+                                    }
                                     onChange={(route) => router.push(route)}
                                 >
                                     {submenu.unprotected.map((tab) => {
@@ -513,14 +517,14 @@ export default function ({ config, i18n, useThemeProvider }) {
                                             />
                                         )
                                     })}
-                                    {isAuthenticated &&
-                                        submenu.protected.map((tab) => (
-                                            <Tabs.Item
-                                                key={tab['label'][locale]}
-                                                label={tab['label'][locale]}
-                                                value={tab.value}
-                                            />
-                                        ))}
+                                    {submenu.protected.map((tab) => (
+                                        <Tabs.Item
+                                            key={tab['label'][locale]}
+                                            label={tab['label'][locale]}
+                                            value={tab.value}
+                                            disabled={!isAuthenticated}
+                                        />
+                                    ))}
                                 </Tabs>
                             </div>
                         </div>
@@ -554,7 +558,6 @@ export default function ({ config, i18n, useThemeProvider }) {
                                 : 'rgba(0, 0, 0, 0.1) 0 0 15px 0'};
                         }
                         .SubmenuInner {
-                            display: ${width > 650 && 'flex'};
                             width: ${config.theme.width};
                             max-width: 100%;
                             margin: 0 auto;
@@ -625,7 +628,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                         }
                     />
                 )}
-                {locales && (
+                {/* {locales && (
                     <Button
                         type="secondary"
                         ghost
@@ -634,7 +637,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                         icon={<Globe />}
                         onClick={() => loopLanguages()}
                     />
-                )}
+                )} */}
             </div>
             <Title config={config} i18n={i18n} />
             <div>
@@ -670,8 +673,11 @@ export default function ({ config, i18n, useThemeProvider }) {
                             type="secondary"
                             style={{ border: 'none' }}
                             auto
+                            px={1.5}
                             onClick={(e) => setModalVis(true)}
-                        />
+                        >
+                            Login
+                        </Button>
                         <LoginModal />
                     </>
                 )}
@@ -731,7 +737,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                             />
                         </ButtonGroup>
                     }
-                    {locales && (
+                    {/* {locales && (
                         <Button
                             type="secondary"
                             width="100%"
@@ -740,7 +746,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                             icon={<Globe />}
                             onClick={() => loopLanguages()}
                         />
-                    )}
+                    )} */}
                     {isAuthenticated ? (
                         <>
                             <Link href="/cart">

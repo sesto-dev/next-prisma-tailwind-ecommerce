@@ -54,7 +54,7 @@ export default function ({ auth }) {
             router,
             setUser,
             setToast,
-            noDataReceivedToast: i18n['toasts']['noDataReceived'][locale],
+            noDataToast: i18n['toasts']['noData'][locale],
             notVerifiedToast: i18n['toasts']['notVerified'][locale],
         })
     }
@@ -107,11 +107,11 @@ export default function ({ auth }) {
     )
 
     const Orders = ({ user }) => (
-        <Card width="100%">
+        <Card id="Orders" width="100%">
             {user.orders && (
                 <Table data={user.orders}>
-                    <Table.Column prop="link" label="Link" width={150} />
-                    <Table.Column prop="createdAt" label="Date" />
+                    <Table.Column prop="link" label="Link" width={100} />
+                    <Table.Column prop="createdAt" label="Date" width={220} />
                     <Table.Column prop="totalPrice" label="Price" />
                     <Table.Column prop="isPaid" label="Paid" />
                     <Table.Column prop="isDelivered" label="Delivered" />

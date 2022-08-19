@@ -24,7 +24,7 @@ import { handleProductData } from '../../handlers/productHandlers'
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
 
-export default function ({ pid }) {
+export default function ({ id }) {
     const theme = useTheme()
     const router = useRouter()
     const { locale = config.defaultLocale } = router
@@ -38,18 +38,18 @@ export default function ({ pid }) {
     const [title, setTitle] = useState(folio['title'][locale])
 
     async function resolve() {
-        const route = config.backend.routes.products + `/${pid}`
+        const route = config.backend.routes.products + `/${id}`
         const response = await axios.get(route)
 
-        handleProductData(
+        handleProductData({
             response,
             router,
             setTitle,
             setImage,
             setProduct,
             setToast,
-            i18n['toasts']['noDataReceived'][locale]
-        )
+            noDataToast: i18n['toasts']['noData'][locale],
+        })
     }
 
     useEffect(() => {
@@ -210,9 +210,9 @@ export default function ({ pid }) {
 }
 
 export async function getServerSideProps(context) {
-    const { pid } = context.query
+    const { id } = context.query
 
     return {
-        props: { pid }, // will be passed to the page component as props
+        props: { id },
     }
 }

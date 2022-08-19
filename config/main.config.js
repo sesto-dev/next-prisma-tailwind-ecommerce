@@ -33,6 +33,7 @@ export default {
             forgot: '/api/users/forgot',
             reset: '/api/users/reset',
             products: '/api/products',
+            order: '/api/orders',
         },
         axios: {
             simple: {

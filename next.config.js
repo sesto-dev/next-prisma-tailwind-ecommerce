@@ -7,6 +7,11 @@ module.exports = {
                 destination: '/products',
                 permanent: true,
             },
+            {
+                source: '/order',
+                destination: '/',
+                permanent: true,
+            },
         ]
     },
     i18n: {

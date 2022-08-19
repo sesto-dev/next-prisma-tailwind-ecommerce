@@ -114,7 +114,7 @@ const toasts = {
         en: '✓ Successfully Reset Password...',
         fa: 'تغییر پسوورد موفقیت آمیز ✓',
     },
-    noDataReceived: {
+    noData: {
         en: 'No data received',
         fa: 'اطلاعاتی دریافت نشد',
     },
@@ -355,6 +355,16 @@ const root = {
         description: {
             en: 'Cart Page',
             fa: 'صفحه سبد خرید',
+        },
+    },
+    order: {
+        title: {
+            en: 'Order',
+            fa: 'سفارش',
+        },
+        description: {
+            en: 'Order Page',
+            fa: 'صفحه سفارش',
         },
     },
     product: {

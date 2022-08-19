@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import { enUS, faIR } from 'date-fns/locale'
 
 import connectDB from '../../../helpers/connectDB'
 import verifyRequest from '../../../helpers/verifyRequest'
@@ -24,7 +25,8 @@ export default async function (req, res) {
             totalPrice: String(ordersObject[key]['totalPrice']),
             createdAt: format(
                 new Date(ordersObject[key]['createdAt']),
-                'yyyy-MM-dd'
+                'PPPP',
+                { locale: enUS }
             ),
         }))
 
@@ -35,7 +37,8 @@ export default async function (req, res) {
             totalPrice: String(referralsObject[key]['totalPrice']),
             createdAt: format(
                 new Date(referralsObject[key]['createdAt']),
-                'yyyy-MM-dd'
+                'PPPP',
+                { locale: enUS }
             ),
         }))
 
