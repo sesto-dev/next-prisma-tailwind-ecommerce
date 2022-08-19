@@ -19,7 +19,7 @@ import {
 
 import Layout from '../../components/Layout'
 import { useThemeProvider } from '../../state/Theme'
-import { handleOrderData } from '../../handlers/orderHandler'
+import { handleOrderData } from '../../handlers/OrderHandlers'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
@@ -39,9 +39,6 @@ export default function ({ id }) {
     async function resolve() {
         const route = config.backend.routes.order + `/${id}`
         const response = await axios.get(route)
-
-        console.log('response is:')
-        console.log(response)
 
         handleOrderData({
             response,
@@ -98,7 +95,7 @@ export default function ({ id }) {
         <Grid.Container gap={1}>
             {order.productsArray &&
                 order.productsArray.map((product) => {
-                    return <Product product={product} />
+                    return <Product key={product._id} product={product} />
                 })}
         </Grid.Container>
     )

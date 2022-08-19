@@ -18,7 +18,7 @@ import {
 } from '@geist-ui/core'
 import Layout from '../../components/Layout'
 import { useThemeProvider } from '../../state/Theme'
-import { handleProductsData } from '../../handlers/productHandlers'
+import { handleProductsData } from '../../handlers/ProductHandlers'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
@@ -160,6 +160,7 @@ export default function ({ page, category, tags, sort }) {
             i18n={i18n}
             useThemeProvider={useThemeProvider}
             metaTitle={title}
+            metaDescription={description}
         >
             <Grid.Container gap={1}>
                 <Grid xs={24} md={12}>
@@ -230,7 +231,10 @@ export default function ({ page, category, tags, sort }) {
                         {products ? (
                             <>
                                 {products.map((product) => (
-                                    <Product product={product} />
+                                    <Product
+                                        key={product._id}
+                                        product={product}
+                                    />
                                 ))}
                                 <Grid xs={24}>
                                     <Divider h={1.5} my={2} width="100%" />

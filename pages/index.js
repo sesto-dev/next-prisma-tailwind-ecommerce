@@ -29,6 +29,7 @@ export default function ({ auth }) {
             crownLarge={title}
             crownSmall={description}
             metaTitle={title}
+            metaDescription={description}
         >
             <Grid.Container gap={1}>
                 <Grid xs={24}>

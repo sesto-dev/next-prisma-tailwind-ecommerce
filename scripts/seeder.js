@@ -22,10 +22,27 @@ const importData = async () => {
         await User.deleteMany()
         await Product.deleteMany()
 
-        const createdUsers = await User.insertMany(users)
-        createdUsers.map((cu) => userIDs.push(cu._id))
-
         const createdProducts = await Product.insertMany(products)
+
+        const generatedUsers = users.map((user) => {
+            return {
+                ...user,
+                cart: (() => {
+                    const cartProducts = []
+                    for (let j = 0; j < getRandInt(1, 5); j++) {
+                        cartProducts.push(
+                            createdProducts[
+                                getRandInt(0, createdProducts.length)
+                            ]
+                        )
+                    }
+                    return cartProducts
+                })(),
+            }
+        })
+
+        const createdUsers = await User.insertMany(generatedUsers)
+        createdUsers.map((cu) => userIDs.push(cu._id))
 
         for (let i = 0; i < getRandInt(10, 100); i++) {
             const order = {

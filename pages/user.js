@@ -20,8 +20,8 @@ import {
 
 import Layout from '../components/Layout'
 import { GoogleIcon } from '../components/SVGs'
-import { handleUserData } from '../handlers/userHandlers'
-import { logoutHandler } from '../handlers/authHandlers'
+import { handleUserData } from '../handlers/UserHandlers'
+import { logoutHandler } from '../handlers/AuthHandlers'
 import getGoogleURL from '../helpers/getGoogleURL'
 import useWindowSize from '../hooks/useWindowSize'
 import { useAuth } from '../state/Auth'
@@ -45,7 +45,7 @@ export default function ({ auth }) {
     const title = folio['title'][locale]
     const description = folio['description'][locale]
 
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState(null)
 
     async function resolve() {
         const response = await axios.get(config.backend.routes.user)
@@ -193,6 +193,7 @@ export default function ({ auth }) {
                 i18n={i18n}
                 useThemeProvider={useThemeProvider}
                 metaTitle={title}
+                metaDescription={description}
             >
                 <Grid.Container gap={1}>
                     {user ? (
@@ -244,7 +245,14 @@ export default function ({ auth }) {
                         </>
                     ) : (
                         <Grid xs={24}>
-                            <Card>
+                            <Card
+                                width="100%"
+                                height="20rem"
+                                py="8rem"
+                                style={{
+                                    backgroundColor: theme.palette.accents_1,
+                                }}
+                            >
                                 <Loading />
                             </Card>
                         </Grid>

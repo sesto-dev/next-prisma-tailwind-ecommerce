@@ -75,14 +75,14 @@ export async function registerHandler({
     }
 }
 
-export async function verifyHandler(
+export async function verifyHandler({
     config,
     setLoading,
     setToast,
     router,
     refCode,
-    toast
-) {
+    toast,
+}) {
     setLoading(true)
 
     try {

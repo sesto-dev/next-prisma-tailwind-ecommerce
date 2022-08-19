@@ -29,6 +29,7 @@ export default function () {
                 crownLarge={title}
                 crownSmall={description}
                 metaTitle={title}
+                metaDescription={description}
             >
                 <Grid.Container gap={1} className="avanti">
                     <Grid xs={24}>

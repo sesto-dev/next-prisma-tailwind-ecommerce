@@ -19,7 +19,7 @@ import {
 
 import Layout from '../../components/Layout'
 import { useThemeProvider } from '../../state/Theme'
-import { handleProductData } from '../../handlers/productHandlers'
+import { handleProductData } from '../../handlers/ProductHandlers'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
@@ -27,8 +27,9 @@ import i18n from '../../config/i18n.config'
 export default function ({ id }) {
     const theme = useTheme()
     const router = useRouter()
-    const { locale = config.defaultLocale } = router
     const { setToast } = useToasts()
+
+    const { locale = config.defaultLocale } = router
 
     const folio = i18n['root']['product']
     const description = folio['description'][locale]

@@ -33,7 +33,7 @@ import { GoogleIcon } from './SVGs'
 import useWindowSize from '../hooks/useWindowSize'
 import getGoogleURL from '../helpers/getGoogleURL'
 import isEmail from '../helpers/isEmail'
-import { registerHandler, loginHandler } from '../handlers/authHandlers'
+import { registerHandler, loginHandler } from '../handlers/AuthHandlers'
 
 export default function ({ config, i18n, useThemeProvider }) {
     const theme = useTheme()
@@ -548,8 +548,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                         .SubmenuSticky {
                             position: fixed;
                             z-index: 1100;
-                            top: ${width > 650 && 0};
-                            bottom: ${width < 650 && 0};
+                            top: 0;
                             right: 0;
                             left: 0;
                             background: ${theme.palette.background};

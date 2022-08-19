@@ -4,7 +4,7 @@ import { Button, Grid, useTheme, useToasts, Input } from '@geist-ui/core'
 
 import Layout from '../../components/Layout'
 import { useThemeProvider } from '../../state/Theme'
-import { verifyHandler } from '../../handlers/authHandlers'
+import { verifyHandler } from '../../handlers/AuthHandlers'
 import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
 
 import config from '../../config/main.config'
@@ -32,6 +32,7 @@ export default function () {
                 crownLarge={title}
                 crownSmall={description}
                 metaTitle={title}
+                metaDescription={description}
             >
                 <Grid.Container gap={1} className="avanti">
                     <Grid xs={24}>
@@ -61,14 +62,14 @@ export default function () {
                             disabled={!refCode.current}
                             type="secondary"
                             onClick={(e) =>
-                                verifyHandler(
+                                verifyHandler({
                                     config,
                                     setLoading,
                                     setToast,
                                     router,
                                     refCode,
-                                    i18n['toasts']['verify'][locale]
-                                )
+                                    toast: i18n['toasts']['verify'][locale],
+                                })
                             }
                         >
                             <b>{i18n['buttons']['submit'][locale]}</b>
