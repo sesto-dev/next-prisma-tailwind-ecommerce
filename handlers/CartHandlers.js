@@ -20,10 +20,10 @@ export async function handleCartData({
         )
     }
 
-    if (!data) {
+    if (!data || !data.cart) {
         router.replace('/')
         burnToast(setToast, noDataToast)
     }
 
-    setCart(data)
+    setCart(data.cart)
 }

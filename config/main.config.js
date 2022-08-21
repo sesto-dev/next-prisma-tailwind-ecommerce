@@ -34,7 +34,9 @@ export default {
             reset: '/api/users/reset',
             products: '/api/products',
             order: '/api/orders',
-            cart: '/api/cart',
+            getCart: '/api/cart/get',
+            addCart: '/api/cart/add',
+            removeCart: '/api/cart/remove',
         },
         axios: {
             simple: {

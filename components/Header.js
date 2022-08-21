@@ -454,6 +454,10 @@ export default function ({ config, i18n, useThemeProvider }) {
                         .Peculiar:hover {
                             color: ${theme.palette.code}!important;
                         }
+                        .divider > span {
+                            background-color: ${theme.palette
+                                .background}!important;
+                        }
                     `}
                 </style>
             </>

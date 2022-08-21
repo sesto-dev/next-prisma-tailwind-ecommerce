@@ -11,18 +11,18 @@ export default async function (req, res) {
     const user = await User.findById(decoded.id)
 
     if (user) {
-        let cartArray = []
+        let cart = []
 
-        const { cart } = user
+        const { cart: cartIDs } = user
 
-        for (let i = 0; i < cart.length; i++) {
-            const productID = cart[i]
+        for (let i = 0; i < cartIDs.length; i++) {
+            const productID = cartIDs[i]
             const product = await Product.findById(productID.toString())
-            cartArray.push(product)
+            cart.push(product)
         }
 
-        res.status(200).json({ cartArray })
+        res.status(200).json({ cart })
     } else {
-        res.status(404).send('Fail')
+        res.status(404).send('User not found.')
     }
 }

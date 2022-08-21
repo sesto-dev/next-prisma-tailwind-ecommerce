@@ -49,6 +49,6 @@ export default async function (req, res) {
             res.status(403).send('Fail')
         }
     } else {
-        res.status(404).send('Fail')
+        res.status(404).send('User not found.')
     }
 }

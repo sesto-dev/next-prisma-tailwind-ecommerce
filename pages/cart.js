@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { X } from '@geist-ui/icons'
 import {
     Text,
     Image,
@@ -10,6 +11,7 @@ import {
     Grid,
     useTheme,
     useToasts,
+    Button,
 } from '@geist-ui/core'
 
 import config from '../config/main.config'
@@ -34,7 +36,7 @@ export default function () {
     const [cart, setCart] = useState(null)
 
     async function resolve() {
-        const response = await axios.get(config.backend.routes.cart)
+        const response = await axios.get(config.backend.routes.getCart)
         handleCartData({
             response,
             router,
@@ -49,25 +51,51 @@ export default function () {
         resolve()
     }, [])
 
+    async function removeCart(productID) {
+        const response = await axios.post(
+            config.backend.routes.removeCart,
+            { productID },
+            config.backend.axios.simple
+        )
+        handleCartData({
+            response,
+            router,
+            setCart,
+            setToast,
+            noDataToast: i18n['toasts']['noData'][locale],
+            notVerifiedToast: i18n['toasts']['notVerified'][locale],
+        })
+    }
+
     const Product = ({ product }) => (
-        <Grid xs={24} sm={8} md={6}>
-            <Card
-                width="100%"
-                height="100%"
-                style={{ backgroundColor: theme.palette.accents_1 }}
-            >
-                <Image
-                    height="100pt"
-                    width="100%"
-                    style={{
-                        objectFit: 'cover',
-                    }}
-                    src={product.image}
-                />
-                <Card.Body height="100%">
-                    <Text font="1.1rem">{product.name}</Text>
-                </Card.Body>
-            </Card>
+        <Grid style={{ height: 'max-content' }} xs={24}>
+            <Grid.Container gap={1}>
+                <Grid xs={6}>
+                    <Image
+                        width="100%"
+                        height="100pt"
+                        style={{
+                            objectFit: 'cover',
+                        }}
+                        src={product.image}
+                    />
+                </Grid>
+                <Grid xs={18}>
+                    <Card
+                        width="100%"
+                        height="100pt"
+                        style={{ backgroundColor: theme.palette.accents_1 }}
+                    >
+                        <Text font="0.9rem">{product.name}</Text>
+                        <Button
+                            width="100%"
+                            scale={0.8}
+                            icon={<X />}
+                            onClick={() => removeCart(product._id)}
+                        />
+                    </Card>
+                </Grid>
+            </Grid.Container>
         </Grid>
     )
 
@@ -78,25 +106,35 @@ export default function () {
             useThemeProvider={useThemeProvider}
             metaTitle={title}
             metaDescription={description}
-            crownLarge="Cart"
-            crownSmall="Your shopping cart content."
+            crownLarge={title}
+            crownSmall={description}
         >
-            <Grid.Container gap={1}>
+            <Grid.Container gap={2}>
                 {cart ? (
                     <>
-                        {cart.cartArray &&
-                            cart.cartArray.map((product) => {
-                                return (
-                                    <Product
-                                        key={product._id}
-                                        product={product}
-                                    />
-                                )
-                            })}
-                        <Grid xs={24}>
-                            <Divider width="100%" my={4} h={4}>
-                                =
-                            </Divider>
+                        <Grid xs={24} md={14}>
+                            <Grid.Container
+                                style={{ height: 'max-content' }}
+                                gap={1}
+                            >
+                                {cart.map((product) => {
+                                    return (
+                                        <Product
+                                            key={product._id}
+                                            product={product}
+                                        />
+                                    )
+                                })}
+                            </Grid.Container>
+                        </Grid>
+                        <Grid xs={24} md={10}>
+                            <Card
+                                width="100%"
+                                height="500pt"
+                                style={{
+                                    backgroundColor: theme.palette.accents_1,
+                                }}
+                            ></Card>
                         </Grid>
                     </>
                 ) : (
