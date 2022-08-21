@@ -27,27 +27,20 @@ const product = mongoose.Schema(
             type: String,
             required: true,
         },
+        versions: [
+            {
+                platform: { type: String },
+                region: { type: String },
+                price: { type: Number, default: 1000 },
+                stock: { type: Number, default: 0 },
+                discount: { type: Number, default: 0 },
+            },
+        ],
         tags: [
             {
                 type: String,
-                required: true,
             },
         ],
-        price: {
-            type: Number,
-            required: true,
-            default: 0,
-        },
-        discount: {
-            type: Number,
-            required: true,
-            default: 0,
-        },
-        stock: {
-            type: Number,
-            required: true,
-            default: 0,
-        },
     },
     {
         timestamps: true,

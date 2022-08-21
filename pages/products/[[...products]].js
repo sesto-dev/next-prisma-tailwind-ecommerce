@@ -14,7 +14,10 @@ import {
     Select,
     useTheme,
     Divider,
+    Collapse,
     Code,
+    Badge,
+    Tag,
 } from '@geist-ui/core'
 import Layout from '../../components/Layout'
 import { useThemeProvider } from '../../state/Theme'
@@ -66,13 +69,7 @@ export default function ({ page, category, tags, sort }) {
     const handler = (val) => {}
 
     const Paginated = () => (
-        <Card
-            style={{
-                backgroundColor: theme.palette.accents_1,
-            }}
-            className="PaginationCard"
-            width="100%"
-        >
+        <Card style={{}} className="PaginationCard" width="100%">
             <center>
                 {pages ? (
                     <Pagination
@@ -109,9 +106,9 @@ export default function ({ page, category, tags, sort }) {
     )
 
     const Product = ({ product }) => (
-        <Grid key={product._id} xs={24} sm={12} md={8} xl={6}>
-            <Link href={`/product/${product._id}`}>
-                <a>
+        <Grid width="100%" key={product._id} xs={24} sm={12} md={8} xl={6}>
+            <Link width="100%" href={`/product/${product._id}`}>
+                <a style={{ width: '100%' }}>
                     <Card
                         hoverable
                         width="100%"
@@ -122,36 +119,159 @@ export default function ({ page, category, tags, sort }) {
                     >
                         <Image
                             height="20rem"
+                            width="100%"
                             src={product.image}
                             style={{
                                 objectFit: 'cover',
                             }}
                         />
-                        <Text b mb={0}>
-                            {product.name},{' '}
-                        </Text>
-                        <Text
-                            small
+                        <Card.Body
                             style={{
-                                color: `${theme.palette.accents_6}`,
+                                display: 'block',
+                                justifyContent: 'space-between',
+                                margin: '0 0',
                             }}
-                        >
-                            {product.description}
-                        </Text>
-                        <Button
-                            mt={1}
                             width="100%"
-                            icon={<ShoppingCart />}
-                            style={{
-                                backgroundColor: theme.palette.accents_1,
-                            }}
                         >
-                            ${product.price}
-                        </Button>
+                            <div>
+                                {product.versions &&
+                                    product.versions.map((version) => {
+                                        return (
+                                            <Badge
+                                                style={{
+                                                    backgroundColor:
+                                                        theme.palette.accents_6,
+                                                    color: theme.palette
+                                                        .background,
+                                                }}
+                                                mr={0.5}
+                                                mb={0}
+                                                px="0.7rem"
+                                                scale={0.8}
+                                                key={Math.random()}
+                                            >
+                                                {version.platform &&
+                                                    version.platform}
+                                            </Badge>
+                                        )
+                                    })}
+                                {product.tags &&
+                                    product.tags.map((tag) => {
+                                        return (
+                                            <Badge
+                                                style={{
+                                                    backgroundColor:
+                                                        theme.palette.accents_2,
+                                                    color: theme.palette
+                                                        .foreground,
+                                                }}
+                                                mr={0.5}
+                                                mb={0}
+                                                px="0.7rem"
+                                                scale={0.8}
+                                                key={tag}
+                                            >
+                                                {tag}
+                                            </Badge>
+                                        )
+                                    })}
+                                <Text font="1rem" mb={0}>
+                                    {product.name}
+                                </Text>
+                            </div>
+
+                            <Button
+                                mt={1}
+                                width="100%"
+                                icon={<ShoppingCart />}
+                                style={{
+                                    backgroundColor: theme.palette.accents_2,
+                                    color: theme.palette.foreground,
+                                }}
+                            >
+                                ${product['versions'][0]['price']}
+                            </Button>
+                        </Card.Body>
                     </Card>
                 </a>
             </Link>
         </Grid>
+    )
+
+    const Filters = ({}) => (
+        <Card
+            py={0}
+            width="100%"
+            style={{ backgroundColor: theme.palette.accents_1 }}
+        >
+            <Card.Body py={0}>
+                <Collapse.Group my={0}>
+                    <Collapse
+                        title="PRODUCT FILTERS"
+                        subtitle="Set of options to filter out products."
+                        style={{ borderBottom: 'none' }}
+                        my={0}
+                    >
+                        <Grid.Container gap={1}>
+                            <Grid xs={12}>
+                                <Select
+                                    style={{
+                                        minHeight: '3rem',
+                                        minWidth: '100% !important',
+                                    }}
+                                    height="100%"
+                                    width="100%"
+                                    placeholder="Choose Category"
+                                    onChange={handler}
+                                >
+                                    <Select.Option value="1">
+                                        <Code>Games</Code>
+                                    </Select.Option>
+                                    <Select.Option value="2">
+                                        <Code>Gift Cards</Code>
+                                    </Select.Option>
+                                </Select>
+                            </Grid>
+                            <Grid xs={12}>
+                                <Select
+                                    style={{
+                                        minHeight: '3rem',
+                                        minWidth: '100% !important',
+                                    }}
+                                    height="100%"
+                                    width="100%"
+                                    placeholder="Sort by"
+                                    onChange={handler}
+                                >
+                                    <Select.Option value="1">
+                                        <Code>Games</Code>
+                                    </Select.Option>
+                                    <Select.Option value="2">
+                                        <Code>Gift Cards</Code>
+                                    </Select.Option>
+                                </Select>
+                            </Grid>
+                            <Grid xs={24}>
+                                <Select
+                                    style={{
+                                        minHeight: '3rem',
+                                        minWidth: '100% !important',
+                                    }}
+                                    placeholder="Choose Tags"
+                                    multiple
+                                    height="100%"
+                                    width="100%"
+                                >
+                                    <Select.Option value="1">
+                                        <Code>React</Code>
+                                    </Select.Option>
+                                </Select>
+                            </Grid>
+                        </Grid.Container>
+                    </Collapse>
+                </Collapse.Group>
+            </Card.Body>
+        </Card>
     )
 
     return (
@@ -163,66 +283,7 @@ export default function ({ page, category, tags, sort }) {
             metaDescription={description}
         >
             <Grid.Container gap={1}>
-                <Grid xs={24} md={12}>
-                    <Select
-                        style={{
-                            minHeight: '3rem',
-                            backgroundColor: theme.palette.accents_1,
-                            minWidth: '100% !important',
-                        }}
-                        height="100%"
-                        width="100%"
-                        placeholder="Choose Category"
-                        onChange={handler}
-                    >
-                        <Select.Option value="1">
-                            <Code>Games</Code>
-                        </Select.Option>
-                        <Select.Option value="2">
-                            <Code>Gift Cards</Code>
-                        </Select.Option>
-                    </Select>
-                </Grid>
-                <Grid xs={24} md={12}>
-                    <Select
-                        style={{
-                            minHeight: '3rem',
-                            backgroundColor: theme.palette.accents_1,
-                            minWidth: '100% !important',
-                        }}
-                        placeholder="Choose Tags"
-                        multiple
-                        height="100%"
-                        width="100%"
-                    >
-                        <Select.Option value="1">
-                            <Code>React</Code>
-                        </Select.Option>
-                    </Select>
-                </Grid>
-                <Grid xs={24} md={12}>
-                    <Select
-                        style={{
-                            minHeight: '3rem',
-                            backgroundColor: theme.palette.accents_1,
-                            minWidth: '100% !important',
-                        }}
-                        height="100%"
-                        width="100%"
-                        placeholder="Sort by"
-                        onChange={handler}
-                    >
-                        <Select.Option value="1">
-                            <Code>Games</Code>
-                        </Select.Option>
-                        <Select.Option value="2">
-                            <Code>Gift Cards</Code>
-                        </Select.Option>
-                    </Select>
-                </Grid>
-                <Grid xs={24} md={12}>
-                    <Paginated />
-                </Grid>
+                <Filters />
                 <Grid xs={24}>
                     <Divider h={1.5} my={2} width="100%" />
                 </Grid>
@@ -287,12 +348,6 @@ export default function ({ page, category, tags, sort }) {
                     .PaginationCard > .content > center > nav > li > .active {
                         background: ${theme.palette.foreground};
                         color: ${theme.palette.background}!important;
-                    }
-                    .divider > span {
-                        background-color: ${theme.type === 'dark'
-                            ? config.theme.darkBackground
-                            : config.theme.lightBackground} !important;
-                        color: ${theme.palette.accents_4} !important;
                     }
                 `}
             </style>

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import burnToast from '../helpers/burnToast'
+import { Link as LinkIcon } from '@geist-ui/icons'
 
 export async function handleUserData({
     response,
@@ -36,9 +37,11 @@ export async function handleUserData({
         return {
             ...order,
             link: (
-                <Link
-                    href={`/order/${order.id}`}
-                >{`Order #${order.index}`}</Link>
+                <Link href={`/order/${order.id}`}>
+                    <a>
+                        {`Order #${order.index}`} {'  '} <LinkIcon size={12} />
+                    </a>
+                </Link>
             ),
         }
     })

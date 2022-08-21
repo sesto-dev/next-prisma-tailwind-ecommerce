@@ -27,6 +27,42 @@ export default function ({ config, children }) {
                         transform: translateY(-35px);
                         box-sizing: border-box;
                     }
+                    .divider > span {
+                        background-color: ${theme.type === 'dark'
+                            ? config.theme.darkBackground
+                            : config.theme.lightBackground} !important;
+                        color: ${theme.palette.accents_4} !important;
+                    }
+                    .clear-icon > svg {
+                        color: ${theme.palette.code} !important;
+                    }
+                    a {
+                        color: ${theme.palette.code} !important;
+                        transition: color 0.3s ease;
+                    }
+                    a:hover {
+                        color: ${theme.palette.accents_4} !important;
+                    }
+                    .FooterLink {
+                        color: ${theme.palette.accents_4} !important;
+                        transition: color 0.3s ease;
+                    }
+                    .FooterLink:hover {
+                        color: ${theme.palette.code} !important;
+                    }
+                    .Bread a {
+                        color: ${theme.palette.accents_4} !important;
+                        transition: color 0.3s ease;
+                    }
+                    .Bread a:hover {
+                        color: ${theme.palette.code} !important;
+                    }
+                    .Bread > span {
+                        white-space: nowrap;
+                    }
+                    table {
+                        overflow: 'scroll' !important;
+                    }
                 `}
             </style>
         </>

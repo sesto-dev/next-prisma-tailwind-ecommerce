@@ -25,6 +25,5 @@ export async function handleCartData({
         burnToast(setToast, noDataToast)
     }
 
-    console.log(data)
     setCart(data)
 }

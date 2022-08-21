@@ -672,7 +672,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                             type="secondary"
                             style={{ border: 'none' }}
                             auto
-                            px={1.5}
+                            px={1.2}
                             onClick={(e) => setModalVis(true)}
                         >
                             Login

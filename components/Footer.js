@@ -72,12 +72,6 @@ export default function ({ config, i18n }) {
                         vertical-align: text-top;
                         box-sizing: border-box;
                     }
-                    footer a {
-                        color: ${theme.palette.accents_4}!important;
-                    }
-                    footer a:hover {
-                        color: ${theme.palette.foreground}!important;
-                    }
                 `}
             </style>
         </>
@@ -182,7 +176,7 @@ function DesktopLinks({ config, footer }) {
                                         key={link['label'][locale]}
                                         href={link.value}
                                     >
-                                        <a>
+                                        <a className="FooterLink">
                                             <Text
                                                 px={0}
                                                 style={{

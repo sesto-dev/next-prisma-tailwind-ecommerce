@@ -191,20 +191,7 @@ export default function ({ id }) {
                 </Grid.Container>
             </Layout>
             <style jsx global>
-                {`
-                    a {
-                        color: ${theme.palette.accents_3} !important;
-                    }
-                    a:hover {
-                        color: ${theme.palette.foreground} !important;
-                    }
-                    .Bread > a {
-                        white-space: nowrap;
-                    }
-                    .Bread > span {
-                        white-space: nowrap;
-                    }
-                `}
+                {``}
             </style>
         </>
     )

@@ -139,20 +139,6 @@ const components = {
                     },
                     value: '/products',
                 },
-                {
-                    label: {
-                        en: 'About',
-                        fa: 'درباره ما',
-                    },
-                    value: '/about',
-                },
-                {
-                    label: {
-                        en: 'Contact',
-                        fa: 'تماس با ما',
-                    },
-                    value: '/contact',
-                },
             ],
             protected: [
                 {

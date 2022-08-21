@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import {
     Text,
     Image,
+    Divider,
     Loading,
     Card,
     Grid,
@@ -49,31 +50,22 @@ export default function () {
     }, [])
 
     const Product = ({ product }) => (
-        <Grid height="10rem" xs={24}>
-            <Card width="100%">
-                <Card.Body>
-                    <Grid.Container gap={1}>
-                        <Grid height="10rem" xs={8}>
-                            <Image
-                                style={{
-                                    objectFit: 'cover',
-                                }}
-                                width="100%"
-                                height="7rem"
-                                src={product.image}
-                            />
-                        </Grid>
-                        <Grid xs={16}>
-                            <div style={{ display: 'block' }}>
-                                <Text b h3>
-                                    {product.name}
-                                </Text>
-                                <Text p small>
-                                    {product.description}
-                                </Text>
-                            </div>
-                        </Grid>
-                    </Grid.Container>
+        <Grid xs={24} sm={8} md={6}>
+            <Card
+                width="100%"
+                height="100%"
+                style={{ backgroundColor: theme.palette.accents_1 }}
+            >
+                <Image
+                    height="100pt"
+                    width="100%"
+                    style={{
+                        objectFit: 'cover',
+                    }}
+                    src={product.image}
+                />
+                <Card.Body height="100%">
+                    <Text font="1.1rem">{product.name}</Text>
                 </Card.Body>
             </Card>
         </Grid>
@@ -86,32 +78,41 @@ export default function () {
             useThemeProvider={useThemeProvider}
             metaTitle={title}
             metaDescription={description}
+            crownLarge="Cart"
+            crownSmall="Your shopping cart content."
         >
             <Grid.Container gap={1}>
-                <Grid xs={24}>
-                    <Card
-                        style={{
-                            backgroundColor: `${theme.palette.accents_1}`,
-                        }}
-                        width="100%"
-                    >
-                        {cart ? (
-                            <Grid.Container gap={1}>
-                                {cart.cartArray &&
-                                    cart.cartArray.map((product) => {
-                                        return (
-                                            <Product
-                                                key={product._id}
-                                                product={product}
-                                            />
-                                        )
-                                    })}
-                            </Grid.Container>
-                        ) : (
+                {cart ? (
+                    <>
+                        {cart.cartArray &&
+                            cart.cartArray.map((product) => {
+                                return (
+                                    <Product
+                                        key={product._id}
+                                        product={product}
+                                    />
+                                )
+                            })}
+                        <Grid xs={24}>
+                            <Divider width="100%" my={4} h={4}>
+                                =
+                            </Divider>
+                        </Grid>
+                    </>
+                ) : (
+                    <Grid xs={24}>
+                        <Card
+                            style={{
+                                backgroundColor: `${theme.palette.accents_1}`,
+                            }}
+                            height="20rem"
+                            pt="8rem"
+                            width="100%"
+                        >
                             <Loading />
-                        )}
-                    </Card>
-                </Grid>
+                        </Card>
+                    </Grid>
+                )}
             </Grid.Container>
         </Layout>
     )

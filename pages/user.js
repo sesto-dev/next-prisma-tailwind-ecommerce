@@ -112,9 +112,16 @@ export default function ({ auth }) {
                 <Table data={user.orders}>
                     <Table.Column prop="link" label="Link" width={100} />
                     <Table.Column prop="createdAt" label="Date" width={220} />
-                    <Table.Column prop="totalPrice" label="Price" />
-                    <Table.Column prop="isPaid" label="Paid" />
-                    <Table.Column prop="isDelivered" label="Delivered" />
+                    {width > 650 && (
+                        <>
+                            <Table.Column prop="totalPrice" label="Price" />
+                            <Table.Column prop="isPaid" label="Paid" />
+                            <Table.Column
+                                prop="isDelivered"
+                                label="Delivered"
+                            />
+                        </>
+                    )}
                 </Table>
             )}
         </Card>
@@ -269,9 +276,6 @@ export default function ({ auth }) {
                     }
                     tbody > tr:last-child > td {
                         border-bottom: none !important;
-                    }
-                    a {
-                        color: ${theme.palette.code}!important;
                     }
                 `}
             </style>
