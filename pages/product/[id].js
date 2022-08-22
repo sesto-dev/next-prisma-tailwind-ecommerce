@@ -92,7 +92,7 @@ export default function ({ id }) {
                                         </a>
                                     </Link>
                                     <Breadcrumbs.Item>
-                                        {product.name}
+                                        {product.title}
                                     </Breadcrumbs.Item>
                                 </Breadcrumbs>
                             </Grid>
@@ -118,7 +118,7 @@ export default function ({ id }) {
                                         title="Title"
                                         content={
                                             <Text font="1.4rem">
-                                                {product.name}
+                                                {product.title}
                                             </Text>
                                         }
                                         mb={1}
@@ -135,8 +135,8 @@ export default function ({ id }) {
                                     <Description
                                         title="Platforms"
                                         content={
-                                            product.versions &&
-                                            product.versions.map((version) => {
+                                            product.listings &&
+                                            product.listings.map((version) => {
                                                 return (
                                                     <Badge
                                                         style={{
@@ -205,8 +205,8 @@ export default function ({ id }) {
                                             onChange={handler}
                                             mb={0.7}
                                         >
-                                            {product.versions &&
-                                                product.versions.map(
+                                            {product.listings &&
+                                                product.listings.map(
                                                     (version, index) => {
                                                         return (
                                                             <Select.Option
@@ -241,8 +241,8 @@ export default function ({ id }) {
                                             icon={<ShoppingCart />}
                                             type="secondary"
                                         >
-                                            {product.versions &&
-                                                product['versions'][0]['price']}
+                                            {product.listings &&
+                                                product['listings'][0]['price']}
                                         </Button>
                                     </div>
                                 </Card>

@@ -5,6 +5,7 @@ const { users, products } = require('../config/seeder.config.js')
 const Order = require('../models/Order.js')
 const Product = require('../models/Product.js')
 const User = require('../models/User.js')
+const Listing = require('../models/Listing.js')
 
 dotenv.config()
 
@@ -21,22 +22,41 @@ const importData = async () => {
         await Order.deleteMany()
         await User.deleteMany()
         await Product.deleteMany()
+        await Listing.deleteMany()
 
         const createdProducts = await Product.insertMany(products)
+
+        for (let p = 0; p < products.length; p++) {
+            const product = products[p]
+            const createdProduct = createdProducts[p]
+            const { listingsArray } = product
+
+            const generatedListings = listingsArray.map((listing) => {
+                return {
+                    ...listing,
+                    product: createdProduct.id,
+                }
+            })
+
+            const createdListings = await Listing.insertMany(generatedListings)
+
+            createdProduct.listings = createdListings
+            await createdProduct.save()
+        }
+
+        const storedListings = await Listing.find()
 
         const generatedUsers = users.map((user) => {
             return {
                 ...user,
                 cart: (() => {
-                    const cartProducts = []
-                    for (let j = 0; j < getRandInt(1, 5); j++) {
-                        cartProducts.push(
-                            createdProducts[
-                                getRandInt(0, createdProducts.length)
-                            ]
+                    const cartContent = []
+                    for (let j = 0; j < getRandInt(1, 7); j++) {
+                        cartContent.push(
+                            storedListings[getRandInt(0, storedListings.length)]
                         )
                     }
-                    return cartProducts
+                    return cartContent
                 })(),
             }
         })

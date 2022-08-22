@@ -1,26 +1,28 @@
 const mongoose = require('mongoose')
 
-const user = mongoose.Schema(
+const userSchema = mongoose.Schema(
     {
-        name: {
-            type: String,
-        },
-        wallet: {
-            type: Number,
-        },
+        name: String,
+        credit: Number,
         email: {
             type: String,
-            required: true,
-            unique: true,
+            index: {
+                unique: true,
+                partialFilterExpression: { email: { $type: 'string' } },
+            },
         },
-        phone: { type: String },
-        password: {
+        phone: {
             type: String,
+            index: {
+                unique: true,
+                partialFilterExpression: { phone: { $type: 'string' } },
+            },
         },
+        password: String,
         cart: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Product',
+                ref: 'Listing',
             },
         ],
         integrations: {
@@ -80,18 +82,14 @@ const user = mongoose.Schema(
             required: true,
             unique: true,
         },
-        email_verification_code: {
-            type: String,
-        },
-        reset_password_code: {
-            type: String,
-        },
+        email_verification_code: String,
+        reset_password_code: String,
     },
     {
         timestamps: true,
     }
 )
 
-const User = mongoose.models.User || mongoose.model('User', user)
+const User = mongoose.models.User || mongoose.model('User', userSchema)
 
 module.exports = User

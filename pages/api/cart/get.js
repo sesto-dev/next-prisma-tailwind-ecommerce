@@ -1,5 +1,6 @@
 import connectDB from '../../../helpers/connectDB'
 import verifyRequest from '../../../helpers/verifyRequest'
+import Listing from '../../../models/Listing'
 import Product from '../../../models/Product'
 import User from '../../../models/User'
 
@@ -16,9 +17,12 @@ export default async function (req, res) {
         const { cart: cartIDs } = user
 
         for (let i = 0; i < cartIDs.length; i++) {
-            const productID = cartIDs[i]
+            const listingID = cartIDs[i]
+            const listing = await Listing.findById(listingID.toString())
+
+            const { product: productID } = listing
             const product = await Product.findById(productID.toString())
-            cart.push(product)
+            cart.push({ listing, product })
         }
 
         res.status(200).json({ cart })

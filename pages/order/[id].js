@@ -112,7 +112,7 @@ export default function ({ id }) {
                                 objectFit: 'cover',
                             }}
                         />
-                        <Text small>{product.name}</Text>
+                        <Text small>{product.title}</Text>
                     </Card>
                 </a>
             </Link>

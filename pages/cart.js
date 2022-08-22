@@ -67,32 +67,71 @@ export default function () {
         })
     }
 
-    const Product = ({ product }) => (
-        <Grid style={{ height: 'max-content' }} xs={24}>
+    const Product = ({ product, listing }) => (
+        <Grid style={{ height: 'max-content', minHeight: '100pt' }} xs={24}>
             <Grid.Container gap={1}>
-                <Grid xs={6}>
-                    <Image
-                        width="100%"
-                        height="100pt"
-                        style={{
-                            objectFit: 'cover',
-                        }}
-                        src={product.image}
-                    />
-                </Grid>
-                <Grid xs={18}>
+                <Grid xs={24}>
                     <Card
                         width="100%"
-                        height="100pt"
-                        style={{ backgroundColor: theme.palette.accents_1 }}
+                        style={{
+                            backgroundColor: theme.palette.accents_1,
+                            height: 'max-content',
+                            minHeight: '100pt',
+                        }}
                     >
-                        <Text font="0.9rem">{product.name}</Text>
-                        <Button
-                            width="100%"
-                            scale={0.8}
-                            icon={<X />}
-                            onClick={() => removeCart(product._id)}
-                        />
+                        <Card.Body height="100%" width="100%">
+                            <Grid.Container gap={1}>
+                                <Grid xs={6}>
+                                    <Card
+                                        width="100%"
+                                        height="100%"
+                                        style={{
+                                            backgroundImage: `url(${product.image})`,
+                                            backgroundPosition: 'center',
+                                            backgroundSize: 'cover',
+                                            backgroundRepeat: 'no-repeat',
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid style={{ display: 'block' }} xs={18}>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                        }}
+                                    >
+                                        <Text mt={0} mb={0.3} font="1.1rem">
+                                            {product.title}
+                                        </Text>
+                                        <Text mt={0} mb={0.3}>
+                                            {listing['price']}{' '}
+                                        </Text>
+                                    </div>
+                                    <Text mt={0} font={0.7}>
+                                        <Text span type="secondary">
+                                            {`Platform:  `}
+                                        </Text>
+                                        {listing['platform'].toUpperCase()},{' '}
+                                        <Text span type="secondary">
+                                            {`Region:  `}
+                                        </Text>
+                                        {listing['region'].toUpperCase()}
+                                    </Text>
+                                    <Button
+                                        style={{
+                                            backgroundColor:
+                                                theme.palette.accents_1,
+                                        }}
+                                        auto
+                                        scale={0.6}
+                                        icon={<X />}
+                                        onClick={() => removeCart(product._id)}
+                                    >
+                                        Remove from cart
+                                    </Button>
+                                </Grid>
+                            </Grid.Container>
+                        </Card.Body>
                     </Card>
                 </Grid>
             </Grid.Container>
@@ -112,27 +151,28 @@ export default function () {
             <Grid.Container gap={2}>
                 {cart ? (
                     <>
-                        <Grid xs={24} md={14}>
+                        <Grid xs={24} md={16}>
                             <Grid.Container
                                 style={{ height: 'max-content' }}
                                 gap={1}
                             >
-                                {cart.map((product) => {
+                                {cart.map(({ listing, product }) => {
                                     return (
                                         <Product
                                             key={product._id}
+                                            listing={listing}
                                             product={product}
                                         />
                                     )
                                 })}
                             </Grid.Container>
                         </Grid>
-                        <Grid xs={24} md={10}>
+                        <Grid xs={24} md={8}>
                             <Card
                                 width="100%"
-                                height="500pt"
                                 style={{
                                     backgroundColor: theme.palette.accents_1,
+                                    height: 'max-content',
                                 }}
                             ></Card>
                         </Grid>

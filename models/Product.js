@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
-const product = mongoose.Schema(
+const productSchema = mongoose.Schema(
     {
-        name: {
+        title: {
             type: String,
             required: true,
         },
@@ -10,35 +10,24 @@ const product = mongoose.Schema(
             type: String,
             required: true,
         },
-        brand: {
-            type: String,
-        },
-        publisher: {
-            type: String,
-        },
-        developer: {
-            type: String,
-        },
+        description: String,
+        brand: String,
+        publisher: String,
+        developer: String,
         category: {
             type: String,
             required: true,
         },
-        description: {
-            type: String,
-            required: true,
-        },
-        versions: [
-            {
-                platform: { type: String },
-                region: { type: String },
-                price: { type: Number, default: 1000 },
-                stock: { type: Number, default: 0 },
-                discount: { type: Number, default: 0 },
-            },
-        ],
         tags: [
             {
                 type: String,
+            },
+        ],
+        listings: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: 'Listing',
             },
         ],
     },
@@ -47,6 +36,7 @@ const product = mongoose.Schema(
     }
 )
 
-const Product = mongoose.models.Product || mongoose.model('Product', product)
+const Product =
+    mongoose.models.Product || mongoose.model('Product', productSchema)
 
 module.exports = Product

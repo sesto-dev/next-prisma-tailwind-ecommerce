@@ -134,8 +134,8 @@ export default function ({ page, category, tags, sort }) {
                             width="100%"
                         >
                             <div>
-                                {product.versions &&
-                                    product.versions.map((version) => {
+                                {product.listings &&
+                                    product.listings.map((version) => {
                                         return (
                                             <Badge
                                                 style={{
@@ -176,7 +176,7 @@ export default function ({ page, category, tags, sort }) {
                                         )
                                     })}
                                 <Text font="1rem" mb={0}>
-                                    {product.name}
+                                    {product.title}
                                 </Text>
                             </div>
 
@@ -189,7 +189,7 @@ export default function ({ page, category, tags, sort }) {
                                     color: theme.palette.foreground,
                                 }}
                             >
-                                ${product['versions'][0]['price']}
+                                ${product['listings'][0]['price']}
                             </Button>
                         </Card.Body>
                     </Card>
