@@ -4,6 +4,7 @@ const userSchema = mongoose.Schema(
     {
         name: String,
         credit: Number,
+        password: String,
         email: {
             type: String,
             index: {
@@ -18,11 +19,15 @@ const userSchema = mongoose.Schema(
                 partialFilterExpression: { phone: { $type: 'string' } },
             },
         },
-        password: String,
         cart: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Listing',
+            },
+        ],
+        address: [
+            {
+                type: String,
             },
         ],
         integrations: {

@@ -136,7 +136,7 @@ export default function ({ id }) {
                                         title="Platforms"
                                         content={
                                             product.listings &&
-                                            product.listings.map((version) => {
+                                            product.listings.map((listing) => {
                                                 return (
                                                     <Badge
                                                         style={{
@@ -152,8 +152,8 @@ export default function ({ id }) {
                                                         scale={0.8}
                                                         key={Math.random()}
                                                     >
-                                                        {version.platform &&
-                                                            version.platform}
+                                                        {listing.platform &&
+                                                            listing.platform}
                                                     </Badge>
                                                 )
                                             })
@@ -201,13 +201,13 @@ export default function ({ id }) {
                                                 minWidth: '100% !important',
                                             }}
                                             width="100%"
-                                            placeholder="Choose Version"
+                                            placeholder="Choose listing"
                                             onChange={handler}
                                             mb={0.7}
                                         >
                                             {product.listings &&
                                                 product.listings.map(
-                                                    (version, index) => {
+                                                    (listing, index) => {
                                                         return (
                                                             <Select.Option
                                                                 key={index}
@@ -216,19 +216,19 @@ export default function ({ id }) {
                                                                 {'platform: '}
                                                                 <Code>
                                                                     {
-                                                                        version.platform
+                                                                        listing.platform
                                                                     }
                                                                 </Code>
                                                                 {', region: '}
                                                                 <Code>
                                                                     {
-                                                                        version.region
+                                                                        listing.region
                                                                     }
                                                                 </Code>
                                                                 {', price: '}
                                                                 <Code>
                                                                     {
-                                                                        version.price
+                                                                        listing.price
                                                                     }
                                                                 </Code>
                                                             </Select.Option>

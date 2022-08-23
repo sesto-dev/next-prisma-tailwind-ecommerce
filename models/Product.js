@@ -10,6 +10,11 @@ const productSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        physical: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
         description: String,
         brand: String,
         publisher: String,

@@ -135,7 +135,7 @@ export default function ({ page, category, tags, sort }) {
                         >
                             <div>
                                 {product.listings &&
-                                    product.listings.map((version) => {
+                                    product.listings.map((listing) => {
                                         return (
                                             <Badge
                                                 style={{
@@ -150,8 +150,8 @@ export default function ({ page, category, tags, sort }) {
                                                 scale={0.8}
                                                 key={Math.random()}
                                             >
-                                                {version.platform &&
-                                                    version.platform}
+                                                {listing.platform &&
+                                                    listing.platform}
                                             </Badge>
                                         )
                                     })}
