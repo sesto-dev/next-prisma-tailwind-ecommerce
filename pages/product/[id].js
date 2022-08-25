@@ -27,6 +27,7 @@ import { handleProductData } from '../../handlers/ProductHandlers'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
+import { handleAddToCartData } from '../../handlers/CartHandlers'
 
 export default function ({ id }) {
     const theme = useTheme()
@@ -41,6 +42,7 @@ export default function ({ id }) {
     const [product, setProduct] = useState({})
     const [image, setImage] = useState(null)
     const [title, setTitle] = useState(folio['title'][locale])
+    const [listingID, setListingID] = useState(null)
 
     async function resolve() {
         const route = config.backend.routes.products + `/${id}`
@@ -54,10 +56,24 @@ export default function ({ id }) {
             setProduct,
             setToast,
             noDataToast: i18n['toasts']['noData'][locale],
+            setListingID,
         })
     }
 
-    const handler = (val) => {}
+    async function insertToCart() {
+        const response = await axios.post(
+            config.backend.routes.insertCart,
+            { listingID },
+            config.backend.axios.simple
+        )
+
+        handleAddToCartData({
+            response,
+            router,
+            setToast,
+            toast: i18n['toasts']['addToCart'][locale],
+        })
+    }
 
     useEffect(() => {
         resolve()
@@ -202,7 +218,10 @@ export default function ({ id }) {
                                             }}
                                             width="100%"
                                             placeholder="Choose listing"
-                                            onChange={handler}
+                                            value={listingID}
+                                            onChange={(val) =>
+                                                setListingID(val)
+                                            }
                                             mb={0.7}
                                         >
                                             {product.listings &&
@@ -210,8 +229,12 @@ export default function ({ id }) {
                                                     (listing, index) => {
                                                         return (
                                                             <Select.Option
-                                                                key={index}
-                                                                value={index}
+                                                                key={
+                                                                    listing._id
+                                                                }
+                                                                value={
+                                                                    listing._id
+                                                                }
                                                             >
                                                                 {'platform: '}
                                                                 <Code>
@@ -240,6 +263,8 @@ export default function ({ id }) {
                                             width="100%"
                                             icon={<ShoppingCart />}
                                             type="secondary"
+                                            disbaled={listingID}
+                                            onClick={() => insertToCart()}
                                         >
                                             {product.listings &&
                                                 product['listings'][0]['price']}

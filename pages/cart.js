@@ -54,7 +54,7 @@ export default function () {
         resolve()
     }, [])
 
-    async function addCart(listingID) {
+    async function Add(listingID) {
         const response = await axios.post(
             config.backend.routes.addCart,
             { listingID },
@@ -71,7 +71,24 @@ export default function () {
         })
     }
 
-    async function removeCart(listingID) {
+    async function Subtract(listingID) {
+        const response = await axios.post(
+            config.backend.routes.subtractCart,
+            { listingID },
+            config.backend.axios.simple
+        )
+
+        handleCartData({
+            response,
+            router,
+            setCart,
+            setToast,
+            noDataToast: i18n['toasts']['noData'][locale],
+            notVerifiedToast: i18n['toasts']['notVerified'][locale],
+        })
+    }
+
+    async function Remove(listingID) {
         const response = await axios.post(
             config.backend.routes.removeCart,
             { listingID },
@@ -87,9 +104,7 @@ export default function () {
         })
     }
 
-    const Product = ({ product, listing }) => {
-        const idExtraction = cart.map((a) => a.listing._id)
-
+    const Product = ({ product, listing, count }) => {
         return (
             <Grid style={{ height: 'max-content', minHeight: '100pt' }} xs={24}>
                 <Grid.Container gap={1}>
@@ -133,14 +148,7 @@ export default function () {
                                             >
                                                 {`Count:  `}
                                             </Text>
-                                            <b>
-                                                {
-                                                    idExtraction.filter(
-                                                        (x) => x == listing._id
-                                                    ).length
-                                                }
-                                            </b>
-                                            ,
+                                            <b>{count}</b>,
                                             <Text
                                                 ml={0.5}
                                                 span
@@ -178,7 +186,7 @@ export default function () {
                                                 px={1.5}
                                                 icon={<Trash />}
                                                 onClick={() =>
-                                                    removeCart(product._id)
+                                                    Remove(listing._id)
                                                 }
                                             />
                                             <Button
@@ -187,11 +195,12 @@ export default function () {
                                                         theme.palette.accents_1,
                                                 }}
                                                 auto
+                                                disbaled={count < 2}
                                                 scale={0.5}
                                                 px={1.5}
                                                 icon={<Minus />}
                                                 onClick={() =>
-                                                    removeCart(product._id)
+                                                    Subtract(listing._id)
                                                 }
                                             />
                                             <Button
@@ -203,9 +212,7 @@ export default function () {
                                                 scale={0.5}
                                                 px={1.5}
                                                 icon={<Plus />}
-                                                onClick={() =>
-                                                    removeCart(product._id)
-                                                }
+                                                onClick={() => Add(listing._id)}
                                             />
                                         </ButtonGroup>
                                     </Grid>
@@ -298,12 +305,13 @@ export default function () {
                                 style={{ height: 'max-content' }}
                                 gap={1}
                             >
-                                {cart.map(({ listing, product }) => {
+                                {cart.map(({ listing, product, count }) => {
                                     return (
                                         <Product
                                             key={product._id}
                                             listing={listing}
                                             product={product}
+                                            count={count}
                                         />
                                     )
                                 })}

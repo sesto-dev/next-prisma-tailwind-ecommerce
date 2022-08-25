@@ -27,3 +27,24 @@ export async function handleCartData({
 
     setCart(data.cart)
 }
+
+export async function handleAddToCartData({
+    response,
+    router,
+    setToast,
+    toast,
+}) {
+    const { error } = response
+
+    if (error) {
+        router.replace('/')
+        burnToast(
+            setToast,
+            error && error.response && error.response.data
+                ? error.response.data
+                : 'Error'
+        )
+    }
+
+    burnToast(setToast, toast)
+}

@@ -114,6 +114,10 @@ const toasts = {
         en: '✓ Successfully Reset Password...',
         fa: 'تغییر پسوورد موفقیت آمیز ✓',
     },
+    addToCart: {
+        en: 'Successfully added to cart.',
+        fa: 'با موفقیت به سبد خرید اضافه شد.',
+    },
     noData: {
         en: 'No data received',
         fa: 'اطلاعاتی دریافت نشد',

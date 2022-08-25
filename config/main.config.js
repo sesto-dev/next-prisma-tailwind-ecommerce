@@ -36,6 +36,8 @@ export default {
             order: '/api/orders',
             getCart: '/api/cart/get',
             addCart: '/api/cart/add',
+            insertCart: '/api/cart/insert',
+            subtractCart: '/api/cart/subtract',
             removeCart: '/api/cart/remove',
         },
         axios: {

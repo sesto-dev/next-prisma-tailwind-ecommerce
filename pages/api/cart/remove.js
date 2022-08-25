@@ -1,4 +1,6 @@
+import mongoose from 'mongoose'
 import connectDB from '../../../helpers/connectDB'
+import populateCart from '../../../helpers/populateCart'
 import verifyRequest from '../../../helpers/verifyRequest'
 import Product from '../../../models/Product'
 import User from '../../../models/User'
@@ -6,30 +8,23 @@ import User from '../../../models/User'
 export default async function (req, res) {
     const decoded = await verifyRequest(req, res)
 
-    const { productID } = req.body
+    const { listingID } = req.body
 
     connectDB()
 
     const user = await User.findById(decoded.id)
 
     if (user) {
-        let cart = []
-        const index = user.cart.indexOf(productID)
+        const filteredCart = user.cart.filter(function (value, index) {
+            if (value.toString() != listingID) return value
+        })
 
-        if (index > -1) {
-            user.cart.splice(index, 1)
-            await user.save()
+        user.cart = filteredCart
+        await user.save()
 
-            for (let i = 0; i < user.cart.length; i++) {
-                const productID = user['cart'][i]
-                const product = await Product.findById(productID.toString())
-                cart.push(product)
-            }
+        const cart = await populateCart({ user })
 
-            res.status(200).send({ cart })
-        } else {
-            res.status(404).send('Product not found in cart.')
-        }
+        res.status(200).send({ cart })
     } else {
         res.status(404).send('User not found.')
     }

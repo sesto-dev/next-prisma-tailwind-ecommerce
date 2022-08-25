@@ -1,7 +1,8 @@
+import mongoose from 'mongoose'
 import connectDB from '../../../helpers/connectDB'
 import populateCart from '../../../helpers/populateCart'
 import verifyRequest from '../../../helpers/verifyRequest'
-import Listing from '../../../models/Listing'
+import Product from '../../../models/Product'
 import User from '../../../models/User'
 
 export default async function (req, res) {
@@ -12,15 +13,20 @@ export default async function (req, res) {
     connectDB()
 
     const user = await User.findById(decoded.id)
-    const listing = await Listing.findById(listingID)
 
-    if (user && listing) {
-        user.cart.push(listing._id)
-        await user.save()
+    if (user) {
+        const index = user.cart.indexOf(mongoose.Types.ObjectId(listingID))
 
-        const cart = await populateCart({ user })
+        if (index > -1) {
+            user.cart.splice(index, 1)
+            await user.save()
 
-        res.status(200).send({ cart })
+            const cart = await populateCart({ user })
+
+            res.status(200).send({ cart })
+        } else {
+            res.status(404).send('Listing not found in cart.')
+        }
     } else {
         res.status(404).send('User not found.')
     }
