@@ -17,7 +17,7 @@ export default function ({ auth }) {
 
     setLocalAuthentication(auth)
 
-    const folio = i18n['root']['index']
+    const folio = i18n['pages']['index']
     const title = folio['title'][locale]
     const description = folio['description'][locale]
 

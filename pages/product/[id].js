@@ -36,7 +36,7 @@ export default function ({ id }) {
 
     const { locale = config.defaultLocale } = router
 
-    const folio = i18n['root']['product']
+    const folio = i18n['pages']['product']
     const description = folio['description'][locale]
 
     const [product, setProduct] = useState({})
@@ -87,9 +87,10 @@ export default function ({ id }) {
                 useThemeProvider={useThemeProvider}
                 metaTitle={title}
                 metaDescription={description}
+                metaImage={image}
             >
                 <Grid.Container gap={1}>
-                    {product ? (
+                    {product && product.images ? (
                         <>
                             <Grid xs={24}>
                                 <Breadcrumbs className="Bread" mb={1}>
@@ -114,7 +115,7 @@ export default function ({ id }) {
                             </Grid>
                             <Grid xs={24} md={9}>
                                 <Image
-                                    src={product.image}
+                                    src={product.images[0]}
                                     width="100%"
                                     height="100%"
                                     style={{
@@ -317,7 +318,7 @@ export default function ({ id }) {
                         <Grid xs={24}>
                             <Card
                                 style={{
-                                    backgroundColor: `${theme.palette.accents_1}`,
+                                    backgroundColor: theme.palette.accents_1,
                                 }}
                                 width="100%"
                             >

@@ -1,7 +1,15 @@
+import { useRouter } from 'next/router'
 import { useTheme } from '@geist-ui/core'
+
+import {
+    isLocaleRTL,
+    getLocaleDirection,
+    getLocaleAlignment,
+} from '../helpers/RTL'
 
 export default function ({ config, children }) {
     const theme = useTheme()
+    const { locale = config.defaultLocale } = useRouter()
 
     return (
         <>
@@ -16,6 +24,29 @@ export default function ({ config, children }) {
                             ? config.theme.lightBackground
                             : config.theme.darkBackground}!important;
                     }
+
+                    @font-face {
+                        font-family: 'Yekan';
+                        src: url('/fonts/Yekan/Yekan.woff');
+                    }
+
+                    html,
+                    body,
+                    a,
+                    p,
+                    small,
+                    h1,
+                    h2,
+                    h3,
+                    h4,
+                    h5,
+                    h6,
+                    dd,
+                    dt,
+                    dl {
+                        font-family: 'Inter', 'Yekan', 'Segoe UI', 'Roboto' !important;
+                    }
+
                     .PageWrapper {
                         transform: translateY(-5px);
                     }
@@ -62,6 +93,33 @@ export default function ({ config, children }) {
                     }
                     table {
                         overflow: 'scroll' !important;
+                    }
+                    .avanti > .item {
+                        justify-content: ${isLocaleRTL(locale)
+                            ? 'end'
+                            : 'start'};
+                    }
+                    input::placeholder {
+                        text-align: ${isLocaleRTL(locale) ? 'right' : 'left'};
+                        direction: ${getLocaleDirection(locale)} !important;
+                    }
+
+                    .collapse > .view > .title > h3 {
+                        position: ${isLocaleRTL(locale) &&
+                        'absolute !important'};
+                        right: ${isLocaleRTL(locale) && '2.5rem !important'};
+                        direction: ${getLocaleDirection(locale)};
+                        text-align: ${getLocaleAlignment(locale)};
+                    }
+                    .collapse > .view {
+                        margin-bottom: ${isLocaleRTL(locale) &&
+                        '0.6em !important'};
+                    }
+                    .collapse > .view > .subtitle {
+                        direction: ${getLocaleDirection(locale)};
+                        text-align: ${getLocaleAlignment(locale)};
+                        margin-top: ${isLocaleRTL(locale) &&
+                        '0.6rem !important'};
                     }
                 `}
             </style>

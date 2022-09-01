@@ -35,7 +35,7 @@ export default function ({ page, category, tags, sort }) {
 
     const { locale = config.defaultLocale } = router
 
-    const folio = i18n['root']['products']
+    const folio = i18n['pages']['products']
     const title = folio['title'][locale]
     const description = folio['description'][locale]
 
@@ -120,7 +120,7 @@ export default function ({ page, category, tags, sort }) {
                         <Image
                             height="20rem"
                             width="100%"
-                            src={product.image}
+                            src={product.images[0]}
                             style={{
                                 objectFit: 'cover',
                             }}
@@ -185,8 +185,7 @@ export default function ({ page, category, tags, sort }) {
                                 width="100%"
                                 icon={<ShoppingCart />}
                                 style={{
-                                    backgroundColor: theme.palette.accents_2,
-                                    color: theme.palette.foreground,
+                                    backgroundColor: theme.palette.accents_1,
                                 }}
                             >
                                 ${product['listings'][0]['price']}
@@ -207,8 +206,14 @@ export default function ({ page, category, tags, sort }) {
             <Card.Body py={0}>
                 <Collapse.Group my={0}>
                     <Collapse
-                        title="PRODUCT FILTERS"
-                        subtitle="Set of options to filter out products."
+                        title={
+                            i18n['pages']['products']['filter']['title'][locale]
+                        }
+                        subtitle={
+                            i18n['pages']['products']['filter']['subtitle'][
+                                locale
+                            ]
+                        }
                         style={{ borderBottom: 'none' }}
                         my={0}
                     >

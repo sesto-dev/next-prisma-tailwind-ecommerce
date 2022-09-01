@@ -83,6 +83,10 @@ const buttons = {
         en: 'SUBMIT',
         fa: 'ثبت',
     },
+    google: {
+        active: { en: 'Sign in with Google', fa: 'ورود با گوگل' },
+        inactive: { en: 'Integrated with Google', fa: 'پیوند فعال با گوگل' },
+    },
 }
 
 const toasts = {
@@ -159,6 +163,28 @@ const components = {
             ],
         },
         title,
+        modal: {
+            login: {
+                title: {
+                    en: 'Login',
+                    fa: 'ورود',
+                },
+                subtitle: {
+                    en: 'with Email / Password',
+                    fa: 'توسط ایمیل و پسوورد',
+                },
+            },
+            register: {
+                title: {
+                    en: 'Register',
+                    fa: 'ثبت نام',
+                },
+                subtitle: {
+                    en: 'with Email / Password',
+                    fa: 'توسط ایمیل و پسوورد',
+                },
+            },
+        },
     },
     footer: {
         copyright: {
@@ -322,7 +348,7 @@ const auth = {
     },
 }
 
-const root = {
+const pages = {
     index: {
         title: {
             en: 'Index',
@@ -376,6 +402,16 @@ const root = {
             en: 'Products Page',
             fa: 'صفحه محصولات',
         },
+        filter: {
+            title: {
+                en: 'Filter Products',
+                fa: 'فیلتر محصولات',
+            },
+            subtitle: {
+                en: 'Set of options to filter out products',
+                fa: 'مجموعه گزینه ها برای فیلتر محصولات',
+            },
+        },
     },
     pricing: {
         title: {
@@ -405,6 +441,69 @@ const root = {
         description: {
             en: 'User Page',
             fa: 'صفحه حساب کاربری',
+        },
+
+        info: {
+            title: {
+                en: 'User Info',
+                fa: 'اطلاعات کاربری',
+            },
+            description: {
+                en: 'Basic information you have provided.',
+                fa: 'اطلاعات کاربری',
+            },
+            name: {
+                en: 'Name',
+                fa: 'نام و نام خانوادگی',
+            },
+            email: {
+                en: 'Email',
+                fa: 'ایمیل',
+            },
+            referral: {
+                en: 'Referral Code',
+                fa: 'کد دعوت',
+            },
+        },
+        orders: {
+            title: {
+                en: 'Orders',
+                fa: 'سفارشات',
+            },
+            description: {
+                en: 'Your order history.',
+                fa: 'تاریخچه سفارشات شما',
+            },
+        },
+        referrals: {
+            title: {
+                en: 'Referrals',
+                fa: 'دعوت ها',
+            },
+            description: {
+                en: 'Your referral history.',
+                fa: 'تاریخچه دعوت های شما',
+            },
+        },
+        integrations: {
+            title: {
+                en: 'Integrations',
+                fa: 'پیوند ها',
+            },
+            description: {
+                en: 'Your integrations with third-party services.',
+                fa: 'پیوند های شما با سرویس های دیگر',
+            },
+        },
+        logout: {
+            title: {
+                en: 'Logout',
+                fa: 'خروج',
+            },
+            description: {
+                en: 'Logout from yout account',
+                fa: 'از حساب کاربری خود خارج شوید.',
+            },
         },
     },
     about: {
@@ -444,5 +543,5 @@ export default {
     toasts,
     components,
     auth,
-    root,
+    pages,
 }

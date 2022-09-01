@@ -6,10 +6,18 @@ const productSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        image: {
-            type: String,
-            required: true,
-        },
+        covers: [
+            {
+                type: String,
+                required: true,
+            },
+        ],
+        images: [
+            {
+                type: String,
+                required: true,
+            },
+        ],
         physical: {
             type: Boolean,
             required: true,

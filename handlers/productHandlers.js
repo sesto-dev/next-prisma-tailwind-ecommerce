@@ -59,10 +59,10 @@ export async function handleProductData({
         burnToast(setToast, noDataToast)
     }
 
-    const { name, image, listings } = data
+    const { name, images, listings } = data
 
     setTitle(name)
-    setImage(image)
+    setImage(images[0])
     setProduct(data)
     setListingID(listings[0]['_id'])
 }

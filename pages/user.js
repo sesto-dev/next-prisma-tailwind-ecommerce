@@ -41,9 +41,15 @@ export default function ({ auth }) {
 
     const { locale = config.defaultLocale } = router
 
-    const folio = i18n['root']['user']
-    const title = folio['title'][locale]
-    const description = folio['description'][locale]
+    const {
+        title,
+        description,
+        info,
+        referrals,
+        orders,
+        integrations,
+        logout,
+    } = i18n['pages']['user']
 
     const [user, setUser] = useState(null)
 
@@ -69,7 +75,7 @@ export default function ({ auth }) {
                 {user.name && (
                     <Description
                         width="100%"
-                        title="Name"
+                        title={info['name'][locale]}
                         content={
                             <Text width="100%" mt={0} blockquote font="1rem">
                                 {user.name}
@@ -81,7 +87,7 @@ export default function ({ auth }) {
             <Grid xs={24} md={12}>
                 <Description
                     width="100%"
-                    title="Email"
+                    title={info['email'][locale]}
                     content={
                         <Text width="100%" mt={0} blockquote font="1rem">
                             {user.email}
@@ -92,7 +98,7 @@ export default function ({ auth }) {
             <Grid xs={24} md={12}>
                 <Description
                     width="100%"
-                    title="Referral Code"
+                    title={info['referral'][locale]}
                     content={
                         <Snippet
                             font="1rem"
@@ -153,7 +159,7 @@ export default function ({ auth }) {
                         }}
                         onClick={() => {}}
                     >
-                        Integrated with Google
+                        {i18n['buttons']['google']['inactive'][locale]}
                     </Button>
                 ) : (
                     <a style={{ width: '100%' }} href={getGoogleURL()}>
@@ -163,7 +169,7 @@ export default function ({ auth }) {
                             width="100%"
                             onClick={() => {}}
                         >
-                            Integrate with Google
+                            {i18n['buttons']['google']['active'][locale]}
                         </Button>
                     </a>
                 )}
@@ -189,7 +195,7 @@ export default function ({ auth }) {
             width={width < 650 && '100%'}
             auto={width > 650}
         >
-            <b>LOGOUT</b>
+            <b>{logout['title'][locale]}</b>
         </Button>
     )
 
@@ -199,13 +205,13 @@ export default function ({ auth }) {
                 config={config}
                 i18n={i18n}
                 useThemeProvider={useThemeProvider}
-                metaTitle={title}
-                metaDescription={description}
+                metaTitle={title[locale]}
+                metaDescription={description[locale]}
             >
                 <Grid.Container gap={1}>
                     {user ? (
                         <>
-                            <Grid width="100%" xs={24}>
+                            <Grid xs={24}>
                                 <Card
                                     width="100%"
                                     style={{
@@ -215,33 +221,46 @@ export default function ({ auth }) {
                                 >
                                     <Collapse.Group>
                                         <Collapse
-                                            title="User Info"
-                                            subtitle="Basic information you have provided."
+                                            title={info['title'][locale]}
+                                            subtitle={
+                                                info['description'][locale]
+                                            }
                                         >
                                             <UserInfo user={user} />
                                         </Collapse>
                                         <Collapse
-                                            title="Orders"
-                                            subtitle="Your order history."
+                                            title={orders['title'][locale]}
+                                            subtitle={
+                                                orders['description'][locale]
+                                            }
                                         >
                                             <Orders user={user} />
                                         </Collapse>
                                         <Collapse
-                                            title="Referrals"
-                                            subtitle="Your referral history."
+                                            title={referrals['title'][locale]}
+                                            subtitle={
+                                                referrals['description'][locale]
+                                            }
                                         >
                                             <Referrals user={user} />
                                         </Collapse>
                                         <Collapse
-                                            title="Integrations"
-                                            subtitle="Your integrations with different third-party services."
+                                            title={
+                                                integrations['title'][locale]
+                                            }
+                                            subtitle={
+                                                integrations['description'][
+                                                    locale
+                                                ]
+                                            }
                                         >
                                             <Integrations user={user} />
                                         </Collapse>
-
                                         <Collapse
-                                            title="Logout"
-                                            subtitle="Where you can log out."
+                                            title={logout['title'][locale]}
+                                            subtitle={
+                                                logout['description'][locale]
+                                            }
                                             style={{ borderBottom: 'none' }}
                                         >
                                             <Logout />

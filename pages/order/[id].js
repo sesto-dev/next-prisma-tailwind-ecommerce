@@ -30,7 +30,7 @@ export default function ({ id }) {
     const { locale = config.defaultLocale } = router
     const { setToast } = useToasts()
 
-    const folio = i18n['root']['order']
+    const folio = i18n['pages']['order']
     const title = folio['title'][locale]
     const description = folio['description'][locale]
 
@@ -107,7 +107,7 @@ export default function ({ id }) {
                     <Card width="100%" height="100%">
                         <Image
                             height="20rem"
-                            src={product.image}
+                            src={product.images[0]}
                             style={{
                                 objectFit: 'cover',
                             }}

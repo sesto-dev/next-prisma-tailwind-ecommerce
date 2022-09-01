@@ -32,7 +32,7 @@ export default function () {
 
     const { locale = config.defaultLocale } = router
 
-    const folio = i18n['root']['cart']
+    const folio = i18n['pages']['cart']
     const title = folio['title'][locale]
     const description = folio['description'][locale]
 
@@ -125,7 +125,7 @@ export default function () {
                                             width="100%"
                                             height="100%"
                                             style={{
-                                                backgroundImage: `url(${product.image})`,
+                                                backgroundImage: `url(${product.images[0]})`,
                                                 backgroundPosition: 'center',
                                                 backgroundSize: 'cover',
                                                 backgroundRepeat: 'no-repeat',

@@ -68,6 +68,6 @@ You only need to provide your `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` in `.env` file t
 
 ## i18n
 
-You provide the list of languages you are willing to support in `next.config.js` file. All of the i18n content is located in the `i18n.content.js` file in root directory.
+You provide the list of languages you are willing to support in `next.config.js` file. All of the i18n content is located in the `i18n.content.js` file in config directory.
 
 If you want to disable i18n & the select language dropdown in the Header, you only need to remove the `i18n` key from `next.config.js`. In this case the `en` content from the `i18n.config.js` file will be served as default.

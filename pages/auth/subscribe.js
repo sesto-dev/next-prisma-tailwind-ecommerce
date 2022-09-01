@@ -52,15 +52,6 @@ export default function () {
                     </Grid>
                 </Grid.Container>
             </Layout>
-            <style jsx global>
-                {`
-                    .avanti > .item {
-                        justify-content: ${isLocaleRTL(locale)
-                            ? 'end'
-                            : 'start'};
-                    }
-                `}
-            </style>
         </>
     )
 }

@@ -2,8 +2,28 @@ const bcrypt = require('bcryptjs')
 
 const products = [
     {
+        title: 'Camo Pants',
+        images: [
+            'https://cdn.shopify.com/s/files/1/0119/8197/9705/products/joggers.jpg?v=1571784975',
+        ],
+        description: 'Pants',
+        category: 'clothing',
+        listingsArray: [
+            {
+                size: 'XL',
+                color: 'black',
+                price: 49.99,
+                stock: 7,
+                discount: 0,
+            },
+        ],
+        tags: ['pants'],
+    },
+    {
         title: 'Elden Ring Definitive Edition',
-        image: 'https://image.api.playstation.com/vulcan/img/rnd/202201/1918/0P25Aw0mnLS1AwPYEUb6kIYC.png',
+        images: [
+            'https://image.api.playstation.com/vulcan/img/rnd/202201/1918/0P25Aw0mnLS1AwPYEUb6kIYC.png',
+        ],
         description:
             'THE NEW FANTASY ACTION-adventure RPG. Rise, Tarnished, and be guided by grace to publisherish the power of the Elden Ring and become an Elden Lord in the Lands Between.',
         publisher: 'Bandai Namco',
@@ -21,7 +41,9 @@ const products = [
     },
     {
         title: 'Stray',
-        image: 'https://gameluster.com/wp-content/uploads/2022/07/Stray-Cover-Image-scaled.jpg',
+        images: [
+            'https://gameluster.com/wp-content/uploads/2022/07/Stray-Cover-Image-scaled.jpg',
+        ],
         description:
             'Lost, alone and separated from family, a stray cat must untangle an ancient mystery to escape a long-forgotten cybercity and find their way home.',
         publisher: 'Annapurna Interactive',
@@ -40,7 +62,9 @@ const products = [
     },
     {
         title: 'The Last of Us Part II',
-        image: 'https://image.api.playstation.com/vulcan/img/rnd/202010/2618/w48z6bzefZPrRcJHc7L8SO66.png',
+        images: [
+            'https://image.api.playstation.com/vulcan/img/rnd/202010/2618/w48z6bzefZPrRcJHc7L8SO66.png',
+        ],
         description:
             'Lost, alone and separated from family, a stray cat must untangle an ancient mystery to escape a long-forgotten cybercity and find their way home.',
         publisher: 'Annapurna Interactive',
@@ -59,7 +83,9 @@ const products = [
     },
     {
         title: 'Hades',
-        image: 'https://gamerofpassion.com/wp-content/uploads/2020/10/Hades-Cover-Picture-alternative.jpg',
+        images: [
+            'https://gamerofpassion.com/wp-content/uploads/2020/10/Hades-Cover-Picture-alternative.jpg',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -78,7 +104,9 @@ const products = [
     },
     {
         title: 'Dishonored',
-        image: 'https://e.snmc.io/lk/fv/x/d7668e54654c0d238775ac227b26b76f/5285613',
+        images: [
+            'https://e.snmc.io/lk/fv/x/d7668e54654c0d238775ac227b26b76f/5285613',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -97,7 +125,9 @@ const products = [
     },
     {
         title: 'Metro Last Light',
-        image: 'http://s01.riotpixels.net/data/9d/67/9d672c2a-0f42-4b21-93d3-fc5576b0c29d.jpg/cover.metro-last-light.1024x1024.2014-04-24.148.jpg',
+        images: [
+            'http://s01.riotpixels.net/data/9d/67/9d672c2a-0f42-4b21-93d3-fc5576b0c29d.jpg/cover.metro-last-light.1024x1024.2014-04-24.148.jpg',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -116,7 +146,9 @@ const products = [
     },
     {
         title: 'The Last of Us Remastered',
-        image: 'http://www.brashgames.co.uk/wp-content/uploads/2014/08/The-Last-of-Us-Remastered.jpg',
+        images: [
+            'http://www.brashgames.co.uk/wp-content/uploads/2014/08/The-Last-of-Us-Remastered.jpg',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -135,7 +167,9 @@ const products = [
     },
     {
         title: 'Halo Infinite',
-        image: 'https://assets-prd.ignimgs.com/2020/07/24/halo-infinite-button-2020-1595617876660.jpg',
+        images: [
+            'https://assets-prd.ignimgs.com/2020/07/24/halo-infinite-button-2020-1595617876660.jpg',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Microsoft Studios',
@@ -154,7 +188,9 @@ const products = [
     },
     {
         title: 'GTFO',
-        image: 'https://images10.newegg.com/BizIntell/item/Digital%20Games/Downloadable%20Software%20-%20Games/32-968-023/ch1.jpg',
+        images: [
+            'https://images10.newegg.com/BizIntell/item/Digital%20Games/Downloadable%20Software%20-%20Games/32-968-023/ch1.jpg',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Microsoft Studios',
@@ -173,7 +209,7 @@ const products = [
     },
     {
         title: 'Ori and the Blind Forest Definitive Edition',
-        image: 'https://f4.bcbits.com/img/a1402023301_10.jpg',
+        images: ['https://f4.bcbits.com/img/a1402023301_10.jpg'],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Microsoft Studios',
@@ -192,7 +228,9 @@ const products = [
     },
     {
         title: 'Call of Duty Modern Warfare II',
-        image: 'https://www.global-esports.news/wp-content/uploads/2022/05/CoD-Modern-Warfare-2-2022-2.jpg',
+        images: [
+            'https://www.global-esports.news/wp-content/uploads/2022/05/CoD-Modern-Warfare-2-2022-2.jpg',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -218,7 +256,9 @@ const products = [
     },
     {
         title: 'Dishonored 2',
-        image: 'https://image.api.playstation.com/vulcan/ap/rnd/202009/2918/1UfdyQmXpeSdoFE104sNkLd4.png',
+        images: [
+            'https://image.api.playstation.com/vulcan/ap/rnd/202009/2918/1UfdyQmXpeSdoFE104sNkLd4.png',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -237,7 +277,9 @@ const products = [
     },
     {
         title: 'Rainbow Six: Siege',
-        image: 'https://cdn1.epicgames.com/carnation/offer/r6s-y6-epic-std-store-portrait-1200x1600-1200x1600-8ecd88137e14-1200x1600-05e68a0aed3dc068b9b4186997b97317.jpeg',
+        images: [
+            'https://cdn1.epicgames.com/carnation/offer/r6s-y6-epic-std-store-portrait-1200x1600-1200x1600-8ecd88137e14-1200x1600-05e68a0aed3dc068b9b4186997b97317.jpeg',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -256,7 +298,9 @@ const products = [
     },
     {
         title: 'Dishonored The Death of The Outsider',
-        image: 'https://image.api.playstation.com/vulcan/ap/rnd/202009/2920/mUjmWOusNIcAENORucmAnj1k.png',
+        images: [
+            'https://image.api.playstation.com/vulcan/ap/rnd/202009/2920/mUjmWOusNIcAENORucmAnj1k.png',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -275,7 +319,9 @@ const products = [
     },
     {
         title: 'God of War Ragnarok',
-        image: 'https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4xJ8XB3bi888QTLZYdl7Oi0s.png',
+        images: [
+            'https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4xJ8XB3bi888QTLZYdl7Oi0s.png',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -295,7 +341,9 @@ const products = [
     },
     {
         title: 'Final Fantasy VII Remake',
-        image: 'https://image.api.playstation.com/vulcan/img/cfn/113075PxnarzRek4cRpjrRWSpLfrcBd23B5e_Yj2azms6nWYKmySv4h3a22G5_R1CM4BQUmSRD6oOArDROKv041NUkgun78-.png',
+        images: [
+            'https://image.api.playstation.com/vulcan/img/cfn/113075PxnarzRek4cRpjrRWSpLfrcBd23B5e_Yj2azms6nWYKmySv4h3a22G5_R1CM4BQUmSRD6oOArDROKv041NUkgun78-.png',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -314,7 +362,9 @@ const products = [
     },
     {
         title: 'Spider-Man',
-        image: 'https://image.api.playstation.com/vulcan/ap/rnd/202011/0402/C784xeOFo2wViCf4m5bxgoeH.png',
+        images: [
+            'https://image.api.playstation.com/vulcan/ap/rnd/202011/0402/C784xeOFo2wViCf4m5bxgoeH.png',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -333,7 +383,9 @@ const products = [
     },
     {
         title: 'Elden Ring',
-        image: 'https://image.api.playstation.com/vulcan/ap/rnd/202108/0410/0Jz6uJLxOK7JOMMfcfHFBi1D.png',
+        images: [
+            'https://image.api.playstation.com/vulcan/ap/rnd/202108/0410/0Jz6uJLxOK7JOMMfcfHFBi1D.png',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -352,7 +404,9 @@ const products = [
     },
     {
         title: 'Spider-Man Miles Morales',
-        image: 'https://image.api.playstation.com/vulcan/ap/rnd/202008/1020/T45iRN1bhiWcJUzST6UFGBvO.png',
+        images: [
+            'https://image.api.playstation.com/vulcan/ap/rnd/202008/1020/T45iRN1bhiWcJUzST6UFGBvO.png',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',
@@ -371,7 +425,9 @@ const products = [
     },
     {
         title: 'God of War',
-        image: 'https://image.api.playstation.com/cdn/UP9000/CUSA07408_00/9zb3GbJG9h7AbP94R56l7DfqEpoBzljO.png',
+        images: [
+            'https://image.api.playstation.com/cdn/UP9000/CUSA07408_00/9zb3GbJG9h7AbP94R56l7DfqEpoBzljO.png',
+        ],
         description:
             'Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.',
         publisher: 'Annapurna Interactive',

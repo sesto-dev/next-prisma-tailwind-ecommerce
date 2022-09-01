@@ -216,23 +216,6 @@ export default function () {
                             </Grid>
                         </Grid.Container>
                     </Layout>
-                    <style jsx global>
-                        {`
-                            input::placeholder {
-                                text-align: ${isLocaleRTL(locale)
-                                    ? 'right'
-                                    : 'left'};
-                                direction: ${getLocaleDirection(
-                                    locale
-                                )} !important;
-                            }
-                            .avanti > .item {
-                                justify-content: ${isLocaleRTL(locale)
-                                    ? 'end'
-                                    : 'start'};
-                            }
-                        `}
-                    </style>
                 </>
             )}
         </>

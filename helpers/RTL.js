@@ -22,3 +22,7 @@ export function isLocaleRTL(locale) {
 export function getLocaleDirection(locale) {
     return isLocaleRTL(locale) ? 'rtl' : 'ltr'
 }
+
+export function getLocaleAlignment(locale) {
+    return isLocaleRTL(locale) ? 'right' : 'left'
+}

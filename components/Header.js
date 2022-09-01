@@ -25,6 +25,8 @@ import {
     Menu,
     Search,
     Globe,
+    Mail,
+    Lock,
 } from '@geist-ui/icons'
 
 import { getLocaleDirection, isLocaleRTL } from '../helpers/RTL'
@@ -60,6 +62,11 @@ export default function ({ config, i18n, useThemeProvider }) {
     const [placement, setPlacement] = useState('')
     const [modalVis, setModalVis] = useState(false)
 
+    const {
+        buttons,
+        components: { header },
+    } = i18n
+
     useEffect(() => {
         const scrollHandler = () =>
             setSticky(document.documentElement.scrollTop > 54)
@@ -75,8 +82,6 @@ export default function ({ config, i18n, useThemeProvider }) {
     }
 
     const LoginModal = () => {
-        const buttons = i18n['buttons']
-
         const [email, setEmail, refEmail] = useState('')
         const [password, setPassword, refPassword] = useState('')
         const [confirmPassword, setConfirmPassword, refConfirmPassword] =
@@ -102,25 +107,33 @@ export default function ({ config, i18n, useThemeProvider }) {
                                             }}
                                             my={0}
                                         >
-                                            Login
+                                            {
+                                                header['modal']['login'][
+                                                    'title'
+                                                ][locale]
+                                            }
                                         </Text>
                                     }
                                     subtitle={
-                                        <Text small>with Email & Password</Text>
+                                        <Text small>
+                                            {
+                                                header['modal']['login'][
+                                                    'subtitle'
+                                                ][locale]
+                                            }
+                                        </Text>
                                     }
                                 >
                                     <Input
                                         label={
-                                            !isLocaleRTL(locale) &&
-                                            i18n['inputs']['email']['label'][
-                                                locale
-                                            ]
+                                            !isLocaleRTL(locale) && (
+                                                <Mail size={16} />
+                                            )
                                         }
                                         labelRight={
-                                            isLocaleRTL(locale) &&
-                                            i18n['inputs']['email']['label'][
-                                                locale
-                                            ]
+                                            isLocaleRTL(locale) && (
+                                                <Mail size={16} />
+                                            )
                                         }
                                         placeholder={
                                             i18n['inputs']['email'][
@@ -142,16 +155,14 @@ export default function ({ config, i18n, useThemeProvider }) {
                                     />
                                     <Input.Password
                                         label={
-                                            !isLocaleRTL(locale) &&
-                                            i18n['inputs']['password']['label'][
-                                                locale
-                                            ]
+                                            !isLocaleRTL(locale) && (
+                                                <Lock size={16} />
+                                            )
                                         }
                                         labelRight={
-                                            isLocaleRTL(locale) &&
-                                            i18n['inputs']['password']['label'][
-                                                locale
-                                            ]
+                                            isLocaleRTL(locale) && (
+                                                <Lock size={16} />
+                                            )
                                         }
                                         placeholder={
                                             i18n['inputs']['password'][
@@ -232,25 +243,33 @@ export default function ({ config, i18n, useThemeProvider }) {
                                             }}
                                             my={0}
                                         >
-                                            Register
+                                            {
+                                                header['modal']['register'][
+                                                    'title'
+                                                ][locale]
+                                            }
                                         </Text>
                                     }
                                     subtitle={
-                                        <Text small>with Email & Password</Text>
+                                        <Text small>
+                                            {
+                                                header['modal']['register'][
+                                                    'subtitle'
+                                                ][locale]
+                                            }
+                                        </Text>
                                     }
                                 >
                                     <Input
                                         label={
-                                            !isLocaleRTL(locale) &&
-                                            i18n['inputs']['email']['label'][
-                                                locale
-                                            ]
+                                            !isLocaleRTL(locale) && (
+                                                <Mail size={16} />
+                                            )
                                         }
                                         labelRight={
-                                            isLocaleRTL(locale) &&
-                                            i18n['inputs']['email']['label'][
-                                                locale
-                                            ]
+                                            isLocaleRTL(locale) && (
+                                                <Mail size={16} />
+                                            )
                                         }
                                         placeholder={
                                             i18n['inputs']['email'][
@@ -291,16 +310,14 @@ export default function ({ config, i18n, useThemeProvider }) {
                                         )}
                                     <Input.Password
                                         label={
-                                            !isLocaleRTL(locale) &&
-                                            i18n['inputs']['password']['label'][
-                                                locale
-                                            ]
+                                            !isLocaleRTL(locale) && (
+                                                <Lock size={16} />
+                                            )
                                         }
                                         labelRight={
-                                            isLocaleRTL(locale) &&
-                                            i18n['inputs']['password']['label'][
-                                                locale
-                                            ]
+                                            isLocaleRTL(locale) && (
+                                                <Lock size={16} />
+                                            )
                                         }
                                         placeholder={
                                             i18n['inputs']['password'][
@@ -333,16 +350,14 @@ export default function ({ config, i18n, useThemeProvider }) {
                                         )}
                                     <Input.Password
                                         label={
-                                            !isLocaleRTL(locale) &&
-                                            i18n['inputs']['confirmPassword'][
-                                                'label'
-                                            ][locale]
+                                            !isLocaleRTL(locale) && (
+                                                <Lock size={16} />
+                                            )
                                         }
                                         labelRight={
-                                            isLocaleRTL(locale) &&
-                                            i18n['inputs']['confirmPassword'][
-                                                'label'
-                                            ][locale]
+                                            isLocaleRTL(locale) && (
+                                                <Lock size={16} />
+                                            )
                                         }
                                         placeholder={
                                             i18n['inputs']['confirmPassword'][
@@ -423,7 +438,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                                 </Collapse>
                             </Collapse.Group>
                             <Divider mt={1} mb={3}>
-                                OR
+                                /
                             </Divider>
                             <a href={getGoogleURL()}>
                                 <Button
@@ -433,7 +448,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                                     mt={0.8}
                                     onClick={() => {}}
                                 >
-                                    Sign in with Google
+                                    {buttons['google']['active'][locale]}
                                 </Button>
                             </a>
                         </Modal.Content>
@@ -441,12 +456,6 @@ export default function ({ config, i18n, useThemeProvider }) {
                 )}
                 <style jsx global>
                     {`
-                        input::placeholder {
-                            text-align: ${isLocaleRTL(locale)
-                                ? 'right'
-                                : 'left'};
-                            direction: ${getLocaleDirection(locale)} !important;
-                        }
                         .Peculiar {
                             color: ${theme.palette.accents_6}!important;
                             font-size: 0.75rem;
@@ -679,7 +688,7 @@ export default function ({ config, i18n, useThemeProvider }) {
                             px={1.2}
                             onClick={(e) => setModalVis(true)}
                         >
-                            Login
+                            {buttons['login'][locale]}
                         </Button>
                         <LoginModal />
                     </>

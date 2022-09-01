@@ -3,7 +3,7 @@ const url = process.env.NEXT_PUBLIC_URL
 export default {
     defaultLocale: 'en',
     theme: {
-        width: '900pt',
+        width: '950pt',
         defaultTheme: 'dark',
         lightBackground: '#F0F0F0',
         darkBackground: '#040404',
