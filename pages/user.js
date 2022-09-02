@@ -67,6 +67,8 @@ export default function ({ auth }) {
         }
 
         resolve()
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const UserInfo = ({ user }) => (

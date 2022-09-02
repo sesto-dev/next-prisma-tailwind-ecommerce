@@ -4,7 +4,7 @@ import { sendResetPassword } from 'angra'
 import connectDB from '../../../helpers/connectDB'
 
 import User from '../../../models/User'
-import config from '../../../main.config'
+import config from '../../../config/main.config'
 
 export default async function (req, res) {
     const { code, password } = req.body
