@@ -36,20 +36,20 @@ export default function ({ id }) {
 
     const [order, setOrder] = useState({})
 
-    async function resolve() {
-        const route = config.backend.routes.order + `/${id}`
-        const response = await axios.get(route)
-
-        handleOrderData({
-            response,
-            router,
-            setOrder,
-            setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
-        })
-    }
-
     useEffect(() => {
+        async function resolve() {
+            const route = config.backend.routes.order + `/${id}`
+            const response = await axios.get(route)
+
+            handleOrderData({
+                response,
+                router,
+                setOrder,
+                setToast,
+                noDataToast: i18n['toasts']['noData'][locale],
+            })
+        }
+
         resolve()
     }, [])
 

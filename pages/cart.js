@@ -38,19 +38,19 @@ export default function () {
 
     const [cart, setCart] = useState(null)
 
-    async function resolve() {
-        const response = await axios.get(config.backend.routes.getCart)
-        handleCartData({
-            response,
-            router,
-            setCart,
-            setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
-            notVerifiedToast: i18n['toasts']['notVerified'][locale],
-        })
-    }
-
     useEffect(() => {
+        async function resolve() {
+            const response = await axios.get(config.backend.routes.getCart)
+            handleCartData({
+                response,
+                router,
+                setCart,
+                setToast,
+                noDataToast: i18n['toasts']['noData'][locale],
+                notVerifiedToast: i18n['toasts']['notVerified'][locale],
+            })
+        }
+
         resolve()
     }, [])
 

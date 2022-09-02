@@ -41,26 +41,26 @@ export default function ({ page, category, tags, sort }) {
     const [pages, setPages] = useState(null)
     const [products, setProducts] = useState(null)
 
-    async function resolve() {
-        const response = await axios.post(
-            config.backend.routes.products,
-            {
-                page,
-            },
-            config.backend.axios.simple
-        )
-
-        handleProductsData({
-            response,
-            router,
-            setPages,
-            setProducts,
-            setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
-        })
-    }
-
     useEffect(() => {
+        async function resolve() {
+            const response = await axios.post(
+                config.backend.routes.products,
+                {
+                    page,
+                },
+                config.backend.axios.simple
+            )
+
+            handleProductsData({
+                response,
+                router,
+                setPages,
+                setProducts,
+                setToast,
+                noDataToast: i18n['toasts']['noData'][locale],
+            })
+        }
+
         resolve()
     }, [router])
 

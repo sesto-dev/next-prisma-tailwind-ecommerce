@@ -44,22 +44,6 @@ export default function ({ id }) {
     const [description, setDescription] = useState(null)
     const [listingID, setListingID] = useState(null)
 
-    async function resolve() {
-        const route = config.backend.routes.products + `/${id}`
-        const response = await axios.get(route)
-
-        handleProductData({
-            response,
-            router,
-            setTitle,
-            setImage,
-            setProduct,
-            setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
-            setListingID,
-        })
-    }
-
     async function insertToCart() {
         const response = await axios.post(
             config.backend.routes.insertCart,
@@ -76,6 +60,22 @@ export default function ({ id }) {
     }
 
     useEffect(() => {
+        async function resolve() {
+            const route = config.backend.routes.products + `/${id}`
+            const response = await axios.get(route)
+
+            handleProductData({
+                response,
+                router,
+                setTitle,
+                setImage,
+                setProduct,
+                setToast,
+                noDataToast: i18n['toasts']['noData'][locale],
+                setListingID,
+            })
+        }
+
         resolve()
     }, [])
 

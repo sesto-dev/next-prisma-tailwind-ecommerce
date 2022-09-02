@@ -53,19 +53,19 @@ export default function ({ auth }) {
 
     const [user, setUser] = useState(null)
 
-    async function resolve() {
-        const response = await axios.get(config.backend.routes.user)
-        handleUserData({
-            response,
-            router,
-            setUser,
-            setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
-            notVerifiedToast: i18n['toasts']['notVerified'][locale],
-        })
-    }
-
     useEffect(() => {
+        async function resolve() {
+            const response = await axios.get(config.backend.routes.user)
+            handleUserData({
+                response,
+                router,
+                setUser,
+                setToast,
+                noDataToast: i18n['toasts']['noData'][locale],
+                notVerifiedToast: i18n['toasts']['notVerified'][locale],
+            })
+        }
+
         resolve()
     }, [])
 

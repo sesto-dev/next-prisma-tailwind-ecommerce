@@ -2,24 +2,6 @@ const bcrypt = require('bcryptjs')
 
 const products = [
     {
-        title: 'Camo Pants',
-        images: [
-            'https://cdn.shopify.com/s/files/1/0119/8197/9705/products/joggers.jpg?v=1571784975',
-        ],
-        description: 'Pants',
-        category: 'clothing',
-        listingsArray: [
-            {
-                size: 'XL',
-                color: 'black',
-                price: 49.99,
-                stock: 7,
-                discount: 0,
-            },
-        ],
-        tags: ['pants'],
-    },
-    {
         title: 'Elden Ring Definitive Edition',
         images: [
             'https://image.api.playstation.com/vulcan/img/rnd/202201/1918/0P25Aw0mnLS1AwPYEUb6kIYC.png',
