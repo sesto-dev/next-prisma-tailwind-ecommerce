@@ -35,7 +35,7 @@ import { GoogleIcon } from './SVGs'
 import useWindowSize from '../hooks/useWindowSize'
 import getGoogleURL from '../helpers/getGoogleURL'
 import isEmail from '../helpers/isEmail'
-import { registerHandler, loginHandler } from '../handlers/AuthHandlers'
+import { registerHandler, loginHandler } from '../handlers/AuthHandlers.js'
 
 export default function ({ config, i18n, useThemeProvider }) {
     const theme = useTheme()
