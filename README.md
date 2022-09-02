@@ -1,4 +1,4 @@
-<a href="http://accretence.com">![Screenshot](https://user-images.githubusercontent.com/45223699/188122133-dc8260ca-f87c-4681-9996-3a26963fe1e2.png)
+<a href="https://create-next-dashboard.vercel.app">![Screenshot](https://user-images.githubusercontent.com/45223699/188122133-dc8260ca-f87c-4681-9996-3a26963fe1e2.png)
 </a>
 
 <a href="https://npmjs.com/package/create-next-dashboard">
@@ -20,7 +20,7 @@ Password: 12345678
 
 ## NPX Command
 
-Setup a local deployment using this `npx` command:
+Setup a local deployment using this [`npx`](https://docs.npmjs.com/cli/v8/commands/npx) command:
 
 ```bash
 npx create-next-dashboard my-app
@@ -50,7 +50,7 @@ MAIL_SMTP_SERVICE =
 MAIL_SMTP_VERBOSE = // Boolean, Nodemailer will log details if true
 ```
 
-Not all of these parameters are required. For example if you're using Gmail you only need these parameters:
+Not all of these variables are required. For example if you're using Gmail you only need these variables:
 
 ```shell
 MAIL_SMTP_USER = // Your Gmail Address
