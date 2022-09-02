@@ -47,5 +47,8 @@
         "next": "^12.2.5",
         "react": "^18.2.0",
         "react-usestateref": "^1.0.8"
+    },
+    "devDependencies": {
+        "eslint": "^8.23.0"
     }
 }

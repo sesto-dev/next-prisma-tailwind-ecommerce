@@ -36,8 +36,6 @@ export default function ({ page, category, tags, sort }) {
     const { locale = config.defaultLocale } = router
 
     const folio = i18n['pages']['products']
-    const title = folio['title'][locale]
-    const description = folio['description'][locale]
 
     const [keyword, setKeyword] = useState(null)
     const [pages, setPages] = useState(null)
@@ -136,23 +134,27 @@ export default function ({ page, category, tags, sort }) {
                             <div>
                                 {product.listings &&
                                     product.listings.map((listing) => {
+                                        const { category } = product
+
                                         return (
-                                            <Badge
-                                                style={{
-                                                    backgroundColor:
-                                                        theme.palette.accents_6,
-                                                    color: theme.palette
-                                                        .background,
-                                                }}
-                                                mr={0.5}
-                                                mb={0}
-                                                px="0.7rem"
-                                                scale={0.8}
-                                                key={Math.random()}
-                                            >
-                                                {listing.platform &&
-                                                    listing.platform}
-                                            </Badge>
+                                            category && (
+                                                <Badge
+                                                    style={{
+                                                        backgroundColor:
+                                                            theme.palette
+                                                                .accents_6,
+                                                        color: theme.palette
+                                                            .background,
+                                                    }}
+                                                    mr={0.5}
+                                                    mb={0}
+                                                    px="0.7rem"
+                                                    scale={0.8}
+                                                    key={Math.random()}
+                                                >
+                                                    {category}
+                                                </Badge>
+                                            )
                                         )
                                     })}
                                 {product.tags &&
@@ -206,14 +208,8 @@ export default function ({ page, category, tags, sort }) {
             <Card.Body py={0}>
                 <Collapse.Group my={0}>
                     <Collapse
-                        title={
-                            i18n['pages']['products']['filter']['title'][locale]
-                        }
-                        subtitle={
-                            i18n['pages']['products']['filter']['subtitle'][
-                                locale
-                            ]
-                        }
+                        title={folio['filter']['title'][locale]}
+                        subtitle={folio['filter']['subtitle'][locale]}
                         style={{ borderBottom: 'none' }}
                         my={0}
                     >
@@ -284,8 +280,8 @@ export default function ({ page, category, tags, sort }) {
             config={config}
             i18n={i18n}
             useThemeProvider={useThemeProvider}
-            metaTitle={title}
-            metaDescription={description}
+            metaTitle={folio['title'][locale]}
+            metaDescription={folio['description'][locale]}
         >
             <Grid.Container gap={1}>
                 <Filters />

@@ -37,11 +37,11 @@ export default function ({ id }) {
     const { locale = config.defaultLocale } = router
 
     const folio = i18n['pages']['product']
-    const description = folio['description'][locale]
 
     const [product, setProduct] = useState({})
     const [image, setImage] = useState(null)
-    const [title, setTitle] = useState(folio['title'][locale])
+    const [title, setTitle] = useState(null)
+    const [description, setDescription] = useState(null)
     const [listingID, setListingID] = useState(null)
 
     async function resolve() {
