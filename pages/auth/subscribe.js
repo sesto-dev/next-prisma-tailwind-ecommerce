@@ -9,11 +9,13 @@ import { isLocaleRTL } from '../../helpers/RTL'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
+import { useAuth } from '../../state/Auth'
 
 export default function () {
     const theme = useTheme()
     const { locale = config.defaultLocale } = useRouter()
     const { setToast } = useToasts()
+    const { isAuthenticated } = useAuth()
 
     const folio = i18n['auth']['subscribe']
     const title = folio['title'][locale]
@@ -35,7 +37,7 @@ export default function () {
                 <Grid.Container gap={1} className="avanti">
                     <Grid xs={24}>
                         <Button
-                            disabled={!auth}
+                            disabled={!isAuthenticated}
                             loading={loading}
                             type="secondary"
                             onClick={(e) =>
