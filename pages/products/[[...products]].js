@@ -62,7 +62,9 @@ export default function ({ page, category, tags, sort }) {
         }
 
         resolve()
-    }, [router, locale, page, setToast])
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const handler = (val) => {}
 

@@ -1,4 +1,5 @@
-<a href="http://accretence.com">![create-next-dashboard](https://i.imgur.com/hNovO0U.png)</a>
+<a href="http://accretence.com">![Screenshot](https://user-images.githubusercontent.com/45223699/188122133-dc8260ca-f87c-4681-9996-3a26963fe1e2.png)
+</a>
 
 <a href="https://npmjs.com/package/create-next-dashboard">
    <p align="center">
@@ -6,6 +7,16 @@
    <img src="https://img.shields.io/npm/dw/create-next-dashboard?color=000&style=for-the-badge">
    </p>
 </a>
+
+## Live Demo
+
+Visit [https://create-next-dashboard.vercel.app](https://create-next-dashboard.vercel.app).
+You can use these credentials to login and access protected routes:
+
+```
+Email: test@test.com
+Password: 12345678
+```
 
 ## NPX Command
 
@@ -20,13 +31,12 @@ npx create-next-dashboard my-app
 1. Create your `.env` file and provide these variables:
 
 ```shell
-JWT_SECRET =
-MONGO_ATLAS_URI =
+JWT_SECRET = // Pass-phrase to encode JWT tokens
+MONGO_ATLAS_URI = // MongoDB Atlas Cloud Database Server URL, See database section below
 NEXT_PUBLIC_URL = 'http://localhost:3000'
 ```
 
-2. Fill in the `main.config.js` file with your preferred information.
-3. Composing and sending Email templates is handled using [Angra](https://github.com/accretence/angra). You just need to provide `SMTP` credentials obtained from your Email provider in `.env`.
+2. You only need to provide your `SMTP` credentials obtained from your Email provider in `.env` to enable Email features. Registering and authentication will face issues if these variables are not provided.
 
 ```shell
 MAIL_SMTP_HOST =
@@ -48,7 +58,11 @@ MAIL_SMTP_PASS = // Google App Password
 MAIL_SMTP_SERVICE = 'Gmail'
 ```
 
-4. Run `npm run dev`, the app should be running in `localhost:3000`!
+3. Run `npm run dev`, the app should be running in `localhost:3000`!
+
+## Content & Config
+
+All configs and contents are located inside the `config` folder.
 
 ## Deployment
 
@@ -70,4 +84,9 @@ You only need to provide your `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` in `.env` file t
 
 You provide the list of languages you are willing to support in `next.config.js` file. All of the i18n content is located in the `i18n.content.js` file in config directory.
 
-If you want to disable i18n & the select language dropdown in the Header, you only need to remove the `i18n` key from `next.config.js`. In this case the `en` content from the `i18n.config.js` file will be served as default.
+If you want to disable i18n & the select language dropdown in the Header, you only need to remove the `i18n` key from `next.config.js`. In this case the
+`en` content from the `i18n.config.js` file will be served as default.
+
+## Sending Emails
+
+Composing and sending Email templates is handled using [Angra](https://github.com/accretence/angra).
