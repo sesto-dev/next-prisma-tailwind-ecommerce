@@ -52,6 +52,8 @@ export default function () {
         }
 
         resolve()
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     async function Add(listingID) {
@@ -195,7 +197,7 @@ export default function () {
                                                         theme.palette.accents_1,
                                                 }}
                                                 auto
-                                                disbaled={count < 2}
+                                                disabled={count < 2}
                                                 scale={0.5}
                                                 px={1.5}
                                                 icon={<Minus />}

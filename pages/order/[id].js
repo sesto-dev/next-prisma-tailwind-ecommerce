@@ -51,6 +51,8 @@ export default function ({ id }) {
         }
 
         resolve()
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const OrderInfo = ({ order }) => (

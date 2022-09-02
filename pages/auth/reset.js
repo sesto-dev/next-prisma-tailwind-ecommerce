@@ -6,7 +6,10 @@ import isEmail from '../../helpers/isEmail'
 import Layout from '../../components/Layout'
 import { useThemeProvider } from '../../state/Theme'
 import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
-import { forgotHandler, resetHandler } from '../../handlers/authHandlers'
+import {
+    forgotHandler,
+    resetHandler,
+} from '../../handlers/AuthenticationHandlers'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'

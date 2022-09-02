@@ -23,7 +23,7 @@ import {
 
 import Layout from '../../components/Layout'
 import { useThemeProvider } from '../../state/Theme'
-import { handleProductData } from '../../handlers/ProductHandlers'
+import { handleProductData } from '../../handlers/ProductsHandlers'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
@@ -77,6 +77,8 @@ export default function ({ id }) {
         }
 
         resolve()
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -264,7 +266,7 @@ export default function ({ id }) {
                                             width="100%"
                                             icon={<ShoppingCart />}
                                             type="secondary"
-                                            disbaled={listingID}
+                                            disabled={listingID}
                                             onClick={() => insertToCart()}
                                         >
                                             {product.listings &&

@@ -4,7 +4,7 @@ import { Button, Grid, useTheme, useToasts } from '@geist-ui/core'
 
 import Layout from '../../components/Layout'
 import { useThemeProvider } from '../../state/Theme'
-import { unsubscribeHandler } from '../../handlers/authHandlers'
+import { unsubscribeHandler } from '../../handlers/AuthenticationHandlers'
 import { isLocaleRTL } from '../../helpers/RTL'
 
 import config from '../../config/main.config'

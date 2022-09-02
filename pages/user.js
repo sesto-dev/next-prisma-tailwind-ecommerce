@@ -20,8 +20,8 @@ import {
 
 import Layout from '../components/Layout'
 import { GoogleIcon } from '../components/SVGs'
-import { handleUserData } from '../handlers/UserHandlers'
-import { logoutHandler } from '../handlers/AuthHandlers'
+import { handleUserData } from '../handlers/UsersHandlers'
+import { logoutHandler } from '../handlers/AuthenticationHandlers'
 import getGoogleURL from '../helpers/getGoogleURL'
 import useWindowSize from '../hooks/useWindowSize'
 import { useAuth } from '../state/Auth'
