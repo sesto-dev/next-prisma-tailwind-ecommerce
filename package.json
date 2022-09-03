@@ -3,7 +3,7 @@
     "description": "Set up a full-stack Next.js dashboard by running one NPX command.",
     "author": "@accretence",
     "license": "MIT",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "bin": "scripts/npx.js",
     "keywords": [
         "geist-ui",
@@ -21,7 +21,8 @@
         "stop": "taskkill -F -IM node.exe",
         "update": "npx npm-check-updates -u",
         "data:import": "node scripts/seeder",
-        "data:destroy": "node scripts/seeder -d"
+        "data:destroy": "node scripts/seeder -d",
+        "publish": "npm publish --access public --non-interactive"
     },
     "repository": {
         "type": "git",
@@ -36,6 +37,7 @@
         "@geist-ui/icons": "^1.0.2",
         "angra": "^0.4.6",
         "apadana": "^0.0.4",
+        "aryana": "^0.0.22",
         "axios": "^0.27.2",
         "bcryptjs": "^2.4.3",
         "cookie": "^0.5.0",
@@ -46,7 +48,8 @@
         "mongoose": "^6.5.4",
         "next": "^12.2.5",
         "react": "^18.2.0",
-        "react-usestateref": "^1.0.8"
+        "react-usestateref": "^1.0.8",
+        "styled-jsx": "^5.0.5"
     },
     "devDependencies": {
         "eslint": "^8.23.0",
