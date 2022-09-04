@@ -1,7 +1,13 @@
 import useState from 'react-usestateref'
 import { Button, Grid, useToasts, Input, Text } from '@geist-ui/core'
 
-import { Layout, isLocaleRTL, forgotHandler } from 'aryana'
+import {
+    Layout,
+    isLocaleRTL,
+    forgotHandler,
+    resetHandler,
+    isEmail,
+} from 'aryana'
 import essentials from '../../helpers/getEssentials'
 
 export default function () {
@@ -27,6 +33,44 @@ export default function () {
     const [email, setEmail, refEmail] = useState('')
     const [code, setCode, refCode] = useState('')
     const [password, setPassword, refPassword] = useState('')
+
+    async function attemptForgot() {
+        const response = await axios.post(
+            config.backend.routes.forgot,
+            {
+                email: refEmail.current,
+            },
+            config.backend.axios.simple
+        )
+
+        forgotHandler({
+            response,
+            setLoading,
+            setToast,
+            setNextStage,
+            toast: i18n['toasts']['forgot'][locale],
+        })
+    }
+
+    async function attemptReset() {
+        const response = await axios.post(
+            config.backend.routes.reset,
+            {
+                code: refCode.current,
+                password: refPassword.current,
+            },
+            config.backend.axios.simple
+        )
+
+        resetHandler({
+            response,
+            setLoading,
+            setToast,
+            router,
+            toast: i18n['toasts']['forgot'][locale],
+            redirect_uri: config['routes']['frontend']['login'],
+        })
+    }
 
     return (
         <>
@@ -91,16 +135,7 @@ export default function () {
                                             !isEmail(refEmail.current)
                                         }
                                         type="secondary"
-                                        onClick={(e) =>
-                                            forgotHandler(
-                                                config,
-                                                refEmail,
-                                                setLoading,
-                                                setToast,
-                                                setNextStage,
-                                                i18n['toasts']['forgot'][locale]
-                                            )
-                                        }
+                                        onClick={attemptForgot}
                                     >
                                         <b>
                                             {i18n['buttons']['submit'][locale]}
@@ -195,17 +230,7 @@ export default function () {
                                             refPassword.current.length < 8
                                         }
                                         type="secondary"
-                                        onClick={(e) =>
-                                            resetHandler(
-                                                config,
-                                                refCode,
-                                                refPassword,
-                                                setLoading,
-                                                setToast,
-                                                router,
-                                                i18n['toasts']['reset'][locale]
-                                            )
-                                        }
+                                        onClick={attemptReset}
                                     >
                                         <b>
                                             {i18n['buttons']['submit'][locale]}

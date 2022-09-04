@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button, Grid, useToasts } from '@geist-ui/core'
 
-import { Layout } from 'aryana'
+import { Layout, unsubscribeHandler } from 'aryana'
 
 import essentials from '../../helpers/getEssentials'
 
@@ -17,13 +17,29 @@ export default function () {
         axios,
     } = essentials
 
+    const router = useRouter()
     const { locale = config['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
     const { isAuthenticated } = useAuth()
 
-    const { title, description } = i18n['pages']['unsubcribe']
+    const { title, description } = i18n['pages']['unsubscribe']
+
+    console.log({ title: title[locale], description: description[locale] })
 
     const [loading, setLoading] = useState(false)
+
+    async function attemptUnsubscribe() {
+        const response = await axios.post(config.backend.routes.unsubscribe)
+
+        unsubscribeHandler({
+            response,
+            setLoading,
+            setToast,
+            toast: i18n['toasts']['unsubscribe'][locale],
+            router,
+            redirect_uri: '/',
+        })
+    }
 
     return (
         <>
@@ -40,16 +56,9 @@ export default function () {
                             disabled={!isAuthenticated}
                             loading={loading}
                             type="secondary"
-                            onClick={(e) =>
-                                unsubscribeHandler(
-                                    config,
-                                    setLoading,
-                                    setToast,
-                                    i18n['toasts']['unsubscribe'][locale]
-                                )
-                            }
+                            onClick={attemptUnsubscribe}
                         >
-                            {title}
+                            {title[locale]}
                         </Button>
                     </Grid>
                 </Grid.Container>

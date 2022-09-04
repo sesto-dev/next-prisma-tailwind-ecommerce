@@ -47,22 +47,8 @@ export default function ({ auth }) {
 
     const { locale = config['defaultLocale'] } = useRouter()
 
-    const {
-        title,
-        description,
-        info,
-        referrals,
-        orders,
-        integrations,
-        logout,
-    } = i18n['pages']['user']
-
-    const redirect_uri = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_REDIRECT_URL
-    const client_id = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ID
-
-    const googleURL = getGoogleURL(redirect_uri, client_id)
-
-    console.log(googleURL)
+    const { info, referrals, orders, integrations, logout } =
+        i18n['pages']['user']
 
     const [user, setUser] = useState(null)
 
@@ -71,6 +57,7 @@ export default function ({ auth }) {
             const response = await axios.get(
                 config['backend']['routes']['user']
             )
+
             handleUserData({
                 response,
                 router,
@@ -78,6 +65,7 @@ export default function ({ auth }) {
                 setToast,
                 noDataToast: i18n['toasts']['noData'][locale],
                 notVerifiedToast: i18n['toasts']['notVerified'][locale],
+                Link,
             })
         }
 
@@ -85,6 +73,19 @@ export default function ({ auth }) {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    async function attemptLogout() {
+        const response = await axios.post(config.backend.routes.logout)
+
+        logoutHandler({
+            response,
+            setToast,
+            setLocalAuthentication,
+            router,
+            toast: i18n['toasts']['logout'][locale],
+            redirect_uri: '/',
+        })
+    }
 
     const UserInfo = ({ user }) => (
         <Grid.Container gap={1}>
@@ -129,26 +130,32 @@ export default function ({ auth }) {
         </Grid.Container>
     )
 
-    const Orders = ({ user }) => (
-        <Card id="Orders" width="100%">
-            {user && user.orders && (
-                <Table data={user.orders}>
-                    <Table.Column prop="link" label="Link" width={100} />
-                    <Table.Column prop="createdAt" label="Date" width={220} />
-                    {width > 650 && (
-                        <>
-                            <Table.Column prop="totalPrice" label="Price" />
-                            <Table.Column prop="isPaid" label="Paid" />
-                            <Table.Column
-                                prop="isDelivered"
-                                label="Delivered"
-                            />
-                        </>
-                    )}
-                </Table>
-            )}
-        </Card>
-    )
+    const Orders = ({ user }) => {
+        return (
+            <Card id="Orders" width="100%">
+                {user && user.orders && (
+                    <Table data={user.orders}>
+                        <Table.Column prop="link" label="Link" width={100} />
+                        <Table.Column
+                            prop="createdAt"
+                            label="Date"
+                            width={220}
+                        />
+                        {width > 650 && (
+                            <>
+                                <Table.Column prop="totalPrice" label="Price" />
+                                <Table.Column prop="isPaid" label="Paid" />
+                                <Table.Column
+                                    prop="isDelivered"
+                                    label="Delivered"
+                                />
+                            </>
+                        )}
+                    </Table>
+                )}
+            </Card>
+        )
+    }
 
     const Referrals = ({ user }) => (
         <Card width="100%">
@@ -179,7 +186,13 @@ export default function ({ auth }) {
                         {i18n['buttons']['google']['inactive'][locale]}
                     </Button>
                 ) : (
-                    <a style={{ width: '100%' }} href={googleURL}>
+                    <a
+                        style={{ width: '100%' }}
+                        href={getGoogleURL(
+                            process.env.NEXT_PUBLIC_GOOGLE_OAUTH_REDIRECT_URL,
+                            process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ID
+                        )}
+                    >
                         <Button
                             icon={<GoogleIcon />}
                             type="secondary"
@@ -200,23 +213,13 @@ export default function ({ auth }) {
             scale={1.2}
             type="secondary"
             px={2}
-            onClick={(e) =>
-                logoutHandler({
-                    config,
-                    setToast,
-                    setLocalAuthentication,
-                    router,
-                    toast: i18n['toasts']['logout'][locale],
-                })
-            }
+            onClick={attemptLogout}
             width={width < 650 && '100%'}
             auto={width > 650}
         >
             <b>{logout['title'][locale]}</b>
         </Button>
     )
-
-    console.log(user)
 
     return (
         <>

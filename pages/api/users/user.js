@@ -19,7 +19,9 @@ export default async function (req, res) {
         const orders = Object.keys(ordersObject).map((key) => ({
             index: String(Number(key) + 1),
             id: ordersObject[key]['_id'],
-            referral: ordersObject[key]['referral'],
+            referral: ordersObject[key]['referral']
+                ? ordersObject[key]['referral']
+                : 'None',
             isPaid: ordersObject[key]['isPaid'] ? 'YES' : 'NO',
             isDelivered: ordersObject[key]['isDelivered'] ? 'YES' : 'NO',
             totalPrice: String(ordersObject[key]['totalPrice']),

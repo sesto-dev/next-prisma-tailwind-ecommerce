@@ -15,6 +15,12 @@ export default {
         title: 'Next',
         url,
     },
+    routes: {
+        frontend: {
+            user: '/user',
+            verify: '/auth/verify',
+        },
+    },
     urls: {
         contact: url + '/contact',
         login: url + '/auth/login',

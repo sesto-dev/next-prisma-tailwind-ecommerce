@@ -40,7 +40,7 @@ export default function () {
                                 direction: getLocaleDirection(locale),
                             }}
                         >
-                            {title}
+                            {title[locale]}
                         </Text>
                     </Card>
                 </Grid>

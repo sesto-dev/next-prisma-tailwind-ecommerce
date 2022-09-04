@@ -24,6 +24,19 @@ export default function () {
 
     const [loading, setLoading] = useState(false)
 
+    async function attemptSubscribe() {
+        const response = await axios.post(config.backend.routes.subscribe)
+
+        subscribeHandler({
+            response,
+            setLoading,
+            setToast,
+            toast: i18n['toasts']['subscribe'][locale],
+            router,
+            redirect_uri: '/',
+        })
+    }
+
     return (
         <>
             <Layout
@@ -39,16 +52,9 @@ export default function () {
                             disabled={!isAuthenticated}
                             loading={loading}
                             type="secondary"
-                            onClick={(e) =>
-                                subscribeHandler(
-                                    config,
-                                    setLoading,
-                                    setToast,
-                                    i18n['toasts']['subscribe'][locale]
-                                )
-                            }
+                            onClick={attemptSubscribe}
                         >
-                            {title}
+                            {title[locale]}
                         </Button>
                     </Grid>
                 </Grid.Container>

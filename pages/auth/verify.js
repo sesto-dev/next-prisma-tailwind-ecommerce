@@ -25,6 +25,25 @@ export default function () {
     const [loading, setLoading] = useState(false)
     const [code, setCode, refCode] = useState('')
 
+    async function attemptVerify() {
+        const response = await axios.post(
+            config.backend.routes.verify,
+            {
+                code: refCode.current,
+            },
+            config.backend.axios.simple
+        )
+
+        verifyHandler({
+            response,
+            setLoading,
+            setToast,
+            router,
+            toast: i18n['toasts']['verify'][locale],
+            redirect_uri: config.routes.user,
+        })
+    }
+
     return (
         <>
             <Layout
@@ -61,16 +80,7 @@ export default function () {
                             loading={loading}
                             disabled={!refCode.current}
                             type="secondary"
-                            onClick={(e) =>
-                                verifyHandler({
-                                    config,
-                                    setLoading,
-                                    setToast,
-                                    router,
-                                    refCode,
-                                    toast: i18n['toasts']['verify'][locale],
-                                })
-                            }
+                            onClick={attemptVerify}
                         >
                             <b>{i18n['buttons']['submit'][locale]}</b>
                         </Button>
