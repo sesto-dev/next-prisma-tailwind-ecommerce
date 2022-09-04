@@ -1,6 +1,8 @@
+import { Layout, handleCartData } from 'aryana'
+import { useRouter } from 'next/router'
+
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import { Trash, Plus, Minus, CreditCard } from '@geist-ui/icons'
 import {
     Text,
@@ -17,13 +19,7 @@ import {
     Input,
 } from '@geist-ui/core'
 
-import config from '../config/main.config'
-import i18n from '../config/i18n.config'
-
-import Layout from '../components/Layout'
-import { useThemeProvider } from '../state/Theme'
-import { isLocaleRTL, getLocaleDirection } from '../helpers/RTL'
-import { handleCartData } from '../handlers/CartHandlers'
+import getEssentials from '../helpers/getEssentials'
 
 export default function () {
     const theme = useTheme()
@@ -32,7 +28,7 @@ export default function () {
 
     const { locale = config.defaultLocale } = router
 
-    const folio = i18n['pages']['cart']
+    const folio = getEssentials['i18n']['pages']['cart']
     const title = folio['title'][locale]
     const description = folio['description'][locale]
 
@@ -40,14 +36,17 @@ export default function () {
 
     useEffect(() => {
         async function resolve() {
-            const response = await axios.get(config.backend.routes.getCart)
+            const response = await axios.get(
+                getEssentials.config.backend.routes.getCart
+            )
             handleCartData({
                 response,
                 router,
                 setCart,
                 setToast,
-                noDataToast: i18n['toasts']['noData'][locale],
-                notVerifiedToast: i18n['toasts']['notVerified'][locale],
+                noDataToast: getEssentials['i18n']['toasts']['noData'][locale],
+                notVerifiedToast:
+                    getEssentials['i18n']['toasts']['notVerified'][locale],
             })
         }
 
@@ -291,13 +290,11 @@ export default function () {
 
     return (
         <Layout
-            config={config}
-            i18n={i18n}
-            useThemeProvider={useThemeProvider}
-            metaTitle={title}
-            metaDescription={description}
+            essentials={getEssentials}
             crownLarge={title}
             crownSmall={description}
+            metaTitle={title}
+            metaDescription={description}
         >
             <Grid.Container gap={2}>
                 {cart ? (

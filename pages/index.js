@@ -1,31 +1,23 @@
-import Link from 'next/link'
-import { Grid, Card, Text, Code, useTheme } from '@geist-ui/core'
+import { Layout, getLocaleDirection } from 'aryana'
+import { Grid, Card, Text, useTheme } from '@geist-ui/core'
+import getEssentials from '../helpers/getEssentials'
 import { useRouter } from 'next/router'
-
-import Layout from '../components/Layout'
-import { useThemeProvider } from '../state/Theme'
-import { getLocaleDirection } from '../helpers/RTL'
 import { useAuth } from '../state/Auth'
-
-import config from '../config/main.config'
-import i18n from '../config/i18n.config'
 
 export default function ({ auth }) {
     const theme = useTheme()
-    const { locale = config.defaultLocale } = useRouter()
+    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
     const { isAuthenticated, setLocalAuthentication } = useAuth()
 
     setLocalAuthentication(auth)
 
-    const folio = i18n['pages']['index']
+    const folio = getEssentials['i18n']['pages']['index']
     const title = folio['title'][locale]
     const description = folio['description'][locale]
 
     return (
         <Layout
-            config={config}
-            i18n={i18n}
-            useThemeProvider={useThemeProvider}
+            essentials={getEssentials}
             crownLarge={title}
             crownSmall={description}
             metaTitle={title}

@@ -19,23 +19,19 @@ import {
     Badge,
     Tag,
 } from '@geist-ui/core'
-import Layout from '../../components/Layout'
-import { useThemeProvider } from '../../state/Theme'
-import { handleProductsData } from '../../handlers/ProductsHandlers'
-
-import config from '../../config/main.config'
-import i18n from '../../config/i18n.config'
 
 import { ShoppingCart, ChevronLeft, ChevronRight } from '@geist-ui/icons'
+import getEssentials from '../../helpers/getEssentials'
+
+import { Layout, handleProductsData } from 'aryana'
 
 export default function ({ page, category, tags, sort }) {
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
 
-    const { locale = config.defaultLocale } = router
-
-    const folio = i18n['pages']['products']
+    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
+    const folio = getEssentials['i18n']['pages']['products']
 
     const [keyword, setKeyword] = useState(null)
     const [pages, setPages] = useState(null)
@@ -44,11 +40,11 @@ export default function ({ page, category, tags, sort }) {
     useEffect(() => {
         async function resolve() {
             const response = await axios.post(
-                config.backend.routes.products,
+                getEssentials.config.backend.routes.products,
                 {
                     page,
                 },
-                config.backend.axios.simple
+                getEssentials.config.backend.axios.simple
             )
 
             handleProductsData({
@@ -57,7 +53,7 @@ export default function ({ page, category, tags, sort }) {
                 setPages,
                 setProducts,
                 setToast,
-                noDataToast: i18n['toasts']['noData'][locale],
+                noDataToast: getEssentials['i18n']['toasts']['noData'][locale],
             })
         }
 
@@ -279,9 +275,7 @@ export default function ({ page, category, tags, sort }) {
 
     return (
         <Layout
-            config={config}
-            i18n={i18n}
-            useThemeProvider={useThemeProvider}
+            essentials={getEssentials}
             metaTitle={folio['title'][locale]}
             metaDescription={folio['description'][locale]}
         >

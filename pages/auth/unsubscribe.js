@@ -1,33 +1,27 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Button, Grid, useTheme, useToasts } from '@geist-ui/core'
+import { Button, Grid, useToasts } from '@geist-ui/core'
 
-import Layout from '../../components/Layout'
-import { useThemeProvider } from '../../state/Theme'
-import { unsubscribeHandler } from '../../handlers/AuthenticationHandlers'
-import { isLocaleRTL } from '../../helpers/RTL'
+import { Layout } from 'aryana'
 
-import config from '../../config/main.config'
-import i18n from '../../config/i18n.config'
 import { useAuth } from '../../state/Auth'
+import getEssentials from '../../helpers/getEssentials'
 
 export default function () {
-    const theme = useTheme()
-    const { locale = config.defaultLocale } = useRouter()
+    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
     const { isAuthenticated } = useAuth()
 
-    const title = i18n['auth']['unsubscribe']['title'][locale]
-    const description = i18n['auth']['unsubscribe']['description'][locale]
+    const folio = getEssentials['i18n']['pages']['unsubcribe']
+    const title = folio['title'][locale]
+    const description = folio['description'][locale]
 
     const [loading, setLoading] = useState(false)
 
     return (
         <>
             <Layout
-                config={config}
-                i18n={i18n}
-                useThemeProvider={useThemeProvider}
+                essentials={getEssentials}
                 crownLarge={title}
                 crownSmall={description}
                 metaTitle={title}

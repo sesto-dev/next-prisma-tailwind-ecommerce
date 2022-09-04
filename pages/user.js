@@ -1,6 +1,15 @@
+import {
+    Layout,
+    handleUserData,
+    logoutHandler,
+    getGoogleURL,
+    useWindowSize,
+    GoogleIcon,
+} from 'aryana'
+
+import getEssentials from '../helpers/getEssentials'
+
 import axios from 'axios'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { LogOut } from '@geist-ui/icons'
 import {
@@ -8,7 +17,6 @@ import {
     Description,
     Button,
     Text,
-    Divider,
     Loading,
     Card,
     Grid,
@@ -17,18 +25,8 @@ import {
     Snippet,
     Table,
 } from '@geist-ui/core'
-
-import Layout from '../components/Layout'
-import { GoogleIcon } from '../components/SVGs'
-import { handleUserData } from '../handlers/UsersHandlers'
-import { logoutHandler } from '../handlers/AuthenticationHandlers'
-import getGoogleURL from '../helpers/getGoogleURL'
-import useWindowSize from '../hooks/useWindowSize'
+import { useRouter } from 'next/router'
 import { useAuth } from '../state/Auth'
-import { useThemeProvider } from '../state/Theme'
-
-import config from '../config/main.config'
-import i18n from '../config/i18n.config'
 
 export default function ({ auth }) {
     const theme = useTheme()
@@ -39,7 +37,7 @@ export default function ({ auth }) {
 
     setLocalAuthentication(auth)
 
-    const { locale = config.defaultLocale } = router
+    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
 
     const {
         title,
@@ -49,20 +47,30 @@ export default function ({ auth }) {
         orders,
         integrations,
         logout,
-    } = i18n['pages']['user']
+    } = getEssentials['i18n']['pages']['user']
+
+    const redirect_uri = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_REDIRECT_URL
+    const client_id = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ID
+
+    const googleURL = getGoogleURL(redirect_uri, client_id)
+
+    console.log(googleURL)
 
     const [user, setUser] = useState(null)
 
     useEffect(() => {
         async function resolve() {
-            const response = await axios.get(config.backend.routes.user)
+            const response = await axios.get(
+                getEssentials['config']['backend']['routes']['user']
+            )
             handleUserData({
                 response,
                 router,
                 setUser,
                 setToast,
-                noDataToast: i18n['toasts']['noData'][locale],
-                notVerifiedToast: i18n['toasts']['notVerified'][locale],
+                noDataToast: getEssentials['i18n']['toasts']['noData'][locale],
+                notVerifiedToast:
+                    getEssentials['i18n']['toasts']['notVerified'][locale],
             })
         }
 
@@ -116,7 +124,7 @@ export default function ({ auth }) {
 
     const Orders = ({ user }) => (
         <Card id="Orders" width="100%">
-            {user.orders && (
+            {user && user.orders && (
                 <Table data={user.orders}>
                     <Table.Column prop="link" label="Link" width={100} />
                     <Table.Column prop="createdAt" label="Date" width={220} />
@@ -137,7 +145,7 @@ export default function ({ auth }) {
 
     const Referrals = ({ user }) => (
         <Card width="100%">
-            {user.referrals && (
+            {user && user.referrals && (
                 <Table data={user.referrals}>
                     <Table.Column prop="createdAt" label="Date" />
                     <Table.Column prop="totalPrice" label="Price" />
@@ -161,17 +169,25 @@ export default function ({ auth }) {
                         }}
                         onClick={() => {}}
                     >
-                        {i18n['buttons']['google']['inactive'][locale]}
+                        {
+                            getEssentials['i18n']['buttons']['google'][
+                                'inactive'
+                            ][locale]
+                        }
                     </Button>
                 ) : (
-                    <a style={{ width: '100%' }} href={getGoogleURL()}>
+                    <a style={{ width: '100%' }} href={googleURL}>
                         <Button
                             icon={<GoogleIcon />}
                             type="secondary"
                             width="100%"
                             onClick={() => {}}
                         >
-                            {i18n['buttons']['google']['active'][locale]}
+                            {
+                                getEssentials['i18n']['buttons']['google'][
+                                    'active'
+                                ][locale]
+                            }
                         </Button>
                     </a>
                 )}
@@ -187,11 +203,11 @@ export default function ({ auth }) {
             px={2}
             onClick={(e) =>
                 logoutHandler({
-                    config,
+                    config: getEssentials['config'],
                     setToast,
                     setLocalAuthentication,
                     router,
-                    toast: i18n['toasts']['logout'][locale],
+                    toast: getEssentials['i18n']['toasts']['logout'][locale],
                 })
             }
             width={width < 650 && '100%'}
@@ -201,15 +217,11 @@ export default function ({ auth }) {
         </Button>
     )
 
+    console.log(user)
+
     return (
         <>
-            <Layout
-                config={config}
-                i18n={i18n}
-                useThemeProvider={useThemeProvider}
-                metaTitle={title[locale]}
-                metaDescription={description[locale]}
-            >
+            <Layout essentials={getEssentials}>
                 <Grid.Container gap={1}>
                     {user ? (
                         <>

@@ -21,8 +21,7 @@
         "stop": "taskkill -F -IM node.exe",
         "update": "npx npm-check-updates -u",
         "data:import": "node scripts/seeder",
-        "data:destroy": "node scripts/seeder -d",
-        "publish": "npm publish --access public --non-interactive"
+        "data:destroy": "node scripts/seeder -d"
     },
     "repository": {
         "type": "git",
@@ -37,7 +36,7 @@
         "@geist-ui/icons": "^1.0.2",
         "angra": "^0.4.6",
         "apadana": "^0.0.4",
-        "aryana": "^0.0.22",
+        "aryana": "^0.1.8",
         "axios": "^0.27.2",
         "bcryptjs": "^2.4.3",
         "cookie": "^0.5.0",

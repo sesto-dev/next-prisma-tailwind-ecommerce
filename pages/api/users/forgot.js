@@ -2,7 +2,7 @@ import { sendForgotPassword } from 'angra'
 import { generateVoucher } from 'apadana/src/generators'
 
 import connectDB from '../../../helpers/connectDB'
-import isEmail from '../../../helpers/isEmail'
+import { isEmail } from 'aryana'
 
 import User from '../../../models/User'
 import config from '../../../config/main.config'

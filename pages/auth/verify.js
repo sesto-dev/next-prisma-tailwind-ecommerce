@@ -1,22 +1,16 @@
 import useState from 'react-usestateref'
 import { useRouter } from 'next/router'
-import { Button, Grid, useTheme, useToasts, Input } from '@geist-ui/core'
+import { Button, Grid, useToasts, Input } from '@geist-ui/core'
+import getEssentials from '../../helpers/getEssentials'
 
-import Layout from '../../components/Layout'
-import { useThemeProvider } from '../../state/Theme'
-import { verifyHandler } from '../../handlers/AuthenticationHandlers'
-import { isLocaleRTL, getLocaleDirection } from '../../helpers/RTL'
-
-import config from '../../config/main.config'
-import i18n from '../../config/i18n.config'
+import { Layout, isLocaleRTL, verifyHandler } from 'aryana'
 
 export default function () {
-    const theme = useTheme()
     const router = useRouter()
-    const { locale = config.defaultLocale } = router
+    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
 
-    const folio = i18n['auth']['verify']
+    const folio = getEssentials['i18n']['pages']['verify']
     const title = folio['title'][locale]
     const description = folio['description'][locale]
 
@@ -26,9 +20,7 @@ export default function () {
     return (
         <>
             <Layout
-                config={config}
-                i18n={i18n}
-                useThemeProvider={useThemeProvider}
+                essentials={getEssentials}
                 crownLarge={title}
                 crownSmall={description}
                 metaTitle={title}

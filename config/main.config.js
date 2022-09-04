@@ -17,8 +17,10 @@ export default {
     },
     urls: {
         contact: url + '/contact',
+        login: url + '/auth/login',
         verify: url + '/auth/verify',
         reset: url + '/auth/reset',
+        subscribe: url + '/auth/subscribe',
         unsubscribe: url + '/auth/unsubscribe',
     },
     backend: {

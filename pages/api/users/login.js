@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 
 import connectDB from '../../../helpers/connectDB'
 import { bakeAJWT } from '../../../helpers/bakeCookies'
-import isEmail from '../../../helpers/isEmail'
+import { isEmail } from 'aryana'
 
 import User from '../../../models/User'
 

@@ -305,49 +305,6 @@ const components = {
     },
 }
 
-const auth = {
-    reset: {
-        title: {
-            en: 'Reset Password',
-            fa: 'تغییر رمز عبور',
-        },
-        description: {
-            en: 'Reset your password using the verification code sent to your email address.',
-            fa: 'با استفاده از کد تایید ارسال شده به ایمیل شما، رمز عبور خود را تغییر دهید.',
-        },
-    },
-    subscribe: {
-        title: {
-            en: 'Subscribe',
-            fa: 'عضویت در لیست ایمیل',
-        },
-        description: {
-            en: 'For security purposes, you should be logged-in in order to subscribe.',
-            fa: 'به دلایل امنیتی، ابتدا نیاز به ورود به سایت دارید.',
-        },
-    },
-    unsubscribe: {
-        title: {
-            en: 'Unsubscribe',
-            fa: 'حذف از لبست ارسال ایمیل',
-        },
-        description: {
-            en: 'For security purposes, you should be logged-in in order to unsubscribe.',
-            fa: 'به دلایل امنیتی، ابتدا نیاز به ورود به سایت دارید.',
-        },
-    },
-    verify: {
-        title: {
-            en: 'Verify Email Address',
-            fa: 'تایید ایمیل',
-        },
-        description: {
-            en: 'Verify your email address using the verification code sent to your email address.',
-            fa: 'با استفاده از کد تایید ارسال شده به ایمیل، ایمیل خود را تایید کنید.',
-        },
-    },
-}
-
 const pages = {
     index: {
         title: {
@@ -534,6 +491,56 @@ const pages = {
             fa: 'برای تماس با ما می توانید از این راه ها استفاده کنید..',
         },
     },
+    login: {
+        title: {
+            en: 'Login or Register',
+            fa: 'ورود یا ثبت نام',
+        },
+        description: {
+            en: 'Login or Register',
+            fa: 'ورود یا ثبت نام',
+        },
+    },
+    reset: {
+        title: {
+            en: 'Reset Password',
+            fa: 'تغییر رمز عبور',
+        },
+        description: {
+            en: 'Reset your password using the verification code sent to your email address.',
+            fa: 'با استفاده از کد تایید ارسال شده به ایمیل شما، رمز عبور خود را تغییر دهید.',
+        },
+    },
+    subscribe: {
+        title: {
+            en: 'Subscribe',
+            fa: 'عضویت در لیست ایمیل',
+        },
+        description: {
+            en: 'For security purposes, you should be logged-in in order to subscribe.',
+            fa: 'به دلایل امنیتی، ابتدا نیاز به ورود به سایت دارید.',
+        },
+    },
+    unsubscribe: {
+        title: {
+            en: 'Unsubscribe',
+            fa: 'حذف از لبست ارسال ایمیل',
+        },
+        description: {
+            en: 'For security purposes, you should be logged-in in order to unsubscribe.',
+            fa: 'به دلایل امنیتی، ابتدا نیاز به ورود به سایت دارید.',
+        },
+    },
+    verify: {
+        title: {
+            en: 'Verify Email Address',
+            fa: 'تایید ایمیل',
+        },
+        description: {
+            en: 'Verify your email address using the verification code sent to your email address.',
+            fa: 'با استفاده از کد تایید ارسال شده به ایمیل، ایمیل خود را تایید کنید.',
+        },
+    },
 }
 
 export default {
@@ -542,6 +549,5 @@ export default {
     buttons,
     toasts,
     components,
-    auth,
     pages,
 }

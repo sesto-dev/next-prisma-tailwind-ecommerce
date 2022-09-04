@@ -20,23 +20,17 @@ import {
     Select,
     Divider,
 } from '@geist-ui/core'
+import getEssentials from '../../helpers/getEssentials'
 
-import Layout from '../../components/Layout'
-import { useThemeProvider } from '../../state/Theme'
-import { handleProductData } from '../../handlers/ProductsHandlers'
-
-import config from '../../config/main.config'
-import i18n from '../../config/i18n.config'
-import { handleAddToCartData } from '../../handlers/CartHandlers'
+import { Layout, handleProductData } from 'aryana'
 
 export default function ({ id }) {
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
 
-    const { locale = config.defaultLocale } = router
-
-    const folio = i18n['pages']['product']
+    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
+    const folio = getEssentials['i18n']['pages']['product']
 
     const [product, setProduct] = useState({})
     const [image, setImage] = useState(null)
@@ -61,7 +55,8 @@ export default function ({ id }) {
 
     useEffect(() => {
         async function resolve() {
-            const route = config.backend.routes.products + `/${id}`
+            const route =
+                getEssentials.config.backend.routes.products + `/${id}`
             const response = await axios.get(route)
 
             handleProductData({
@@ -71,7 +66,7 @@ export default function ({ id }) {
                 setImage,
                 setProduct,
                 setToast,
-                noDataToast: i18n['toasts']['noData'][locale],
+                noDataToast: getEssentials['i18n']['toasts']['noData'][locale],
                 setListingID,
             })
         }
@@ -84,9 +79,7 @@ export default function ({ id }) {
     return (
         <>
             <Layout
-                config={config}
-                i18n={i18n}
-                useThemeProvider={useThemeProvider}
+                essentials={getEssentials}
                 metaTitle={title}
                 metaDescription={description}
                 metaImage={image}

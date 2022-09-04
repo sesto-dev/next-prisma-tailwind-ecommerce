@@ -4,7 +4,7 @@ import { sendVerifyMail } from 'angra'
 
 import connectDB from '../../../helpers/connectDB'
 import { bakeAJWT } from '../../../helpers/bakeCookies'
-import isEmail from '../../../helpers/isEmail'
+import { isEmail } from 'aryana'
 
 import User from '../../../models/User'
 import config from '../../../config/main.config'

@@ -1,17 +1,11 @@
 import { useRouter } from 'next/router'
 import { Grid, Card, useTheme, Text, Spacer, Code } from '@geist-ui/core'
-
-import { useThemeProvider } from '../state/Theme'
-import Layout from '../components/Layout'
-
-import config from '../config/main.config'
-import i18n from '../config/i18n.config'
-import { getLocaleDirection } from '../helpers/RTL'
+import getEssentials from '../helpers/getEssentials'
+import { Layout, getLocaleDirection } from 'aryana'
 
 export default function () {
     const theme = useTheme()
-    const { locale = config.defaultLocale } = useRouter()
-
+    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
     const folio = i18n['pages']['about']
     const title = folio['title'][locale]
     const description = folio['description'][locale]
@@ -21,9 +15,7 @@ export default function () {
     return (
         <>
             <Layout
-                config={config}
-                i18n={i18n}
-                useThemeProvider={useThemeProvider}
+                essentials={getEssentials}
                 crownLarge={title}
                 crownSmall={description}
                 metaTitle={title}

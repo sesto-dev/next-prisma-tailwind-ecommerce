@@ -16,18 +16,13 @@ import {
     Grid,
     useTheme,
 } from '@geist-ui/core'
-
-import Layout from '../../components/Layout'
-import { useThemeProvider } from '../../state/Theme'
-import { handleOrderData } from '../../handlers/OrderHandlers'
-
-import config from '../../config/main.config'
-import i18n from '../../config/i18n.config'
+import getEssentials from '../../helpers/getEssentials'
+import { Layout } from 'aryana'
 
 export default function ({ id }) {
     const theme = useTheme()
     const router = useRouter()
-    const { locale = config.defaultLocale } = router
+    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
 
     const folio = i18n['pages']['order']
@@ -124,9 +119,7 @@ export default function ({ id }) {
     return (
         <>
             <Layout
-                config={config}
-                i18n={i18n}
-                useThemeProvider={useThemeProvider}
+                essentials={getEssentials}
                 metaTitle={title}
                 metaDescription={description}
             >
