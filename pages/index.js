@@ -1,27 +1,34 @@
 import { Layout, getLocaleDirection } from 'aryana'
 import { Grid, Card, Text, useTheme } from '@geist-ui/core'
-import getEssentials from '../helpers/getEssentials'
-import { useRouter } from 'next/router'
-import { useAuth } from '../state/Auth'
+import essentials from '../helpers/getEssentials'
 
 export default function ({ auth }) {
+    const {
+        config,
+        i18n,
+        useThemeProvider,
+        useAuth,
+        useRouter,
+        Link,
+        Head,
+        axios,
+    } = essentials
+
     const theme = useTheme()
-    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
+    const { locale = config['defaultLocale'] } = useRouter()
     const { isAuthenticated, setLocalAuthentication } = useAuth()
 
     setLocalAuthentication(auth)
 
-    const folio = getEssentials['i18n']['pages']['index']
-    const title = folio['title'][locale]
-    const description = folio['description'][locale]
+    const { title, description, content } = i18n['pages']['index']
 
     return (
         <Layout
-            essentials={getEssentials}
-            crownLarge={title}
-            crownSmall={description}
-            metaTitle={title}
-            metaDescription={description}
+            essentials={essentials}
+            crownLarge={title[locale]}
+            crownSmall={description[locale]}
+            metaTitle={title[locale]}
+            metaDescription={description[locale]}
         >
             <Grid.Container gap={1}>
                 <Grid xs={24}>
@@ -37,7 +44,7 @@ export default function ({ auth }) {
                                 direction: getLocaleDirection(locale),
                             }}
                         >
-                            {folio['content'][locale]}
+                            {content[locale]}
                         </Text>
                     </Card>
                 </Grid>

@@ -1,6 +1,3 @@
-import axios from 'axios'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { ChevronLeft, ChevronRight, ShoppingCart } from '@geist-ui/icons'
 import { useEffect, useState } from 'react'
 import {
@@ -20,17 +17,27 @@ import {
     Select,
     Divider,
 } from '@geist-ui/core'
-import getEssentials from '../../helpers/getEssentials'
+import essentials from '../../helpers/getEssentials'
 
 import { Layout, handleProductData } from 'aryana'
 
 export default function ({ id }) {
+    const {
+        config,
+        i18n,
+        useThemeProvider,
+        useAuth,
+        useRouter,
+        Link,
+        Head,
+        axios,
+    } = essentials
+
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
 
-    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
-    const folio = getEssentials['i18n']['pages']['product']
+    const { locale = config['defaultLocale'] } = useRouter()
 
     const [product, setProduct] = useState({})
     const [image, setImage] = useState(null)
@@ -55,8 +62,7 @@ export default function ({ id }) {
 
     useEffect(() => {
         async function resolve() {
-            const route =
-                getEssentials.config.backend.routes.products + `/${id}`
+            const route = config.backend.routes.products + `/${id}`
             const response = await axios.get(route)
 
             handleProductData({
@@ -66,7 +72,7 @@ export default function ({ id }) {
                 setImage,
                 setProduct,
                 setToast,
-                noDataToast: getEssentials['i18n']['toasts']['noData'][locale],
+                noDataToast: i18n['toasts']['noData'][locale],
                 setListingID,
             })
         }
@@ -79,7 +85,7 @@ export default function ({ id }) {
     return (
         <>
             <Layout
-                essentials={getEssentials}
+                essentials={essentials}
                 metaTitle={title}
                 metaDescription={description}
                 metaImage={image}

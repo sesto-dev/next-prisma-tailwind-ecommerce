@@ -1,31 +1,38 @@
 import { useState } from 'react'
-import { useRouter } from 'next/router'
 import { Button, Grid, useToasts } from '@geist-ui/core'
 
 import { Layout } from 'aryana'
 
-import { useAuth } from '../../state/Auth'
-import getEssentials from '../../helpers/getEssentials'
+import essentials from '../../helpers/getEssentials'
 
 export default function () {
-    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
+    const {
+        config,
+        i18n,
+        useThemeProvider,
+        useAuth,
+        useRouter,
+        Link,
+        Head,
+        axios,
+    } = essentials
+
+    const { locale = config['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
     const { isAuthenticated } = useAuth()
 
-    const folio = getEssentials['i18n']['pages']['unsubcribe']
-    const title = folio['title'][locale]
-    const description = folio['description'][locale]
+    const { title, description } = i18n['pages']['unsubcribe']
 
     const [loading, setLoading] = useState(false)
 
     return (
         <>
             <Layout
-                essentials={getEssentials}
-                crownLarge={title}
-                crownSmall={description}
-                metaTitle={title}
-                metaDescription={description}
+                essentials={essentials}
+                crownLarge={title[locale]}
+                crownSmall={description[locale]}
+                metaTitle={title[locale]}
+                metaDescription={description[locale]}
             >
                 <Grid.Container gap={1} className="avanti">
                     <Grid xs={24}>

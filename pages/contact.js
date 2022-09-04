@@ -1,22 +1,31 @@
 import { Layout, getLocaleDirection } from 'aryana'
-import { useRouter } from 'next/router'
 import { Text, Card, Grid, useTheme } from '@geist-ui/core'
-import getEssentials from '../helpers/getEssentials'
+import essentials from '../helpers/getEssentials'
 
 export default function () {
+    const {
+        config,
+        i18n,
+        useThemeProvider,
+        useAuth,
+        useRouter,
+        Link,
+        Head,
+        axios,
+    } = essentials
+
     const theme = useTheme()
-    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
-    const folio = i18n['pages']['contact']
-    const title = folio['title'][locale]
-    const description = folio['description'][locale]
+    const { locale = config['defaultLocale'] } = useRouter()
+    const { title, description } = i18n['pages']['contact']
+    console.log({ title, description, locale })
 
     return (
         <Layout
-            essentials={getEssentials}
-            crownLarge={title}
-            crownSmall={description}
-            metaTitle={title}
-            metaDescription={description}
+            essentials={essentials}
+            crownLarge={title[locale]}
+            crownSmall={description[locale]}
+            metaTitle={title[locale]}
+            metaDescription={description[locale]}
         >
             <Grid.Container gap={1}>
                 <Grid xs={24}>

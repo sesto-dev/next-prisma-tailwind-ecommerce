@@ -5,6 +5,7 @@ import { useAuth } from '../state/Auth'
 import Link from 'next/link'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 
 export default {
     config,
@@ -14,4 +15,5 @@ export default {
     Link,
     Head,
     useRouter,
+    axios,
 }

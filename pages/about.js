@@ -1,25 +1,35 @@
-import { useRouter } from 'next/router'
 import { Grid, Card, useTheme, Text, Spacer, Code } from '@geist-ui/core'
-import getEssentials from '../helpers/getEssentials'
+import essentials from '../helpers/getEssentials'
 import { Layout, getLocaleDirection } from 'aryana'
 
 export default function () {
+    const {
+        config,
+        i18n,
+        useThemeProvider,
+        useAuth,
+        useRouter,
+        Link,
+        Head,
+        axios,
+    } = essentials
+
     const theme = useTheme()
-    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
-    const folio = i18n['pages']['about']
-    const title = folio['title'][locale]
-    const description = folio['description'][locale]
+    const { locale = config['defaultLocale'] } = useRouter()
+    const { title, description, content } = i18n['pages']['about']
+
+    console.log({ title, description, locale })
 
     const links = ['http://github.com/accretence/create-next-dashboard']
 
     return (
         <>
             <Layout
-                essentials={getEssentials}
-                crownLarge={title}
-                crownSmall={description}
-                metaTitle={title}
-                metaDescription={description}
+                essentials={essentials}
+                crownLarge={title[locale]}
+                crownSmall={description[locale]}
+                metaTitle={title[locale]}
+                metaDescription={description[locale]}
             >
                 <Grid.Container gap={1}>
                     <Grid xs={24}>
@@ -31,7 +41,7 @@ export default function () {
                             padding={2}
                             width="100%"
                         >
-                            {folio && (
+                            {
                                 <>
                                     <Text
                                         type="secondary"
@@ -41,7 +51,7 @@ export default function () {
                                                 getLocaleDirection(locale),
                                         }}
                                     >
-                                        {folio['content'][locale]}
+                                        {content[locale]}
                                     </Text>
                                     <Spacer />
                                     <Grid.Container gap={1}>
@@ -66,7 +76,7 @@ export default function () {
                                         ))}
                                     </Grid.Container>
                                 </>
-                            )}
+                            }
                         </Card>
                     </Grid>
                 </Grid.Container>

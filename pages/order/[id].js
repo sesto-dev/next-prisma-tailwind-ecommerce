@@ -1,6 +1,3 @@
-import axios from 'axios'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import {
     useToasts,
@@ -16,18 +13,27 @@ import {
     Grid,
     useTheme,
 } from '@geist-ui/core'
-import getEssentials from '../../helpers/getEssentials'
+import essentials from '../../helpers/getEssentials'
 import { Layout } from 'aryana'
 
 export default function ({ id }) {
+    const {
+        config,
+        i18n,
+        useThemeProvider,
+        useAuth,
+        useRouter,
+        Link,
+        Head,
+        axios,
+    } = essentials
+
     const theme = useTheme()
     const router = useRouter()
-    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
+    const { locale = config['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
 
-    const folio = i18n['pages']['order']
-    const title = folio['title'][locale]
-    const description = folio['description'][locale]
+    const { title, description } = i18n['pages']['order']
 
     const [order, setOrder] = useState({})
 
@@ -119,9 +125,9 @@ export default function ({ id }) {
     return (
         <>
             <Layout
-                essentials={getEssentials}
-                metaTitle={title}
-                metaDescription={description}
+                essentials={essentials}
+                metaTitle={title[locale]}
+                metaDescription={description[locale]}
             >
                 <Grid.Container gap={1}>
                     {order ? (

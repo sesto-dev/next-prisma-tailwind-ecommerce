@@ -7,9 +7,8 @@ import {
     GoogleIcon,
 } from 'aryana'
 
-import getEssentials from '../helpers/getEssentials'
+import essentials from '../helpers/getEssentials'
 
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { LogOut } from '@geist-ui/icons'
 import {
@@ -25,10 +24,19 @@ import {
     Snippet,
     Table,
 } from '@geist-ui/core'
-import { useRouter } from 'next/router'
-import { useAuth } from '../state/Auth'
 
 export default function ({ auth }) {
+    const {
+        config,
+        i18n,
+        useThemeProvider,
+        useAuth,
+        useRouter,
+        Link,
+        Head,
+        axios,
+    } = essentials
+
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
@@ -37,7 +45,7 @@ export default function ({ auth }) {
 
     setLocalAuthentication(auth)
 
-    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
+    const { locale = config['defaultLocale'] } = useRouter()
 
     const {
         title,
@@ -47,7 +55,7 @@ export default function ({ auth }) {
         orders,
         integrations,
         logout,
-    } = getEssentials['i18n']['pages']['user']
+    } = i18n['pages']['user']
 
     const redirect_uri = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_REDIRECT_URL
     const client_id = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ID
@@ -61,16 +69,15 @@ export default function ({ auth }) {
     useEffect(() => {
         async function resolve() {
             const response = await axios.get(
-                getEssentials['config']['backend']['routes']['user']
+                config['backend']['routes']['user']
             )
             handleUserData({
                 response,
                 router,
                 setUser,
                 setToast,
-                noDataToast: getEssentials['i18n']['toasts']['noData'][locale],
-                notVerifiedToast:
-                    getEssentials['i18n']['toasts']['notVerified'][locale],
+                noDataToast: i18n['toasts']['noData'][locale],
+                notVerifiedToast: i18n['toasts']['notVerified'][locale],
             })
         }
 
@@ -169,11 +176,7 @@ export default function ({ auth }) {
                         }}
                         onClick={() => {}}
                     >
-                        {
-                            getEssentials['i18n']['buttons']['google'][
-                                'inactive'
-                            ][locale]
-                        }
+                        {i18n['buttons']['google']['inactive'][locale]}
                     </Button>
                 ) : (
                     <a style={{ width: '100%' }} href={googleURL}>
@@ -183,11 +186,7 @@ export default function ({ auth }) {
                             width="100%"
                             onClick={() => {}}
                         >
-                            {
-                                getEssentials['i18n']['buttons']['google'][
-                                    'active'
-                                ][locale]
-                            }
+                            {i18n['buttons']['google']['active'][locale]}
                         </Button>
                     </a>
                 )}
@@ -203,11 +202,11 @@ export default function ({ auth }) {
             px={2}
             onClick={(e) =>
                 logoutHandler({
-                    config: getEssentials['config'],
+                    config,
                     setToast,
                     setLocalAuthentication,
                     router,
-                    toast: getEssentials['i18n']['toasts']['logout'][locale],
+                    toast: i18n['toasts']['logout'][locale],
                 })
             }
             width={width < 650 && '100%'}
@@ -221,7 +220,7 @@ export default function ({ auth }) {
 
     return (
         <>
-            <Layout essentials={getEssentials}>
+            <Layout essentials={essentials}>
                 <Grid.Container gap={1}>
                     {user ? (
                         <>

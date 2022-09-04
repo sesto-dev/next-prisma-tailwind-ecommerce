@@ -1,6 +1,3 @@
-import Link from 'next/link'
-import axios from 'axios'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import {
     useToasts,
@@ -21,17 +18,28 @@ import {
 } from '@geist-ui/core'
 
 import { ShoppingCart, ChevronLeft, ChevronRight } from '@geist-ui/icons'
-import getEssentials from '../../helpers/getEssentials'
+import essentials from '../../helpers/getEssentials'
 
 import { Layout, handleProductsData } from 'aryana'
 
 export default function ({ page, category, tags, sort }) {
+    const {
+        config,
+        i18n,
+        useThemeProvider,
+        useAuth,
+        useRouter,
+        Link,
+        Head,
+        axios,
+    } = essentials
+
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
 
-    const { locale = getEssentials['config']['defaultLocale'] } = useRouter()
-    const folio = getEssentials['i18n']['pages']['products']
+    const { locale = config['defaultLocale'] } = useRouter()
+    const folio = i18n['pages']['products']
 
     const [keyword, setKeyword] = useState(null)
     const [pages, setPages] = useState(null)
@@ -40,11 +48,11 @@ export default function ({ page, category, tags, sort }) {
     useEffect(() => {
         async function resolve() {
             const response = await axios.post(
-                getEssentials.config.backend.routes.products,
+                config.backend.routes.products,
                 {
                     page,
                 },
-                getEssentials.config.backend.axios.simple
+                config.backend.axios.simple
             )
 
             handleProductsData({
@@ -53,7 +61,7 @@ export default function ({ page, category, tags, sort }) {
                 setPages,
                 setProducts,
                 setToast,
-                noDataToast: getEssentials['i18n']['toasts']['noData'][locale],
+                noDataToast: i18n['toasts']['noData'][locale],
             })
         }
 
@@ -275,7 +283,7 @@ export default function ({ page, category, tags, sort }) {
 
     return (
         <Layout
-            essentials={getEssentials}
+            essentials={essentials}
             metaTitle={folio['title'][locale]}
             metaDescription={folio['description'][locale]}
         >

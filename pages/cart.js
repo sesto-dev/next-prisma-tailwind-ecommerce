@@ -1,8 +1,6 @@
 import { Layout, handleCartData } from 'aryana'
-import { useRouter } from 'next/router'
-
-import axios from 'axios'
 import { useState, useEffect } from 'react'
+
 import { Trash, Plus, Minus, CreditCard } from '@geist-ui/icons'
 import {
     Text,
@@ -19,34 +17,40 @@ import {
     Input,
 } from '@geist-ui/core'
 
-import getEssentials from '../helpers/getEssentials'
+import essentials from '../helpers/getEssentials'
 
 export default function () {
+    const {
+        config,
+        i18n,
+        useThemeProvider,
+        useAuth,
+        useRouter,
+        Link,
+        Head,
+        axios,
+    } = essentials
+
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
 
     const { locale = config.defaultLocale } = router
 
-    const folio = getEssentials['i18n']['pages']['cart']
-    const title = folio['title'][locale]
-    const description = folio['description'][locale]
+    const { title, description } = i18n['pages']['cart']
 
     const [cart, setCart] = useState(null)
 
     useEffect(() => {
         async function resolve() {
-            const response = await axios.get(
-                getEssentials.config.backend.routes.getCart
-            )
+            const response = await axios.get(config.backend.routes.getCart)
             handleCartData({
                 response,
                 router,
                 setCart,
                 setToast,
-                noDataToast: getEssentials['i18n']['toasts']['noData'][locale],
-                notVerifiedToast:
-                    getEssentials['i18n']['toasts']['notVerified'][locale],
+                noDataToast: i18n['toasts']['noData'][locale],
+                notVerifiedToast: i18n['toasts']['notVerified'][locale],
             })
         }
 
@@ -290,11 +294,11 @@ export default function () {
 
     return (
         <Layout
-            essentials={getEssentials}
-            crownLarge={title}
-            crownSmall={description}
-            metaTitle={title}
-            metaDescription={description}
+            essentials={essentials}
+            crownLarge={title[locale]}
+            crownSmall={description[locale]}
+            metaTitle={title[locale]}
+            metaDescription={description[locale]}
         >
             <Grid.Container gap={2}>
                 {cart ? (
