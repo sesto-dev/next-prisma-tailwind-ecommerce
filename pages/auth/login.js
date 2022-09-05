@@ -77,8 +77,6 @@ export default function () {
             config.backend.axios.simple
         )
 
-        console.log(response)
-
         loginHandler({
             response,
             setLoading,
@@ -101,8 +99,6 @@ export default function () {
             },
             config.backend.axios.simple
         )
-
-        console.log(response)
 
         registerHandler({
             response,
@@ -371,7 +367,12 @@ export default function () {
                     <Divider mt={1} mb={3}>
                         /
                     </Divider>
-                    <a href={getGoogleURL()}>
+                    <a
+                        href={getGoogleURL(
+                            process.env.NEXT_PUBLIC_GOOGLE_OAUTH_REDIRECT_URL,
+                            process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ID
+                        )}
+                    >
                         <Button
                             icon={<GoogleIcon />}
                             type="secondary"

@@ -40,8 +40,6 @@ export default function () {
     async function attemptVerify() {
         setLoading(true)
 
-        console.log(refCode.current)
-
         const response = await axios.post(
             config.backend.routes.verify,
             {
@@ -49,8 +47,6 @@ export default function () {
             },
             config.backend.axios.simple
         )
-
-        console.log(response)
 
         verifyHandler({
             response,
