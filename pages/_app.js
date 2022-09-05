@@ -3,6 +3,11 @@ import { useEffect } from 'react'
 
 import { AuthProvider } from '../state/Auth'
 import { ThemeProvider } from '../state/Theme'
+import { EssentialsProvider } from '../state/Essentials'
+
+import { Layout } from 'aryana'
+
+import essentials from '../helpers/getEssentials'
 
 export default function ({ Component, pageProps }) {
     const router = useRouter()
@@ -32,7 +37,11 @@ export default function ({ Component, pageProps }) {
     return (
         <ThemeProvider>
             <AuthProvider>
-                <Component {...pageProps} />
+                <EssentialsProvider>
+                    <Layout essentials={essentials}>
+                        <Component {...pageProps} />
+                    </Layout>
+                </EssentialsProvider>
             </AuthProvider>
         </ThemeProvider>
     )

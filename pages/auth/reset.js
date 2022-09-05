@@ -1,13 +1,7 @@
 import useState from 'react-usestateref'
 import { Button, Grid, useToasts, Input, Text } from '@geist-ui/core'
 
-import {
-    Layout,
-    isLocaleRTL,
-    forgotHandler,
-    resetHandler,
-    isEmail,
-} from 'aryana'
+import { isLocaleRTL, forgotHandler, resetHandler, isEmail } from 'aryana'
 import essentials from '../../helpers/getEssentials'
 
 export default function () {
@@ -73,175 +67,132 @@ export default function () {
     }
 
     return (
-        <>
-            {i18n && (
-                <>
-                    <Layout
-                        essentials={essentials}
-                        crownLarge={title[locale]}
-                        crownSmall={description[locale]}
-                        metaTitle={title[locale]}
-                        metaDescription={description[locale]}
+        <Grid.Container gap={0.5} className="avanti">
+            <Grid xs={24}>
+                <Input
+                    label={
+                        !isLocaleRTL(locale) &&
+                        i18n['inputs']['email']['label'][locale]
+                    }
+                    labelRight={
+                        isLocaleRTL(locale) &&
+                        i18n['inputs']['email']['label'][locale]
+                    }
+                    placeholder={i18n['inputs']['email']['placeholder'][locale]}
+                    width="400pt"
+                    value={email}
+                    type={
+                        refEmail.current == ''
+                            ? 'default'
+                            : isEmail(refEmail.current)
+                            ? 'success'
+                            : 'error'
+                    }
+                    onChange={(e) => {
+                        setEmail(e.target.value.trim())
+                    }}
+                />
+            </Grid>
+            <Grid xs={24}>
+                {!nextStage &&
+                    refEmail.current != '' &&
+                    !isEmail(refEmail.current) && (
+                        <Text small type="error">
+                            {i18n['inputs']['email']['error'][locale]}
+                        </Text>
+                    )}
+            </Grid>
+            <Grid xs={24}>
+                {!nextStage && (
+                    <Button
+                        loading={loading}
+                        disabled={
+                            !refEmail.current || !isEmail(refEmail.current)
+                        }
+                        type="secondary"
+                        onClick={attemptForgot}
                     >
-                        <Grid.Container gap={0.5} className="avanti">
-                            <Grid xs={24}>
-                                <Input
-                                    label={
-                                        !isLocaleRTL(locale) &&
-                                        i18n['inputs']['email']['label'][locale]
-                                    }
-                                    labelRight={
-                                        isLocaleRTL(locale) &&
-                                        i18n['inputs']['email']['label'][locale]
-                                    }
-                                    placeholder={
-                                        i18n['inputs']['email']['placeholder'][
-                                            locale
-                                        ]
-                                    }
-                                    width="400pt"
-                                    value={email}
-                                    type={
-                                        refEmail.current == ''
-                                            ? 'default'
-                                            : isEmail(refEmail.current)
-                                            ? 'success'
-                                            : 'error'
-                                    }
-                                    onChange={(e) => {
-                                        setEmail(e.target.value.trim())
-                                    }}
-                                />
-                            </Grid>
-                            <Grid xs={24}>
-                                {!nextStage &&
-                                    refEmail.current != '' &&
-                                    !isEmail(refEmail.current) && (
-                                        <Text small type="error">
-                                            {
-                                                i18n['inputs']['email'][
-                                                    'error'
-                                                ][locale]
-                                            }
-                                        </Text>
-                                    )}
-                            </Grid>
-                            <Grid xs={24}>
-                                {!nextStage && (
-                                    <Button
-                                        loading={loading}
-                                        disabled={
-                                            !refEmail.current ||
-                                            !isEmail(refEmail.current)
-                                        }
-                                        type="secondary"
-                                        onClick={attemptForgot}
-                                    >
-                                        <b>
-                                            {i18n['buttons']['submit'][locale]}
-                                        </b>
-                                    </Button>
-                                )}
-                            </Grid>
-                            <Grid xs={24}>
-                                {nextStage && (
-                                    <Input
-                                        label={
-                                            !isLocaleRTL(locale) &&
-                                            i18n['inputs']['code']['label'][
-                                                locale
-                                            ]
-                                        }
-                                        labelRight={
-                                            isLocaleRTL(locale) &&
-                                            i18n['inputs']['code']['label'][
-                                                locale
-                                            ]
-                                        }
-                                        placeholder={
-                                            i18n['inputs']['code'][
-                                                'placeholder'
-                                            ][locale]
-                                        }
-                                        width="100%"
-                                        type="secondary"
-                                        value={code}
-                                        onChange={(e) => {
-                                            setCode(e.target.value.trim())
-                                        }}
-                                    />
-                                )}
-                            </Grid>
-                            <Grid xs={24}>
-                                {nextStage && (
-                                    <Input
-                                        label={
-                                            !isLocaleRTL(locale) &&
-                                            i18n['inputs']['password']['label'][
-                                                locale
-                                            ]
-                                        }
-                                        labelRight={
-                                            isLocaleRTL(locale) &&
-                                            i18n['inputs']['password']['label'][
-                                                locale
-                                            ]
-                                        }
-                                        placeholder={
-                                            i18n['inputs']['password'][
-                                                'placeholder'
-                                            ][locale]
-                                        }
-                                        width="100%"
-                                        type={
-                                            refPassword.current == ''
-                                                ? 'default'
-                                                : refPassword.current.length > 7
-                                                ? 'success'
-                                                : 'error'
-                                        }
-                                        value={password}
-                                        onChange={(e) => {
-                                            setPassword(e.target.value.trim())
-                                        }}
-                                    />
-                                )}
-                            </Grid>
-                            <Grid xs={24}>
-                                {nextStage &&
-                                    !refPassword.current == '' &&
-                                    refPassword.current.length < 8 && (
-                                        <Text small type="error">
-                                            {
-                                                i18n['inputs']['password'][
-                                                    'error'
-                                                ][locale]
-                                            }
-                                        </Text>
-                                    )}
-                            </Grid>
-                            <Grid xs={24}>
-                                {nextStage && (
-                                    <Button
-                                        loading={loading}
-                                        disabled={
-                                            !refCode.current ||
-                                            !refPassword.current ||
-                                            refPassword.current.length < 8
-                                        }
-                                        type="secondary"
-                                        onClick={attemptReset}
-                                    >
-                                        <b>
-                                            {i18n['buttons']['submit'][locale]}
-                                        </b>
-                                    </Button>
-                                )}
-                            </Grid>
-                        </Grid.Container>
-                    </Layout>
-                </>
-            )}
-        </>
+                        <b>{i18n['buttons']['submit'][locale]}</b>
+                    </Button>
+                )}
+            </Grid>
+            <Grid xs={24}>
+                {nextStage && (
+                    <Input
+                        label={
+                            !isLocaleRTL(locale) &&
+                            i18n['inputs']['code']['label'][locale]
+                        }
+                        labelRight={
+                            isLocaleRTL(locale) &&
+                            i18n['inputs']['code']['label'][locale]
+                        }
+                        placeholder={
+                            i18n['inputs']['code']['placeholder'][locale]
+                        }
+                        width="100%"
+                        type="secondary"
+                        value={code}
+                        onChange={(e) => {
+                            setCode(e.target.value.trim())
+                        }}
+                    />
+                )}
+            </Grid>
+            <Grid xs={24}>
+                {nextStage && (
+                    <Input
+                        label={
+                            !isLocaleRTL(locale) &&
+                            i18n['inputs']['password']['label'][locale]
+                        }
+                        labelRight={
+                            isLocaleRTL(locale) &&
+                            i18n['inputs']['password']['label'][locale]
+                        }
+                        placeholder={
+                            i18n['inputs']['password']['placeholder'][locale]
+                        }
+                        width="100%"
+                        type={
+                            refPassword.current == ''
+                                ? 'default'
+                                : refPassword.current.length > 7
+                                ? 'success'
+                                : 'error'
+                        }
+                        value={password}
+                        onChange={(e) => {
+                            setPassword(e.target.value.trim())
+                        }}
+                    />
+                )}
+            </Grid>
+            <Grid xs={24}>
+                {nextStage &&
+                    !refPassword.current == '' &&
+                    refPassword.current.length < 8 && (
+                        <Text small type="error">
+                            {i18n['inputs']['password']['error'][locale]}
+                        </Text>
+                    )}
+            </Grid>
+            <Grid xs={24}>
+                {nextStage && (
+                    <Button
+                        loading={loading}
+                        disabled={
+                            !refCode.current ||
+                            !refPassword.current ||
+                            refPassword.current.length < 8
+                        }
+                        type="secondary"
+                        onClick={attemptReset}
+                    >
+                        <b>{i18n['buttons']['submit'][locale]}</b>
+                    </Button>
+                )}
+            </Grid>
+        </Grid.Container>
     )
 }

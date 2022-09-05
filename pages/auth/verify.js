@@ -1,18 +1,20 @@
 import useState from 'react-usestateref'
 import { Button, Grid, useToasts, Input } from '@geist-ui/core'
-import essentials from '../../helpers/getEssentials'
 
-import { Layout, isLocaleRTL, verifyHandler } from 'aryana'
+import { isLocaleRTL, verifyHandler } from 'aryana'
+import { useEssentials } from '../../state/Essentials'
 
 export default function () {
+    const { essentials, setLocalEssentials } = useEssentials()
+
     const {
         config,
         i18n,
         useThemeProvider,
         useAuth,
-        useRouter,
         Link,
         Head,
+        useRouter,
         axios,
     } = essentials
 
@@ -45,48 +47,36 @@ export default function () {
     }
 
     return (
-        <>
-            <Layout
-                essentials={essentials}
-                crownLarge={title[locale]}
-                crownSmall={description[locale]}
-                metaTitle={title[locale]}
-                metaDescription={description[locale]}
-            >
-                <Grid.Container gap={1} className="avanti">
-                    <Grid xs={24}>
-                        <Input
-                            label={
-                                !isLocaleRTL(locale) &&
-                                i18n['inputs']['code']['label'][locale]
-                            }
-                            labelRight={
-                                isLocaleRTL(locale) &&
-                                i18n['inputs']['code']['label'][locale]
-                            }
-                            placeholder={
-                                i18n['inputs']['code']['placeholder'][locale]
-                            }
-                            width="220pt"
-                            value={code}
-                            type="secondary"
-                            onChange={(e) => {
-                                setCode(e.target.value.trim())
-                            }}
-                        />
-                    </Grid>
-                    <Grid xs={24}>
-                        <Button
-                            loading={loading}
-                            disabled={!refCode.current}
-                            type="secondary"
-                            onClick={attemptVerify}
-                        >
-                            <b>{i18n['buttons']['submit'][locale]}</b>
-                        </Button>
-                    </Grid>
-                </Grid.Container>
-            </Layout>
-        </>
+        <Grid.Container gap={1} className="avanti">
+            <Grid xs={24}>
+                <Input
+                    label={
+                        !isLocaleRTL(locale) &&
+                        i18n['inputs']['code']['label'][locale]
+                    }
+                    labelRight={
+                        isLocaleRTL(locale) &&
+                        i18n['inputs']['code']['label'][locale]
+                    }
+                    placeholder={i18n['inputs']['code']['placeholder'][locale]}
+                    width="220pt"
+                    value={code}
+                    type="secondary"
+                    onChange={(e) => {
+                        setCode(e.target.value.trim())
+                    }}
+                />
+            </Grid>
+            <Grid xs={24}>
+                <Button
+                    loading={loading}
+                    disabled={!refCode.current}
+                    type="secondary"
+                    onClick={attemptVerify}
+                >
+                    <b>{i18n['buttons']['submit'][locale]}</b>
+                </Button>
+            </Grid>
+        </Grid.Container>
     )
 }

@@ -20,7 +20,7 @@ import {
 import { ShoppingCart, ChevronLeft, ChevronRight } from '@geist-ui/icons'
 import essentials from '../../helpers/getEssentials'
 
-import { Layout, handleProductsData } from 'aryana'
+import { handleProductsData } from 'aryana'
 
 export default function ({ page, category, tags, sort }) {
     const {
@@ -282,11 +282,7 @@ export default function ({ page, category, tags, sort }) {
     )
 
     return (
-        <Layout
-            essentials={essentials}
-            metaTitle={folio['title'][locale]}
-            metaDescription={folio['description'][locale]}
-        >
+        <>
             <Grid.Container gap={1}>
                 <Filters />
                 <Grid xs={24}>
@@ -356,7 +352,7 @@ export default function ({ page, category, tags, sort }) {
                     }
                 `}
             </style>
-        </Layout>
+        </>
     )
 }
 

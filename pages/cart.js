@@ -1,4 +1,4 @@
-import { Layout, handleCartData } from 'aryana'
+import { handleCartData } from 'aryana'
 import { useState, useEffect } from 'react'
 
 import { Trash, Plus, Minus, CreditCard } from '@geist-ui/icons'
@@ -293,55 +293,47 @@ export default function () {
     }
 
     return (
-        <Layout
-            essentials={essentials}
-            crownLarge={title[locale]}
-            crownSmall={description[locale]}
-            metaTitle={title[locale]}
-            metaDescription={description[locale]}
-        >
-            <Grid.Container gap={2}>
-                {cart ? (
-                    <>
-                        <Grid xs={24} md={16}>
-                            <Grid.Container
-                                style={{ height: 'max-content' }}
-                                gap={1}
-                            >
-                                {cart.map(({ listing, product, count }) => {
-                                    return (
-                                        <Product
-                                            key={product._id}
-                                            listing={listing}
-                                            product={product}
-                                            count={count}
-                                        />
-                                    )
-                                })}
-                            </Grid.Container>
-                        </Grid>
-                        <Grid xs={24} md={0}>
-                            <Divider width="100%" />
-                        </Grid>
-                        <Grid xs={24} md={8}>
-                            <Receipt />
-                        </Grid>
-                    </>
-                ) : (
-                    <Grid xs={24}>
-                        <Card
-                            style={{
-                                backgroundColor: `${theme.palette.accents_1}`,
-                            }}
-                            height="20rem"
-                            pt="8rem"
-                            width="100%"
+        <Grid.Container gap={2}>
+            {cart ? (
+                <>
+                    <Grid xs={24} md={16}>
+                        <Grid.Container
+                            style={{ height: 'max-content' }}
+                            gap={1}
                         >
-                            <Loading />
-                        </Card>
+                            {cart.map(({ listing, product, count }) => {
+                                return (
+                                    <Product
+                                        key={product._id}
+                                        listing={listing}
+                                        product={product}
+                                        count={count}
+                                    />
+                                )
+                            })}
+                        </Grid.Container>
                     </Grid>
-                )}
-            </Grid.Container>
-        </Layout>
+                    <Grid xs={24} md={0}>
+                        <Divider width="100%" />
+                    </Grid>
+                    <Grid xs={24} md={8}>
+                        <Receipt />
+                    </Grid>
+                </>
+            ) : (
+                <Grid xs={24}>
+                    <Card
+                        style={{
+                            backgroundColor: `${theme.palette.accents_1}`,
+                        }}
+                        height="20rem"
+                        pt="8rem"
+                        width="100%"
+                    >
+                        <Loading />
+                    </Card>
+                </Grid>
+            )}
+        </Grid.Container>
     )
 }

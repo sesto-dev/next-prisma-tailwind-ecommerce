@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button, Grid, useToasts } from '@geist-ui/core'
 
-import { Layout, unsubscribeHandler } from 'aryana'
+import { unsubscribeHandler } from 'aryana'
 
 import essentials from '../../helpers/getEssentials'
 
@@ -24,8 +24,6 @@ export default function () {
 
     const { title, description } = i18n['pages']['unsubscribe']
 
-    console.log({ title: title[locale], description: description[locale] })
-
     const [loading, setLoading] = useState(false)
 
     async function attemptUnsubscribe() {
@@ -42,27 +40,17 @@ export default function () {
     }
 
     return (
-        <>
-            <Layout
-                essentials={essentials}
-                crownLarge={title[locale]}
-                crownSmall={description[locale]}
-                metaTitle={title[locale]}
-                metaDescription={description[locale]}
-            >
-                <Grid.Container gap={1} className="avanti">
-                    <Grid xs={24}>
-                        <Button
-                            disabled={!isAuthenticated}
-                            loading={loading}
-                            type="secondary"
-                            onClick={attemptUnsubscribe}
-                        >
-                            {title[locale]}
-                        </Button>
-                    </Grid>
-                </Grid.Container>
-            </Layout>
-        </>
+        <Grid.Container gap={1} className="avanti">
+            <Grid xs={24}>
+                <Button
+                    disabled={!isAuthenticated}
+                    loading={loading}
+                    type="secondary"
+                    onClick={attemptUnsubscribe}
+                >
+                    {title[locale]}
+                </Button>
+            </Grid>
+        </Grid.Container>
     )
 }

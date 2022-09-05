@@ -1,5 +1,4 @@
 import {
-    Layout,
     handleUserData,
     logoutHandler,
     getGoogleURL,
@@ -223,84 +222,72 @@ export default function ({ auth }) {
 
     return (
         <>
-            <Layout essentials={essentials}>
-                <Grid.Container gap={1}>
-                    {user ? (
-                        <>
-                            <Grid xs={24}>
-                                <Card
-                                    width="100%"
-                                    style={{
-                                        backgroundColor:
-                                            theme.palette.accents_1,
-                                    }}
-                                >
-                                    <Collapse.Group>
-                                        <Collapse
-                                            title={info['title'][locale]}
-                                            subtitle={
-                                                info['description'][locale]
-                                            }
-                                        >
-                                            <UserInfo user={user} />
-                                        </Collapse>
-                                        <Collapse
-                                            title={orders['title'][locale]}
-                                            subtitle={
-                                                orders['description'][locale]
-                                            }
-                                        >
-                                            <Orders user={user} />
-                                        </Collapse>
-                                        <Collapse
-                                            title={referrals['title'][locale]}
-                                            subtitle={
-                                                referrals['description'][locale]
-                                            }
-                                        >
-                                            <Referrals user={user} />
-                                        </Collapse>
-                                        <Collapse
-                                            title={
-                                                integrations['title'][locale]
-                                            }
-                                            subtitle={
-                                                integrations['description'][
-                                                    locale
-                                                ]
-                                            }
-                                        >
-                                            <Integrations user={user} />
-                                        </Collapse>
-                                        <Collapse
-                                            title={logout['title'][locale]}
-                                            subtitle={
-                                                logout['description'][locale]
-                                            }
-                                            style={{ borderBottom: 'none' }}
-                                        >
-                                            <Logout />
-                                        </Collapse>
-                                    </Collapse.Group>
-                                </Card>
-                            </Grid>
-                        </>
-                    ) : (
+            <Grid.Container gap={1}>
+                {user ? (
+                    <>
                         <Grid xs={24}>
                             <Card
                                 width="100%"
-                                height="20rem"
-                                py="8rem"
                                 style={{
                                     backgroundColor: theme.palette.accents_1,
                                 }}
                             >
-                                <Loading />
+                                <Collapse.Group>
+                                    <Collapse
+                                        title={info['title'][locale]}
+                                        subtitle={info['description'][locale]}
+                                    >
+                                        <UserInfo user={user} />
+                                    </Collapse>
+                                    <Collapse
+                                        title={orders['title'][locale]}
+                                        subtitle={orders['description'][locale]}
+                                    >
+                                        <Orders user={user} />
+                                    </Collapse>
+                                    <Collapse
+                                        title={referrals['title'][locale]}
+                                        subtitle={
+                                            referrals['description'][locale]
+                                        }
+                                    >
+                                        <Referrals user={user} />
+                                    </Collapse>
+                                    <Collapse
+                                        title={integrations['title'][locale]}
+                                        subtitle={
+                                            integrations['description'][locale]
+                                        }
+                                    >
+                                        <Integrations user={user} />
+                                    </Collapse>
+                                    <Collapse
+                                        title={logout['title'][locale]}
+                                        subtitle={logout['description'][locale]}
+                                        style={{ borderBottom: 'none' }}
+                                    >
+                                        <Logout />
+                                    </Collapse>
+                                </Collapse.Group>
                             </Card>
                         </Grid>
-                    )}
-                </Grid.Container>
-            </Layout>
+                    </>
+                ) : (
+                    <Grid xs={24}>
+                        <Card
+                            width="100%"
+                            height="20rem"
+                            py="8rem"
+                            style={{
+                                backgroundColor: theme.palette.accents_1,
+                            }}
+                        >
+                            <Loading />
+                        </Card>
+                    </Grid>
+                )}
+            </Grid.Container>
+
             <style jsx global>
                 {`
                     .group-tabs > button {

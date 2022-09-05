@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Button, Grid, useToasts } from '@geist-ui/core'
 import essentials from '../../helpers/getEssentials'
 
-import { Layout, subscribeHandler } from 'aryana'
+import { subscribeHandler } from 'aryana'
 
 export default function () {
     const {
@@ -38,27 +38,17 @@ export default function () {
     }
 
     return (
-        <>
-            <Layout
-                essentials={essentials}
-                crownLarge={title[locale]}
-                crownSmall={description[locale]}
-                metaTitle={title[locale]}
-                metaDescription={description[locale]}
-            >
-                <Grid.Container gap={1} className="avanti">
-                    <Grid xs={24}>
-                        <Button
-                            disabled={!isAuthenticated}
-                            loading={loading}
-                            type="secondary"
-                            onClick={attemptSubscribe}
-                        >
-                            {title[locale]}
-                        </Button>
-                    </Grid>
-                </Grid.Container>
-            </Layout>
-        </>
+        <Grid.Container gap={1} className="avanti">
+            <Grid xs={24}>
+                <Button
+                    disabled={!isAuthenticated}
+                    loading={loading}
+                    type="secondary"
+                    onClick={attemptSubscribe}
+                >
+                    {title[locale]}
+                </Button>
+            </Grid>
+        </Grid.Container>
     )
 }

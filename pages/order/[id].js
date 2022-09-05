@@ -14,7 +14,6 @@ import {
     useTheme,
 } from '@geist-ui/core'
 import essentials from '../../helpers/getEssentials'
-import { Layout } from 'aryana'
 
 export default function ({ id }) {
     const {
@@ -123,81 +122,64 @@ export default function ({ id }) {
     )
 
     return (
-        <>
-            <Layout
-                essentials={essentials}
-                metaTitle={title[locale]}
-                metaDescription={description[locale]}
-            >
-                <Grid.Container gap={1}>
-                    {order ? (
-                        <>
-                            <Grid xs={24}>
-                                <Breadcrumbs className="Bread" mb={1}>
-                                    <Link href="/">
-                                        <a>
-                                            <Breadcrumbs.Item>
-                                                Home
-                                            </Breadcrumbs.Item>
-                                        </a>
-                                    </Link>
-                                    <Link href="/user">
-                                        <a>
-                                            <Breadcrumbs.Item>
-                                                Orders
-                                            </Breadcrumbs.Item>
-                                        </a>
-                                    </Link>
-                                    <Breadcrumbs.Item>
-                                        {order.name}
-                                    </Breadcrumbs.Item>
-                                </Breadcrumbs>
-                            </Grid>
-                            <Grid xs={24}>
-                                <Card
-                                    style={{
-                                        backgroundColor: `${theme.palette.accents_1}`,
-                                    }}
-                                    width="100%"
-                                    height="100%"
+        <Grid.Container gap={1}>
+            {order ? (
+                <>
+                    <Grid xs={24}>
+                        <Breadcrumbs className="Bread" mb={1}>
+                            <Link href="/">
+                                <a>
+                                    <Breadcrumbs.Item>Home</Breadcrumbs.Item>
+                                </a>
+                            </Link>
+                            <Link href="/user">
+                                <a>
+                                    <Breadcrumbs.Item>Orders</Breadcrumbs.Item>
+                                </a>
+                            </Link>
+                            <Breadcrumbs.Item>{order.name}</Breadcrumbs.Item>
+                        </Breadcrumbs>
+                    </Grid>
+                    <Grid xs={24}>
+                        <Card
+                            style={{
+                                backgroundColor: `${theme.palette.accents_1}`,
+                            }}
+                            width="100%"
+                            height="100%"
+                        >
+                            <Collapse.Group>
+                                <Collapse
+                                    title="Order Info"
+                                    subtitle="Basic order information provided."
+                                    initialVisible
                                 >
-                                    <Collapse.Group>
-                                        <Collapse
-                                            title="Order Info"
-                                            subtitle="Basic order information provided."
-                                            initialVisible
-                                        >
-                                            <OrderInfo order={order} />
-                                        </Collapse>
-                                        <Collapse
-                                            title="Products"
-                                            subtitle="Your order history."
-                                            style={{ borderBottom: 'none' }}
-                                        >
-                                            <Products order={order} />
-                                        </Collapse>
-                                    </Collapse.Group>
-                                </Card>
-                            </Grid>
-                        </>
-                    ) : (
-                        <Grid xs={24}>
-                            <Card
-                                style={{
-                                    backgroundColor: `${theme.palette.accents_1}`,
-                                }}
-                                width="100%"
-                            >
-                                <Loading />
-                            </Card>
-                        </Grid>
-                    )}
-                </Grid.Container>
-            </Layout>
-            <style jsx global>
-                {``}
-            </style>
-        </>
+                                    <OrderInfo order={order} />
+                                </Collapse>
+                                <Collapse
+                                    title="Products"
+                                    subtitle="Your order history."
+                                    style={{ borderBottom: 'none' }}
+                                >
+                                    <Products order={order} />
+                                </Collapse>
+                            </Collapse.Group>
+                        </Card>
+                    </Grid>
+                </>
+            ) : (
+                <Grid xs={24}>
+                    <Card
+                        style={{
+                            backgroundColor: `${theme.palette.accents_1}`,
+                        }}
+                        width="100%"
+                    >
+                        <Loading />
+                    </Card>
+                </Grid>
+            )}
+        </Grid.Container>
     )
 }
 

@@ -19,7 +19,7 @@ import {
 } from '@geist-ui/core'
 import essentials from '../../helpers/getEssentials'
 
-import { Layout, handleProductData } from 'aryana'
+import { handleProductData } from 'aryana'
 
 export default function ({ id }) {
     const {
@@ -84,251 +84,230 @@ export default function ({ id }) {
 
     return (
         <>
-            <Layout
-                essentials={essentials}
-                metaTitle={title}
-                metaDescription={description}
-                metaImage={image}
-            >
-                <Grid.Container gap={1}>
-                    {product && product.images ? (
-                        <>
-                            <Grid xs={24}>
-                                <Breadcrumbs className="Bread" mb={1}>
-                                    <Link href="/">
-                                        <a>
-                                            <Breadcrumbs.Item>
-                                                Home
-                                            </Breadcrumbs.Item>
-                                        </a>
-                                    </Link>
-                                    <Link href="/products">
-                                        <a>
-                                            <Breadcrumbs.Item>
-                                                Products
-                                            </Breadcrumbs.Item>
-                                        </a>
-                                    </Link>
-                                    <Breadcrumbs.Item>
-                                        {product.title}
-                                    </Breadcrumbs.Item>
-                                </Breadcrumbs>
-                            </Grid>
-                            <Grid xs={24} md={9}>
-                                <Image
-                                    src={product.images[0]}
-                                    width="100%"
-                                    height="100%"
-                                    style={{
-                                        objectFit: 'cover',
-                                    }}
+            <Grid.Container gap={1}>
+                {product && product.images ? (
+                    <>
+                        <Grid xs={24}>
+                            <Breadcrumbs className="Bread" mb={1}>
+                                <Link href="/">
+                                    <a>
+                                        <Breadcrumbs.Item>
+                                            Home
+                                        </Breadcrumbs.Item>
+                                    </a>
+                                </Link>
+                                <Link href="/products">
+                                    <a>
+                                        <Breadcrumbs.Item>
+                                            Products
+                                        </Breadcrumbs.Item>
+                                    </a>
+                                </Link>
+                                <Breadcrumbs.Item>
+                                    {product.title}
+                                </Breadcrumbs.Item>
+                            </Breadcrumbs>
+                        </Grid>
+                        <Grid xs={24} md={9}>
+                            <Image
+                                src={product.images[0]}
+                                width="100%"
+                                height="100%"
+                                style={{
+                                    objectFit: 'cover',
+                                }}
+                            />
+                        </Grid>
+                        <Grid xs={24} md={15}>
+                            <Card
+                                style={{
+                                    backgroundColor: `${theme.palette.accents_1}`,
+                                }}
+                                width="100%"
+                                height="100%"
+                            >
+                                <Description
+                                    title="Title"
+                                    content={
+                                        <Text font="1.4rem">
+                                            {product.title}
+                                        </Text>
+                                    }
+                                    mb={1}
                                 />
-                            </Grid>
-                            <Grid xs={24} md={15}>
-                                <Card
+                                <Description
+                                    title="Description"
+                                    content={
+                                        <Text p small>
+                                            {product.description}
+                                        </Text>
+                                    }
+                                    mb={1}
+                                />
+                                <Description
+                                    title="Platforms"
+                                    content={
+                                        product.listings &&
+                                        product.listings.map((listing) => {
+                                            return (
+                                                <Badge
+                                                    style={{
+                                                        backgroundColor:
+                                                            theme.palette
+                                                                .accents_6,
+                                                        color: theme.palette
+                                                            .background,
+                                                    }}
+                                                    mr={0.5}
+                                                    mb={0}
+                                                    px="0.7rem"
+                                                    scale={0.8}
+                                                    key={Math.random()}
+                                                >
+                                                    {listing.platform &&
+                                                        listing.platform}
+                                                </Badge>
+                                            )
+                                        })
+                                    }
+                                    mb={1}
+                                />
+                                <Description
+                                    title="Tags"
+                                    content={
+                                        product.tags &&
+                                        product.tags.map((tag) => {
+                                            return (
+                                                <Badge
+                                                    style={{
+                                                        backgroundColor:
+                                                            theme.palette
+                                                                .accents_2,
+                                                        color: theme.palette
+                                                            .foreground,
+                                                    }}
+                                                    mr={0.5}
+                                                    mb={0}
+                                                    px="0.7rem"
+                                                    scale={0.8}
+                                                    key={tag}
+                                                >
+                                                    {tag}
+                                                </Badge>
+                                            )
+                                        })
+                                    }
+                                    mb={1}
+                                />
+                                <Divider my={4} width="100%" />
+                                <div
                                     style={{
-                                        backgroundColor: `${theme.palette.accents_1}`,
+                                        display: 'block!important',
+                                        width: '100%',
+                                        height: '100%',
                                     }}
-                                    width="100%"
-                                    height="100%"
                                 >
-                                    <Description
-                                        title="Title"
-                                        content={
-                                            <Text font="1.4rem">
-                                                {product.title}
-                                            </Text>
-                                        }
-                                        mb={1}
-                                    />
-                                    <Description
-                                        title="Description"
-                                        content={
-                                            <Text p small>
-                                                {product.description}
-                                            </Text>
-                                        }
-                                        mb={1}
-                                    />
-                                    <Description
-                                        title="Platforms"
-                                        content={
-                                            product.listings &&
-                                            product.listings.map((listing) => {
-                                                return (
-                                                    <Badge
-                                                        style={{
-                                                            backgroundColor:
-                                                                theme.palette
-                                                                    .accents_6,
-                                                            color: theme.palette
-                                                                .background,
-                                                        }}
-                                                        mr={0.5}
-                                                        mb={0}
-                                                        px="0.7rem"
-                                                        scale={0.8}
-                                                        key={Math.random()}
-                                                    >
-                                                        {listing.platform &&
-                                                            listing.platform}
-                                                    </Badge>
-                                                )
-                                            })
-                                        }
-                                        mb={1}
-                                    />
-                                    <Description
-                                        title="Tags"
-                                        content={
-                                            product.tags &&
-                                            product.tags.map((tag) => {
-                                                return (
-                                                    <Badge
-                                                        style={{
-                                                            backgroundColor:
-                                                                theme.palette
-                                                                    .accents_2,
-                                                            color: theme.palette
-                                                                .foreground,
-                                                        }}
-                                                        mr={0.5}
-                                                        mb={0}
-                                                        px="0.7rem"
-                                                        scale={0.8}
-                                                        key={tag}
-                                                    >
-                                                        {tag}
-                                                    </Badge>
-                                                )
-                                            })
-                                        }
-                                        mb={1}
-                                    />
-                                    <Divider my={4} width="100%" />
-                                    <div
+                                    <Select
                                         style={{
-                                            display: 'block!important',
-                                            width: '100%',
-                                            height: '100%',
+                                            minHeight: '3rem',
+                                            minWidth: '100% !important',
                                         }}
+                                        width="100%"
+                                        placeholder="Choose listing"
+                                        value={listingID}
+                                        onChange={(val) => setListingID(val)}
+                                        mb={0.7}
                                     >
-                                        <Select
-                                            style={{
-                                                minHeight: '3rem',
-                                                minWidth: '100% !important',
-                                            }}
-                                            width="100%"
-                                            placeholder="Choose listing"
-                                            value={listingID}
-                                            onChange={(val) =>
-                                                setListingID(val)
-                                            }
-                                            mb={0.7}
-                                        >
-                                            {product.listings &&
-                                                product.listings.map(
-                                                    (listing, index) => {
-                                                        return (
-                                                            <Select.Option
-                                                                key={
-                                                                    listing._id
+                                        {product.listings &&
+                                            product.listings.map(
+                                                (listing, index) => {
+                                                    return (
+                                                        <Select.Option
+                                                            key={listing._id}
+                                                            value={listing._id}
+                                                        >
+                                                            {'platform: '}
+                                                            <Code>
+                                                                {
+                                                                    listing.platform
                                                                 }
-                                                                value={
-                                                                    listing._id
-                                                                }
-                                                            >
-                                                                {'platform: '}
-                                                                <Code>
-                                                                    {
-                                                                        listing.platform
-                                                                    }
-                                                                </Code>
-                                                                {', region: '}
-                                                                <Code>
-                                                                    {
-                                                                        listing.region
-                                                                    }
-                                                                </Code>
-                                                                {', price: '}
-                                                                <Code>
-                                                                    {
-                                                                        listing.price
-                                                                    }
-                                                                </Code>
-                                                            </Select.Option>
-                                                        )
-                                                    }
-                                                )}
-                                        </Select>
-                                        <Button
-                                            width="100%"
-                                            icon={<ShoppingCart />}
-                                            type="secondary"
-                                            disabled={listingID}
-                                            onClick={() => insertToCart()}
-                                        >
-                                            {product.listings &&
-                                                product['listings'][0]['price']}
-                                        </Button>
-                                    </div>
-                                </Card>
-                            </Grid>
-                            <Grid xs={24}>
-                                <Card
-                                    style={{
-                                        backgroundColor: `${theme.palette.accents_1}`,
-                                    }}
-                                >
-                                    <Collapse.Group>
-                                        <Collapse
-                                            title="Question A"
-                                            initialVisible
-                                        >
-                                            <Text>
-                                                Lorem ipsum dolor sit amet,
-                                                consectetur adipiscing elit, sed
-                                                do eiusmod tempor incididunt ut
-                                                labore et dolore magna aliqua.
-                                                Ut enim ad minim veniam, quis
-                                                nostrud exercitation ullamco
-                                                laboris nisi ut aliquip ex ea
-                                                commodo consequat.
-                                            </Text>
-                                        </Collapse>
-                                        <Collapse
-                                            style={{ borderBottom: 'none' }}
-                                            title="Question B"
-                                        >
-                                            <Text>
-                                                Lorem ipsum dolor sit amet,
-                                                consectetur adipiscing elit, sed
-                                                do eiusmod tempor incididunt ut
-                                                labore et dolore magna aliqua.
-                                                Ut enim ad minim veniam, quis
-                                                nostrud exercitation ullamco
-                                                laboris nisi ut aliquip ex ea
-                                                commodo consequat.
-                                            </Text>
-                                        </Collapse>
-                                    </Collapse.Group>
-                                </Card>
-                            </Grid>
-                        </>
-                    ) : (
+                                                            </Code>
+                                                            {', region: '}
+                                                            <Code>
+                                                                {listing.region}
+                                                            </Code>
+                                                            {', price: '}
+                                                            <Code>
+                                                                {listing.price}
+                                                            </Code>
+                                                        </Select.Option>
+                                                    )
+                                                }
+                                            )}
+                                    </Select>
+                                    <Button
+                                        width="100%"
+                                        icon={<ShoppingCart />}
+                                        type="secondary"
+                                        disabled={listingID}
+                                        onClick={() => insertToCart()}
+                                    >
+                                        {product.listings &&
+                                            product['listings'][0]['price']}
+                                    </Button>
+                                </div>
+                            </Card>
+                        </Grid>
                         <Grid xs={24}>
                             <Card
                                 style={{
-                                    backgroundColor: theme.palette.accents_1,
+                                    backgroundColor: `${theme.palette.accents_1}`,
                                 }}
-                                width="100%"
                             >
-                                <Loading />
+                                <Collapse.Group>
+                                    <Collapse title="Question A" initialVisible>
+                                        <Text>
+                                            Lorem ipsum dolor sit amet,
+                                            consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore
+                                            et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud
+                                            exercitation ullamco laboris nisi ut
+                                            aliquip ex ea commodo consequat.
+                                        </Text>
+                                    </Collapse>
+                                    <Collapse
+                                        style={{ borderBottom: 'none' }}
+                                        title="Question B"
+                                    >
+                                        <Text>
+                                            Lorem ipsum dolor sit amet,
+                                            consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore
+                                            et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud
+                                            exercitation ullamco laboris nisi ut
+                                            aliquip ex ea commodo consequat.
+                                        </Text>
+                                    </Collapse>
+                                </Collapse.Group>
                             </Card>
                         </Grid>
-                    )}
-                </Grid.Container>
-            </Layout>
+                    </>
+                ) : (
+                    <Grid xs={24}>
+                        <Card
+                            style={{
+                                backgroundColor: theme.palette.accents_1,
+                            }}
+                            width="100%"
+                        >
+                            <Loading />
+                        </Card>
+                    </Grid>
+                )}
+            </Grid.Container>
+
             <style jsx global>
                 {`
                     .btn-group > button {

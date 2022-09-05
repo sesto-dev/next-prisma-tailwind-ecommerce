@@ -1,4 +1,4 @@
-import { Layout, getLocaleDirection } from 'aryana'
+import { getLocaleDirection } from 'aryana'
 import { Grid, Card, Text, useTheme } from '@geist-ui/core'
 import essentials from '../helpers/getEssentials'
 
@@ -23,33 +23,25 @@ export default function ({ auth }) {
     const { title, description, content } = i18n['pages']['index']
 
     return (
-        <Layout
-            essentials={essentials}
-            crownLarge={title[locale]}
-            crownSmall={description[locale]}
-            metaTitle={title[locale]}
-            metaDescription={description[locale]}
-        >
-            <Grid.Container gap={1}>
-                <Grid xs={24}>
-                    <Card
-                        width="100%"
+        <Grid.Container gap={1}>
+            <Grid xs={24}>
+                <Card
+                    width="100%"
+                    style={{
+                        backgroundColor: theme.palette.accents_1,
+                    }}
+                >
+                    <Text
+                        type="secondary"
                         style={{
-                            backgroundColor: theme.palette.accents_1,
+                            direction: getLocaleDirection(locale),
                         }}
                     >
-                        <Text
-                            type="secondary"
-                            style={{
-                                direction: getLocaleDirection(locale),
-                            }}
-                        >
-                            {content[locale]}
-                        </Text>
-                    </Card>
-                </Grid>
-            </Grid.Container>
-        </Layout>
+                        {content[locale]}
+                    </Text>
+                </Card>
+            </Grid>
+        </Grid.Container>
     )
 }
 
