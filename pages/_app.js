@@ -1,16 +1,22 @@
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { Layout } from 'aryana'
 
 import { AuthProvider } from '../state/Auth'
 import { ThemeProvider } from '../state/Theme'
-import { EssentialsProvider } from '../state/Essentials'
-
-import { Layout } from 'aryana'
+import { MetaContext } from '../state/Meta'
 
 import essentials from '../helpers/getEssentials'
 
+const obj = {
+    title: 'Next',
+    description: 'Next Page',
+    image: 'https://i.imgur.com/NitQE9d.jpg',
+}
+
 export default function ({ Component, pageProps }) {
     const router = useRouter()
+    const [meta, setMeta] = useState(essentials.config.meta)
 
     // Google Analytics Route Handling
     useEffect(() => {
@@ -37,11 +43,11 @@ export default function ({ Component, pageProps }) {
     return (
         <ThemeProvider>
             <AuthProvider>
-                <EssentialsProvider>
-                    <Layout essentials={essentials}>
+                <MetaContext.Provider value={{ meta, setMeta }}>
+                    <Layout essentials={essentials} meta={meta}>
                         <Component {...pageProps} />
                     </Layout>
-                </EssentialsProvider>
+                </MetaContext.Provider>
             </AuthProvider>
         </ThemeProvider>
     )

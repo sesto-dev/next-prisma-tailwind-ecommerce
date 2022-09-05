@@ -25,14 +25,23 @@ export default function ({ id }) {
         Link,
         Head,
         axios,
+        useMeta,
     } = essentials
 
     const theme = useTheme()
     const router = useRouter()
+    const { setMeta } = useMeta()
     const { locale = config['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
 
     const { title, description } = i18n['pages']['order']
+
+    useEffect(() => {
+        setMeta({
+            title: title[locale],
+            description: description[locale],
+        })
+    }, [locale])
 
     const [order, setOrder] = useState({})
 

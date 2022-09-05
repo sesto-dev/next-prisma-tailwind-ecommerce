@@ -3,6 +3,7 @@ import { Button, Grid, useToasts, Input, Text } from '@geist-ui/core'
 
 import { isLocaleRTL, forgotHandler, resetHandler, isEmail } from 'aryana'
 import essentials from '../../helpers/getEssentials'
+import { useEffect } from 'react'
 
 export default function () {
     const {
@@ -14,13 +15,22 @@ export default function () {
         Link,
         Head,
         axios,
+        useMeta,
     } = essentials
 
     const router = useRouter()
+    const { setMeta } = useMeta()
     const { locale = config['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
 
     const { title, description } = i18n['pages']['reset']
+
+    useEffect(() => {
+        setMeta({
+            title: title[locale],
+            description: description[locale],
+        })
+    }, [locale])
 
     const [loading, setLoading] = useState(false)
     const [nextStage, setNextStage] = useState(false)

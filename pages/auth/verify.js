@@ -2,11 +2,11 @@ import useState from 'react-usestateref'
 import { Button, Grid, useToasts, Input } from '@geist-ui/core'
 
 import { isLocaleRTL, verifyHandler } from 'aryana'
-import { useEssentials } from '../../state/Essentials'
+import { useEffect } from 'react'
+
+import essentials from '../../helpers/getEssentials'
 
 export default function () {
-    const { essentials, setLocalEssentials } = useEssentials()
-
     const {
         config,
         i18n,
@@ -16,13 +16,22 @@ export default function () {
         Head,
         useRouter,
         axios,
+        useMeta,
     } = essentials
 
+    const { setMeta } = useMeta()
+    const { setToast } = useToasts()
     const router = useRouter()
     const { locale = config['defaultLocale'] } = useRouter()
-    const { setToast } = useToasts()
 
     const { title, description } = i18n['pages']['verify']
+
+    useEffect(() => {
+        setMeta({
+            title: title[locale],
+            description: description[locale],
+        })
+    }, [locale])
 
     const [loading, setLoading] = useState(false)
     const [code, setCode, refCode] = useState('')
@@ -42,7 +51,7 @@ export default function () {
             setToast,
             router,
             toast: i18n['toasts']['verify'][locale],
-            redirect_uri: config.routes.user,
+            redirect_uri: config.routes.frontend.user,
         })
     }
 

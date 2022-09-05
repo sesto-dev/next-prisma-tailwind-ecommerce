@@ -47,7 +47,7 @@ export const ThemeProvider = ({ children }) => {
 export const useThemeProvider = () => {
     const context = useContext(ThemeContext)
     if (context === undefined)
-        throw new Error('useThemeProvider must be used within a ThemeProvider')
+        throw new Error('Hooks must be used within a provider.')
 
     return context
 }

@@ -399,7 +399,6 @@ const pages = {
             en: 'User Page',
             fa: 'صفحه حساب کاربری',
         },
-
         info: {
             title: {
                 en: 'User Info',

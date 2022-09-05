@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Grid, useToasts } from '@geist-ui/core'
 
 import { unsubscribeHandler } from 'aryana'
@@ -15,14 +15,23 @@ export default function () {
         Link,
         Head,
         axios,
+        useMeta,
     } = essentials
 
     const router = useRouter()
     const { locale = config['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
     const { isAuthenticated } = useAuth()
+    const { setMeta } = useMeta()
 
     const { title, description } = i18n['pages']['unsubscribe']
+
+    useEffect(() => {
+        setMeta({
+            title: title[locale],
+            description: description[locale],
+        })
+    }, [locale])
 
     const [loading, setLoading] = useState(false)
 

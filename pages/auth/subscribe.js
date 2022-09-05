@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Grid, useToasts } from '@geist-ui/core'
 import essentials from '../../helpers/getEssentials'
 
@@ -14,13 +14,22 @@ export default function () {
         Link,
         Head,
         axios,
+        useMeta,
     } = essentials
 
     const { locale = config['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
+    const { setMeta } = useMeta()
     const { isAuthenticated } = useAuth()
 
     const { title, description } = i18n['pages']['subscribe']
+
+    useEffect(() => {
+        setMeta({
+            title: title[locale],
+            description: description[locale],
+        })
+    }, [locale])
 
     const [loading, setLoading] = useState(false)
 

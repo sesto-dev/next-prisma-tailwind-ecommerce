@@ -32,14 +32,25 @@ export default function ({ page, category, tags, sort }) {
         Link,
         Head,
         axios,
+        useMeta,
     } = essentials
 
     const theme = useTheme()
+    const { setMeta } = useMeta()
     const router = useRouter()
     const { setToast } = useToasts()
 
     const { locale = config['defaultLocale'] } = useRouter()
     const folio = i18n['pages']['products']
+
+    useEffect(() => {
+        const { title, description } = folio
+
+        setMeta({
+            title: title[locale],
+            description: description[locale],
+        })
+    }, [locale])
 
     const [keyword, setKeyword] = useState(null)
     const [pages, setPages] = useState(null)

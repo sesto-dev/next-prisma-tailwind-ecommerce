@@ -23,6 +23,7 @@ import {
     GoogleIcon,
     isEmail,
 } from 'aryana'
+import { useEffect } from 'react'
 
 export default function () {
     const {
@@ -34,15 +35,24 @@ export default function () {
         Link,
         Head,
         axios,
+        useMeta,
     } = essentials
 
     const theme = useTheme()
     const router = useRouter()
+    const { setMeta } = useMeta()
     const { locale = config['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
     const { setLocalAuthentication } = useAuth()
 
     const { title, description } = i18n['pages']['login']
+
+    useEffect(() => {
+        setMeta({
+            title: title[locale],
+            description: description[locale],
+        })
+    }, [locale])
 
     const [email, setEmail, refEmail] = useState('')
     const [password, setPassword, refPassword] = useState('')
@@ -72,7 +82,7 @@ export default function () {
             setLocalAuthentication,
             router,
             toast: i18n['toasts']['login'][locale],
-            redirect_uri: config.routes.user,
+            redirect_uri: config.routes.frontend.user,
         })
     }
 
@@ -92,7 +102,7 @@ export default function () {
             setToast,
             setLocalAuthentication,
             router,
-            redirect_uri: config.routes.verify,
+            redirect_uri: config.routes.frontend.verify,
         })
     }
 
@@ -162,7 +172,7 @@ export default function () {
                                 }}
                             />
                             <Button
-                                loading={loading}
+                                loading={refLoading.current}
                                 disabled={
                                     !refEmail.current ||
                                     !refPassword.current ||
@@ -330,7 +340,7 @@ export default function () {
                                     </Text>
                                 )}
                             <Button
-                                loading={loading}
+                                loading={refLoading.current}
                                 disabled={
                                     !refEmail.current ||
                                     !refPassword.current ||

@@ -31,18 +31,17 @@ export default function ({ id }) {
         Link,
         Head,
         axios,
+        useMeta,
     } = essentials
 
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
+    const { setMeta } = useMeta()
 
     const { locale = config['defaultLocale'] } = useRouter()
 
     const [product, setProduct] = useState({})
-    const [image, setImage] = useState(null)
-    const [title, setTitle] = useState(null)
-    const [description, setDescription] = useState(null)
     const [listingID, setListingID] = useState(null)
 
     async function insertToCart() {
@@ -62,14 +61,14 @@ export default function ({ id }) {
 
     useEffect(() => {
         async function resolve() {
-            const route = config.backend.routes.products + `/${id}`
-            const response = await axios.get(route)
+            const response = await axios.get(
+                config.backend.routes.products + `/${id}`
+            )
 
             handleProductData({
                 response,
                 router,
-                setTitle,
-                setImage,
+                setMeta,
                 setProduct,
                 setToast,
                 noDataToast: i18n['toasts']['noData'][locale],

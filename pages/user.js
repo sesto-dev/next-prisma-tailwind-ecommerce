@@ -34,20 +34,38 @@ export default function ({ auth }) {
         Link,
         Head,
         axios,
+        useMeta,
     } = essentials
 
+    const { setMeta } = useMeta()
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
     const { setLocalAuthentication } = useAuth()
     const { width, height } = useWindowSize()
 
-    setLocalAuthentication(auth)
+    useEffect(() => {
+        setLocalAuthentication(auth)
+    }, [])
 
     const { locale = config['defaultLocale'] } = useRouter()
 
-    const { info, referrals, orders, integrations, logout } =
-        i18n['pages']['user']
+    const {
+        title,
+        description,
+        info,
+        referrals,
+        orders,
+        integrations,
+        logout,
+    } = i18n['pages']['user']
+
+    useEffect(() => {
+        setMeta({
+            title: title[locale],
+            description: description[locale],
+        })
+    }, [locale])
 
     const [user, setUser] = useState(null)
 
@@ -65,6 +83,7 @@ export default function ({ auth }) {
                 noDataToast: i18n['toasts']['noData'][locale],
                 notVerifiedToast: i18n['toasts']['notVerified'][locale],
                 Link,
+                notVerifiedRedirectURI: config.routes.frontend.verify,
             })
         }
 

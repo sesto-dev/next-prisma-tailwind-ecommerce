@@ -29,9 +29,11 @@ export default function () {
         Link,
         Head,
         axios,
+        useMeta,
     } = essentials
 
     const theme = useTheme()
+    const { setMeta } = useMeta()
     const router = useRouter()
     const { setToast } = useToasts()
 
@@ -40,6 +42,13 @@ export default function () {
     const { title, description } = i18n['pages']['cart']
 
     const [cart, setCart] = useState(null)
+
+    useEffect(() => {
+        setMeta({
+            title: title[locale],
+            description: description[locale],
+        })
+    }, [locale])
 
     useEffect(() => {
         async function resolve() {

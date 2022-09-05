@@ -1,6 +1,7 @@
 import { Grid, Card, useTheme, Text, Spacer, Code } from '@geist-ui/core'
 import essentials from '../helpers/getEssentials'
 import { getLocaleDirection } from 'aryana'
+import { useEffect } from 'react'
 
 export default function () {
     const {
@@ -12,13 +13,20 @@ export default function () {
         Link,
         Head,
         axios,
+        useMeta,
     } = essentials
 
     const theme = useTheme()
+    const { setMeta } = useMeta()
     const { locale = config['defaultLocale'] } = useRouter()
     const { title, description, content } = i18n['pages']['about']
 
-    console.log({ title, description, locale })
+    useEffect(() => {
+        setMeta({
+            title: title[locale],
+            description: description[locale],
+        })
+    }, [locale])
 
     const links = ['http://github.com/accretence/create-next-dashboard']
 

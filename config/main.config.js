@@ -12,13 +12,17 @@ export default {
         authentication: true,
     },
     meta: {
-        title: 'Next',
+        title: 'Sample Meta Title',
+        description: 'Sample Meta Description',
+        image: 'https://i.imgur.com/NitQE9d.jpg',
         url,
     },
     routes: {
         frontend: {
             user: '/user',
             verify: '/auth/verify',
+            root: '/',
+            login: '/auth/login',
         },
     },
     urls: {

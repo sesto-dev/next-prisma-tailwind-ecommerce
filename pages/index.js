@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { getLocaleDirection } from 'aryana'
 import { Grid, Card, Text, useTheme } from '@geist-ui/core'
 import essentials from '../helpers/getEssentials'
@@ -12,15 +13,27 @@ export default function ({ auth }) {
         Link,
         Head,
         axios,
+        useMeta,
     } = essentials
 
+    const { setMeta } = useMeta()
     const theme = useTheme()
     const { locale = config['defaultLocale'] } = useRouter()
     const { isAuthenticated, setLocalAuthentication } = useAuth()
 
-    setLocalAuthentication(auth)
+    useEffect(() => {
+        setLocalAuthentication(auth)
+    }, [])
 
     const { title, description, content } = i18n['pages']['index']
+
+    useEffect(() => {
+        setMeta({
+            title: title[locale],
+            description: description[locale],
+            image: 'https://i.imgur.com/NitQE9d.jpg',
+        })
+    }, [locale])
 
     return (
         <Grid.Container gap={1}>

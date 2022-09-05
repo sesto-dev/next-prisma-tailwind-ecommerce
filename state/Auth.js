@@ -42,9 +42,9 @@ export const AuthProvider = ({ children }) => {
 
 export function useAuth() {
     const context = useContext(AuthContext)
-    if (context === undefined) {
+    if (context === undefined)
         throw new Error('Hooks must be used within a provider.')
-    }
+
     return context
 }
 
