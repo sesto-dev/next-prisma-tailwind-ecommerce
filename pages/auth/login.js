@@ -77,6 +77,8 @@ export default function () {
             config.backend.axios.simple
         )
 
+        console.log(response)
+
         loginHandler({
             response,
             setLoading,
@@ -99,6 +101,8 @@ export default function () {
             },
             config.backend.axios.simple
         )
+
+        console.log(response)
 
         registerHandler({
             response,

@@ -101,7 +101,7 @@ export default function ({ auth }) {
             setLocalAuthentication,
             router,
             toast: i18n['toasts']['logout'][locale],
-            redirect_uri: '/',
+            redirect_uri: config.routes.frontend.root,
         })
     }
 

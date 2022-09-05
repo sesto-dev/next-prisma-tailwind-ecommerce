@@ -21,8 +21,8 @@ export default {
         frontend: {
             user: '/user',
             verify: '/auth/verify',
-            root: '/',
             login: '/auth/login',
+            root: '/',
         },
     },
     urls: {

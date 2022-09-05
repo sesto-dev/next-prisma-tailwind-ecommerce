@@ -76,7 +76,7 @@ export default function () {
             setToast,
             router,
             toast: i18n['toasts']['forgot'][locale],
-            redirect_uri: config['routes']['frontend']['login'],
+            redirect_uri: config.routes.frontend.login,
         })
     }
 

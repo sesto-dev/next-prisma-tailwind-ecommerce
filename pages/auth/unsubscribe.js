@@ -46,7 +46,7 @@ export default function () {
             setToast,
             toast: i18n['toasts']['unsubscribe'][locale],
             router,
-            redirect_uri: '/',
+            redirect_uri: config.routes.frontend.root,
         })
     }
 
