@@ -34,6 +34,8 @@ export default function () {
     const [loading, setLoading] = useState(false)
 
     async function attemptSubscribe() {
+        setLoading(true)
+
         const response = await axios.post(config.backend.routes.subscribe)
 
         subscribeHandler({

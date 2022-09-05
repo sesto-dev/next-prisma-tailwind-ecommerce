@@ -66,6 +66,8 @@ export default function () {
     } = i18n
 
     async function attemptLogin() {
+        setLoading(true)
+
         const response = await axios.post(
             config.backend.routes.login,
             {
@@ -87,6 +89,8 @@ export default function () {
     }
 
     async function attemptRegister() {
+        setLoading(true)
+
         const response = await axios.post(
             config.backend.routes.register,
             {

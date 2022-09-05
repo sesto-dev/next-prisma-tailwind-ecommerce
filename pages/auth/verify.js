@@ -30,6 +30,8 @@ export default function () {
         setMeta({
             title: title[locale],
             description: description[locale],
+            large: title[locale],
+            small: description[locale],
         })
     }, [locale])
 

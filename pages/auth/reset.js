@@ -32,13 +32,15 @@ export default function () {
         })
     }, [locale])
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading, refLoading] = useState(false)
     const [nextStage, setNextStage] = useState(false)
     const [email, setEmail, refEmail] = useState('')
     const [code, setCode, refCode] = useState('')
     const [password, setPassword, refPassword] = useState('')
 
     async function attemptForgot() {
+        setLoading(true)
+
         const response = await axios.post(
             config.backend.routes.forgot,
             {
@@ -57,6 +59,8 @@ export default function () {
     }
 
     async function attemptReset() {
+        setLoading(true)
+
         const response = await axios.post(
             config.backend.routes.reset,
             {
@@ -115,7 +119,7 @@ export default function () {
             <Grid xs={24}>
                 {!nextStage && (
                     <Button
-                        loading={loading}
+                        loading={refLoading.current}
                         disabled={
                             !refEmail.current || !isEmail(refEmail.current)
                         }
@@ -190,7 +194,7 @@ export default function () {
             <Grid xs={24}>
                 {nextStage && (
                     <Button
-                        loading={loading}
+                        loading={refLoading.current}
                         disabled={
                             !refCode.current ||
                             !refPassword.current ||
