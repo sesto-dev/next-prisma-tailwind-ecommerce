@@ -199,7 +199,6 @@ export default function ({ auth }) {
                             border: `1px solid ${theme.palette.code}`,
                             color: theme.palette.code,
                         }}
-                        onClick={() => {}}
                     >
                         {i18n['buttons']['google']['inactive'][locale]}
                     </Button>
