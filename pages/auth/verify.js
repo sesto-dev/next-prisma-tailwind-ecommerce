@@ -1,8 +1,7 @@
+import { useEffect } from 'react'
 import useState from 'react-usestateref'
 import { Button, Grid, useToasts, Input } from '@geist-ui/core'
-
 import { isLocaleRTL, verifyHandler } from 'aryana'
-import { useEffect } from 'react'
 
 import essentials from '../../helpers/getEssentials'
 
@@ -39,6 +38,10 @@ export default function () {
     const [code, setCode, refCode] = useState('')
 
     async function attemptVerify() {
+        setLoading(true)
+
+        console.log(refCode.current)
+
         const response = await axios.post(
             config.backend.routes.verify,
             {
@@ -46,6 +49,8 @@ export default function () {
             },
             config.backend.axios.simple
         )
+
+        console.log(response)
 
         verifyHandler({
             response,
@@ -71,7 +76,7 @@ export default function () {
                     }
                     placeholder={i18n['inputs']['code']['placeholder'][locale]}
                     width="220pt"
-                    value={code}
+                    value={refCode.current}
                     type="secondary"
                     onChange={(e) => {
                         setCode(e.target.value.trim())

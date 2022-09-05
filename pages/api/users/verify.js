@@ -1,5 +1,4 @@
 import connectDB from '../../../helpers/connectDB'
-import verifyRequest from '../../../helpers/verifyRequest'
 
 import User from '../../../models/User'
 
@@ -10,11 +9,9 @@ export default async function (req, res) {
         res.status(401).send('Input error!')
     }
 
-    const decoded = await verifyRequest(req, res)
-
     connectDB()
 
-    const user = await User.findById(decoded.id)
+    const user = await User.findOne({ email_verification_code: code })
 
     if (user && !user.isEmailVerified) {
         if (code == user.email_verification_code) {
