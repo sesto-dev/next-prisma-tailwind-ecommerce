@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 import connectDB from '../../../helpers/connectDB'
 import populateCart from '../../../helpers/populateCart'
 import verifyRequest from '../../../helpers/verifyRequest'
-import Product from '../../../models/Product'
 import User from '../../../models/User'
 
 export default async function (req, res) {
@@ -15,11 +14,11 @@ export default async function (req, res) {
     const user = await User.findById(decoded.id)
 
     if (user) {
-        const filteredCart = user.cart.filter(function (value, index) {
+        const filteredCart = user.cart.items.filter(function (value, index) {
             if (value.toString() != listingID) return value
         })
 
-        user.cart = filteredCart
+        user.cart.items = filteredCart
         await user.save()
 
         const cart = await populateCart({ user })

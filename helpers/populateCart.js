@@ -2,11 +2,12 @@ import Listing from '../models/Listing'
 import Product from '../models/Product'
 
 export default async function ({ user }) {
-    let cart = []
+    let items = [],
+        totalCost = 0,
+        discountCost = 0,
+        hasPhysical = false
 
-    const { cart: cartIDs } = user
-
-    const stringIDs = cartIDs.map((id) => id.toString())
+    const stringIDs = user.cart.items.map((id) => id.toString())
     stringIDs.sort((a, b) => a.localeCompare(b))
 
     const uniqueIDs = stringIDs.filter((x, i, a) => a.indexOf(x) == i)
@@ -18,12 +19,26 @@ export default async function ({ user }) {
         const { product: productID } = listing
         const product = await Product.findById(productID.toString())
 
-        cart.push({ listing, product })
+        items.push({ listing, product })
     }
 
-    for (let j = 0; j < cart.length; j++) {
-        cart[j]['count'] = stringIDs.filter((x) => x == uniqueIDs[j]).length
+    for (let j = 0; j < items.length; j++) {
+        const element = items[j]
+
+        const count = stringIDs.filter((x) => x == uniqueIDs[j]).length
+        element.count = count
+        totalCost += element.listing.price * count
+
+        if (element.product.physical) hasPhysical = true
     }
 
-    return cart
+    const payableCost = totalCost - discountCost
+
+    return {
+        items,
+        totalCost,
+        payableCost,
+        discountCost,
+        hasPhysical,
+    }
 }

@@ -19,12 +19,15 @@ const userSchema = mongoose.Schema(
                 partialFilterExpression: { phone: { $type: 'string' } },
             },
         },
-        cart: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Listing',
-            },
-        ],
+        cart: {
+            discount_code: String,
+            items: [
+                {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Listing',
+                },
+            ],
+        },
         address: [
             {
                 type: String,

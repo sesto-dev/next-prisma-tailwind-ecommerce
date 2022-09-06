@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 import connectDB from '../../../helpers/connectDB'
 import populateCart from '../../../helpers/populateCart'
 import verifyRequest from '../../../helpers/verifyRequest'
-import Product from '../../../models/Product'
 import User from '../../../models/User'
 
 export default async function (req, res) {
@@ -15,10 +14,12 @@ export default async function (req, res) {
     const user = await User.findById(decoded.id)
 
     if (user) {
-        const index = user.cart.indexOf(mongoose.Types.ObjectId(listingID))
+        const index = user.cart.items.indexOf(
+            mongoose.Types.ObjectId(listingID)
+        )
 
         if (index > -1) {
-            user.cart.splice(index, 1)
+            user.cart.items.splice(index, 1)
             await user.save()
 
             const cart = await populateCart({ user })

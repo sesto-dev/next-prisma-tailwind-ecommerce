@@ -6,6 +6,7 @@ const Order = require('../models/Order.js')
 const Product = require('../models/Product.js')
 const User = require('../models/User.js')
 const Listing = require('../models/Listing.js')
+const Discount = require('../models/Discount.js')
 
 dotenv.config()
 
@@ -17,13 +18,30 @@ mongoose.connect(process.env.MONGO_ATLAS_URI, {
 const importData = async () => {
     try {
         let userIDs = [],
-            orders = []
+            orders = [],
+            discounts = []
 
         await Order.deleteMany()
         await User.deleteMany()
         await Product.deleteMany()
         await Listing.deleteMany()
+        await Discount.deleteMany()
 
+        for (let d = 0; d < getRandInt(2, 5); d++) {
+            const count = getRandInt(2, 10)
+            const uses = getRandInt(1, count)
+
+            discounts.push({
+                code: generateVoucher(1),
+                count,
+                uses,
+                category: 'games',
+                percentage: getRandInt(3, 15),
+                maximum_amount: getRandInt(5, 10),
+            })
+        }
+
+        const createdDiscounts = await Discount.insertMany(discounts)
         const createdProducts = await Product.insertMany(products)
 
         for (let p = 0; p < products.length; p++) {
@@ -49,15 +67,19 @@ const importData = async () => {
         const generatedUsers = users.map((user) => {
             return {
                 ...user,
-                cart: (() => {
-                    const cartContent = []
-                    for (let j = 0; j < getRandInt(1, 7); j++) {
-                        cartContent.push(
-                            storedListings[getRandInt(0, storedListings.length)]
-                        )
-                    }
-                    return cartContent
-                })(),
+                cart: {
+                    items: (() => {
+                        const cartContent = []
+                        for (let j = 0; j < getRandInt(1, 7); j++) {
+                            cartContent.push(
+                                storedListings[
+                                    getRandInt(0, storedListings.length)
+                                ]
+                            )
+                        }
+                        return cartContent
+                    })(),
+                },
             }
         })
 
@@ -121,4 +143,27 @@ if (process.argv[2] === '-d') {
 
 function getRandInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min)
+}
+
+function generateVoucher(batch = 3) {
+    let voucher = ''
+
+    function generate() {
+        let generation = ''
+
+        while (generation.length != 5) {
+            generation = Math.random().toString(36).slice(8).toUpperCase()
+        }
+
+        return generation
+    }
+
+    voucher = voucher.concat(generate())
+
+    for (let i = 1; i < batch; i++) {
+        voucher = voucher.concat('-')
+        voucher = voucher.concat(generate())
+    }
+
+    return voucher
 }

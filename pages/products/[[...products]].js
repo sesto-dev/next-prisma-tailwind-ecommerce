@@ -327,7 +327,6 @@ export default function ({ page, category, tags, sort }) {
                                         xl={6}
                                     >
                                         <Card
-                                            shadow
                                             width="100%"
                                             height="20rem"
                                             py="8rem"

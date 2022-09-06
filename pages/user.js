@@ -71,9 +71,7 @@ export default function ({ auth }) {
 
     useEffect(() => {
         async function resolve() {
-            const response = await axios.get(
-                config['backend']['routes']['user']
-            )
+            const response = await axios.get(config.routes.backend.user)
 
             handleUserData({
                 response,
@@ -137,6 +135,7 @@ export default function ({ auth }) {
                     title={info['referral'][locale]}
                     content={
                         <Snippet
+                            symbol=""
                             font="1rem"
                             toastText="✓ Referral-Code copied!"
                             toastType="default"
@@ -234,7 +233,7 @@ export default function ({ auth }) {
             width={width < 650 && '100%'}
             auto={width > 650}
         >
-            <b>{logout['title'][locale]}</b>
+            <b>{logout['title'][locale].toUpperCase()}</b>
         </Button>
     )
 

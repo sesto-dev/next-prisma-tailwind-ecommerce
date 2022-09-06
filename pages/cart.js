@@ -1,7 +1,7 @@
 import { handleCartData } from 'aryana'
 import { useState, useEffect } from 'react'
 
-import { Trash, Plus, Minus, CreditCard } from '@geist-ui/icons'
+import { Trash, Plus, Minus, CreditCard, Unlock } from '@geist-ui/icons'
 import {
     Text,
     ButtonGroup,
@@ -67,9 +67,194 @@ export default function () {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    useEffect(() => {
-        console.log(cart)
-    }, [cart])
+    return (
+        <Grid.Container gap={2}>
+            <Items cart={cart} setCart={setCart} />
+            <Receipt cart={cart} />
+        </Grid.Container>
+    )
+}
+
+const Receipt = ({ cart, setCart }) => {
+    const theme = useTheme()
+
+    const [discountCode, setDiscountCode] = useState('')
+    const [referralCode, setReferralCode] = useState('')
+
+    return (
+        <Grid xs={24} md={8}>
+            <Card
+                width="100%"
+                style={{
+                    backgroundColor: theme.palette.accents_1,
+                    height: 'max-content',
+                }}
+            >
+                {cart ? (
+                    <>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <Text mb={0} type="secondary">
+                                TOTAL COST
+                            </Text>
+                            <Text mb={0}>{cart.totalCost}</Text>
+                        </div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <Text mb={0} type="secondary">
+                                DISCOUNT
+                            </Text>
+                            <Text mb={0}>{cart.discountCost}</Text>
+                        </div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <Text mb={0} type="secondary">
+                                PAYABLE
+                            </Text>
+                            <Text mb={0}>{cart.payableCost}</Text>
+                        </div>
+                        <Divider my={3} />
+                        {cart.hasPhysical && (
+                            <>
+                                <Text small type="secondary">
+                                    ADDRESS
+                                </Text>
+                                <Select
+                                    width="100%"
+                                    mb={1}
+                                    placeholder="Choose address."
+                                    disabled
+                                >
+                                    <Select.Option value="1">
+                                        Option 1
+                                    </Select.Option>
+                                    <Select.Option value="2">
+                                        Option 2
+                                    </Select.Option>
+                                </Select>
+                            </>
+                        )}
+                        <Text small type="secondary">
+                            REFERRAL CODE
+                        </Text>
+                        <Grid.Container gap={1}>
+                            <Grid xs={18}>
+                                <Input
+                                    mb={1}
+                                    width="100%"
+                                    placeholder="Input referral code."
+                                    value={referralCode}
+                                    onChange={(e) =>
+                                        setReferralCode(e.target.value.trim())
+                                    }
+                                />
+                            </Grid>
+                            <Grid xs={6}>
+                                <Button
+                                    disabled
+                                    height="2.25rem"
+                                    width="100%"
+                                    icon={<Unlock />}
+                                />
+                            </Grid>
+                        </Grid.Container>
+                        <Text small type="secondary">
+                            DISCOUNT CODE
+                        </Text>
+                        <Grid.Container gap={1}>
+                            <Grid xs={18}>
+                                <Input
+                                    width="100%"
+                                    placeholder="Input discount code."
+                                    value={discountCode}
+                                    onChange={(e) =>
+                                        setDiscountCode(e.target.value.trim())
+                                    }
+                                />
+                            </Grid>
+                            <Grid xs={6}>
+                                <Button
+                                    disabled
+                                    height="2.25rem"
+                                    width="100%"
+                                    icon={<Unlock />}
+                                />
+                            </Grid>
+                        </Grid.Container>
+                        <Divider my={3} />
+                        <Button
+                            mb={0.6}
+                            width="100%"
+                            type="secondary"
+                            icon={<CreditCard />}
+                        >
+                            Pay
+                        </Button>
+                    </>
+                ) : (
+                    <Loading />
+                )}
+            </Card>
+        </Grid>
+    )
+}
+
+const Items = ({ cart, setCart }) => {
+    return (
+        <>
+            <Grid xs={24} md={16}>
+                <Grid.Container style={{ height: 'max-content' }} gap={1}>
+                    {cart &&
+                        cart.items.map(({ listing, product, count }) => {
+                            return (
+                                <Product
+                                    key={product._id}
+                                    listing={listing}
+                                    product={product}
+                                    count={count}
+                                    cart={cart}
+                                    setCart={setCart}
+                                />
+                            )
+                        })}
+                </Grid.Container>
+            </Grid>
+            <Grid xs={24} md={0}>
+                <Divider width="100%" />
+            </Grid>
+        </>
+    )
+}
+
+const Product = ({ product, listing, count, cart, setCart }) => {
+    const {
+        config,
+        i18n,
+        useThemeProvider,
+        useAuth,
+        useRouter,
+        Link,
+        Head,
+        axios,
+        useMeta,
+    } = essentials
+
+    const theme = useTheme()
+    const router = useRouter()
+    const { setToast } = useToasts()
+    const { locale = config.defaultLocale } = router
 
     async function onAdd(listingID) {
         const response = await axios.post(
@@ -121,233 +306,119 @@ export default function () {
         })
     }
 
-    const Product = ({ product, listing, count }) => {
-        return (
-            <Grid style={{ height: 'max-content', minHeight: '100pt' }} xs={24}>
-                <Grid.Container gap={1}>
-                    <Grid xs={24}>
-                        <Card
-                            width="100%"
-                            pb={0}
-                            style={{
-                                backgroundColor: theme.palette.accents_1,
-                                height: 'max-content',
-                                minHeight: '100pt',
-                            }}
-                        >
-                            <Card.Body height="100%" width="100%">
-                                <Grid.Container gap={1}>
-                                    <Grid xs={6}>
-                                        <Card
-                                            width="100%"
-                                            height="100%"
-                                            style={{
-                                                backgroundImage: `url(${product.images[0]})`,
-                                                backgroundPosition: 'center',
-                                                backgroundSize: 'cover',
-                                                backgroundRepeat: 'no-repeat',
-                                            }}
-                                        />
-                                    </Grid>
-                                    <Grid style={{ display: 'block' }} xs={18}>
-                                        <Text mt={0} mb={0.3} font="1.2rem">
-                                            {product.title}
-                                        </Text>
-                                        <Text mt={0} font={0.8}>
-                                            <Text span type="secondary">
-                                                {`Price:  `}
-                                            </Text>
-                                            <b>{listing.price}</b>,
-                                            <Text
-                                                ml={0.5}
-                                                span
-                                                type="secondary"
-                                            >
-                                                {`Count:  `}
-                                            </Text>
-                                            <b>{count}</b>,
-                                            <Text
-                                                ml={0.5}
-                                                span
-                                                type="secondary"
-                                            >
-                                                {`Platform:  `}
-                                            </Text>
-                                            <b>
-                                                {listing[
-                                                    'platform'
-                                                ].toUpperCase()}
-                                            </b>
-                                            ,
-                                            <Text
-                                                ml={0.5}
-                                                span
-                                                type="secondary"
-                                            >
-                                                {`Region:  `}
-                                            </Text>
-                                            <b>
-                                                {listing[
-                                                    'region'
-                                                ].toUpperCase()}
-                                            </b>
-                                        </Text>
-                                        <ButtonGroup>
-                                            <Button
-                                                style={{
-                                                    backgroundColor:
-                                                        theme.palette.accents_1,
-                                                }}
-                                                auto
-                                                scale={0.5}
-                                                px={1.5}
-                                                icon={<Trash />}
-                                                onClick={() =>
-                                                    onRemove(listing._id)
-                                                }
-                                            />
-                                            <Button
-                                                style={{
-                                                    backgroundColor:
-                                                        theme.palette.accents_1,
-                                                }}
-                                                auto
-                                                disabled={count < 2}
-                                                scale={0.5}
-                                                px={1.5}
-                                                icon={<Minus />}
-                                                onClick={() =>
-                                                    onSubtract(listing._id)
-                                                }
-                                            />
-                                            <Button
-                                                style={{
-                                                    backgroundColor:
-                                                        theme.palette.accents_1,
-                                                }}
-                                                auto
-                                                scale={0.5}
-                                                px={1.5}
-                                                icon={<Plus />}
-                                                onClick={() =>
-                                                    onAdd(listing._id)
-                                                }
-                                            />
-                                        </ButtonGroup>
-                                    </Grid>
-                                </Grid.Container>
-                            </Card.Body>
-                        </Card>
-                    </Grid>
-                </Grid.Container>
-            </Grid>
-        )
-    }
-
-    const Receipt = ({}) => {
-        return (
-            <Card
-                width="100%"
-                style={{
-                    backgroundColor: theme.palette.accents_1,
-                    height: 'max-content',
-                }}
-            >
-                <div
-                    style={{ display: 'flex', justifyContent: 'space-between' }}
-                >
-                    <Text mb={0} type="secondary">
-                        TOTAL COST
-                    </Text>
-                    <Text mb={0}></Text>
-                </div>
-                <div
-                    style={{ display: 'flex', justifyContent: 'space-between' }}
-                >
-                    <Text mb={0} type="secondary">
-                        DISCOUNT
-                    </Text>
-                    <Text mb={0}></Text>
-                </div>
-                <div
-                    style={{ display: 'flex', justifyContent: 'space-between' }}
-                >
-                    <Text mb={0} type="secondary">
-                        PAYABLE
-                    </Text>
-                    <Text mb={0}></Text>
-                </div>
-                <Divider my={3} />
-                <Text small type="secondary">
-                    ADDRESS
-                </Text>
-                <Select
-                    width="100%"
-                    mb={1}
-                    placeholder="Choose address."
-                    disabled
-                >
-                    <Select.Option value="1">Option 1</Select.Option>
-                    <Select.Option value="2">Option 2</Select.Option>
-                </Select>
-                <Text small type="secondary">
-                    REFERRAL CODE
-                </Text>
-                <Input mb={1} width="100%" placeholder="Input referral code." />
-                <Text small type="secondary">
-                    DISCOUNT CODE
-                </Text>
-                <Input mb={1} width="100%" placeholder="Input discount code." />
-                <Divider my={3} />
-                <Button width="100%" type="secondary" icon={<CreditCard />}>
-                    Pay
-                </Button>
-            </Card>
-        )
-    }
-
     return (
-        <Grid.Container gap={2}>
-            {cart ? (
-                <>
-                    <Grid xs={24} md={16}>
-                        <Grid.Container
-                            style={{ height: 'max-content' }}
-                            gap={1}
-                        >
-                            {cart.map(({ listing, product, count }) => {
-                                return (
-                                    <Product
-                                        key={product._id}
-                                        listing={listing}
-                                        product={product}
-                                        count={count}
-                                    />
-                                )
-                            })}
-                        </Grid.Container>
-                    </Grid>
-                    <Grid xs={24} md={0}>
-                        <Divider width="100%" />
-                    </Grid>
-                    <Grid xs={24} md={8}>
-                        <Receipt />
-                    </Grid>
-                </>
-            ) : (
+        <Grid style={{ height: 'max-content', minHeight: '100pt' }} xs={24}>
+            <Grid.Container gap={1}>
                 <Grid xs={24}>
                     <Card
-                        style={{
-                            backgroundColor: `${theme.palette.accents_1}`,
-                        }}
-                        height="20rem"
-                        pt="8rem"
                         width="100%"
+                        pb={0}
+                        style={{
+                            backgroundColor: theme.palette.accents_1,
+                            height: 'max-content',
+                            minHeight: '100pt',
+                        }}
                     >
-                        <Loading />
+                        <Card.Body height="100%" width="100%">
+                            <Grid.Container gap={1}>
+                                <Grid xs={6}>
+                                    <Link href={`/product/${product._id}`}>
+                                        <a
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                            }}
+                                        >
+                                            <Card
+                                                width="100%"
+                                                height="100%"
+                                                style={{
+                                                    backgroundImage: `url(${product.images[0]})`,
+                                                    backgroundPosition:
+                                                        'center',
+                                                    backgroundSize: 'cover',
+                                                    backgroundRepeat:
+                                                        'no-repeat',
+                                                }}
+                                            />
+                                        </a>
+                                    </Link>
+                                </Grid>
+                                <Grid style={{ display: 'block' }} xs={18}>
+                                    <Link href={`/product/${product._id}`}>
+                                        <Text mt={0} mb={0.3} font="1.2rem">
+                                            <a className="Peculiar">
+                                                {product.title}
+                                            </a>
+                                        </Text>
+                                    </Link>
+                                    <Text mt={0} font={0.8}>
+                                        <Text span type="secondary">
+                                            {`Price:  `}
+                                        </Text>
+                                        <b>{listing.price}</b>,
+                                        <Text ml={0.5} span type="secondary">
+                                            {`Count:  `}
+                                        </Text>
+                                        <b>{count}</b>,
+                                        <Text ml={0.5} span type="secondary">
+                                            {`Platform:  `}
+                                        </Text>
+                                        <b>
+                                            {listing['platform'].toUpperCase()}
+                                        </b>
+                                        ,
+                                        <Text ml={0.5} span type="secondary">
+                                            {`Region:  `}
+                                        </Text>
+                                        <b>{listing['region'].toUpperCase()}</b>
+                                    </Text>
+                                    <ButtonGroup>
+                                        <Button
+                                            style={{
+                                                backgroundColor:
+                                                    theme.palette.accents_1,
+                                            }}
+                                            auto
+                                            scale={0.5}
+                                            px={1.5}
+                                            icon={<Trash />}
+                                            onClick={() =>
+                                                onRemove(listing._id)
+                                            }
+                                        />
+                                        <Button
+                                            style={{
+                                                backgroundColor:
+                                                    theme.palette.accents_1,
+                                            }}
+                                            auto
+                                            disabled={count < 2}
+                                            scale={0.5}
+                                            px={1.5}
+                                            icon={<Minus />}
+                                            onClick={() =>
+                                                onSubtract(listing._id)
+                                            }
+                                        />
+                                        <Button
+                                            style={{
+                                                backgroundColor:
+                                                    theme.palette.accents_1,
+                                            }}
+                                            auto
+                                            scale={0.5}
+                                            px={1.5}
+                                            icon={<Plus />}
+                                            onClick={() => onAdd(listing._id)}
+                                        />
+                                    </ButtonGroup>
+                                </Grid>
+                            </Grid.Container>
+                        </Card.Body>
                     </Card>
                 </Grid>
-            )}
-        </Grid.Container>
+            </Grid.Container>
+        </Grid>
     )
 }

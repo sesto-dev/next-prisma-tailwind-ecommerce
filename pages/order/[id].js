@@ -14,6 +14,7 @@ import {
     useTheme,
 } from '@geist-ui/core'
 import essentials from '../../helpers/getEssentials'
+import { handleOrderData } from 'aryana'
 
 export default function ({ id }) {
     const {
@@ -34,7 +35,9 @@ export default function ({ id }) {
     const { locale = config['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
 
-    const { title, description } = i18n['pages']['order']
+    const { title, description, info, products } = i18n['pages']['order']
+
+    const [order, setOrder] = useState({})
 
     useEffect(() => {
         setMeta({
@@ -43,12 +46,11 @@ export default function ({ id }) {
         })
     }, [locale])
 
-    const [order, setOrder] = useState({})
-
     useEffect(() => {
         async function resolve() {
-            const route = config.routes.backend.order + `/${id}`
-            const response = await axios.get(route)
+            const response = await axios.get(
+                config.routes.backend.order + `/${id}`
+            )
 
             handleOrderData({
                 response,
@@ -130,44 +132,48 @@ export default function ({ id }) {
         </Grid>
     )
 
+    const Bread = () => (
+        <Grid xs={24}>
+            <Breadcrumbs className="Bread" mb={1}>
+                <Link href="/">
+                    <a>
+                        <Breadcrumbs.Item>Home</Breadcrumbs.Item>
+                    </a>
+                </Link>
+                <Link href="/user">
+                    <a>
+                        <Breadcrumbs.Item>Orders</Breadcrumbs.Item>
+                    </a>
+                </Link>
+                <Breadcrumbs.Item>{order._id}</Breadcrumbs.Item>
+            </Breadcrumbs>
+        </Grid>
+    )
+
     return (
         <Grid.Container gap={1}>
             {order ? (
                 <>
-                    <Grid xs={24}>
-                        <Breadcrumbs className="Bread" mb={1}>
-                            <Link href="/">
-                                <a>
-                                    <Breadcrumbs.Item>Home</Breadcrumbs.Item>
-                                </a>
-                            </Link>
-                            <Link href="/user">
-                                <a>
-                                    <Breadcrumbs.Item>Orders</Breadcrumbs.Item>
-                                </a>
-                            </Link>
-                            <Breadcrumbs.Item>{order.name}</Breadcrumbs.Item>
-                        </Breadcrumbs>
-                    </Grid>
+                    <Bread />
                     <Grid xs={24}>
                         <Card
                             style={{
-                                backgroundColor: `${theme.palette.accents_1}`,
+                                backgroundColor: theme.palette.accents_1,
                             }}
                             width="100%"
                             height="100%"
                         >
                             <Collapse.Group>
                                 <Collapse
-                                    title="Order Info"
-                                    subtitle="Basic order information provided."
+                                    title={info['title'][locale]}
+                                    subtitle={info['description'][locale]}
                                     initialVisible
                                 >
                                     <OrderInfo order={order} />
                                 </Collapse>
                                 <Collapse
-                                    title="Products"
-                                    subtitle="Your order history."
+                                    title={products['title'][locale]}
+                                    subtitle={products['description'][locale]}
                                     style={{ borderBottom: 'none' }}
                                 >
                                     <Products order={order} />
@@ -180,7 +186,7 @@ export default function ({ id }) {
                 <Grid xs={24}>
                     <Card
                         style={{
-                            backgroundColor: `${theme.palette.accents_1}`,
+                            backgroundColor: theme.palette.accents_1,
                         }}
                         width="100%"
                     >

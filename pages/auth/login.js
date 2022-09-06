@@ -107,7 +107,12 @@ export default function () {
 
     return (
         <Grid.Container gap={1} className="avanti">
-            <Grid xs={24} md={16}>
+            {isLocaleRTL(locale) && (
+                <Grid xs={8}>
+                    <Card width="100%" />
+                </Grid>
+            )}
+            <Grid xs={16}>
                 <Card
                     width="100%"
                     style={{ backgroundColor: theme.palette.accents_1 }}
@@ -146,11 +151,11 @@ export default function () {
                                         ? 'default'
                                         : 'error'
                                 }
-                                onChange={(e) => {
+                                onChange={(e) =>
                                     setEmail(
                                         e.target.value.trim().toLowerCase()
                                     )
-                                }}
+                                }
                             />
                             <Input.Password
                                 label={
@@ -174,9 +179,9 @@ export default function () {
                                         ? 'default'
                                         : 'error'
                                 }
-                                onChange={(e) => {
+                                onChange={(e) =>
                                     setPassword(e.target.value.trim())
-                                }}
+                                }
                             />
                             <Button
                                 loading={refLoading.current}
@@ -195,7 +200,10 @@ export default function () {
                                 {i18n['buttons']['login'][locale]}
                             </Button>
                             <Link href="/auth/reset">
-                                <a className="Peculiar">
+                                <a
+                                    className="Peculiar"
+                                    style={{ fontSize: '0.75rem' }}
+                                >
                                     <Text
                                         style={{
                                             direction:
@@ -245,11 +253,11 @@ export default function () {
                                         ? 'success'
                                         : 'error'
                                 }
-                                onChange={(e) => {
+                                onChange={(e) =>
                                     setEmail(
                                         e.target.value.trim().toLowerCase()
                                     )
-                                }}
+                                }
                             />
                             {!refEmail.current == '' &&
                                 !isEmail(refEmail.current) && (
@@ -290,9 +298,9 @@ export default function () {
                                 width="100%"
                                 mt={1}
                                 value={password}
-                                onChange={(e) => {
+                                onChange={(e) =>
                                     setPassword(e.target.value.trim())
-                                }}
+                                }
                             />
                             {!refPassword.current == '' &&
                                 refPassword.current.length < 8 && (
@@ -394,12 +402,6 @@ export default function () {
                         </Button>
                     </a>
                 </Card>
-            </Grid>
-            <Grid xs={0} md={8}>
-                <Card
-                    width="100%"
-                    style={{ backgroundColor: theme.palette.accents_1 }}
-                ></Card>
             </Grid>
         </Grid.Container>
     )

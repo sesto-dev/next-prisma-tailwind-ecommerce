@@ -339,6 +339,26 @@ const pages = {
             en: 'Order Page',
             fa: 'صفحه سفارش',
         },
+        info: {
+            title: {
+                en: 'Order Info',
+                fa: 'اطلاعات سفارش',
+            },
+            description: {
+                en: 'Detailed information about this order.',
+                fa: 'جزییات دقیق در باره این سفارش',
+            },
+        },
+        products: {
+            title: {
+                en: 'Order Products',
+                fa: 'محصولات سفارش',
+            },
+            description: {
+                en: 'List of products in this order.',
+                fa: 'لیست محصولات سفارش داده شده در این سفارش',
+            },
+        },
     },
     product: {
         title: {
@@ -457,7 +477,7 @@ const pages = {
                 fa: 'خروج',
             },
             description: {
-                en: 'Logout from yout account',
+                en: 'Logout from your account',
                 fa: 'از حساب کاربری خود خارج شوید.',
             },
         },

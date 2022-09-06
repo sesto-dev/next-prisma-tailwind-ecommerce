@@ -15,7 +15,7 @@ export default async function (req, res) {
     const listing = await Listing.findById(listingID)
 
     if (user && listing) {
-        user.cart.push(listing._id)
+        user.cart.items.push(listing._id)
         await user.save()
 
         const cart = await populateCart({ user })

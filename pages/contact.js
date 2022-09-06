@@ -33,7 +33,7 @@ export default function () {
             <Grid xs={24}>
                 <Card
                     style={{
-                        backgroundColor: `${theme.palette.accents_1}`,
+                        backgroundColor: theme.palette.accents_1,
                     }}
                     width="100%"
                 >
