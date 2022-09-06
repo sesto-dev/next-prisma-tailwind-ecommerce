@@ -64,12 +64,12 @@ export default function () {
         setLoading(true)
 
         const response = await axios.post(
-            config.backend.routes.login,
+            config.routes.backend.login,
             {
                 email: refEmail.current,
                 password: refPassword.current,
             },
-            config.backend.axios.simple
+            config.axios.simple
         )
 
         loginHandler({
@@ -87,12 +87,12 @@ export default function () {
         setLoading(true)
 
         const response = await axios.post(
-            config.backend.routes.register,
+            config.routes.backend.register,
             {
                 email: refEmail.current,
                 password: refPassword.current,
             },
-            config.backend.axios.simple
+            config.axios.simple
         )
 
         registerHandler({

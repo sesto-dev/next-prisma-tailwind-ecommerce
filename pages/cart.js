@@ -51,7 +51,7 @@ export default function () {
 
     useEffect(() => {
         async function resolve() {
-            const response = await axios.get(config.backend.routes.getCart)
+            const response = await axios.get(config.routes.backend.getCart)
             handleCartData({
                 response,
                 router,
@@ -73,9 +73,9 @@ export default function () {
 
     async function onAdd(listingID) {
         const response = await axios.post(
-            config.backend.routes.addCart,
+            config.routes.backend.addCart,
             { listingID },
-            config.backend.axios.simple
+            config.axios.simple
         )
 
         handleCartData({
@@ -90,9 +90,9 @@ export default function () {
 
     async function onSubtract(listingID) {
         const response = await axios.post(
-            config.backend.routes.subtractCart,
+            config.routes.backend.subtractCart,
             { listingID },
-            config.backend.axios.simple
+            config.axios.simple
         )
 
         handleCartData({
@@ -107,9 +107,9 @@ export default function () {
 
     async function onRemove(listingID) {
         const response = await axios.post(
-            config.backend.routes.removeCart,
+            config.routes.backend.removeCart,
             { listingID },
-            config.backend.axios.simple
+            config.axios.simple
         )
         handleCartData({
             response,

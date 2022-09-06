@@ -46,9 +46,9 @@ export default function ({ id }) {
 
     async function insertToCart() {
         const response = await axios.post(
-            config.backend.routes.insertCart,
+            config.routes.backend.insertCart,
             { listingID },
-            config.backend.axios.simple
+            config.axios.simple
         )
 
         handleAddToCartData({
@@ -62,7 +62,7 @@ export default function ({ id }) {
     useEffect(() => {
         async function resolve() {
             const response = await axios.get(
-                config.backend.routes.products + `/${id}`
+                config.routes.backend.products + `/${id}`
             )
 
             handleProductData({

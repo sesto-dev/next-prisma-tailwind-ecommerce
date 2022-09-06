@@ -32,7 +32,8 @@ export default async function (req, res) {
                 await sendResetPassword(
                     config.meta.title,
                     user.email,
-                    config.urls.unsubscribe
+                    process.env.NEXT_PUBLIC_URL +
+                        config.routes.frontend.unsubscribe
                 )
 
                 res.status(200).json('Success!')

@@ -19,22 +19,16 @@ export default {
     },
     routes: {
         frontend: {
+            root: '/',
             user: '/user',
             verify: '/auth/verify',
             login: '/auth/login',
-            root: '/',
+            contact: '/contact',
+            reset: '/auth/reset',
+            subscribe: '/auth/subscribe',
+            unsubscribe: '/auth/unsubscribe',
         },
-    },
-    urls: {
-        contact: url + '/contact',
-        login: url + '/auth/login',
-        verify: url + '/auth/verify',
-        reset: url + '/auth/reset',
-        subscribe: url + '/auth/subscribe',
-        unsubscribe: url + '/auth/unsubscribe',
-    },
-    backend: {
-        routes: {
+        backend: {
             user: '/api/users/user',
             login: '/api/users/login',
             logout: '/api/users/logout',
@@ -52,11 +46,11 @@ export default {
             subtractCart: '/api/cart/subtract',
             removeCart: '/api/cart/remove',
         },
-        axios: {
-            simple: {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+    },
+    axios: {
+        simple: {
+            headers: {
+                'Content-Type': 'application/json',
             },
         },
     },

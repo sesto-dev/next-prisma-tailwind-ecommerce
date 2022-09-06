@@ -283,21 +283,21 @@ const components = {
                             en: 'Instagram',
                             fa: 'اینستاگرام',
                         },
-                        value: '/instagram',
+                        value: 'https://instagram.com/next',
                     },
                     {
                         label: {
                             en: 'YouTube',
                             fa: 'یوتیوب',
                         },
-                        value: '/youtube',
+                        value: 'https://youtube.com/c/next',
                     },
                     {
                         label: {
                             en: 'Medium',
                             fa: 'مدیوم',
                         },
-                        value: '/medium',
+                        value: 'https://medium.com/@next',
                     },
                 ],
             },

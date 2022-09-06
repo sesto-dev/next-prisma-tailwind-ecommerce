@@ -38,7 +38,7 @@ export default function () {
     async function onUnsubscribe() {
         setLoading(true)
 
-        const response = await axios.post(config.backend.routes.unsubscribe)
+        const response = await axios.post(config.routes.backend.unsubscribe)
 
         unsubscribeHandler({
             response,

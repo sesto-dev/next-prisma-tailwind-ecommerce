@@ -93,7 +93,7 @@ export default function ({ auth }) {
     }, [])
 
     async function onLogout() {
-        const response = await axios.post(config.backend.routes.logout)
+        const response = await axios.post(config.routes.backend.logout)
 
         logoutHandler({
             response,

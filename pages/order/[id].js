@@ -47,7 +47,7 @@ export default function ({ id }) {
 
     useEffect(() => {
         async function resolve() {
-            const route = config.backend.routes.order + `/${id}`
+            const route = config.routes.backend.order + `/${id}`
             const response = await axios.get(route)
 
             handleOrderData({

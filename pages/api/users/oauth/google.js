@@ -76,8 +76,9 @@ export default async function (req, res) {
                     config.meta.title,
                     email,
                     email_verification_code,
-                    config.urls.verify,
-                    config.urls.unsubscribe
+                    process.env.NEXT_PUBLIC_URL + config.routes.frontend.verify,
+                    process.env.NEXT_PUBLIC_URL +
+                        config.routes.frontend.unsubscribe
                 )
 
             res.setHeader('Set-Cookie', AJWT)

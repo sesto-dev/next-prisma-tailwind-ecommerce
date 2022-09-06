@@ -42,11 +42,11 @@ export default function () {
         setLoading(true)
 
         const response = await axios.post(
-            config.backend.routes.forgot,
+            config.routes.backend.forgot,
             {
                 email: refEmail.current,
             },
-            config.backend.axios.simple
+            config.axios.simple
         )
 
         forgotHandler({
@@ -62,12 +62,12 @@ export default function () {
         setLoading(true)
 
         const response = await axios.post(
-            config.backend.routes.reset,
+            config.routes.backend.reset,
             {
                 code: refCode.current,
                 password: refPassword.current,
             },
-            config.backend.axios.simple
+            config.axios.simple
         )
 
         resetHandler({

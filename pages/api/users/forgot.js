@@ -27,8 +27,8 @@ export default async function (req, res) {
                 config.meta.title,
                 email,
                 code,
-                config.urls.reset,
-                config.urls.unsubscribe
+                process.env.NEXT_PUBLIC_URL + config.routes.frontend.reset,
+                process.env.NEXT_PUBLIC_URL + config.routes.frontend.unsubscribe
             )
 
             res.status(200).json('Success!')

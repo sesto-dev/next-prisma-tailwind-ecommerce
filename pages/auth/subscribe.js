@@ -36,7 +36,7 @@ export default function () {
     async function onSubscribe() {
         setLoading(true)
 
-        const response = await axios.post(config.backend.routes.subscribe)
+        const response = await axios.post(config.routes.backend.subscribe)
 
         subscribeHandler({
             response,

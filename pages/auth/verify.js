@@ -41,11 +41,11 @@ export default function () {
         setLoading(true)
 
         const response = await axios.post(
-            config.backend.routes.verify,
+            config.routes.backend.verify,
             {
                 code: refCode.current,
             },
-            config.backend.axios.simple
+            config.axios.simple
         )
 
         verifyHandler({

@@ -59,11 +59,11 @@ export default function ({ page, category, tags, sort }) {
     useEffect(() => {
         async function resolve() {
             const response = await axios.post(
-                config.backend.routes.products,
+                config.routes.backend.products,
                 {
                     page,
                 },
-                config.backend.axios.simple
+                config.axios.simple
             )
 
             handleProductsData({
