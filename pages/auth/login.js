@@ -60,12 +60,7 @@ export default function () {
         useState('')
     const [loading, setLoading, refLoading] = useState(false)
 
-    const {
-        buttons,
-        components: { header },
-    } = i18n
-
-    async function attemptLogin() {
+    async function onLogin() {
         setLoading(true)
 
         const response = await axios.post(
@@ -88,7 +83,7 @@ export default function () {
         })
     }
 
-    async function attemptRegister() {
+    async function onRegister() {
         setLoading(true)
 
         const response = await axios.post(
@@ -119,9 +114,15 @@ export default function () {
                 >
                     <Collapse.Group>
                         <Collapse
-                            title={header['modal']['login']['title'][locale]}
+                            title={
+                                i18n['components']['header']['modal']['login'][
+                                    'title'
+                                ][locale]
+                            }
                             subtitle={
-                                header['modal']['login']['subtitle'][locale]
+                                i18n['components']['header']['modal']['login'][
+                                    'subtitle'
+                                ][locale]
                             }
                         >
                             <Input
@@ -146,7 +147,9 @@ export default function () {
                                         : 'error'
                                 }
                                 onChange={(e) => {
-                                    setEmail(e.target.value.trim())
+                                    setEmail(
+                                        e.target.value.trim().toLowerCase()
+                                    )
                                 }}
                             />
                             <Input.Password
@@ -186,10 +189,10 @@ export default function () {
                                 width="100%"
                                 mt={1}
                                 type="secondary"
-                                onClick={attemptLogin}
+                                onClick={onLogin}
                                 icon={<LogIn />}
                             >
-                                {buttons['login'][locale]}
+                                {i18n['buttons']['login'][locale]}
                             </Button>
                             <Link href="/auth/reset">
                                 <a className="Peculiar">
@@ -202,7 +205,7 @@ export default function () {
                                                 : 'left',
                                         }}
                                     >
-                                        {buttons['forgot'][locale]}
+                                        {i18n['buttons']['forgot'][locale]}
                                     </Text>
                                 </a>
                             </Link>
@@ -210,9 +213,15 @@ export default function () {
                         <Collapse
                             id="Register"
                             style={{ borderBottom: 'none' }}
-                            title={header['modal']['register']['title'][locale]}
+                            title={
+                                i18n['components']['header']['modal'][
+                                    'register'
+                                ]['title'][locale]
+                            }
                             subtitle={
-                                header['modal']['register']['subtitle'][locale]
+                                i18n['components']['header']['modal'][
+                                    'register'
+                                ]['subtitle'][locale]
                             }
                         >
                             <Input
@@ -237,7 +246,9 @@ export default function () {
                                         : 'error'
                                 }
                                 onChange={(e) => {
-                                    setEmail(e.target.value.trim())
+                                    setEmail(
+                                        e.target.value.trim().toLowerCase()
+                                    )
                                 }}
                             />
                             {!refEmail.current == '' &&
@@ -357,14 +368,14 @@ export default function () {
                                 width="100%"
                                 mt={1}
                                 type="secondary"
-                                onClick={attemptRegister}
+                                onClick={onRegister}
                                 icon={<UserPlus />}
                             >
-                                {buttons['register'][locale]}
+                                {i18n['buttons']['register'][locale]}
                             </Button>
                         </Collapse>
                     </Collapse.Group>
-                    <Divider mt={1} mb={3}>
+                    <Divider className="AccentDivider" mt={1} mb={3}>
                         /
                     </Divider>
                     <a
@@ -378,9 +389,8 @@ export default function () {
                             type="secondary"
                             width="100%"
                             mt={0.8}
-                            onClick={() => {}}
                         >
-                            {buttons['google']['active'][locale]}
+                            {i18n['buttons']['google']['active'][locale]}
                         </Button>
                     </a>
                 </Card>

@@ -38,7 +38,6 @@ export default function () {
     const { setToast } = useToasts()
 
     const { locale = config.defaultLocale } = router
-
     const { title, description } = i18n['pages']['cart']
 
     const [cart, setCart] = useState(null)
@@ -68,7 +67,11 @@ export default function () {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    async function Add(listingID) {
+    useEffect(() => {
+        console.log(cart)
+    }, [cart])
+
+    async function onAdd(listingID) {
         const response = await axios.post(
             config.backend.routes.addCart,
             { listingID },
@@ -85,7 +88,7 @@ export default function () {
         })
     }
 
-    async function Subtract(listingID) {
+    async function onSubtract(listingID) {
         const response = await axios.post(
             config.backend.routes.subtractCart,
             { listingID },
@@ -102,7 +105,7 @@ export default function () {
         })
     }
 
-    async function Remove(listingID) {
+    async function onRemove(listingID) {
         const response = await axios.post(
             config.backend.routes.removeCart,
             { listingID },
@@ -200,7 +203,7 @@ export default function () {
                                                 px={1.5}
                                                 icon={<Trash />}
                                                 onClick={() =>
-                                                    Remove(listing._id)
+                                                    onRemove(listing._id)
                                                 }
                                             />
                                             <Button
@@ -214,7 +217,7 @@ export default function () {
                                                 px={1.5}
                                                 icon={<Minus />}
                                                 onClick={() =>
-                                                    Subtract(listing._id)
+                                                    onSubtract(listing._id)
                                                 }
                                             />
                                             <Button
@@ -226,7 +229,9 @@ export default function () {
                                                 scale={0.5}
                                                 px={1.5}
                                                 icon={<Plus />}
-                                                onClick={() => Add(listing._id)}
+                                                onClick={() =>
+                                                    onAdd(listing._id)
+                                                }
                                             />
                                         </ButtonGroup>
                                     </Grid>

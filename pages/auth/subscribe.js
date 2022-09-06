@@ -33,7 +33,7 @@ export default function () {
 
     const [loading, setLoading] = useState(false)
 
-    async function attemptSubscribe() {
+    async function onSubscribe() {
         setLoading(true)
 
         const response = await axios.post(config.backend.routes.subscribe)
@@ -55,7 +55,7 @@ export default function () {
                     disabled={!isAuthenticated}
                     loading={loading}
                     type="secondary"
-                    onClick={attemptSubscribe}
+                    onClick={onSubscribe}
                 >
                     {title[locale]}
                 </Button>

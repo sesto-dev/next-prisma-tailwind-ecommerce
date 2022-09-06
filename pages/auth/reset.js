@@ -38,7 +38,7 @@ export default function () {
     const [code, setCode, refCode] = useState('')
     const [password, setPassword, refPassword] = useState('')
 
-    async function attemptForgot() {
+    async function onForgot() {
         setLoading(true)
 
         const response = await axios.post(
@@ -58,7 +58,7 @@ export default function () {
         })
     }
 
-    async function attemptReset() {
+    async function onReset() {
         setLoading(true)
 
         const response = await axios.post(
@@ -103,7 +103,7 @@ export default function () {
                             : 'error'
                     }
                     onChange={(e) => {
-                        setEmail(e.target.value.trim())
+                        setEmail(e.target.value.trim().toLowerCase())
                     }}
                 />
             </Grid>
@@ -124,7 +124,7 @@ export default function () {
                             !refEmail.current || !isEmail(refEmail.current)
                         }
                         type="secondary"
-                        onClick={attemptForgot}
+                        onClick={onForgot}
                     >
                         <b>{i18n['buttons']['submit'][locale]}</b>
                     </Button>
@@ -201,7 +201,7 @@ export default function () {
                             refPassword.current.length < 8
                         }
                         type="secondary"
-                        onClick={attemptReset}
+                        onClick={onReset}
                     >
                         <b>{i18n['buttons']['submit'][locale]}</b>
                     </Button>

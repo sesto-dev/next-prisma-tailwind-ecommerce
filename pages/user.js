@@ -92,7 +92,7 @@ export default function ({ auth }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    async function attemptLogout() {
+    async function onLogout() {
         const response = await axios.post(config.backend.routes.logout)
 
         logoutHandler({
@@ -230,7 +230,7 @@ export default function ({ auth }) {
             scale={1.2}
             type="secondary"
             px={2}
-            onClick={attemptLogout}
+            onClick={onLogout}
             width={width < 650 && '100%'}
             auto={width > 650}
         >

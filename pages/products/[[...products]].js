@@ -231,7 +231,7 @@ export default function ({ page, category, tags, sort }) {
                         my={0}
                     >
                         <Grid.Container gap={1}>
-                            <Grid xs={12}>
+                            <Grid xs={24} md={12}>
                                 <Select
                                     style={{
                                         minHeight: '3rem',
@@ -250,7 +250,7 @@ export default function ({ page, category, tags, sort }) {
                                     </Select.Option>
                                 </Select>
                             </Grid>
-                            <Grid xs={12}>
+                            <Grid xs={24} md={12}>
                                 <Select
                                     style={{
                                         minHeight: '3rem',

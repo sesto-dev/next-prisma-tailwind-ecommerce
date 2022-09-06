@@ -37,7 +37,7 @@ export default function () {
     const [loading, setLoading] = useState(false)
     const [code, setCode, refCode] = useState('')
 
-    async function attemptVerify() {
+    async function onVerify() {
         setLoading(true)
 
         const response = await axios.post(
@@ -84,7 +84,7 @@ export default function () {
                     loading={loading}
                     disabled={!refCode.current}
                     type="secondary"
-                    onClick={attemptVerify}
+                    onClick={onVerify}
                 >
                     <b>{i18n['buttons']['submit'][locale]}</b>
                 </Button>
