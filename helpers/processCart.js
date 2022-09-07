@@ -1,3 +1,4 @@
+import Discount from '../models/Discount'
 import Listing from '../models/Listing'
 import Product from '../models/Product'
 
@@ -32,7 +33,27 @@ export default async function ({ user }) {
         if (element.product.physical) hasPhysical = true
     }
 
+    if (user.cart.discount_code) {
+        const sourceDiscountCode = await Discount.findOne({
+            code: user.cart.discount_code,
+        })
+
+        if (sourceDiscountCode) {
+            discountCost = (totalCost * sourceDiscountCode.percentage) / 100
+
+            if (discountCost > sourceDiscountCode.maximum_amount)
+                discountCost = sourceDiscountCode.maximum_amount
+        }
+    }
+
     const payableCost = totalCost - discountCost
+
+    user.cart.total_cost = totalCost
+    user.cart.discount_cost = discountCost
+    user.cart.payable_cost = discountCost
+    user.cart.has_physical = hasPhysical
+
+    await user.save()
 
     return {
         items,

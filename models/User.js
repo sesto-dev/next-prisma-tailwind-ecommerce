@@ -20,8 +20,13 @@ const userSchema = mongoose.Schema(
             },
         },
         cart: {
+            delivery_address: String,
+            has_physical: Boolean,
             referral_code: String,
             discount_code: String,
+            total_cost: Number,
+            discount_cost: Number,
+            payable_cost: Number,
             items: [
                 {
                     type: mongoose.Schema.Types.ObjectId,

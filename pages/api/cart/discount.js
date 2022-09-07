@@ -1,5 +1,5 @@
 import connectDB from '../../../helpers/connectDB'
-import populateCart from '../../../helpers/populateCart'
+import processCart from '../../../helpers/processCart'
 import verifyRequest from '../../../helpers/verifyRequest'
 import Discount from '../../../models/Discount'
 import User from '../../../models/User'
@@ -26,7 +26,7 @@ export default async function (req, res) {
         }
 
         await user.save()
-        const cart = await populateCart({ user })
+        const cart = await processCart({ user })
 
         res.status(200).json({ cart })
     } else {

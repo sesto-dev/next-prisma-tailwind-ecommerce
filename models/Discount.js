@@ -27,6 +27,7 @@ const discountSchema = mongoose.Schema(
         maximum_amount: {
             type: Number,
             required: true,
+            default: 100,
         },
     },
     {
