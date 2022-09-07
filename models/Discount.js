@@ -6,7 +6,7 @@ const discountSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        count: {
+        credit: {
             type: Number,
             required: true,
             default: 1,

@@ -107,12 +107,7 @@ export default function () {
 
     return (
         <Grid.Container gap={1} className="avanti">
-            {isLocaleRTL(locale) && (
-                <Grid xs={8}>
-                    <Card width="100%" />
-                </Grid>
-            )}
-            <Grid xs={16}>
+            <Grid xs={24}>
                 <Card
                     width="100%"
                     style={{ backgroundColor: theme.palette.accents_1 }}

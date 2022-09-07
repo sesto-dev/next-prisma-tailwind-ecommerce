@@ -40,5 +40,7 @@ export default async function ({ user }) {
         payableCost,
         discountCost,
         hasPhysical,
+        referralCode: user.cart.referral_code,
+        discountCode: user.cart.discount_code,
     }
 }

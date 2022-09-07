@@ -1,7 +1,7 @@
 import { handleCartData } from 'aryana'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-import { Trash, Plus, Minus, CreditCard, Unlock } from '@geist-ui/icons'
+import { Trash, Plus, Minus, CreditCard, Unlock, X } from '@geist-ui/icons'
 import {
     Text,
     ButtonGroup,
@@ -32,7 +32,6 @@ export default function () {
         useMeta,
     } = essentials
 
-    const theme = useTheme()
     const { setMeta } = useMeta()
     const router = useRouter()
     const { setToast } = useToasts()
@@ -52,13 +51,13 @@ export default function () {
     useEffect(() => {
         async function resolve() {
             const response = await axios.get(config.routes.backend.getCart)
+
             handleCartData({
                 response,
                 router,
                 setCart,
                 setToast,
                 noDataToast: i18n['toasts']['noData'][locale],
-                notVerifiedToast: i18n['toasts']['notVerified'][locale],
             })
         }
 
@@ -70,16 +69,87 @@ export default function () {
     return (
         <Grid.Container gap={2}>
             <Items cart={cart} setCart={setCart} />
-            <Receipt cart={cart} />
+            <Receipt cart={cart} setCart={setCart} />
         </Grid.Container>
     )
 }
 
 const Receipt = ({ cart, setCart }) => {
+    const { config, i18n, useRouter, axios } = essentials
+
     const theme = useTheme()
+    const router = useRouter()
+    const { setToast } = useToasts()
+
+    const { locale = config.defaultLocale } = router
 
     const [discountCode, setDiscountCode] = useState('')
     const [referralCode, setReferralCode] = useState('')
+
+    useEffect(() => {
+        if (cart && cart.discountCode) setDiscountCode(cart.discountCode)
+        if (cart && cart.referralCode) setReferralCode(cart.referralCode)
+    }, [cart])
+
+    async function onAddDiscountCode() {
+        const response = await axios.post(
+            config.routes.backend.discount,
+            { discountCode },
+            config.axios.simple
+        )
+
+        handleCartData({
+            response,
+            router,
+            setCart,
+            setToast,
+            noDataToast: i18n['toasts']['noData'][locale],
+        })
+    }
+
+    async function onRemoveDiscountCode() {
+        const response = await axios.delete(config.routes.backend.discount)
+
+        handleCartData({
+            response,
+            router,
+            setCart,
+            setToast,
+            noDataToast: i18n['toasts']['noData'][locale],
+        })
+
+        setDiscountCode('')
+    }
+
+    async function onAddReferralCode() {
+        const response = await axios.post(
+            config.routes.backend.referral,
+            { referralCode },
+            config.axios.simple
+        )
+
+        handleCartData({
+            response,
+            router,
+            setCart,
+            setToast,
+            noDataToast: i18n['toasts']['noData'][locale],
+        })
+    }
+
+    async function onRemoveReferralCode() {
+        const response = await axios.delete(config.routes.backend.referral)
+
+        handleCartData({
+            response,
+            router,
+            setCart,
+            setToast,
+            noDataToast: i18n['toasts']['noData'][locale],
+        })
+
+        setReferralCode('')
+    }
 
     return (
         <Grid xs={24} md={8}>
@@ -155,6 +225,7 @@ const Receipt = ({ cart, setCart }) => {
                                     mb={1}
                                     width="100%"
                                     placeholder="Input referral code."
+                                    disabled={cart && cart.referralCode}
                                     value={referralCode}
                                     onChange={(e) =>
                                         setReferralCode(e.target.value.trim())
@@ -163,10 +234,23 @@ const Receipt = ({ cart, setCart }) => {
                             </Grid>
                             <Grid xs={6}>
                                 <Button
-                                    disabled
+                                    disabled={!referralCode}
+                                    type="secondary"
                                     height="2.25rem"
                                     width="100%"
-                                    icon={<Unlock />}
+                                    icon={
+                                        cart && cart.referralCode ? (
+                                            <X />
+                                        ) : (
+                                            <Unlock />
+                                        )
+                                    }
+                                    onClick={() => {
+                                        if (!cart.referralCode)
+                                            onAddReferralCode()
+                                        if (cart && cart.referralCode)
+                                            onRemoveReferralCode()
+                                    }}
                                 />
                             </Grid>
                         </Grid.Container>
@@ -178,7 +262,9 @@ const Receipt = ({ cart, setCart }) => {
                                 <Input
                                     width="100%"
                                     placeholder="Input discount code."
+                                    disabled={cart && cart.discountCode}
                                     value={discountCode}
+                                    type={cart.discountCode && 'success'}
                                     onChange={(e) =>
                                         setDiscountCode(e.target.value.trim())
                                     }
@@ -186,10 +272,23 @@ const Receipt = ({ cart, setCart }) => {
                             </Grid>
                             <Grid xs={6}>
                                 <Button
-                                    disabled
+                                    disabled={!discountCode}
+                                    type="secondary"
                                     height="2.25rem"
                                     width="100%"
-                                    icon={<Unlock />}
+                                    icon={
+                                        cart && cart.discountCode ? (
+                                            <X />
+                                        ) : (
+                                            <Unlock />
+                                        )
+                                    }
+                                    onClick={() => {
+                                        if (!cart.discountCode)
+                                            onAddDiscountCode()
+                                        if (cart && cart.discountCode)
+                                            onRemoveDiscountCode()
+                                    }}
                                 />
                             </Grid>
                         </Grid.Container>
@@ -216,7 +315,7 @@ const Items = ({ cart, setCart }) => {
         <>
             <Grid xs={24} md={16}>
                 <Grid.Container style={{ height: 'max-content' }} gap={1}>
-                    {cart &&
+                    {cart ? (
                         cart.items.map(({ listing, product, count }) => {
                             return (
                                 <Product
@@ -228,7 +327,20 @@ const Items = ({ cart, setCart }) => {
                                     setCart={setCart}
                                 />
                             )
-                        })}
+                        })
+                    ) : (
+                        <Grid
+                            style={{
+                                height: 'max-content',
+                                minHeight: '100pt',
+                            }}
+                            xs={24}
+                        >
+                            <Card width="100%">
+                                <Loading />
+                            </Card>
+                        </Grid>
+                    )}
                 </Grid.Container>
             </Grid>
             <Grid xs={24} md={0}>
@@ -239,17 +351,7 @@ const Items = ({ cart, setCart }) => {
 }
 
 const Product = ({ product, listing, count, cart, setCart }) => {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useRouter, Link, axios } = essentials
 
     const theme = useTheme()
     const router = useRouter()
@@ -269,7 +371,6 @@ const Product = ({ product, listing, count, cart, setCart }) => {
             setCart,
             setToast,
             noDataToast: i18n['toasts']['noData'][locale],
-            notVerifiedToast: i18n['toasts']['notVerified'][locale],
         })
     }
 
@@ -286,7 +387,6 @@ const Product = ({ product, listing, count, cart, setCart }) => {
             setCart,
             setToast,
             noDataToast: i18n['toasts']['noData'][locale],
-            notVerifiedToast: i18n['toasts']['notVerified'][locale],
         })
     }
 
@@ -302,7 +402,6 @@ const Product = ({ product, listing, count, cart, setCart }) => {
             setCart,
             setToast,
             noDataToast: i18n['toasts']['noData'][locale],
-            notVerifiedToast: i18n['toasts']['notVerified'][locale],
         })
     }
 

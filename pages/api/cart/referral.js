@@ -1,7 +1,6 @@
 import connectDB from '../../../helpers/connectDB'
 import populateCart from '../../../helpers/populateCart'
 import verifyRequest from '../../../helpers/verifyRequest'
-import Discount from '../../../models/Discount'
 import User from '../../../models/User'
 
 export default async function (req, res) {
@@ -13,16 +12,18 @@ export default async function (req, res) {
 
     if (user) {
         if (req.method == 'POST') {
-            const { discountCode } = req.body
-            const discount = await Discount.findOne({ discountCode })
+            const { referralCode: referral_code } = req.body
+            const referredUser = await User.findOne({ referral_code })
 
-            if (discount && discount.uses < discount.credit) {
-                user.cart.discount_code = discountCode
+            if (referredUser && referredUser != user) {
+                console.log({ referredUser })
+                user.cart.referral_code = referral_code
+                console.log({ user })
             }
         }
 
         if (req.method == 'DELETE') {
-            user.cart.discount_code = null
+            user.cart.referral_code = null
         }
 
         await user.save()

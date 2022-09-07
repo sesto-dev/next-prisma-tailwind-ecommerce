@@ -20,6 +20,7 @@ const userSchema = mongoose.Schema(
             },
         },
         cart: {
+            referral_code: String,
             discount_code: String,
             items: [
                 {

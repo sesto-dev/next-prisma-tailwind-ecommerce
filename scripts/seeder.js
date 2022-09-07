@@ -28,12 +28,12 @@ const importData = async () => {
         await Discount.deleteMany()
 
         for (let d = 0; d < getRandInt(2, 5); d++) {
-            const count = getRandInt(2, 10)
-            const uses = getRandInt(1, count)
+            const credit = getRandInt(2, 10)
+            const uses = getRandInt(1, credit)
 
             discounts.push({
                 code: generateVoucher(1),
-                count,
+                credit,
                 uses,
                 category: 'games',
                 percentage: getRandInt(3, 15),

@@ -45,6 +45,8 @@ export default {
             insertCart: '/api/cart/insert',
             subtractCart: '/api/cart/subtract',
             removeCart: '/api/cart/remove',
+            discount: '/api/cart/discount',
+            referral: '/api/cart/referral',
         },
     },
     axios: {

@@ -1,13 +1,4 @@
-import config from '../config/main.config'
-import i18n from '../config/i18n.config'
-
-import {
-    createContext,
-    useContext,
-    useState,
-    useEffect,
-    useCallback,
-} from 'react'
+import { createContext, useContext } from 'react'
 
 export const MetaContext = createContext({})
 

@@ -3,8 +3,7 @@ import Listing from '../../../models/Listing'
 import Product from '../../../models/Product'
 
 export default async function (req, res) {
-    const pageSize = 15
-    const { page = 1 } = req.body
+    const { pageSize = 15, currentPage = 1 } = req.body
 
     connectDB()
 
@@ -20,7 +19,7 @@ export default async function (req, res) {
     const count = await Product.countDocuments({ ...keyword })
     const products = await Product.find({ ...keyword })
         .limit(pageSize)
-        .skip(pageSize * (page - 1))
+        .skip(pageSize * (currentPage - 1))
 
     for (let i = 0; i < products.length; i++) {
         const element = products[i]
@@ -33,5 +32,9 @@ export default async function (req, res) {
         products[i]['listings'] = elementListings
     }
 
-    res.status(200).json({ products, page, pages: Math.ceil(count / pageSize) })
+    res.status(200).json({
+        products,
+        page: currentPage,
+        pages: Math.ceil(count / pageSize),
+    })
 }
