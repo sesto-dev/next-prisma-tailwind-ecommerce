@@ -1,4 +1,5 @@
-<a href="https://create-next-dashboard.vercel.app">![Screenshot](https://user-images.githubusercontent.com/45223699/188122133-dc8260ca-f87c-4681-9996-3a26963fe1e2.png)
+<a href="https://create-next-dashboard.vercel.app">![Screenshot](https://user-images.githubusercontent.com/45223699/188952783-09436330-558c-49d4-8a04-12ed75615ba7.png)
+
 </a>
 
 <a href="https://npmjs.com/package/create-next-dashboard">

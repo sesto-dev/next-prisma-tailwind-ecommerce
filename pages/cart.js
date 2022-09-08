@@ -1,4 +1,4 @@
-import { handleCartData } from 'aryana'
+import { getLocaleAlignment, getLocaleDirection, handleCartData } from 'aryana'
 import { useEffect, useState } from 'react'
 
 import { Trash, Plus, Minus, CreditCard, Unlock, X } from '@geist-ui/icons'
@@ -169,7 +169,11 @@ const Receipt = ({ cart, setCart }) => {
                             }}
                         >
                             <Text mb={0} type="secondary">
-                                TOTAL COST
+                                {
+                                    i18n['pages']['cart']['receipt']['total'][
+                                        locale
+                                    ]
+                                }
                             </Text>
                             <Text mb={0}>{cart.totalCost}</Text>
                         </div>
@@ -180,7 +184,11 @@ const Receipt = ({ cart, setCart }) => {
                             }}
                         >
                             <Text mb={0} type="secondary">
-                                DISCOUNT
+                                {
+                                    i18n['pages']['cart']['receipt'][
+                                        'discounted'
+                                    ][locale]
+                                }
                             </Text>
                             <Text mb={0}>{cart.discountCost}</Text>
                         </div>
@@ -191,7 +199,11 @@ const Receipt = ({ cart, setCart }) => {
                             }}
                         >
                             <Text mb={0} type="secondary">
-                                PAYABLE
+                                {
+                                    i18n['pages']['cart']['receipt']['payable'][
+                                        locale
+                                    ]
+                                }
                             </Text>
                             <Text mb={0}>{cart.payableCost}</Text>
                         </div>
@@ -199,7 +211,11 @@ const Receipt = ({ cart, setCart }) => {
                         {cart.hasPhysical && (
                             <>
                                 <Text small type="secondary">
-                                    ADDRESS
+                                    {
+                                        i18n['pages']['cart']['receipt'][
+                                            'address'
+                                        ][locale]
+                                    }
                                 </Text>
                                 <Select
                                     width="100%"
@@ -216,15 +232,26 @@ const Receipt = ({ cart, setCart }) => {
                                 </Select>
                             </>
                         )}
-                        <Text small type="secondary">
-                            REFERRAL CODE
+                        <Text
+                            style={{
+                                direction: getLocaleDirection(locale),
+                                textAlign: getLocaleAlignment(locale),
+                            }}
+                            small
+                            type="secondary"
+                        >
+                            {i18n['inputs']['referralCode']['label'][locale]}
                         </Text>
                         <Grid.Container gap={1}>
                             <Grid xs={18}>
                                 <Input
                                     mb={1}
                                     width="100%"
-                                    placeholder="Input referral code."
+                                    placeholder={
+                                        i18n['inputs']['referralCode'][
+                                            'placeholder'
+                                        ][locale]
+                                    }
                                     disabled={cart && cart.referralCode}
                                     value={referralCode}
                                     onChange={(e) =>
@@ -255,13 +282,17 @@ const Receipt = ({ cart, setCart }) => {
                             </Grid>
                         </Grid.Container>
                         <Text small type="secondary">
-                            DISCOUNT CODE
+                            {i18n['inputs']['discountCode']['label'][locale]}
                         </Text>
                         <Grid.Container gap={1}>
                             <Grid xs={18}>
                                 <Input
                                     width="100%"
-                                    placeholder="Input discount code."
+                                    placeholder={
+                                        i18n['inputs']['discountCode'][
+                                            'placeholder'
+                                        ][locale]
+                                    }
                                     disabled={cart && cart.discountCode}
                                     value={discountCode}
                                     type={cart.discountCode && 'success'}
@@ -299,7 +330,7 @@ const Receipt = ({ cart, setCart }) => {
                             type="secondary"
                             icon={<CreditCard />}
                         >
-                            Pay
+                            {i18n['buttons']['payment'][locale]}
                         </Button>
                     </>
                 ) : (
@@ -311,6 +342,8 @@ const Receipt = ({ cart, setCart }) => {
 }
 
 const Items = ({ cart, setCart }) => {
+    const theme = useTheme()
+
     return (
         <>
             <Grid xs={24} md={16}>
@@ -332,11 +365,16 @@ const Items = ({ cart, setCart }) => {
                         <Grid
                             style={{
                                 height: 'max-content',
-                                minHeight: '100pt',
                             }}
                             xs={24}
                         >
-                            <Card width="100%">
+                            <Card
+                                width="100%"
+                                style={{
+                                    backgroundColor: theme.palette.accents_1,
+                                    height: 'max-content',
+                                }}
+                            >
                                 <Loading />
                             </Card>
                         </Grid>

@@ -1,6 +1,13 @@
 import { useEffect } from 'react'
-import { getLocaleDirection } from 'aryana'
-import { Grid, Card, Text, useTheme } from '@geist-ui/core'
+import { getLocaleDirection, isLocaleRTL } from 'aryana'
+import {
+    Grid,
+    Card,
+    Description,
+    Text,
+    Snippet,
+    useTheme,
+} from '@geist-ui/core'
 import essentials from '../helpers/getEssentials'
 
 export default function ({ auth }) {
@@ -32,6 +39,8 @@ export default function ({ auth }) {
             title: title[locale],
             description: description[locale],
             image: 'https://i.imgur.com/NitQE9d.jpg',
+            large: title[locale],
+            small: description[locale],
         })
     }, [locale])
 
@@ -50,8 +59,37 @@ export default function ({ auth }) {
                             direction: getLocaleDirection(locale),
                         }}
                     >
-                        {content[locale]}
+                        {isLocaleRTL(locale)
+                            ? 'این صفحه برای نمایش سادگی استفاده از کامپوننت ها ساخته شده است. برای دسترسی به صفحات شخصی میتوانید ثبت نام کنید و یا از  ایمیل و پسوورد زیر استفاده کنید:'
+                            : 'This page is designed to showcase the simplicity of the Layout component. In order to access protected routes you can register or use these credentials:'}
                     </Text>
+                    <Description
+                        width="100%"
+                        title="Email"
+                        mb={1}
+                        content={
+                            <Snippet
+                                symbol=""
+                                font="1rem"
+                                toastText={i18n['toasts']['copied'][locale]}
+                                toastType="default"
+                                text="test@test.com"
+                            />
+                        }
+                    />
+                    <Description
+                        width="100%"
+                        title="Password"
+                        content={
+                            <Snippet
+                                symbol=""
+                                font="1rem"
+                                toastText={i18n['toasts']['copied'][locale]}
+                                toastType="default"
+                                text="12345678"
+                            />
+                        }
+                    />
                 </Card>
             </Grid>
         </Grid.Container>

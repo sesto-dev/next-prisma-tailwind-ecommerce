@@ -54,7 +54,7 @@ const inputs = {
             fa: 'رمز عبور ها یکسان نمی باشند',
         },
     },
-    code: {
+    verificationCode: {
         label: {
             en: 'code',
             fa: 'کد تایید',
@@ -64,9 +64,41 @@ const inputs = {
             fa: 'کد تایید خود را وارد کنید',
         },
     },
+    referralCode: {
+        label: {
+            en: 'Referral Code',
+            fa: 'کد معرف',
+        },
+        placeholder: {
+            en: 'Input your referral code.',
+            fa: 'کد معرف خود را وارد کنید',
+        },
+    },
+    discountCode: {
+        label: {
+            en: 'Discount Code',
+            fa: 'کد تخفیف',
+        },
+        placeholder: {
+            en: 'Input your discount code.',
+            fa: 'کد تخفیف خود را وارد کنید',
+        },
+    },
 }
 
 const buttons = {
+    user: {
+        en: 'USER',
+        fa: 'صفحه کاربر',
+    },
+    cart: {
+        en: 'CART',
+        fa: 'سبد خرید',
+    },
+    logout: {
+        en: 'LOGOUT',
+        fa: 'خروج',
+    },
     login: {
         en: 'LOGIN',
         fa: 'ورود',
@@ -82,6 +114,10 @@ const buttons = {
     submit: {
         en: 'SUBMIT',
         fa: 'ثبت',
+    },
+    payment: {
+        en: 'Payment',
+        fa: 'پرداخت نهایی',
     },
     google: {
         active: { en: 'Sign in with Google', fa: 'ورود با گوگل' },
@@ -130,6 +166,10 @@ const toasts = {
         en: 'Your account is not verified.',
         fa: 'اکانت شما تایید نشده است',
     },
+    copied: {
+        en: '✓ Succesfully copied!',
+        fa: 'با موفقیت کپی شد ✓',
+    },
 }
 
 const components = {
@@ -146,6 +186,24 @@ const components = {
                         fa: 'محصولات',
                     },
                     value: '/products',
+                },
+                {
+                    label: { en: 'Blog', fa: 'بلاگ' },
+                    value: '/blog',
+                },
+                {
+                    label: {
+                        en: 'Contact',
+                        fa: 'تماس با ما',
+                    },
+                    value: '/contact',
+                },
+                {
+                    label: {
+                        en: 'About',
+                        fa: 'درباره ما',
+                    },
+                    value: '/about',
                 },
             ],
             protected: [
@@ -315,10 +373,6 @@ const pages = {
             en: 'Index Page',
             fa: 'صفحه خانه',
         },
-        content: {
-            en: 'This page is designed to showcase the simplicity of the Layout component. Please visit the About page which displays a more substantial usecase.',
-            fa: 'این صفحه برای نمایش سادگی استفاده از کامپوننت ها ساخته شده است.',
-        },
     },
     cart: {
         title: {
@@ -328,6 +382,24 @@ const pages = {
         description: {
             en: 'Cart Page',
             fa: 'صفحه سبد خرید',
+        },
+        receipt: {
+            total: {
+                en: 'Total Cost',
+                fa: 'هزینه کل',
+            },
+            discounted: {
+                en: 'Discounted Cost',
+                fa: 'مقدار تخفیف',
+            },
+            payable: {
+                en: 'Payable Cost',
+                fa: 'هزینه قابل پرداخت',
+            },
+            address: {
+                en: 'Address',
+                fa: 'آدرس',
+            },
         },
     },
     order: {
@@ -438,7 +510,7 @@ const pages = {
             },
             referral: {
                 en: 'Referral Code',
-                fa: 'کد دعوت',
+                fa: 'کد معرف',
             },
         },
         orders: {
@@ -454,11 +526,11 @@ const pages = {
         referrals: {
             title: {
                 en: 'Referrals',
-                fa: 'دعوت ها',
+                fa: 'تاریخچه کد معرف',
             },
             description: {
                 en: 'Your referral history.',
-                fa: 'تاریخچه دعوت های شما',
+                fa: 'تاریخچه استفاده از کد معرف شما',
             },
         },
         integrations: {
@@ -494,6 +566,20 @@ const pages = {
         content: {
             en: 'NPX is a tool intended to help round out the experience of using packages from the npm registry — the same way npm makes it super easy to install and manage dependencies hosted on the registry, npx makes it easy to use CLI tools and other executables hosted on the registry. It greatly simplifies a number of things that, until now, required a bit of ceremony to do with plain npm.',
             fa: 'NPX ابزاری است که برای کمک به تکمیل تجربه استفاده از بسته‌ها از رجیستری npm در نظر گرفته شده است - همان طور که npm نصب و مدیریت وابستگی‌های میزبانی شده در رجیستری را بسیار آسان می‌کند، npx استفاده از ابزارهای CLI و سایر فایل‌های اجرایی میزبانی شده را آسان می‌کند. رجیستری این کار تعدادی از مواردی را که تا به حال نیاز به کمی تشریفات برای npm ساده داشت، بسیار ساده می کند.',
+        },
+    },
+    blog: {
+        title: {
+            en: 'Blog',
+            fa: 'بلاگ',
+        },
+        description: {
+            en: 'Blog sample page.',
+            fa: 'صفحه بلاگ',
+        },
+        content: {
+            en: 'Blog placeholder page.',
+            fa: 'صفحه بلاگ',
         },
     },
     contact: {

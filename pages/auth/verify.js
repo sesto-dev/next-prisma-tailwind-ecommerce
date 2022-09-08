@@ -64,13 +64,17 @@ export default function () {
                 <Input
                     label={
                         !isLocaleRTL(locale) &&
-                        i18n['inputs']['code']['label'][locale]
+                        i18n['inputs']['verificationCode']['label'][locale]
                     }
                     labelRight={
                         isLocaleRTL(locale) &&
-                        i18n['inputs']['code']['label'][locale]
+                        i18n['inputs']['verificationCode']['label'][locale]
                     }
-                    placeholder={i18n['inputs']['code']['placeholder'][locale]}
+                    placeholder={
+                        i18n['inputs']['verificationCode']['placeholder'][
+                            locale
+                        ]
+                    }
                     width="220pt"
                     value={refCode.current}
                     type="secondary"

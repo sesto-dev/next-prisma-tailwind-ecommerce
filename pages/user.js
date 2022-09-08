@@ -25,18 +25,8 @@ import {
 } from '@geist-ui/core'
 
 export default function ({ auth }) {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
-
+    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
+        essentials
     const { setMeta } = useMeta()
     const theme = useTheme()
     const router = useRouter()
@@ -90,6 +80,262 @@ export default function ({ auth }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    return (
+        <Binder>
+            <Collapse.Group>
+                <Collapse
+                    title={info['title'][locale]}
+                    subtitle={info['description'][locale]}
+                >
+                    <UserInfo user={user} />
+                </Collapse>
+                <Collapse
+                    title={orders['title'][locale]}
+                    subtitle={orders['description'][locale]}
+                >
+                    <Orders user={user} />
+                </Collapse>
+                <Collapse
+                    title={referrals['title'][locale]}
+                    subtitle={referrals['description'][locale]}
+                >
+                    <Referrals user={user} />
+                </Collapse>
+                <Collapse
+                    title={integrations['title'][locale]}
+                    subtitle={integrations['description'][locale]}
+                >
+                    <Integrations user={user} />
+                </Collapse>
+                <Collapse
+                    title={logout['title'][locale]}
+                    subtitle={logout['description'][locale]}
+                    style={{ borderBottom: 'none' }}
+                >
+                    <Logout />
+                </Collapse>
+            </Collapse.Group>
+        </Binder>
+    )
+}
+
+const Binder = ({ children }) => {
+    const theme = useTheme()
+
+    return (
+        <Grid.Container gap={1}>
+            <Grid xs={24}>
+                <Card
+                    width="100%"
+                    style={{
+                        backgroundColor: theme.palette.accents_1,
+                    }}
+                >
+                    {children}
+                </Card>
+            </Grid>
+        </Grid.Container>
+    )
+}
+
+const UserInfo = ({ user }) => {
+    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
+        essentials
+
+    const { setMeta } = useMeta()
+    const theme = useTheme()
+    const { setToast } = useToasts()
+    const { setLocalAuthentication } = useAuth()
+    const { width, height } = useWindowSize()
+
+    const { locale = config['defaultLocale'] } = useRouter()
+
+    const { info } = i18n['pages']['user']
+
+    return (
+        <Grid.Container gap={1}>
+            {user ? (
+                <>
+                    <Grid xs={24} md={12}>
+                        {user.name && (
+                            <Description
+                                width="100%"
+                                title={info['name'][locale]}
+                                content={
+                                    <Text
+                                        width="100%"
+                                        mt={0}
+                                        blockquote
+                                        font="1rem"
+                                    >
+                                        {user.name}
+                                    </Text>
+                                }
+                            />
+                        )}
+                    </Grid>
+                    <Grid xs={24} md={12}>
+                        <Description
+                            width="100%"
+                            title={info['email'][locale]}
+                            content={
+                                <Text
+                                    width="100%"
+                                    mt={0}
+                                    blockquote
+                                    font="1rem"
+                                >
+                                    {user.email}
+                                </Text>
+                            }
+                        />
+                    </Grid>
+                    <Grid xs={24} md={12}>
+                        <Description
+                            width="100%"
+                            title={info['referral'][locale]}
+                            content={
+                                <Snippet
+                                    symbol=""
+                                    font="1rem"
+                                    toastText={i18n['toasts']['copied'][locale]}
+                                    toastType="default"
+                                    text={user.referral_code}
+                                />
+                            }
+                        />
+                    </Grid>
+                </>
+            ) : (
+                <Loading />
+            )}
+        </Grid.Container>
+    )
+}
+
+const Orders = ({ user }) => {
+    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
+        essentials
+
+    const { setMeta } = useMeta()
+    const theme = useTheme()
+    const router = useRouter()
+    const { setToast } = useToasts()
+    const { setLocalAuthentication } = useAuth()
+    const { width, height } = useWindowSize()
+
+    return (
+        <Card id="Orders" width="100%">
+            {user && user.orders ? (
+                <Table data={user.orders}>
+                    <Table.Column prop="link" label="Link" width={100} />
+                    <Table.Column prop="createdAt" label="Date" width={220} />
+                    {width > 650 && (
+                        <>
+                            <Table.Column prop="totalPrice" label="Price" />
+                            <Table.Column prop="isPaid" label="Paid" />
+                            <Table.Column
+                                prop="isDelivered"
+                                label="Delivered"
+                            />
+                        </>
+                    )}
+                </Table>
+            ) : (
+                <Loading />
+            )}
+        </Card>
+    )
+}
+
+const Referrals = ({ user }) => {
+    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
+        essentials
+
+    return (
+        <Card width="100%">
+            {user && user.referrals ? (
+                <Table data={user.referrals}>
+                    <Table.Column prop="createdAt" label="Date" />
+                    <Table.Column prop="totalPrice" label="Price" />
+                </Table>
+            ) : (
+                <Loading />
+            )}
+        </Card>
+    )
+}
+
+const Integrations = ({ user }) => {
+    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
+        essentials
+
+    const { setMeta } = useMeta()
+    const theme = useTheme()
+    const { setToast } = useToasts()
+    const { setLocalAuthentication } = useAuth()
+    const { width, height } = useWindowSize()
+
+    const { locale = config['defaultLocale'] } = useRouter()
+
+    return (
+        <Grid.Container width="100%" gap={1}>
+            {user ? (
+                <Grid width="100%" xs={24} sm={12} md={8}>
+                    {user.integrations.google.id ? (
+                        <Button
+                            icon={<GoogleIcon color={theme.palette.code} />}
+                            disabled
+                            type="secondary"
+                            width="100%"
+                            style={{
+                                border: `1px solid ${theme.palette.code}`,
+                                color: theme.palette.code,
+                            }}
+                        >
+                            {i18n['buttons']['google']['inactive'][locale]}
+                        </Button>
+                    ) : (
+                        <a
+                            style={{ width: '100%' }}
+                            href={getGoogleURL(
+                                process.env
+                                    .NEXT_PUBLIC_GOOGLE_OAUTH_REDIRECT_URL,
+                                process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ID
+                            )}
+                        >
+                            <Button
+                                icon={<GoogleIcon />}
+                                type="secondary"
+                                width="100%"
+                                onClick={() => {}}
+                            >
+                                {i18n['buttons']['google']['active'][locale]}
+                            </Button>
+                        </a>
+                    )}
+                </Grid>
+            ) : (
+                <Loading />
+            )}
+        </Grid.Container>
+    )
+}
+
+const Logout = () => {
+    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
+        essentials
+
+    const { setMeta } = useMeta()
+    const theme = useTheme()
+    const router = useRouter()
+    const { setToast } = useToasts()
+    const { setLocalAuthentication } = useAuth()
+    const { width, height } = useWindowSize()
+
+    const { locale = config['defaultLocale'] } = router
+    const { logout } = i18n['pages']['user']
+
     async function onLogout() {
         const response = await axios.post(config.routes.backend.logout)
 
@@ -103,127 +349,7 @@ export default function ({ auth }) {
         })
     }
 
-    const UserInfo = ({ user }) => (
-        <Grid.Container gap={1}>
-            <Grid xs={24} md={12}>
-                {user.name && (
-                    <Description
-                        width="100%"
-                        title={info['name'][locale]}
-                        content={
-                            <Text width="100%" mt={0} blockquote font="1rem">
-                                {user.name}
-                            </Text>
-                        }
-                    />
-                )}
-            </Grid>
-            <Grid xs={24} md={12}>
-                <Description
-                    width="100%"
-                    title={info['email'][locale]}
-                    content={
-                        <Text width="100%" mt={0} blockquote font="1rem">
-                            {user.email}
-                        </Text>
-                    }
-                />
-            </Grid>
-            <Grid xs={24} md={12}>
-                <Description
-                    width="100%"
-                    title={info['referral'][locale]}
-                    content={
-                        <Snippet
-                            symbol=""
-                            font="1rem"
-                            toastText="✓ Referral-Code copied!"
-                            toastType="default"
-                            text={user.referral_code}
-                        />
-                    }
-                />
-            </Grid>
-        </Grid.Container>
-    )
-
-    const Orders = ({ user }) => {
-        return (
-            <Card id="Orders" width="100%">
-                {user && user.orders && (
-                    <Table data={user.orders}>
-                        <Table.Column prop="link" label="Link" width={100} />
-                        <Table.Column
-                            prop="createdAt"
-                            label="Date"
-                            width={220}
-                        />
-                        {width > 650 && (
-                            <>
-                                <Table.Column prop="totalPrice" label="Price" />
-                                <Table.Column prop="isPaid" label="Paid" />
-                                <Table.Column
-                                    prop="isDelivered"
-                                    label="Delivered"
-                                />
-                            </>
-                        )}
-                    </Table>
-                )}
-            </Card>
-        )
-    }
-
-    const Referrals = ({ user }) => (
-        <Card width="100%">
-            {user && user.referrals && (
-                <Table data={user.referrals}>
-                    <Table.Column prop="createdAt" label="Date" />
-                    <Table.Column prop="totalPrice" label="Price" />
-                </Table>
-            )}
-        </Card>
-    )
-
-    const Integrations = ({ user }) => (
-        <Grid.Container width="100%" gap={1}>
-            <Grid width="100%" xs={24} sm={12} md={8}>
-                {user.integrations && user.integrations.google.id ? (
-                    <Button
-                        icon={<GoogleIcon color={theme.palette.code} />}
-                        disabled
-                        type="secondary"
-                        width="100%"
-                        style={{
-                            border: `1px solid ${theme.palette.code}`,
-                            color: theme.palette.code,
-                        }}
-                    >
-                        {i18n['buttons']['google']['inactive'][locale]}
-                    </Button>
-                ) : (
-                    <a
-                        style={{ width: '100%' }}
-                        href={getGoogleURL(
-                            process.env.NEXT_PUBLIC_GOOGLE_OAUTH_REDIRECT_URL,
-                            process.env.NEXT_PUBLIC_GOOGLE_OAUTH_ID
-                        )}
-                    >
-                        <Button
-                            icon={<GoogleIcon />}
-                            type="secondary"
-                            width="100%"
-                            onClick={() => {}}
-                        >
-                            {i18n['buttons']['google']['active'][locale]}
-                        </Button>
-                    </a>
-                )}
-            </Grid>
-        </Grid.Container>
-    )
-
-    const Logout = () => (
+    return (
         <Button
             icon={<LogOut />}
             scale={1.2}
@@ -235,90 +361,6 @@ export default function ({ auth }) {
         >
             <b>{logout['title'][locale].toUpperCase()}</b>
         </Button>
-    )
-
-    return (
-        <>
-            <Grid.Container gap={1}>
-                {user ? (
-                    <>
-                        <Grid xs={24}>
-                            <Card
-                                width="100%"
-                                style={{
-                                    backgroundColor: theme.palette.accents_1,
-                                }}
-                            >
-                                <Collapse.Group>
-                                    <Collapse
-                                        title={info['title'][locale]}
-                                        subtitle={info['description'][locale]}
-                                    >
-                                        <UserInfo user={user} />
-                                    </Collapse>
-                                    <Collapse
-                                        title={orders['title'][locale]}
-                                        subtitle={orders['description'][locale]}
-                                    >
-                                        <Orders user={user} />
-                                    </Collapse>
-                                    <Collapse
-                                        title={referrals['title'][locale]}
-                                        subtitle={
-                                            referrals['description'][locale]
-                                        }
-                                    >
-                                        <Referrals user={user} />
-                                    </Collapse>
-                                    <Collapse
-                                        title={integrations['title'][locale]}
-                                        subtitle={
-                                            integrations['description'][locale]
-                                        }
-                                    >
-                                        <Integrations user={user} />
-                                    </Collapse>
-                                    <Collapse
-                                        title={logout['title'][locale]}
-                                        subtitle={logout['description'][locale]}
-                                        style={{ borderBottom: 'none' }}
-                                    >
-                                        <Logout />
-                                    </Collapse>
-                                </Collapse.Group>
-                            </Card>
-                        </Grid>
-                    </>
-                ) : (
-                    <Grid xs={24}>
-                        <Card
-                            width="100%"
-                            height="20rem"
-                            py="8rem"
-                            style={{
-                                backgroundColor: theme.palette.accents_1,
-                            }}
-                        >
-                            <Loading />
-                        </Card>
-                    </Grid>
-                )}
-            </Grid.Container>
-
-            <style jsx global>
-                {`
-                    .group-tabs > button {
-                        background-color: ${theme.palette.accents_1}!important;
-                    }
-                    .group-content > .fieldset > .content {
-                        background-color: ${theme.palette.accents_1};
-                    }
-                    tbody > tr:last-child > td {
-                        border-bottom: none !important;
-                    }
-                `}
-            </style>
-        </>
     )
 }
 
