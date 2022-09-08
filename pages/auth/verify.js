@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import useState from 'react-usestateref'
+import { useEffect, useState } from 'react'
 import { Button, Grid, useToasts, Input } from '@geist-ui/core'
 import { isLocaleRTL, verifyHandler } from 'aryana'
 
@@ -35,7 +34,7 @@ export default function () {
     }, [locale])
 
     const [loading, setLoading] = useState(false)
-    const [code, setCode, refCode] = useState('')
+    const [code, setCode] = useState('')
 
     async function onVerify() {
         setLoading(true)
@@ -43,7 +42,7 @@ export default function () {
         const response = await axios.post(
             config.routes.backend.verify,
             {
-                code: refCode.current,
+                code,
             },
             config.axios.simple
         )
@@ -76,7 +75,7 @@ export default function () {
                         ]
                     }
                     width="220pt"
-                    value={refCode.current}
+                    value={code}
                     type="secondary"
                     onChange={(e) => {
                         setCode(e.target.value.trim())
@@ -86,7 +85,7 @@ export default function () {
             <Grid xs={24}>
                 <Button
                     loading={loading}
-                    disabled={!refCode.current}
+                    disabled={!code}
                     type="secondary"
                     onClick={onVerify}
                 >

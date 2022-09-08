@@ -50,7 +50,6 @@
         "mongoose": "^6.5.4",
         "next": "^12.2.5",
         "react": "^18.2.0",
-        "react-usestateref": "^1.0.8",
         "styled-jsx": "^5.0.5"
     },
     "devDependencies": {

@@ -1,9 +1,8 @@
-import useState from 'react-usestateref'
 import { Button, Grid, useToasts, Input, Text } from '@geist-ui/core'
 
 import { isLocaleRTL, forgotHandler, resetHandler, isEmail } from 'aryana'
 import essentials from '../../helpers/getEssentials'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function () {
     const {
@@ -32,11 +31,11 @@ export default function () {
         })
     }, [locale])
 
-    const [loading, setLoading, refLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [nextStage, setNextStage] = useState(false)
-    const [email, setEmail, refEmail] = useState('')
-    const [code, setCode, refCode] = useState('')
-    const [password, setPassword, refPassword] = useState('')
+    const [email, setEmail] = useState('')
+    const [code, setCode] = useState('')
+    const [password, setPassword] = useState('')
 
     async function onForgot() {
         setLoading(true)
@@ -44,7 +43,7 @@ export default function () {
         const response = await axios.post(
             config.routes.backend.forgot,
             {
-                email: refEmail.current,
+                email: email,
             },
             config.axios.simple
         )
@@ -64,8 +63,8 @@ export default function () {
         const response = await axios.post(
             config.routes.backend.reset,
             {
-                code: refCode.current,
-                password: refPassword.current,
+                code,
+                password,
             },
             config.axios.simple
         )
@@ -96,9 +95,9 @@ export default function () {
                     width="400pt"
                     value={email}
                     type={
-                        refEmail.current == ''
+                        email == ''
                             ? 'default'
-                            : isEmail(refEmail.current)
+                            : isEmail(email)
                             ? 'success'
                             : 'error'
                     }
@@ -108,21 +107,17 @@ export default function () {
                 />
             </Grid>
             <Grid xs={24}>
-                {!nextStage &&
-                    refEmail.current != '' &&
-                    !isEmail(refEmail.current) && (
-                        <Text small type="error">
-                            {i18n['inputs']['email']['error'][locale]}
-                        </Text>
-                    )}
+                {!nextStage && email != '' && !isEmail(email) && (
+                    <Text small type="error">
+                        {i18n['inputs']['email']['error'][locale]}
+                    </Text>
+                )}
             </Grid>
             <Grid xs={24}>
                 {!nextStage && (
                     <Button
-                        loading={refLoading.current}
-                        disabled={
-                            !refEmail.current || !isEmail(refEmail.current)
-                        }
+                        loading={loading}
+                        disabled={!email || !isEmail(email)}
                         type="secondary"
                         onClick={onForgot}
                     >
@@ -171,9 +166,9 @@ export default function () {
                         }
                         width="100%"
                         type={
-                            refPassword.current == ''
+                            password == ''
                                 ? 'default'
-                                : refPassword.current.length > 7
+                                : password.length > 7
                                 ? 'success'
                                 : 'error'
                         }
@@ -185,23 +180,17 @@ export default function () {
                 )}
             </Grid>
             <Grid xs={24}>
-                {nextStage &&
-                    !refPassword.current == '' &&
-                    refPassword.current.length < 8 && (
-                        <Text small type="error">
-                            {i18n['inputs']['password']['error'][locale]}
-                        </Text>
-                    )}
+                {nextStage && !password == '' && password.length < 8 && (
+                    <Text small type="error">
+                        {i18n['inputs']['password']['error'][locale]}
+                    </Text>
+                )}
             </Grid>
             <Grid xs={24}>
                 {nextStage && (
                     <Button
-                        loading={refLoading.current}
-                        disabled={
-                            !refCode.current ||
-                            !refPassword.current ||
-                            refPassword.current.length < 8
-                        }
+                        loading={loading}
+                        disabled={!code || !password || password.length < 8}
                         type="secondary"
                         onClick={onReset}
                     >

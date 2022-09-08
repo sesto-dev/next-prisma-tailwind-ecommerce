@@ -1,7 +1,5 @@
-import useState from 'react-usestateref'
-import essentials from '../../helpers/getEssentials'
+import { useEffect, useState } from 'react'
 import { Lock, Mail, LogIn, UserPlus } from '@geist-ui/icons'
-
 import {
     Card,
     Divider,
@@ -23,7 +21,8 @@ import {
     GoogleIcon,
     isEmail,
 } from 'aryana'
-import { useEffect } from 'react'
+
+import essentials from '../../helpers/getEssentials'
 
 export default function () {
     const {
@@ -41,7 +40,7 @@ export default function () {
     const theme = useTheme()
     const router = useRouter()
     const { setMeta } = useMeta()
-    const { locale = config['defaultLocale'] } = useRouter()
+    const { locale = config['defaultLocale'] } = router
     const { setToast } = useToasts()
     const { setLocalAuthentication } = useAuth()
 
@@ -54,11 +53,10 @@ export default function () {
         })
     }, [locale])
 
-    const [email, setEmail, refEmail] = useState('')
-    const [password, setPassword, refPassword] = useState('')
-    const [confirmPassword, setConfirmPassword, refConfirmPassword] =
-        useState('')
-    const [loading, setLoading, refLoading] = useState(false)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [loading, setLoading] = useState(false)
 
     async function onLogin() {
         setLoading(true)
@@ -66,8 +64,8 @@ export default function () {
         const response = await axios.post(
             config.routes.backend.login,
             {
-                email: refEmail.current,
-                password: refPassword.current,
+                email,
+                password,
             },
             config.axios.simple
         )
@@ -89,8 +87,8 @@ export default function () {
         const response = await axios.post(
             config.routes.backend.register,
             {
-                email: refEmail.current,
-                password: refPassword.current,
+                email: email,
+                password: password,
             },
             config.axios.simple
         )
@@ -140,9 +138,9 @@ export default function () {
                                 width="100%"
                                 value={email}
                                 type={
-                                    refEmail.current == ''
+                                    email == ''
                                         ? 'default'
-                                        : isEmail(refEmail.current)
+                                        : isEmail(email)
                                         ? 'default'
                                         : 'error'
                                 }
@@ -168,9 +166,9 @@ export default function () {
                                 mt={1}
                                 value={password}
                                 type={
-                                    refPassword.current == ''
+                                    password == ''
                                         ? 'default'
-                                        : refPassword.current.length > 7
+                                        : password.length > 7
                                         ? 'default'
                                         : 'error'
                                 }
@@ -179,12 +177,12 @@ export default function () {
                                 }
                             />
                             <Button
-                                loading={refLoading.current}
+                                loading={loading}
                                 disabled={
-                                    !refEmail.current ||
-                                    !refPassword.current ||
-                                    !isEmail(refEmail.current) ||
-                                    refPassword.current.length < 8
+                                    !email ||
+                                    !password ||
+                                    !isEmail(email) ||
+                                    password.length < 8
                                 }
                                 width="100%"
                                 mt={1}
@@ -242,9 +240,9 @@ export default function () {
                                 width="100%"
                                 value={email}
                                 type={
-                                    refEmail.current == ''
+                                    email == ''
                                         ? 'default'
-                                        : isEmail(refEmail.current)
+                                        : isEmail(email)
                                         ? 'success'
                                         : 'error'
                                 }
@@ -254,23 +252,17 @@ export default function () {
                                     )
                                 }
                             />
-                            {!refEmail.current == '' &&
-                                !isEmail(refEmail.current) && (
-                                    <Text
-                                        style={{
-                                            direction:
-                                                getLocaleDirection(locale),
-                                        }}
-                                        small
-                                        type="error"
-                                    >
-                                        {
-                                            i18n['inputs']['email']['error'][
-                                                locale
-                                            ]
-                                        }
-                                    </Text>
-                                )}
+                            {!email == '' && !isEmail(email) && (
+                                <Text
+                                    style={{
+                                        direction: getLocaleDirection(locale),
+                                    }}
+                                    small
+                                    type="error"
+                                >
+                                    {i18n['inputs']['email']['error'][locale]}
+                                </Text>
+                            )}
                             <Input.Password
                                 label={
                                     !isLocaleRTL(locale) && <Lock size={16} />
@@ -284,9 +276,9 @@ export default function () {
                                     ]
                                 }
                                 type={
-                                    refPassword.current == ''
+                                    password == ''
                                         ? 'default'
-                                        : refPassword.current.length > 7
+                                        : password.length > 7
                                         ? 'success'
                                         : 'error'
                                 }
@@ -297,16 +289,15 @@ export default function () {
                                     setPassword(e.target.value.trim())
                                 }
                             />
-                            {!refPassword.current == '' &&
-                                refPassword.current.length < 8 && (
-                                    <Text small type="error">
-                                        {
-                                            i18n['inputs']['password']['error'][
-                                                locale
-                                            ]
-                                        }
-                                    </Text>
-                                )}
+                            {!password == '' && password.length < 8 && (
+                                <Text small type="error">
+                                    {
+                                        i18n['inputs']['password']['error'][
+                                            locale
+                                        ]
+                                    }
+                                </Text>
+                            )}
                             <Input.Password
                                 label={
                                     !isLocaleRTL(locale) && <Lock size={16} />
@@ -320,12 +311,10 @@ export default function () {
                                     ][locale]
                                 }
                                 type={
-                                    refConfirmPassword.current == ''
+                                    confirmPassword == ''
                                         ? 'default'
-                                        : refConfirmPassword.current.length >
-                                              7 &&
-                                          refConfirmPassword.current ==
-                                              refPassword.current
+                                        : confirmPassword.length > 7 &&
+                                          confirmPassword == password
                                         ? 'success'
                                         : 'error'
                                 }
@@ -336,8 +325,8 @@ export default function () {
                                     setConfirmPassword(e.target.value.trim())
                                 }}
                             />
-                            {!refConfirmPassword.current == '' &&
-                                refConfirmPassword.current.length < 8 && (
+                            {!confirmPassword == '' &&
+                                confirmPassword.length < 8 && (
                                     <Text small type="error">
                                         {
                                             i18n['inputs']['confirmPassword'][
@@ -346,9 +335,8 @@ export default function () {
                                         }{' '}
                                     </Text>
                                 )}
-                            {!refConfirmPassword.current == '' &&
-                                refConfirmPassword.current !=
-                                    refPassword.current && (
+                            {!confirmPassword == '' &&
+                                confirmPassword != password && (
                                     <Text small type="error">
                                         {
                                             i18n['inputs']['password']['error'][
@@ -358,15 +346,14 @@ export default function () {
                                     </Text>
                                 )}
                             <Button
-                                loading={refLoading.current}
+                                loading={loading}
                                 disabled={
-                                    !refEmail.current ||
-                                    !refPassword.current ||
-                                    refConfirmPassword.current !=
-                                        refPassword.current ||
-                                    !isEmail(refEmail.current) ||
-                                    refPassword.current.length < 8 ||
-                                    refConfirmPassword.current.length < 8
+                                    !email ||
+                                    !password ||
+                                    confirmPassword != password ||
+                                    !isEmail(email) ||
+                                    password.length < 8 ||
+                                    confirmPassword.length < 8
                                 }
                                 width="100%"
                                 mt={1}
