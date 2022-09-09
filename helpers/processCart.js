@@ -28,7 +28,7 @@ export default async function ({ user }) {
 
         const count = stringIDs.filter((x) => x == uniqueIDs[j]).length
         element.count = count
-        totalCost += element.listing.price * count
+        totalCost = Math.trunc(totalCost + element.listing.price * count)
 
         if (element.product.physical) hasPhysical = true
     }
@@ -39,14 +39,16 @@ export default async function ({ user }) {
         })
 
         if (sourceDiscountCode) {
-            discountCost = (totalCost * sourceDiscountCode.percentage) / 100
+            discountCost = Math.trunc(
+                (totalCost * sourceDiscountCode.percentage) / 100
+            )
 
             if (discountCost > sourceDiscountCode.maximum_amount)
-                discountCost = sourceDiscountCode.maximum_amount
+                discountCost = Math.trunc(sourceDiscountCode.maximum_amount)
         }
     }
 
-    const payableCost = totalCost - discountCost
+    const payableCost = Math.trunc(totalCost - discountCost)
 
     user.cart.total_cost = totalCost
     user.cart.discount_cost = discountCost

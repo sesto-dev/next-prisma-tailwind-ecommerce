@@ -14,7 +14,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 1505500,
                 stock: 7,
                 discount: 0,
             },
@@ -35,7 +35,7 @@ const products = [
             {
                 platform: 'xbox',
                 region: 'us',
-                price: 49.99,
+                price: 1400000,
                 stock: 7,
                 discount: 0,
             },
@@ -56,7 +56,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 1300000,
                 stock: 7,
                 discount: 0,
             },
@@ -77,7 +77,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 1266000,
                 stock: 7,
                 discount: 0,
             },
@@ -98,7 +98,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 966000,
                 stock: 7,
                 discount: 0,
             },
@@ -119,7 +119,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 1116000,
                 stock: 7,
                 discount: 0,
             },
@@ -140,7 +140,7 @@ const products = [
             {
                 platform: 'ps4',
                 region: 'us',
-                price: 49.99,
+                price: 1666000,
                 stock: 7,
                 discount: 0,
             },
@@ -161,7 +161,7 @@ const products = [
             {
                 platform: 'xbox',
                 region: 'us',
-                price: 49.99,
+                price: 866000,
                 stock: 7,
                 discount: 0,
             },
@@ -182,7 +182,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 1359000,
                 stock: 7,
                 discount: 0,
             },
@@ -201,7 +201,7 @@ const products = [
             {
                 platform: 'xbox',
                 region: 'us',
-                price: 49.99,
+                price: 1161000,
                 stock: 7,
                 discount: 0,
             },
@@ -222,14 +222,14 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 1365000,
                 stock: 7,
                 discount: 0,
             },
             {
                 platform: 'ps5',
                 region: 'us',
-                price: 49.99,
+                price: 2144000,
                 stock: 7,
                 discount: 0,
             },
@@ -250,7 +250,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 566000,
                 stock: 7,
                 discount: 0,
             },
@@ -271,7 +271,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 866000,
                 stock: 7,
                 discount: 0,
             },
@@ -292,7 +292,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 912000,
                 stock: 7,
                 discount: 0,
             },
@@ -313,7 +313,7 @@ const products = [
             {
                 platform: 'ps5',
                 region: 'us',
-                price: 49.99,
+                price: 2666000,
                 stock: 7,
                 discount: 0,
             },
@@ -335,7 +335,7 @@ const products = [
             {
                 platform: 'ps4',
                 region: 'us',
-                price: 49.99,
+                price: 1066000,
                 stock: 7,
                 discount: 0,
             },
@@ -356,7 +356,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 866000,
                 stock: 7,
                 discount: 0,
             },
@@ -377,7 +377,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 1266000,
                 stock: 7,
                 discount: 0,
             },
@@ -398,7 +398,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 1350900,
                 stock: 7,
                 discount: 0,
             },
@@ -419,7 +419,7 @@ const products = [
             {
                 platform: 'steam',
                 region: 'us',
-                price: 49.99,
+                price: 811000,
                 stock: 7,
                 discount: 0,
             },

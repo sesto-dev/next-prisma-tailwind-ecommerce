@@ -18,6 +18,7 @@ import {
 } from '@geist-ui/core'
 
 import essentials from '../helpers/getEssentials'
+import { getPersianNumber } from 'aryana'
 
 export default function () {
     const {
@@ -168,14 +169,25 @@ const Receipt = ({ cart, setCart }) => {
                                 justifyContent: 'space-between',
                             }}
                         >
-                            <Text mb={0} type="secondary">
+                            <Text small mb={1} type="secondary">
                                 {
                                     i18n['pages']['cart']['receipt']['total'][
                                         locale
                                     ]
                                 }
                             </Text>
-                            <Text mb={0}>{cart.totalCost}</Text>
+                            <Text
+                                small
+                                mb={1}
+                                style={{
+                                    direction: getLocaleDirection(locale),
+                                }}
+                            >
+                                {locale == 'fa'
+                                    ? getPersianNumber(cart.totalCost)
+                                    : cart.totalCost.toLocaleString()}{' '}
+                                {i18n['currency'][locale]}
+                            </Text>
                         </div>
                         <div
                             style={{
@@ -183,14 +195,25 @@ const Receipt = ({ cart, setCart }) => {
                                 justifyContent: 'space-between',
                             }}
                         >
-                            <Text mb={0} type="secondary">
+                            <Text small mb={1} type="secondary">
                                 {
                                     i18n['pages']['cart']['receipt'][
                                         'discounted'
                                     ][locale]
                                 }
                             </Text>
-                            <Text mb={0}>{cart.discountCost}</Text>
+                            <Text
+                                small
+                                mb={1}
+                                style={{
+                                    direction: getLocaleDirection(locale),
+                                }}
+                            >
+                                {locale == 'fa'
+                                    ? getPersianNumber(cart.discountCost)
+                                    : cart.discountCost.toLocaleString()}{' '}
+                                {i18n['currency'][locale]}
+                            </Text>
                         </div>
                         <div
                             style={{
@@ -198,14 +221,25 @@ const Receipt = ({ cart, setCart }) => {
                                 justifyContent: 'space-between',
                             }}
                         >
-                            <Text mb={0} type="secondary">
+                            <Text small mb={1} type="secondary">
                                 {
                                     i18n['pages']['cart']['receipt']['payable'][
                                         locale
                                     ]
                                 }
                             </Text>
-                            <Text mb={0}>{cart.payableCost}</Text>
+                            <Text
+                                small
+                                mb={1}
+                                style={{
+                                    direction: getLocaleDirection(locale),
+                                }}
+                            >
+                                {locale == 'fa'
+                                    ? getPersianNumber(cart.payableCost)
+                                    : cart.payableCost.toLocaleString()}{' '}
+                                {i18n['currency'][locale]}
+                            </Text>
                         </div>
                         <Divider my={3} />
                         {cart.hasPhysical && (
@@ -482,33 +516,43 @@ const Product = ({ product, listing, count, cart, setCart }) => {
                                     </Link>
                                 </Grid>
                                 <Grid style={{ display: 'block' }} xs={18}>
-                                    <Link href={`/product/${product._id}`}>
-                                        <Text mt={0} mb={0.3} font="1.2rem">
+                                    <Text mt={0} mb={0.3} font="1.1rem">
+                                        <Link href={`/product/${product._id}`}>
                                             <a className="Peculiar">
                                                 {product.title}
                                             </a>
-                                        </Text>
-                                    </Link>
-                                    <Text mt={0} font={0.8}>
+                                        </Link>
+                                    </Text>
+                                    <Text
+                                        mt={0}
+                                        font={0.8}
+                                        style={{
+                                            wordBreak: 'break-all',
+                                        }}
+                                    >
                                         <Text span type="secondary">
-                                            {`Price:  `}
+                                            {i18n['product']['price'][locale]}
+                                            {':'}
                                         </Text>
-                                        <b>{listing.price}</b>,
-                                        <Text ml={0.5} span type="secondary">
-                                            {`Count:  `}
+                                        <Text b mx={0.4}>
+                                            {locale == 'fa'
+                                                ? getPersianNumber(
+                                                      listing.price
+                                                  )
+                                                : listing.price.toLocaleString()}
+                                            <Text span b mx={0.2}>
+                                                {i18n['currency'][locale]}
+                                            </Text>
                                         </Text>
-                                        <b>{count}</b>,
-                                        <Text ml={0.5} span type="secondary">
-                                            {`Platform:  `}
+                                        <Text span type="secondary">
+                                            {i18n['product']['count'][locale]}
+                                            {`:`}
                                         </Text>
-                                        <b>
-                                            {listing['platform'].toUpperCase()}
-                                        </b>
-                                        ,
-                                        <Text ml={0.5} span type="secondary">
-                                            {`Region:  `}
+                                        <Text b mx={0.4}>
+                                            {locale == 'fa'
+                                                ? getPersianNumber(count)
+                                                : count}
                                         </Text>
-                                        <b>{listing['region'].toUpperCase()}</b>
                                     </Text>
                                     <ButtonGroup>
                                         <Button

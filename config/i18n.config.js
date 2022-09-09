@@ -394,7 +394,7 @@ const pages = {
             },
             payable: {
                 en: 'Payable Cost',
-                fa: 'هزینه قابل پرداخت',
+                fa: 'قابل پرداخت',
             },
             address: {
                 en: 'Address',
@@ -648,6 +648,30 @@ const pages = {
     },
 }
 
+const currency = {
+    en: 'Toman',
+    fa: 'تومان',
+}
+
+const product = {
+    price: {
+        en: 'Price',
+        fa: 'قیمت',
+    },
+    count: {
+        en: 'Count',
+        fa: 'تعداد',
+    },
+    platform: {
+        en: 'Platform',
+        fa: 'پلتفرم',
+    },
+    region: {
+        en: 'Region',
+        fa: 'ریجن',
+    },
+}
+
 export default {
     meta,
     inputs,
@@ -655,4 +679,6 @@ export default {
     toasts,
     components,
     pages,
+    currency,
+    product,
 }

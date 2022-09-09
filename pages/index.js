@@ -32,15 +32,12 @@ export default function ({ auth }) {
         setLocalAuthentication(auth)
     }, [])
 
-    const { title, description, content } = i18n['pages']['index']
+    const { title, description } = i18n['pages']['index']
 
     useEffect(() => {
         setMeta({
             title: title[locale],
             description: description[locale],
-            image: 'https://i.imgur.com/NitQE9d.jpg',
-            large: title[locale],
-            small: description[locale],
         })
     }, [locale])
 
