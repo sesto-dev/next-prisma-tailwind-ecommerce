@@ -4,17 +4,7 @@ import { getLocaleDirection } from 'aryana'
 import { useEffect } from 'react'
 
 export default function () {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useRouter, Link, useMeta } = essentials
 
     const theme = useTheme()
     const { setMeta } = useMeta()

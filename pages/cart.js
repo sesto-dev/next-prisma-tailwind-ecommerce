@@ -1,4 +1,4 @@
-import { getLocaleAlignment, getLocaleDirection, handleCartData } from 'aryana'
+import { getLocaleAlignment, getLocaleDirection, fetchHandler } from 'aryana'
 import { useEffect, useState } from 'react'
 
 import { Trash, Plus, Minus, CreditCard, Unlock, X } from '@geist-ui/icons'
@@ -21,17 +21,8 @@ import essentials from '../helpers/getEssentials'
 import { getPersianNumber } from 'aryana'
 
 export default function () {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, useRouter, Link, Head, axios, useMeta } =
+        essentials
 
     const { setMeta } = useMeta()
     const router = useRouter()
@@ -41,6 +32,7 @@ export default function () {
     const { title, description } = i18n['pages']['cart']
 
     const [cart, setCart] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         setMeta({
@@ -51,14 +43,20 @@ export default function () {
 
     useEffect(() => {
         async function resolve() {
-            const response = await axios.get(config.routes.backend.getCart)
+            let response
 
-            handleCartData({
-                response,
+            try {
+                response = await axios.get(config.routes.backend.getCart)
+            } catch (error) {
+                response = error.response
+            }
+
+            fetchHandler({
                 router,
-                setCart,
+                response,
+                setLoading,
                 setToast,
-                noDataToast: i18n['toasts']['noData'][locale],
+                setState: setCart,
             })
         }
 
@@ -69,13 +67,23 @@ export default function () {
 
     return (
         <Grid.Container gap={2}>
-            <Items cart={cart} setCart={setCart} />
-            <Receipt cart={cart} setCart={setCart} />
+            <Items
+                cart={cart}
+                setCart={setCart}
+                loading={loading}
+                setLoading={setLoading}
+            />
+            <Receipt
+                cart={cart}
+                setCart={setCart}
+                loading={loading}
+                setLoading={setLoading}
+            />
         </Grid.Container>
     )
 }
 
-const Receipt = ({ cart, setCart }) => {
+const Receipt = ({ cart, setCart, loading, setLoading }) => {
     const { config, i18n, useRouter, axios } = essentials
 
     const theme = useTheme()
@@ -93,60 +101,84 @@ const Receipt = ({ cart, setCart }) => {
     }, [cart])
 
     async function onAddDiscountCode() {
-        const response = await axios.post(
-            config.routes.backend.discount,
-            { discountCode },
-            config.axios.simple
-        )
+        let response
 
-        handleCartData({
-            response,
+        try {
+            response = await axios.post(
+                config.routes.backend.discount,
+                { discountCode },
+                config.axios.simple
+            )
+        } catch (error) {
+            response = error.response
+        }
+
+        fetchHandler({
             router,
-            setCart,
+            response,
+            setLoading,
             setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
+            setState: setCart,
         })
     }
 
     async function onRemoveDiscountCode() {
-        const response = await axios.delete(config.routes.backend.discount)
+        let response
 
-        handleCartData({
-            response,
+        try {
+            response = await axios.delete(config.routes.backend.discount)
+        } catch (error) {
+            response = error.response
+        }
+
+        fetchHandler({
             router,
-            setCart,
+            response,
+            setLoading,
             setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
+            setState: setCart,
         })
 
         setDiscountCode('')
     }
 
     async function onAddReferralCode() {
-        const response = await axios.post(
-            config.routes.backend.referral,
-            { referralCode },
-            config.axios.simple
-        )
+        let response
 
-        handleCartData({
-            response,
+        try {
+            response = await axios.post(
+                config.routes.backend.referral,
+                { referralCode },
+                config.axios.simple
+            )
+        } catch (error) {
+            response = error.response
+        }
+
+        fetchHandler({
             router,
-            setCart,
+            response,
+            setLoading,
             setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
+            setState: setCart,
         })
     }
 
     async function onRemoveReferralCode() {
-        const response = await axios.delete(config.routes.backend.referral)
+        let response
 
-        handleCartData({
-            response,
+        try {
+            response = await axios.delete(config.routes.backend.referral)
+        } catch (error) {
+            response = error.response
+        }
+
+        fetchHandler({
             router,
-            setCart,
+            response,
+            setLoading,
             setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
+            setState: setCart,
         })
 
         setReferralCode('')
@@ -375,7 +407,7 @@ const Receipt = ({ cart, setCart }) => {
     )
 }
 
-const Items = ({ cart, setCart }) => {
+const Items = ({ cart, setCart, loading, setLoading }) => {
     const theme = useTheme()
 
     return (
@@ -392,6 +424,8 @@ const Items = ({ cart, setCart }) => {
                                     count={count}
                                     cart={cart}
                                     setCart={setCart}
+                                    loading={loading}
+                                    setLoading={setLoading}
                                 />
                             )
                         })
@@ -422,7 +456,15 @@ const Items = ({ cart, setCart }) => {
     )
 }
 
-const Product = ({ product, listing, count, cart, setCart }) => {
+const Product = ({
+    product,
+    listing,
+    count,
+    cart,
+    setCart,
+    loading,
+    setLoading,
+}) => {
     const { config, i18n, useRouter, Link, axios } = essentials
 
     const theme = useTheme()
@@ -431,49 +473,68 @@ const Product = ({ product, listing, count, cart, setCart }) => {
     const { locale = config.defaultLocale } = router
 
     async function onAdd(listingID) {
-        const response = await axios.post(
-            config.routes.backend.addCart,
-            { listingID },
-            config.axios.simple
-        )
+        let response
 
-        handleCartData({
-            response,
+        try {
+            response = await axios.post(
+                config.routes.backend.addCart,
+                { listingID },
+                config.axios.simple
+            )
+        } catch (error) {
+            response = error.response
+        }
+
+        fetchHandler({
             router,
-            setCart,
+            response,
+            setLoading,
             setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
+            setState: setCart,
         })
     }
 
     async function onSubtract(listingID) {
-        const response = await axios.post(
-            config.routes.backend.subtractCart,
-            { listingID },
-            config.axios.simple
-        )
+        let response
 
-        handleCartData({
-            response,
+        try {
+            response = await axios.post(
+                config.routes.backend.subtractCart,
+                { listingID },
+                config.axios.simple
+            )
+        } catch (error) {
+            response = error.response
+        }
+
+        fetchHandler({
             router,
-            setCart,
+            response,
+            setLoading,
             setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
+            setState: setCart,
         })
     }
 
     async function onRemove(listingID) {
-        const response = await axios.post(
-            config.routes.backend.removeCart,
-            { listingID },
-            config.axios.simple
-        )
-        handleCartData({
-            response,
+        let response
+
+        try {
+            response = await axios.post(
+                config.routes.backend.removeCart,
+                { listingID },
+                config.axios.simple
+            )
+        } catch (error) {
+            response = error.response
+        }
+
+        fetchHandler({
             router,
-            setCart,
+            response,
+            setLoading,
             setToast,
-            noDataToast: i18n['toasts']['noData'][locale],
+            setState: setCart,
         })
     }
 

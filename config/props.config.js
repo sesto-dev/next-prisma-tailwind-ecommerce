@@ -1,5 +1,4 @@
-const defaultProps = {
-    useThemeProvider: null,
+export default {
     config: {
         theme: {
             width: '900pt',
@@ -25,5 +24,3 @@ const defaultProps = {
         ],
     },
 }
-
-export default defaultProps

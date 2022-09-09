@@ -14,8 +14,7 @@ import {
 
 import {
     isLocaleRTL,
-    loginHandler,
-    registerHandler,
+    fetchHandler,
     getLocaleDirection,
     getGoogleURL,
     GoogleIcon,
@@ -25,17 +24,8 @@ import {
 import essentials from '../../helpers/getEssentials'
 
 export default function () {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, useRouter, Link, Head, axios, useMeta } =
+        essentials
 
     const theme = useTheme()
     const router = useRouter()
@@ -60,24 +50,31 @@ export default function () {
 
     async function onLogin() {
         setLoading(true)
+        let response
 
-        const response = await axios.post(
-            config.routes.backend.login,
-            {
-                email,
-                password,
-            },
-            config.axios.simple
-        )
+        try {
+            response = await axios.post(
+                config.routes.backend.login,
+                {
+                    email,
+                    password,
+                },
+                config.axios.simple
+            )
+        } catch (error) {
+            response = error.response
+        }
 
-        loginHandler({
+        console.log({ response })
+
+        fetchHandler({
+            router,
             response,
             setLoading,
             setToast,
-            setLocalAuthentication,
-            router,
-            toast: i18n['toasts']['login'][locale],
-            redirect_uri: config.routes.frontend.user,
+            setState: setLocalAuthentication,
+            success_toast: i18n['toasts']['login'][locale],
+            success_redirect_uri: config.routes.frontend.user,
         })
     }
 
@@ -93,13 +90,13 @@ export default function () {
             config.axios.simple
         )
 
-        registerHandler({
+        fetchHandler({
+            router,
             response,
             setLoading,
             setToast,
-            setLocalAuthentication,
-            router,
-            redirect_uri: config.routes.frontend.verify,
+            setState: setLocalAuthentication,
+            success_redirect_uri: config.routes.frontend.verify,
         })
     }
 

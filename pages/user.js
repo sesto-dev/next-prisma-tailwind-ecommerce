@@ -1,10 +1,4 @@
-import {
-    handleUserData,
-    logoutHandler,
-    getGoogleURL,
-    useWindowSize,
-    GoogleIcon,
-} from 'aryana'
+import { fetchHandler, getGoogleURL, useWindowSize, GoogleIcon } from 'aryana'
 
 import essentials from '../helpers/getEssentials'
 
@@ -57,21 +51,26 @@ export default function ({ auth }) {
         })
     }, [locale])
 
+    const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(null)
 
     useEffect(() => {
         async function resolve() {
-            const response = await axios.get(config.routes.backend.user)
+            let response
 
-            handleUserData({
-                response,
+            try {
+                response = await axios.get(config.routes.backend.user)
+            } catch (error) {
+                response = error.response
+            }
+
+            fetchHandler({
                 router,
-                setUser,
+                response,
+                setLoading,
                 setToast,
-                noDataToast: i18n['toasts']['noData'][locale],
-                notVerifiedToast: i18n['toasts']['notVerified'][locale],
-                Link,
-                notVerifiedRedirectURI: config.routes.frontend.verify,
+                setState: setUser,
+                failure_redirect_uri: config.routes.frontend.verify,
             })
         }
 
@@ -333,19 +332,28 @@ const Logout = () => {
     const { setLocalAuthentication } = useAuth()
     const { width, height } = useWindowSize()
 
+    const { logoutButtonLoading, setLogoutButtonLoading } = useState(false)
+
     const { locale = config['defaultLocale'] } = router
     const { logout } = i18n['pages']['user']
 
     async function onLogout() {
-        const response = await axios.post(config.routes.backend.logout)
+        let response
 
-        logoutHandler({
-            response,
-            setToast,
-            setLocalAuthentication,
+        try {
+            response = await axios.post(config.routes.backend.logout)
+        } catch (error) {
+            response = error.response
+        }
+
+        fetchHandler({
             router,
-            toast: i18n['toasts']['logout'][locale],
-            redirect_uri: config.routes.frontend.root,
+            response,
+            setLoading: setLogoutButtonLoading,
+            setToast,
+            setState: setLocalAuthentication,
+            success_toast: i18n['toasts']['logout'][locale],
+            success_redirect_uri: config.routes.frontend.root,
         })
     }
 

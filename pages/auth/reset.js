@@ -1,21 +1,12 @@
 import { Button, Grid, useToasts, Input, Text } from '@geist-ui/core'
 
-import { isLocaleRTL, forgotHandler, resetHandler, isEmail } from 'aryana'
+import { isLocaleRTL, fetchHandler, isEmail } from 'aryana'
 import essentials from '../../helpers/getEssentials'
 import { useEffect, useState } from 'react'
 
 export default function () {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, useRouter, Link, Head, axios, useMeta } =
+        essentials
 
     const router = useRouter()
     const { setMeta } = useMeta()
@@ -38,44 +29,55 @@ export default function () {
     const [password, setPassword] = useState('')
 
     async function onForgot() {
+        let response
         setLoading(true)
 
-        const response = await axios.post(
-            config.routes.backend.forgot,
-            {
-                email: email,
-            },
-            config.axios.simple
-        )
+        try {
+            response = await axios.post(
+                config.routes.backend.forgot,
+                {
+                    email: email,
+                },
+                config.axios.simple
+            )
+        } catch (error) {
+            response = error.response
+        }
 
-        forgotHandler({
+        fetchHandler({
+            router,
             response,
             setLoading,
             setToast,
-            setNextStage,
-            toast: i18n['toasts']['forgot'][locale],
+            setState: setNextStage,
+            success_toast: i18n['toasts']['forgot'][locale],
         })
     }
 
     async function onReset() {
+        let response
         setLoading(true)
 
-        const response = await axios.post(
-            config.routes.backend.reset,
-            {
-                code,
-                password,
-            },
-            config.axios.simple
-        )
+        try {
+            response = await axios.post(
+                config.routes.backend.reset,
+                {
+                    code,
+                    password,
+                },
+                config.axios.simple
+            )
+        } catch (error) {
+            response = error.response
+        }
 
-        resetHandler({
+        fetchHandler({
+            router,
             response,
             setLoading,
             setToast,
-            router,
-            toast: i18n['toasts']['forgot'][locale],
-            redirect_uri: config.routes.frontend.login,
+            success_toast: i18n['toasts']['forgot'][locale],
+            success_redirect_uri: config.routes.frontend.login,
         })
     }
 

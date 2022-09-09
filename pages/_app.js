@@ -8,15 +8,9 @@ import { MetaContext } from '../state/Meta'
 
 import essentials from '../helpers/getEssentials'
 
-const obj = {
-    title: 'Next',
-    description: 'Next Page',
-    image: 'https://i.imgur.com/NitQE9d.jpg',
-}
-
 export default function ({ Component, pageProps }) {
     const router = useRouter()
-    const [meta, setMeta] = useState(essentials.config.meta)
+    const [meta, setMeta] = useState(null)
 
     // Google Analytics Route Handling
     useEffect(() => {

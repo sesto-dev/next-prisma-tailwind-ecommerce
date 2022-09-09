@@ -22,6 +22,10 @@ export default async function (req, res) {
         res.setHeader('Set-Cookie', AJWT)
         res.status(200).json('Success!')
     } else {
-        res.status(401).send('Invalid email or password')
+        return res
+            .status(401)
+            .send(
+                'User with this credentials does not exist or wrong credentials.'
+            )
     }
 }

@@ -11,17 +11,7 @@ import {
 import essentials from '../helpers/getEssentials'
 
 export default function ({ auth }) {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, useRouter, Link, useMeta } = essentials
 
     const { setMeta } = useMeta()
     const theme = useTheme()

@@ -4,17 +4,7 @@ import essentials from '../helpers/getEssentials'
 import { useEffect } from 'react'
 
 export default function () {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useRouter, Link, useMeta } = essentials
 
     const { setMeta } = useMeta()
     const theme = useTheme()

@@ -19,20 +19,10 @@ import {
 } from '@geist-ui/core'
 import essentials from '../../helpers/getEssentials'
 
-import { handleProductData, handleAddToCartData } from 'aryana'
+import { fetchHandler, getLocaleDirection, getPersianNumber } from 'aryana'
 
 export default function ({ id }) {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useRouter, Link, axios, useMeta } = essentials
 
     const router = useRouter()
     const { setToast } = useToasts()
@@ -42,21 +32,26 @@ export default function ({ id }) {
 
     const [product, setProduct] = useState({})
     const [listingID, setListingID] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         async function resolve() {
-            const response = await axios.get(
-                config.routes.backend.products + `/${id}`
-            )
+            let response
 
-            handleProductData({
-                response,
+            try {
+                response = await axios.get(
+                    config.routes.backend.products + `/${id}`
+                )
+            } catch (error) {
+                response = error.response
+            }
+
+            fetchHandler({
                 router,
-                setMeta,
-                setProduct,
+                response,
+                setLoading,
                 setToast,
-                noDataToast: i18n['toasts']['noData'][locale],
-                setListingID,
+                setState: setProduct,
             })
         }
 
@@ -73,6 +68,8 @@ export default function ({ id }) {
                 product={product}
                 listingID={listingID}
                 setListingID={setListingID}
+                loading={loading}
+                setLoading={setLoading}
             />
             <ProductDescription product={product} />
         </Grid.Container>
@@ -122,18 +119,14 @@ const ProductImages = ({ product }) => {
     )
 }
 
-const ProductMain = ({ product, listingID, setListingID }) => {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+const ProductMain = ({
+    product,
+    listingID,
+    setListingID,
+    loading,
+    setLoading,
+}) => {
+    const { config, i18n, useRouter, Link, axios, useMeta } = essentials
 
     const theme = useTheme()
     const router = useRouter()
@@ -142,17 +135,24 @@ const ProductMain = ({ product, listingID, setListingID }) => {
     const { locale = config['defaultLocale'] } = useRouter()
 
     async function insertToCart() {
-        const response = await axios.post(
-            config.routes.backend.insertCart,
-            { listingID },
-            config.axios.simple
-        )
+        let response
 
-        handleAddToCartData({
-            response,
+        try {
+            response = await axios.post(
+                config.routes.backend.insertCart,
+                { listingID },
+                config.axios.simple
+            )
+        } catch (error) {
+            response = error.response
+        }
+
+        fetchHandler({
             router,
+            response,
+            setLoading,
             setToast,
-            toast: i18n['toasts']['addToCart'][locale],
+            success_toast: i18n['toasts']['addToCart'][locale],
         })
     }
 
@@ -271,7 +271,22 @@ const ProductMain = ({ product, listingID, setListingID }) => {
                         type="secondary"
                         onClick={() => insertToCart()}
                     >
-                        {product.listings && product['listings'][0]['price']}
+                        {product.listings && (
+                            <Text
+                                style={{
+                                    direction: getLocaleDirection(locale),
+                                }}
+                            >
+                                {locale == 'fa'
+                                    ? getPersianNumber(
+                                          product['listings'][0]['price']
+                                      )
+                                    : product['listings'][0][
+                                          'price'
+                                      ].toLocaleString()}{' '}
+                                {i18n['currency'][locale]}
+                            </Text>
+                        )}
                     </Button>
                 </div>
             </Card>
@@ -280,17 +295,8 @@ const ProductMain = ({ product, listingID, setListingID }) => {
 }
 
 const ProductDescription = ({ product }) => {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, useRouter, Link, axios, useMeta } =
+        essentials
 
     const theme = useTheme()
 

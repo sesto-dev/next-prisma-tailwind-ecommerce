@@ -1,22 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Button, Grid, useToasts } from '@geist-ui/core'
 
-import { unsubscribeHandler } from 'aryana'
+import { fetchHandler } from 'aryana'
 
 import essentials from '../../helpers/getEssentials'
 
 export default function () {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, useRouter, Link, Head, axios, useMeta } =
+        essentials
 
     const router = useRouter()
     const { locale = config['defaultLocale'] } = useRouter()
@@ -36,17 +27,22 @@ export default function () {
     const [loading, setLoading] = useState(false)
 
     async function onUnsubscribe() {
+        let response
         setLoading(true)
 
-        const response = await axios.post(config.routes.backend.unsubscribe)
+        try {
+            response = await axios.post(config.routes.backend.unsubscribe)
+        } catch (error) {
+            response = error.response
+        }
 
-        unsubscribeHandler({
+        fetchHandler({
+            router,
             response,
             setLoading,
             setToast,
-            toast: i18n['toasts']['unsubscribe'][locale],
-            router,
-            redirect_uri: config.routes.frontend.root,
+            success_toast: i18n['toasts']['unsubscribe'][locale],
+            success_redirect_uri: config.routes.frontend.root,
         })
     }
 

@@ -14,20 +14,11 @@ import {
     useTheme,
 } from '@geist-ui/core'
 import essentials from '../../helpers/getEssentials'
-import { handleOrderData } from 'aryana'
+import { fetchHandler } from 'aryana'
 
 export default function ({ id }) {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, useRouter, Link, Head, axios, useMeta } =
+        essentials
 
     const theme = useTheme()
     const router = useRouter()
@@ -38,6 +29,7 @@ export default function ({ id }) {
     const { title, description, info, products } = i18n['pages']['order']
 
     const [order, setOrder] = useState({})
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         setMeta({
@@ -48,16 +40,22 @@ export default function ({ id }) {
 
     useEffect(() => {
         async function resolve() {
-            const response = await axios.get(
-                config.routes.backend.order + `/${id}`
-            )
+            let response
 
-            handleOrderData({
-                response,
+            try {
+                response = await axios.get(
+                    config.routes.backend.order + `/${id}`
+                )
+            } catch (error) {
+                response = error.response
+            }
+
+            fetchHandler({
                 router,
-                setOrder,
+                response,
+                setLoading,
                 setToast,
-                noDataToast: i18n['toasts']['noData'][locale],
+                setState: setOrder,
             })
         }
 

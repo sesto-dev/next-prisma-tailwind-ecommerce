@@ -20,20 +20,11 @@ import {
 import { ShoppingCart, ChevronLeft, ChevronRight } from '@geist-ui/icons'
 import essentials from '../../helpers/getEssentials'
 
-import { handleProductsData } from 'aryana'
+import { fetchHandler, getLocaleDirection, getPersianNumber } from 'aryana'
 
 export default function ({ currentPage, category, tags, sort }) {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, useRouter, Link, axios, useMeta } =
+        essentials
 
     const theme = useTheme()
     const { setMeta } = useMeta()
@@ -43,9 +34,11 @@ export default function ({ currentPage, category, tags, sort }) {
     const { locale = config['defaultLocale'] } = useRouter()
     const { title, description } = i18n['pages']['products']
 
+    const [data, setData] = useState(null)
     const [keyword, setKeyword] = useState(null)
     const [totalPages, setTotalPages] = useState(null)
     const [products, setProducts] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         setMeta({
@@ -54,25 +47,28 @@ export default function ({ currentPage, category, tags, sort }) {
         })
     }, [locale])
 
-    useEffect(() => {}, [])
-
     useEffect(() => {
         async function resolve() {
-            const response = await axios.post(
-                config.routes.backend.products,
-                {
-                    currentPage,
-                },
-                config.axios.simple
-            )
+            let response
 
-            handleProductsData({
-                response,
+            try {
+                response = await axios.post(
+                    config.routes.backend.products,
+                    {
+                        currentPage,
+                    },
+                    config.axios.simple
+                )
+            } catch (error) {
+                response = error.response
+            }
+
+            fetchHandler({
                 router,
-                setTotalPages,
-                setProducts,
+                response,
+                setLoading,
                 setToast,
-                noDataToast: i18n['toasts']['noData'][locale],
+                setState: setData,
             })
         }
 
@@ -80,6 +76,15 @@ export default function ({ currentPage, category, tags, sort }) {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage])
+
+    useEffect(() => {
+        if (data) {
+            const { page, pages, products } = data
+
+            setTotalPages(pages)
+            setProducts(products)
+        }
+    }, [data])
 
     return (
         <Grid.Container gap={1}>
@@ -136,17 +141,8 @@ const ProductGrid = ({ products }) => {
 }
 
 const Paginated = ({ totalPages, currentPage }) => {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, useRouter, Link, axios, useMeta } =
+        essentials
 
     const theme = useTheme()
     const router = useRouter()
@@ -222,19 +218,11 @@ const Paginated = ({ totalPages, currentPage }) => {
 }
 
 const Product = ({ product }) => {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, useRouter, Link, axios, useMeta } =
+        essentials
 
     const theme = useTheme()
+    const { locale = config['defaultLocale'] } = useRouter()
 
     return (
         <Grid width="100%" key={product._id} xs={24} sm={12} md={8} xl={6}>
@@ -323,7 +311,20 @@ const Product = ({ product }) => {
                                     backgroundColor: theme.palette.accents_1,
                                 }}
                             >
-                                ${product['listings'][0]['price']}
+                                <Text
+                                    style={{
+                                        direction: getLocaleDirection(locale),
+                                    }}
+                                >
+                                    {locale == 'fa'
+                                        ? getPersianNumber(
+                                              product['listings'][0]['price']
+                                          )
+                                        : product['listings'][0][
+                                              'price'
+                                          ].toLocaleString()}{' '}
+                                    {i18n['currency'][locale]}
+                                </Text>
                             </Button>
                         </Card.Body>
                     </Card>
@@ -334,17 +335,8 @@ const Product = ({ product }) => {
 }
 
 const Filters = ({}) => {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        useRouter,
-        Link,
-        Head,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, useRouter, Link, axios, useMeta } =
+        essentials
 
     const theme = useTheme()
     const { locale = config['defaultLocale'] } = useRouter()

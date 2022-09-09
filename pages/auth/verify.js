@@ -1,21 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Button, Grid, useToasts, Input } from '@geist-ui/core'
-import { isLocaleRTL, verifyHandler } from 'aryana'
+import { isLocaleRTL, fetchHandler } from 'aryana'
 
 import essentials from '../../helpers/getEssentials'
 
 export default function () {
-    const {
-        config,
-        i18n,
-        useThemeProvider,
-        useAuth,
-        Link,
-        Head,
-        useRouter,
-        axios,
-        useMeta,
-    } = essentials
+    const { config, i18n, useAuth, Link, useRouter, axios, useMeta } =
+        essentials
 
     const { setMeta } = useMeta()
     const { setToast } = useToasts()
@@ -37,23 +28,28 @@ export default function () {
     const [code, setCode] = useState('')
 
     async function onVerify() {
+        let response
         setLoading(true)
 
-        const response = await axios.post(
-            config.routes.backend.verify,
-            {
-                code,
-            },
-            config.axios.simple
-        )
+        try {
+            response = await axios.post(
+                config.routes.backend.verify,
+                {
+                    code,
+                },
+                config.axios.simple
+            )
+        } catch (error) {
+            response = error.response
+        }
 
-        verifyHandler({
+        fetchHandler({
+            router,
             response,
             setLoading,
             setToast,
-            router,
-            toast: i18n['toasts']['verify'][locale],
-            redirect_uri: config.routes.frontend.user,
+            success_toast: i18n['toasts']['verify'][locale],
+            success_redirect_uri: config.routes.frontend.user,
         })
     }
 
