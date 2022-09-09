@@ -87,6 +87,14 @@ const inputs = {
 }
 
 const buttons = {
+    about: {
+        en: 'ABOUT',
+        fa: 'درباره ما',
+    },
+    contact: {
+        en: 'CONTACT',
+        fa: 'تماس با ما',
+    },
     user: {
         en: 'USER',
         fa: 'صفحه کاربر',
@@ -190,20 +198,6 @@ const components = {
                 {
                     label: { en: 'Blog', fa: 'بلاگ' },
                     value: '/blog',
-                },
-                {
-                    label: {
-                        en: 'Contact',
-                        fa: 'تماس با ما',
-                    },
-                    value: '/contact',
-                },
-                {
-                    label: {
-                        en: 'About',
-                        fa: 'درباره ما',
-                    },
-                    value: '/about',
                 },
             ],
             protected: [
@@ -360,6 +354,21 @@ const components = {
                 ],
             },
         ],
+    },
+}
+
+const breadcrumbs = {
+    home: {
+        en: 'Home',
+        fa: 'خانه',
+    },
+    products: {
+        en: 'Products',
+        fa: 'محصولات',
+    },
+    orders: {
+        en: 'Orders',
+        fa: 'سفارشات',
     },
 }
 
@@ -681,4 +690,5 @@ export default {
     pages,
     currency,
     product,
+    breadcrumbs,
 }

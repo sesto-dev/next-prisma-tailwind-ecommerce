@@ -14,7 +14,7 @@ import {
     useTheme,
 } from '@geist-ui/core'
 import essentials from '../../helpers/getEssentials'
-import { fetchHandler } from 'aryana'
+import { fetchHandler, getLocaleAlignment, getLocaleDirection } from 'aryana'
 
 export default function ({ id }) {
     const { config, i18n, useAuth, useRouter, Link, Head, axios, useMeta } =
@@ -130,23 +130,33 @@ export default function ({ id }) {
         </Grid>
     )
 
-    const Bread = () => (
-        <Grid xs={24}>
-            <Breadcrumbs className="Bread" mb={1}>
-                <Link href="/">
-                    <a>
-                        <Breadcrumbs.Item>Home</Breadcrumbs.Item>
-                    </a>
-                </Link>
-                <Link href="/user">
-                    <a>
-                        <Breadcrumbs.Item>Orders</Breadcrumbs.Item>
-                    </a>
-                </Link>
-                <Breadcrumbs.Item>{order._id}</Breadcrumbs.Item>
-            </Breadcrumbs>
-        </Grid>
-    )
+    const Bread = () => {
+        const { config, i18n, useRouter, Link } = essentials
+
+        const { locale = config['defaultLocale'] } = useRouter()
+
+        return (
+            <Grid xs={24}>
+                <Breadcrumbs className="Bread" mb={1}>
+                    <Link href="/">
+                        <a>
+                            <Breadcrumbs.Item>
+                                {i18n['breadcrumbs']['home'][locale]}
+                            </Breadcrumbs.Item>
+                        </a>
+                    </Link>
+                    <Link href="/user">
+                        <a>
+                            <Breadcrumbs.Item>
+                                {i18n['breadcrumbs']['orders'][locale]}
+                            </Breadcrumbs.Item>
+                        </a>
+                    </Link>
+                    <Breadcrumbs.Item>{order._id}</Breadcrumbs.Item>
+                </Breadcrumbs>
+            </Grid>
+        )
+    }
 
     return (
         <Grid.Container gap={1}>

@@ -3,7 +3,8 @@ import { fetchHandler, getGoogleURL, useWindowSize, GoogleIcon } from 'aryana'
 import essentials from '../helpers/getEssentials'
 
 import { useEffect, useState } from 'react'
-import { LogOut } from '@geist-ui/icons'
+import { LogOut, Link as LinkIcon } from '@geist-ui/icons'
+
 import {
     useToasts,
     Description,
@@ -44,15 +45,15 @@ export default function ({ auth }) {
         logout,
     } = i18n['pages']['user']
 
+    const [loading, setLoading] = useState(false)
+    const [user, setUser] = useState(null)
+
     useEffect(() => {
         setMeta({
             title: title[locale],
             description: description[locale],
         })
     }, [locale])
-
-    const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState(null)
 
     useEffect(() => {
         async function resolve() {
@@ -226,7 +227,22 @@ const Orders = ({ user }) => {
     return (
         <Card id="Orders" width="100%">
             {user && user.orders ? (
-                <Table data={user.orders}>
+                <Table
+                    data={user.orders.map((order) => {
+                        return {
+                            ...order,
+                            link: (
+                                <Link href={`/order/${order.id}`}>
+                                    <a>
+                                        {`Order #${order.index}`}
+                                        {'  '}
+                                        <LinkIcon size={12} />
+                                    </a>
+                                </Link>
+                            ),
+                        }
+                    })}
+                >
                     <Table.Column prop="link" label="Link" width={100} />
                     <Table.Column prop="createdAt" label="Date" width={220} />
                     {width > 650 && (

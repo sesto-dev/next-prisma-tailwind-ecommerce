@@ -60,6 +60,15 @@ export default function ({ id }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    useEffect(() => {
+        if (product && product.title && product.description && product.images)
+            setMeta({
+                title: product.title,
+                description: product.description,
+                image: product['images'][0],
+            })
+    }, [product])
+
     return (
         <Grid.Container gap={1}>
             <Bread product={product} />
