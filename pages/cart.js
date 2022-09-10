@@ -20,6 +20,7 @@ import {
 import { getPersianNumber } from 'aryana'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import Link from 'next/link'
 
 import config from '../config/main.config'
 import i18n from '../config/i18n.config'
