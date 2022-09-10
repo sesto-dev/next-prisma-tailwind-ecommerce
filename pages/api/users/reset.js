@@ -5,6 +5,7 @@ import connectDB from '../../../helpers/connectDB'
 
 import User from '../../../models/User'
 import config from '../../../config/main.config'
+import i18n from '../../../config/i18n.config'
 
 export default async function (req, res) {
     const { code, password } = req.body
@@ -30,7 +31,7 @@ export default async function (req, res) {
                 await user.save()
 
                 await sendResetPassword(
-                    config.meta.title,
+                    i18n.meta.title.en,
                     user.email,
                     process.env.NEXT_PUBLIC_URL +
                         config.routes.frontend.unsubscribe

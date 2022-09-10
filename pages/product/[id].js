@@ -17,16 +17,25 @@ import {
     Select,
     Divider,
 } from '@geist-ui/core'
-import essentials from '../../helpers/getEssentials'
 
-import { fetchHandler, getLocaleDirection, getPersianNumber } from 'aryana'
+import {
+    fetchHandler,
+    getLocaleDirection,
+    getPersianNumber,
+    Helmet,
+} from 'aryana'
+
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import Head from 'next/head'
+
+import config from '../../config/main.config'
+import i18n from '../../config/i18n.config'
 
 export default function ({ id }) {
-    const { config, i18n, useRouter, Link, axios, useMeta } = essentials
-
     const router = useRouter()
     const { setToast } = useToasts()
-    const { setMeta } = useMeta()
 
     const { locale = config['defaultLocale'] } = useRouter()
 
@@ -60,17 +69,17 @@ export default function ({ id }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    useEffect(() => {
-        if (product && product.title && product.description && product.images)
-            setMeta({
-                title: product.title,
-                description: product.description,
-                image: product['images'][0],
-            })
-    }, [product])
-
     return (
         <Grid.Container gap={1}>
+            {product && product.images && (
+                <Helmet
+                    Head={Head}
+                    i18n={i18n}
+                    title={product.title}
+                    description={product.description}
+                    image={product.images[0]}
+                />
+            )}
             <Bread product={product} />
             <ProductImages product={product} />
             <ProductMain
@@ -86,8 +95,6 @@ export default function ({ id }) {
 }
 
 const Bread = ({ product }) => {
-    const { Link } = essentials
-
     return (
         <Grid xs={24}>
             <Breadcrumbs className="Bread" mb={1}>
@@ -135,8 +142,6 @@ const ProductMain = ({
     loading,
     setLoading,
 }) => {
-    const { config, i18n, useRouter, Link, axios, useMeta } = essentials
-
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
@@ -304,9 +309,6 @@ const ProductMain = ({
 }
 
 const ProductDescription = ({ product }) => {
-    const { config, i18n, useAuth, useRouter, Link, axios, useMeta } =
-        essentials
-
     const theme = useTheme()
 
     return (

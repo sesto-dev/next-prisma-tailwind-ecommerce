@@ -8,6 +8,7 @@ import { isEmail } from 'aryana'
 
 import User from '../../../models/User'
 import config from '../../../config/main.config'
+import i18n from '../../../config/i18n.config'
 
 export default async function (req, res) {
     const { email, password } = req.body
@@ -39,7 +40,7 @@ export default async function (req, res) {
             const AJWT = await bakeAJWT(user, 'Strict')
 
             await sendVerifyMail(
-                config.meta.title,
+                i18n.meta.title.en,
                 email,
                 email_verification_code,
                 process.env.NEXT_PUBLIC_URL + config.routes.frontend.verify,

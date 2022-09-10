@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { getLocaleDirection, isLocaleRTL } from 'aryana'
+import { getLocaleDirection, Helmet, isLocaleRTL } from 'aryana'
 import {
     Grid,
     Card,
@@ -8,12 +8,13 @@ import {
     Snippet,
     useTheme,
 } from '@geist-ui/core'
-import essentials from '../helpers/getEssentials'
+import { useAuth } from '../state/Auth'
+import { useRouter } from 'next/router'
+
+import config from '../config/main.config'
+import i18n from '../config/i18n.config'
 
 export default function ({ auth }) {
-    const { config, i18n, useAuth, useRouter, Link, useMeta } = essentials
-
-    const { setMeta } = useMeta()
     const theme = useTheme()
     const { locale = config['defaultLocale'] } = useRouter()
     const { isAuthenticated, setLocalAuthentication } = useAuth()
@@ -24,15 +25,9 @@ export default function ({ auth }) {
 
     const { title, description } = i18n['pages']['index']
 
-    useEffect(() => {
-        setMeta({
-            title: title[locale],
-            description: description[locale],
-        })
-    }, [locale])
-
     return (
         <Grid.Container gap={1}>
+            <Helmet i18n={i18n} />
             <Grid xs={24}>
                 <Card
                     width="100%"

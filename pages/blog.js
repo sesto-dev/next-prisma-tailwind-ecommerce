@@ -1,22 +1,15 @@
 import { getLocaleDirection } from 'aryana'
 import { Text, Card, Grid, useTheme } from '@geist-ui/core'
-import essentials from '../helpers/getEssentials'
 import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+
+import i18n from '../config/i18n.config'
+import config from '../config/main.config'
 
 export default function () {
-    const { config, i18n, useRouter, Link, useMeta } = essentials
-
-    const { setMeta } = useMeta()
     const theme = useTheme()
     const { locale = config['defaultLocale'] } = useRouter()
     const { title, description } = i18n['pages']['blog']
-
-    useEffect(() => {
-        setMeta({
-            title: title[locale],
-            description: description[locale],
-        })
-    }, [locale])
 
     return (
         <Grid.Container gap={1}>

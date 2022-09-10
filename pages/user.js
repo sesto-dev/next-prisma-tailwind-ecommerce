@@ -1,7 +1,5 @@
 import { fetchHandler, getGoogleURL, useWindowSize, GoogleIcon } from 'aryana'
 
-import essentials from '../helpers/getEssentials'
-
 import { useEffect, useState } from 'react'
 import { LogOut, Link as LinkIcon } from '@geist-ui/icons'
 
@@ -18,11 +16,15 @@ import {
     Snippet,
     Table,
 } from '@geist-ui/core'
+import { useAuth } from '../state/Auth'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+
+import config from '../config/main.config'
+import i18n from '../config/i18n.config'
 
 export default function ({ auth }) {
-    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
-        essentials
-    const { setMeta } = useMeta()
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
@@ -47,13 +49,6 @@ export default function ({ auth }) {
 
     const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(null)
-
-    useEffect(() => {
-        setMeta({
-            title: title[locale],
-            description: description[locale],
-        })
-    }, [locale])
 
     useEffect(() => {
         async function resolve() {
@@ -139,10 +134,6 @@ const Binder = ({ children }) => {
 }
 
 const UserInfo = ({ user }) => {
-    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
-        essentials
-
-    const { setMeta } = useMeta()
     const theme = useTheme()
     const { setToast } = useToasts()
     const { setLocalAuthentication } = useAuth()
@@ -214,10 +205,6 @@ const UserInfo = ({ user }) => {
 }
 
 const Orders = ({ user }) => {
-    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
-        essentials
-
-    const { setMeta } = useMeta()
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
@@ -264,9 +251,6 @@ const Orders = ({ user }) => {
 }
 
 const Referrals = ({ user }) => {
-    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
-        essentials
-
     return (
         <Card width="100%">
             {user && user.referrals ? (
@@ -282,15 +266,7 @@ const Referrals = ({ user }) => {
 }
 
 const Integrations = ({ user }) => {
-    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
-        essentials
-
-    const { setMeta } = useMeta()
     const theme = useTheme()
-    const { setToast } = useToasts()
-    const { setLocalAuthentication } = useAuth()
-    const { width, height } = useWindowSize()
-
     const { locale = config['defaultLocale'] } = useRouter()
 
     return (
@@ -338,10 +314,6 @@ const Integrations = ({ user }) => {
 }
 
 const Logout = () => {
-    const { config, i18n, Link, axios, useAuth, useRouter, useMeta } =
-        essentials
-
-    const { setMeta } = useMeta()
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()

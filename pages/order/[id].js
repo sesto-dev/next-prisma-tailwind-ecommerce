@@ -13,16 +13,19 @@ import {
     Grid,
     useTheme,
 } from '@geist-ui/core'
-import essentials from '../../helpers/getEssentials'
 import { fetchHandler, getLocaleAlignment, getLocaleDirection } from 'aryana'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import Head from 'next/head'
+import axios from 'axios'
+import { useAuth } from '../../state/Auth'
+
+import config from '../../config/main.config'
+import i18n from '../../config/i18n.config'
 
 export default function ({ id }) {
-    const { config, i18n, useAuth, useRouter, Link, Head, axios, useMeta } =
-        essentials
-
     const theme = useTheme()
     const router = useRouter()
-    const { setMeta } = useMeta()
     const { locale = config['defaultLocale'] } = useRouter()
     const { setToast } = useToasts()
 
@@ -30,13 +33,6 @@ export default function ({ id }) {
 
     const [order, setOrder] = useState({})
     const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        setMeta({
-            title: title[locale],
-            description: description[locale],
-        })
-    }, [locale])
 
     useEffect(() => {
         async function resolve() {
@@ -131,8 +127,6 @@ export default function ({ id }) {
     )
 
     const Bread = () => {
-        const { config, i18n, useRouter, Link } = essentials
-
         const { locale = config['defaultLocale'] } = useRouter()
 
         return (

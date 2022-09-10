@@ -17,14 +17,14 @@ import {
     Input,
 } from '@geist-ui/core'
 
-import essentials from '../helpers/getEssentials'
 import { getPersianNumber } from 'aryana'
+import { useRouter } from 'next/router'
+import axios from 'axios'
+
+import config from '../config/main.config'
+import i18n from '../config/i18n.config'
 
 export default function () {
-    const { config, i18n, useAuth, useRouter, Link, Head, axios, useMeta } =
-        essentials
-
-    const { setMeta } = useMeta()
     const router = useRouter()
     const { setToast } = useToasts()
 
@@ -33,13 +33,6 @@ export default function () {
 
     const [cart, setCart] = useState(null)
     const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        setMeta({
-            title: title[locale],
-            description: description[locale],
-        })
-    }, [locale])
 
     useEffect(() => {
         async function resolve() {
@@ -84,8 +77,6 @@ export default function () {
 }
 
 const Receipt = ({ cart, setCart, loading, setLoading }) => {
-    const { config, i18n, useRouter, axios } = essentials
-
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()
@@ -465,8 +456,6 @@ const Product = ({
     loading,
     setLoading,
 }) => {
-    const { config, i18n, useRouter, Link, axios } = essentials
-
     const theme = useTheme()
     const router = useRouter()
     const { setToast } = useToasts()

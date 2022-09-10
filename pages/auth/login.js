@@ -20,28 +20,23 @@ import {
     GoogleIcon,
     isEmail,
 } from 'aryana'
+import { useAuth } from '../../state/Auth'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import axios from 'axios'
+import Head from 'next/head'
 
-import essentials from '../../helpers/getEssentials'
+import config from '../../config/main.config'
+import i18n from '../../config/i18n.config'
 
 export default function () {
-    const { config, i18n, useAuth, useRouter, Link, Head, axios, useMeta } =
-        essentials
-
     const theme = useTheme()
     const router = useRouter()
-    const { setMeta } = useMeta()
     const { locale = config['defaultLocale'] } = router
     const { setToast } = useToasts()
     const { setLocalAuthentication } = useAuth()
 
     const { title, description } = i18n['pages']['login']
-
-    useEffect(() => {
-        setMeta({
-            title: title[locale],
-            description: description[locale],
-        })
-    }, [locale])
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')

@@ -18,16 +18,18 @@ import {
 } from '@geist-ui/core'
 
 import { ShoppingCart, ChevronLeft, ChevronRight } from '@geist-ui/icons'
-import essentials from '../../helpers/getEssentials'
 
 import { fetchHandler, getLocaleDirection, getPersianNumber } from 'aryana'
+import { useRouter } from 'next/router'
+import axios from 'axios'
+import Head from 'next/head'
+import Link from 'next/link'
+
+import config from '../../config/main.config'
+import i18n from '../../config/i18n.config'
 
 export default function ({ currentPage, category, tags, sort }) {
-    const { config, i18n, useAuth, useRouter, Link, axios, useMeta } =
-        essentials
-
     const theme = useTheme()
-    const { setMeta } = useMeta()
     const router = useRouter()
     const { setToast } = useToasts()
 
@@ -39,13 +41,6 @@ export default function ({ currentPage, category, tags, sort }) {
     const [totalPages, setTotalPages] = useState(null)
     const [products, setProducts] = useState(null)
     const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        setMeta({
-            title: title[locale],
-            description: description[locale],
-        })
-    }, [locale])
 
     useEffect(() => {
         async function resolve() {
@@ -88,7 +83,7 @@ export default function ({ currentPage, category, tags, sort }) {
 
     return (
         <Grid.Container gap={1}>
-            <Filters />
+            <Filters useRouter={useRouter} i18n={i18n} />
             <ProductGrid products={products} />
             <Paginated totalPages={totalPages} currentPage={currentPage} />
         </Grid.Container>
@@ -141,9 +136,6 @@ const ProductGrid = ({ products }) => {
 }
 
 const Paginated = ({ totalPages, currentPage }) => {
-    const { config, i18n, useAuth, useRouter, Link, axios, useMeta } =
-        essentials
-
     const theme = useTheme()
     const router = useRouter()
 
@@ -218,9 +210,6 @@ const Paginated = ({ totalPages, currentPage }) => {
 }
 
 const Product = ({ product }) => {
-    const { config, i18n, useAuth, useRouter, Link, axios, useMeta } =
-        essentials
-
     const theme = useTheme()
     const { locale = config['defaultLocale'] } = useRouter()
 
@@ -334,10 +323,7 @@ const Product = ({ product }) => {
     )
 }
 
-const Filters = ({}) => {
-    const { config, i18n, useAuth, useRouter, Link, axios, useMeta } =
-        essentials
-
+const Filters = () => {
     const theme = useTheme()
     const { locale = config['defaultLocale'] } = useRouter()
 

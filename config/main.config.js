@@ -1,5 +1,3 @@
-const url = process.env.NEXT_PUBLIC_URL
-
 export default {
     defaultLocale: 'en',
     theme: {
@@ -10,12 +8,6 @@ export default {
     },
     layout: {
         authentication: true,
-    },
-    meta: {
-        title: 'Sample Meta Title',
-        description: 'Sample Meta Description',
-        image: 'https://i.imgur.com/NitQE9d.jpg',
-        url,
     },
     routes: {
         frontend: {

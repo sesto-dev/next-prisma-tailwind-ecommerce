@@ -1,28 +1,21 @@
 import { useEffect, useState } from 'react'
 import { Button, Grid, useToasts, Input } from '@geist-ui/core'
 import { isLocaleRTL, fetchHandler } from 'aryana'
+import { useRouter } from 'next/router'
+import axios from 'axios'
+import { useAuth } from '../../state/Auth'
+import Link from 'next/link'
+import Head from 'next/head'
 
-import essentials from '../../helpers/getEssentials'
+import config from '../../config/main.config'
+import i18n from '../../config/i18n.config'
 
 export default function () {
-    const { config, i18n, useAuth, Link, useRouter, axios, useMeta } =
-        essentials
-
-    const { setMeta } = useMeta()
     const { setToast } = useToasts()
     const router = useRouter()
     const { locale = config['defaultLocale'] } = useRouter()
 
     const { title, description } = i18n['pages']['verify']
-
-    useEffect(() => {
-        setMeta({
-            title: title[locale],
-            description: description[locale],
-            large: title[locale],
-            small: description[locale],
-        })
-    }, [locale])
 
     const [loading, setLoading] = useState(false)
     const [code, setCode] = useState('')

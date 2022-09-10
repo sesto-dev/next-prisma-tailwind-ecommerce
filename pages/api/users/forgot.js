@@ -6,6 +6,7 @@ import { isEmail } from 'aryana'
 
 import User from '../../../models/User'
 import config from '../../../config/main.config'
+import i18n from '../../../config/i18n.config'
 
 export default async function (req, res) {
     const { email } = req.body
@@ -24,7 +25,7 @@ export default async function (req, res) {
             await user.save()
 
             await sendForgotPassword(
-                config.meta.title,
+                i18n.meta.title.en,
                 email,
                 code,
                 process.env.NEXT_PUBLIC_URL + config.routes.frontend.reset,
