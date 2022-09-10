@@ -9,6 +9,7 @@ import axios from 'axios'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
+import { useAuth } from '../../state/Auth'
 
 export default function () {
     const router = useRouter()
