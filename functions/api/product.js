@@ -1,7 +1,10 @@
+import connectDB from '../../helpers/connectDB'
 import Listing from '../../models/Listing'
 import Product from '../../models/Product'
 
 export async function getProductByID({ id }) {
+    connectDB()
+
     const product = await Product.findById(id)
 
     const listingsContent = []
