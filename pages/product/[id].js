@@ -71,15 +71,13 @@ export default function ({ id }) {
 
     return (
         <Grid.Container gap={1}>
-            {product && product.images && (
-                <Helmet
-                    Head={Head}
-                    i18n={i18n}
-                    title={product.title}
-                    description={product.description}
-                    image={product.images[0]}
-                />
-            )}
+            <Helmet
+                Head={Head}
+                i18n={i18n}
+                title="Elden Ring"
+                description="Action Adventure Game"
+                image="https://image.api.playstation.com/vulcan/img/rnd/202201/1918/0P25Aw0mnLS1AwPYEUb6kIYC.png"
+            />
             <Bread product={product} />
             <ProductImages product={product} />
             <ProductMain

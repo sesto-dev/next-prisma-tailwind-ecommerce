@@ -13,6 +13,7 @@ import { useRouter } from 'next/router'
 
 import config from '../config/main.config'
 import i18n from '../config/i18n.config'
+import Head from 'next/head'
 
 export default function ({ auth }) {
     const theme = useTheme()
@@ -27,7 +28,12 @@ export default function ({ auth }) {
 
     return (
         <Grid.Container gap={1}>
-            <Helmet i18n={i18n} />
+            <Helmet
+                i18n={i18n}
+                Head={Head}
+                title={title[locale]}
+                description={description[locale]}
+            />
             <Grid xs={24}>
                 <Card
                     width="100%"
