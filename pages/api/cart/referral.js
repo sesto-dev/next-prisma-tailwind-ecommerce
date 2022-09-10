@@ -16,9 +16,7 @@ export default async function (req, res) {
             const referredUser = await User.findOne({ referral_code })
 
             if (referredUser && referredUser != user) {
-                console.log({ referredUser })
                 user.cart.referral_code = referral_code
-                console.log({ user })
             }
         }
 

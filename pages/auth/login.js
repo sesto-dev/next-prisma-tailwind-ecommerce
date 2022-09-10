@@ -60,8 +60,6 @@ export default function () {
             response = error.response
         }
 
-        console.log({ response })
-
         fetchHandler({
             router,
             response,

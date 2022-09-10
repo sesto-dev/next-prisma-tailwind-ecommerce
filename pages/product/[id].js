@@ -25,59 +25,34 @@ import {
     Helmet,
 } from 'aryana'
 
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Head from 'next/head'
 
 import config from '../../config/main.config'
 import i18n from '../../config/i18n.config'
+import { getProductByID } from '../../functions/api/product'
 
-export default function ({ id }) {
+export default function ({ product }) {
     const router = useRouter()
     const { setToast } = useToasts()
 
     const { locale = config['defaultLocale'] } = useRouter()
 
-    const [product, setProduct] = useState({})
     const [listingID, setListingID] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        async function resolve() {
-            let response
-
-            try {
-                response = await axios.get(
-                    config.routes.backend.products + `/${id}`
-                )
-            } catch (error) {
-                response = error.response
-            }
-
-            fetchHandler({
-                router,
-                response,
-                setLoading,
-                setToast,
-                setState: setProduct,
-            })
-        }
-
-        resolve()
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
     return (
         <Grid.Container gap={1}>
-            <Helmet
-                Head={Head}
-                i18n={i18n}
-                title="Elden Ring"
-                description="Action Adventure Game"
-                image="https://image.api.playstation.com/vulcan/img/rnd/202201/1918/0P25Aw0mnLS1AwPYEUb6kIYC.png"
-            />
+            {product && product.images && (
+                <Helmet
+                    Head={Head}
+                    i18n={i18n}
+                    title={product.title}
+                    description={product.description}
+                    image={product.images[0]}
+                />
+            )}
             <Bread product={product} />
             <ProductImages product={product} />
             <ProductMain
@@ -347,7 +322,9 @@ const ProductDescription = ({ product }) => {
 export async function getServerSideProps(context) {
     const { id } = context.query
 
+    const product = await getProductByID({ id })
+
     return {
-        props: { id },
+        props: { product },
     }
 }
