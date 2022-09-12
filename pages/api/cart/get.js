@@ -12,8 +12,7 @@ export default async function (req, res) {
 
     if (user) {
         const cart = await processCart({ user })
-
-        res.status(200).json({ cart })
+        res.status(200).json(cart)
     } else {
         res.status(404).send('User not found.')
     }

@@ -59,6 +59,10 @@ export default function () {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    useEffect(() => {
+        console.log(cart)
+    }, [cart])
+
     return (
         <Grid.Container gap={2}>
             <Items
@@ -209,7 +213,8 @@ const Receipt = ({ cart, setCart, loading, setLoading }) => {
                             >
                                 {locale == 'fa'
                                     ? getPersianNumber(cart.totalCost)
-                                    : cart.totalCost.toLocaleString()}{' '}
+                                    : cart.totalCost &&
+                                      cart.totalCost.toLocaleString()}{' '}
                                 {i18n['currency'][locale]}
                             </Text>
                         </div>
@@ -235,7 +240,8 @@ const Receipt = ({ cart, setCart, loading, setLoading }) => {
                             >
                                 {locale == 'fa'
                                     ? getPersianNumber(cart.discountCost)
-                                    : cart.discountCost.toLocaleString()}{' '}
+                                    : cart.discountCost &&
+                                      cart.discountCost.toLocaleString()}{' '}
                                 {i18n['currency'][locale]}
                             </Text>
                         </div>
@@ -261,7 +267,8 @@ const Receipt = ({ cart, setCart, loading, setLoading }) => {
                             >
                                 {locale == 'fa'
                                     ? getPersianNumber(cart.payableCost)
-                                    : cart.payableCost.toLocaleString()}{' '}
+                                    : cart.payableCost &&
+                                      cart.payableCost.toLocaleString()}{' '}
                                 {i18n['currency'][locale]}
                             </Text>
                         </div>
@@ -406,7 +413,7 @@ const Items = ({ cart, setCart, loading, setLoading }) => {
         <>
             <Grid xs={24} md={16}>
                 <Grid.Container style={{ height: 'max-content' }} gap={1}>
-                    {cart ? (
+                    {cart && cart['items'] ? (
                         cart.items.map(({ listing, product, count }) => {
                             return (
                                 <Product
@@ -590,7 +597,8 @@ const Product = ({
                                                 ? getPersianNumber(
                                                       listing.price
                                                   )
-                                                : listing.price.toLocaleString()}
+                                                : listing.price &&
+                                                  listing.price.toLocaleString()}
                                             <Text span b mx={0.2}>
                                                 {i18n['currency'][locale]}
                                             </Text>

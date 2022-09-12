@@ -1,8 +1,6 @@
 import { CssBaseline } from '@geist-ui/core'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
-import config from '../config/main.config'
-
 const isProduction = process.env.NODE_ENV === 'production'
 const googleID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID
 

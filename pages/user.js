@@ -215,6 +215,7 @@ const Orders = ({ user }) => {
         <Card id="Orders" width="100%">
             {user && user.orders ? (
                 <Table
+                    width="100%"
                     data={user.orders.map((order) => {
                         return {
                             ...order,
