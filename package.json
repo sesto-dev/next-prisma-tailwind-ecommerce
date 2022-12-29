@@ -1,59 +1,56 @@
 {
-    "name": "create-next-dashboard",
-    "description": "Set up a full-stack Next.js dashboard by running one NPX command.",
+    "name": "pasargad",
     "author": "@accretence",
     "license": "MIT",
-    "version": "0.1.5",
-    "bin": "scripts/npx.js",
-    "keywords": [
-        "geist-ui",
-        "nextjs",
-        "react",
-        "serverless",
-        "mongoose",
-        "npx",
-        "dashboard",
-        "commerce",
-        "shop",
-        "authentication"
-    ],
+    "prisma": {
+        "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    },
     "scripts": {
+        "vercel-build": "npm run db:seed && prisma generate && next build",
         "dev": "next dev",
         "build": "next build",
+        "postbuild": "next-sitemap",
         "start": "next start",
         "lint": "next lint",
-        "stop": "taskkill -F -IM node.exe",
         "update": "npx npm-check-updates -u",
-        "data:import": "node scripts/seeder",
-        "data:destroy": "node scripts/seeder -d"
+        "db:format": "npx prisma format",
+        "db:reset": "npx prisma db push --force-reset",
+        "db:push": "npx prisma db push",
+        "db:studio": "npx prisma studio",
+        "db:seed": "npm run db:reset && npx prisma db seed"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Accretence/create-next-dashboard.git"
-    },
-    "bugs": {
-        "url": "https://github.com/Accretence/create-next-dashboard/issues"
-    },
-    "homepage": "https://github.com/Accretence/create-next-dashboard#readme",
     "dependencies": {
-        "@geist-ui/core": "^2.3.8",
-        "@geist-ui/icons": "^1.0.2",
+        "@heroicons/react": "^2.0.13",
+        "@prisma/client": "^4.7.0",
         "angra": "^0.4.6",
-        "apadana": "^0.0.4",
-        "aryana": "^0.3.6",
-        "axios": "^0.27.2",
         "bcryptjs": "^2.4.3",
         "cookie": "^0.5.0",
-        "date-fns": "^2.29.2",
-        "dotenv": "^16.0.2",
-        "jose": "^4.9.2",
-        "mongoose": "^6.5.4",
-        "next": "^12.2.5",
-        "react": "^18.2.0",
-        "styled-jsx": "^5.0.5"
+        "date-fns": "^2.29.3",
+        "ethers": "^5.7.2",
+        "jose": "^4.11.0",
+        "next": "13.0.4",
+        "next-mdx-remote": "^4.2.0",
+        "next-seo": "^5.14.1",
+        "next-sitemap": "^3.1.32",
+        "next-themes": "^0.2.1",
+        "openai": "^3.1.0",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "swr": "^1.3.0",
+        "wagmi": "^0.8.6"
     },
     "devDependencies": {
-        "eslint": "^8.23.0",
-        "eslint-config-next": "^12.2.5"
+        "@types/node": "18.11.9",
+        "@types/react": "^18.0.25",
+        "autoprefixer": "^10.4.13",
+        "eslint": "8.28.0",
+        "eslint-config-next": "13.0.4",
+        "postcss": "^8.4.19",
+        "prettier": "^2.7.1",
+        "prettier-plugin-tailwindcss": "^0.1.13",
+        "prisma": "^4.7.0",
+        "tailwindcss": "^3.2.4",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.9.3"
     }
 }
