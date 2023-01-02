@@ -61,7 +61,7 @@ export default function Header() {
             />
             <div className="flex flex-col justify-center">
                 <nav className="relative flex w-full items-center justify-between border-gray-200 bg-opacity-60 pt-4 text-gray-900 dark:border-gray-700 dark:text-gray-100">
-                    <div className="flex">{getThemeButton()}</div>
+                    <div className="flex">{ThemeButton()}</div>
                     <div>
                         <Drawer
                             setShowDrawer={setShowDrawer}
@@ -117,7 +117,7 @@ function getHeaderButtonStyles() {
     return 'h-9 w-9 items-center justify-center rounded-lg bg-gray-200 transition-all hover:bg-purple-600                                             hover:text-white dark:bg-gray-700 hover:dark:bg-purple-600'
 }
 
-function getThemeButton() {
+function ThemeButton() {
     const { resolvedTheme, setTheme } = useTheme()
 
     return (
