@@ -11,7 +11,7 @@ export default function Doc({ nav, doc, mdx }) {
         return (
             <>
                 <NextSeo
-                    title="Simple Usage Example"
+                    title="Documentation"
                     description="A short description goes here."
                 />
                 <div className="grid grid-cols-7 gap-4">

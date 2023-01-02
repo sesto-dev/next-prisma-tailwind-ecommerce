@@ -36,7 +36,7 @@ export default function User({ auth, omitted }) {
     return (
         <>
             <NextSeo
-                title="Simple Usage Example"
+                title="User"
                 description="A short description goes here."
             />
             {userObject && (
@@ -257,11 +257,10 @@ function Logout() {
 
     return (
         <button
-            type="button"
-            className="mt-6 w-20 rounded-lg border border-gray-200 bg-neutral-100 py-3 text-lg text-neutral-400 transition-all duration-300 hover:bg-red-600 hover:text-white dark:border-gray-700 dark:bg-neutral-900 hover:dark:bg-red-600"
+            className="mt-6 w-min rounded-lg border border-gray-200 bg-neutral-100 px-10 py-2 text-lg text-neutral-400 transition-all duration-300 hover:bg-red-600 hover:text-white dark:border-gray-700 dark:bg-neutral-900 hover:dark:bg-red-600"
             onClick={onLogout}
         >
-            {loading ? <Spinner /> : 'Logout'}
+            <p>Logout</p>
         </button>
     )
 }

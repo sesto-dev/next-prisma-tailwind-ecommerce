@@ -1,4 +1,4 @@
 export default {
-    siteName: 'Hiva',
+    siteName: 'Pasargad',
     handle: '@accretence',
 }

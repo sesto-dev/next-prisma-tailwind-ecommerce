@@ -15,10 +15,10 @@ export default function Footer() {
                 <div className="mb-6 hidden md:mb-0 md:block">
                     <span className="flex flex-col">
                         <h2 className="whitespace-nowrap text-sm font-semibold uppercase text-black dark:text-white">
-                            Hiva
+                            Pasargad
                         </h2>
                         <span className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                            © 2022 Hiva™ . All Rights Reserved.
+                            © 2022 Pasargad™ . All Rights Reserved.
                         </span>
                     </span>
                 </div>
@@ -29,7 +29,9 @@ export default function Footer() {
                         </h2>
                         <ul className="text-gray-600 dark:text-gray-400">
                             <li className="mb-2 text-sm">
-                                <Link href="/blog" className={getLinkStyles()}>Blog</Link>
+                                <Link href="/blog" className={getLinkStyles()}>
+                                    Blog
+                                </Link>
                             </li>
                             <li className="text-sm">
                                 <Link
@@ -79,7 +81,9 @@ export default function Footer() {
                                 </a>
                             </li>
                             <li className="text-sm">
-                                <Link href="#" className={getLinkStyles()}>Terms &amp; Conditions</Link>
+                                <Link href="#" className={getLinkStyles()}>
+                                    Terms &amp; Conditions
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -92,7 +96,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noreferrer"
                     className={`${getLinkStyles()} + text-gray-500`}
-                    >
+                >
                     <FacebookIcon />
                     <span className="sr-only">Facebook page</span>
                 </a>

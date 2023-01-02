@@ -10,7 +10,7 @@ export default function Index({ blogs }) {
     return (
         <div className="flex flex-col border-gray-200 dark:border-gray-700">
             <NextSeo
-                title="Simple Usage Example"
+                title="Pasargad"
                 description="A short description goes here."
             />
             <Blogs blogs={JSON.parse(blogs)} />
@@ -80,9 +80,26 @@ function Blogs({ blogs }) {
 }
 
 export async function getStaticProps() {
-    return {
-        props: {
+    let props
+
+    try {
+        props = {
             blogs: JSON.stringify(await prisma.blogPost.findMany({ take: 3 })),
-        },
+        }
+    } catch (error) {
+        props = {
+            blogs: JSON.stringify([
+                {
+                    slug: 'how-can-ai-be-used-to-generate-revenue-in-the-cryptocurrency-space',
+                    title: 'How can AI be used to generate revenue in the cryptocurrency space',
+                    description:
+                        'How can AI be used to generate revenue in the cryptocurrency space',
+                    image: 'https://pasargad.vercel.app/_next/image?url=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F1358460%2Fscreenshots%2F14313986%2Fmedia%2Fcf14d4ef432f3a05078df0ac1d1e7387.jpg&w=3840&q=75',
+                    createdAt: new Date('2022-03-25'),
+                },
+            ]),
+        }
     }
+
+    return { props }
 }
