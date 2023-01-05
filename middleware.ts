@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
 
     console.log({ verified })
 
-    if (verified) {
+    if (!verified) {
         return NextResponse.redirect(new URL('/', request.url))
     }
 
