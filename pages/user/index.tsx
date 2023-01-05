@@ -269,33 +269,26 @@ export async function getServerSideProps(context) {
     try {
         const { AJWT } = context.req.cookies
 
-        if (AJWT) {
-            const decoded = await getJWTPayload(AJWT)
+        const decoded = await getJWTPayload(AJWT)
 
-            if (decoded) {
-                const user = await prisma.user.findUnique({
-                    where: {
-                        id: decoded.id.toString(),
-                    },
-                    include: {
-                        charges: true,
-                        referralsProvided: true,
-                    },
-                })
+        const user = await prisma.user.findUnique({
+            where: {
+                id: decoded.id.toString(),
+            },
+            include: {
+                charges: true,
+                referralsProvided: true,
+            },
+        })
 
-                if (user) {
-                    const omitted = omitUser(user)
-                    return {
-                        props: {
-                            auth: AJWT ? true : false,
-                            omitted: JSON.stringify(omitted),
-                        },
-                    }
-                }
-            }
+        const omitted = omitUser(user)
+
+        return {
+            props: {
+                auth: AJWT ? true : false,
+                omitted: JSON.stringify(omitted),
+            },
         }
-
-        return { props: {} }
     } catch (error) {
         return { props: {} }
     }

@@ -50,7 +50,7 @@ export default function Footer() {
                         <ul className="text-gray-600 dark:text-gray-400">
                             <li className="mb-2 text-sm">
                                 <a
-                                    href="https://github.com/themesberg/flowbite"
+                                    href="https://github.com/accretence"
                                     target="_blank"
                                     rel="noreferrer"
                                     className={getLinkStyles()}
@@ -92,7 +92,7 @@ export default function Footer() {
             <hr className="mt-8 border-gray-200 dark:border-gray-800 sm:mx-auto" />
             <div className="my-8 flex justify-center space-x-6">
                 <a
-                    href="https://facebook.com"
+                    href="https://facebook.com/accretence"
                     target="_blank"
                     rel="noreferrer"
                     className={`${getLinkStyles()} + text-gray-500`}
@@ -101,7 +101,7 @@ export default function Footer() {
                     <span className="sr-only">Facebook page</span>
                 </a>
                 <a
-                    href="https://instagram.com"
+                    href="https://instagram.com/accretence"
                     target="_blank"
                     rel="noreferrer"
                     className={`${getLinkStyles()} + text-gray-500`}
@@ -110,7 +110,7 @@ export default function Footer() {
                     <span className="sr-only">Instagram page</span>
                 </a>
                 <a
-                    href="https://twitter.com"
+                    href="https://twitter.com/accretence"
                     target="_blank"
                     rel="noreferrer"
                     className={`${getLinkStyles()} + text-gray-500`}
@@ -119,7 +119,7 @@ export default function Footer() {
                     <span className="sr-only">Twitter page</span>
                 </a>
                 <a
-                    href="https://github.com"
+                    href="https://github.com/accretence"
                     target="_blank"
                     rel="noreferrer"
                     className={`${getLinkStyles()} + text-gray-500`}

@@ -5,7 +5,11 @@ import { getJWTPayload } from 'lib/jwt'
 export async function middleware(request: NextRequest) {
     const { value: AJWT } = request.cookies.get('AJWT')
 
-    if (!AJWT || !(await getJWTPayload(AJWT))) {
+    const verified = await getJWTPayload(AJWT)
+
+    console.log({ verified })
+
+    if (verified) {
         return NextResponse.redirect(new URL('/', request.url))
     }
 
