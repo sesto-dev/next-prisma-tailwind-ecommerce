@@ -26,7 +26,7 @@ export default function User({ auth, omitted }) {
     const { isAuthenticated, setLocalAuthentication } = useAuth()
     const [userObject, setUserObject] = useState(null)
 
-    console.log({ user: JSON.parse(omitted) })
+    console.log({ parsed: JSON.parse(omitted) })
 
     useEffect(() => {
         setLocalAuthentication(auth)
@@ -281,13 +281,15 @@ export async function getServerSideProps(context) {
             },
         })
 
+        console.log({ user })
+
         const omitted = omitUser(user)
 
         console.log({ omitted })
 
         return {
             props: {
-                auth: decoded ? true : false,
+                auth: omitted ? true : false,
                 omitted: JSON.stringify(omitted),
             },
         }
