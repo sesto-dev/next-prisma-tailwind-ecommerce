@@ -271,13 +271,11 @@ export async function getServerSideProps(context) {
 
         const decoded = await getJWTPayload(AJWT)
 
+        console.log({ id: decoded.id.toString() })
+
         const user = await prisma.user.findUnique({
             where: {
                 id: decoded.id.toString(),
-            },
-            include: {
-                charges: true,
-                referralsProvided: true,
             },
         })
 

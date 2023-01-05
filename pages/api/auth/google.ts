@@ -30,7 +30,7 @@ export default async function (req, res) {
 
     if (exists) {
         const AJWT = await cookie({
-            id,
+            id: exists.id,
             sameSite: 'Lax',
         })
         console.log('Google Authentication Successful.')
@@ -50,7 +50,7 @@ export default async function (req, res) {
 
         if (user) {
             const AJWT = await cookie({
-                id,
+                id: exists.id,
                 sameSite: 'Lax',
             })
 
