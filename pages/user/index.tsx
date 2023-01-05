@@ -23,14 +23,14 @@ import OrderTable from 'components/tables/OrderTable'
 import { getDiscordURL } from 'lib/discord'
 
 export default function User({ auth, omitted }) {
-    const router = useRouter()
     const { isAuthenticated, setLocalAuthentication } = useAuth()
-    const [userObject, setUserObject] = useState(
-        (omitted && JSON.parse(omitted)) || null
-    )
+    const [userObject, setUserObject] = useState(null)
+
+    console.log({ user: JSON.parse(omitted) })
 
     useEffect(() => {
         setLocalAuthentication(auth)
+        setUserObject(JSON.parse(omitted))
     }, [])
 
     return (
@@ -283,13 +283,16 @@ export async function getServerSideProps(context) {
 
         const omitted = omitUser(user)
 
+        console.log({ omitted })
+
         return {
             props: {
-                auth: AJWT ? true : false,
+                auth: decoded ? true : false,
                 omitted: JSON.stringify(omitted),
             },
         }
     } catch (error) {
+        console.log({ error })
         return { props: {} }
     }
 }
