@@ -18,6 +18,8 @@ export default async function (req, res) {
         access_token,
     })
 
+    console.log({ id, email, name })
+
     if (!email) {
         return res.redirect(502, '/')
     }
@@ -31,7 +33,7 @@ export default async function (req, res) {
             id,
             sameSite: 'Lax',
         })
-
+        console.log('Google Authentication Successful.')
         return res.setHeader('Set-Cookie', AJWT).redirect(302, '/user')
     }
 
@@ -52,8 +54,11 @@ export default async function (req, res) {
                 sameSite: 'Lax',
             })
 
+            console.log('Google Authentication Successful.')
+
             return res.setHeader('Set-Cookie', AJWT).redirect(302, '/user')
         } else {
+            console.log('Google Authentication Unsuccessful.')
             return res.redirect(302, '/auth/error')
         }
     }
