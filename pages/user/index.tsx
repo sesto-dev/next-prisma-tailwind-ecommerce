@@ -17,10 +17,11 @@ import {
     MetamaskIcon,
     Spinner,
 } from 'components/Icons'
-import { NextSeo } from 'next-seo'
 import ConnectModal from 'components/modals/ConnectModal'
 import OrderTable from 'components/tables/OrderTable'
 import { getDiscordURL } from 'lib/discord'
+import Meta from 'components/Meta'
+import Config from 'main.config'
 
 export default function User({ auth, omitted }) {
     const { isAuthenticated, setLocalAuthentication } = useAuth()
@@ -33,9 +34,11 @@ export default function User({ auth, omitted }) {
 
     return (
         <>
-            <NextSeo
-                title="User"
-                description="A short description goes here."
+            <Meta
+                title="Pasargad"
+                description="Home Page"
+                image={Config.image}
+                canonical={process.env.NEXT_PUBLIC_URL}
             />
             {userObject && (
                 <div className="rounded-lg bg-neutral-100 dark:bg-neutral-900">

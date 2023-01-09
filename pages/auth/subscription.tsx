@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { NextSeo } from 'next-seo'
 
 import config from 'main.config'
 

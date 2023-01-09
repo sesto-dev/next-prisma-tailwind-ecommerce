@@ -1,22 +1,21 @@
-import { memo, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import { useState } from 'react'
 import Link from 'next/link'
-import { NextSeo } from 'next-seo'
 
 import Image from 'next/image'
 import { ChevronRight, HomeIcon } from 'components/Icons'
+import Meta from 'components/Meta'
+import Config from 'main.config'
 
 export default function Product({ unserialized }) {
     const [product, setProduct] = useState(JSON.parse(unserialized) || null)
 
     return (
         <>
-            <NextSeo
+            <Meta
                 title={product.title || 'Product'}
                 description={product.description || 'Product Page'}
-                openGraph={{
-                    images: [{ url: product.images[0]['url'] }],
-                }}
+                image={product.images[0]}
+                canonical={process.env.NEXT_PUBLIC_URL}
             />
             <Breadcrumbs product={product} />
             <div className="mt-6 grid grid-cols-1 gap-2 md:grid-cols-3">

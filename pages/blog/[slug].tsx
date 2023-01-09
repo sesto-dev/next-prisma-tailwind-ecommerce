@@ -1,4 +1,3 @@
-import { NextSeo } from 'next-seo'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 import MDXComponents from 'components/mdx/MDXComponents'
@@ -6,7 +5,8 @@ import prisma from 'lib/prisma'
 import { parseISO, format } from 'date-fns'
 import Link from 'next/link'
 import Image from 'next/image'
-import config from 'main.config'
+import Config from 'main.config'
+import Meta from 'components/Meta'
 
 export default function BlogPost({ blog, mdx, recommendations }) {
     if (blog && mdx && recommendations) {
@@ -16,21 +16,11 @@ export default function BlogPost({ blog, mdx, recommendations }) {
 
         return (
             <>
-                <NextSeo
+                <Meta
                     title={title}
                     description={description}
-                    openGraph={{
-                        url: process.env.NEXT_PUBLIC_URL + `/blog/${slug}`,
-                        title,
-                        description,
-                        images: [{ url: image }],
-                        siteName: config.siteName,
-                    }}
-                    twitter={{
-                        handle: config.handle,
-                        site: config.handle,
-                        cardType: 'summary_large_image',
-                    }}
+                    image={image}
+                    canonical={process.env.NEXT_PUBLIC_URL + '/blog/' + slug}
                 />
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
                     <Content blog={blog} mdx={mdx} />

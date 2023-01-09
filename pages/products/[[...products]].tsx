@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Link from 'next/link'
-import { NextSeo } from 'next-seo'
 
-import config from 'main.config'
 import fetcher from 'lib/fetcher'
 import { ProductsList } from 'lib/types'
 import Image from 'next/image'
 import { ImageSkeleton } from 'components/Icons'
+import Config from 'main.config'
+import Meta from 'components/Meta'
 
 export default function Products({ currentPage, category, tags, sort }) {
     const { data } = useSWR<ProductsList>(`/api/products/list`, fetcher)
@@ -21,7 +21,12 @@ export default function Products({ currentPage, category, tags, sort }) {
 
     return (
         <>
-            <NextSeo title="Products" description="Product" />
+            <Meta
+                title="Pasargad"
+                description="Home Page"
+                image={Config.image}
+                canonical={process.env.NEXT_PUBLIC_URL}
+            />
             <ProductGrid products={products} />
         </>
     )

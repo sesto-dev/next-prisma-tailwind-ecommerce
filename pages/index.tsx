@@ -4,14 +4,17 @@ import { BlogPostCard } from 'components/BlogPostCard'
 import VideoCard from 'components/VideoCard'
 
 import prisma from 'lib/prisma'
-import { NextSeo } from 'next-seo'
+import Meta from 'components/Meta'
+import Config from 'main.config'
 
 export default function Index({ blogs }) {
     return (
         <div className="flex flex-col border-gray-200 dark:border-gray-700">
-            <NextSeo
+            <Meta
                 title="Pasargad"
-                description="A short description goes here."
+                description="Home Page"
+                image={Config.image}
+                canonical={process.env.NEXT_PUBLIC_URL}
             />
             <Blogs blogs={JSON.parse(blogs)} />
             <h3 className="mb-4 mt-16 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">

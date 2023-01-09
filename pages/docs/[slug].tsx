@@ -1,18 +1,21 @@
 import prisma from 'lib/prisma'
 import { MDXRemote } from 'next-mdx-remote'
-import { NextSeo } from 'next-seo'
 import { serialize } from 'next-mdx-remote/serialize'
 import MDXComponents from 'components/mdx/MDXComponents'
 import { parseISO, format } from 'date-fns'
 import Link from 'next/link'
+import Meta from 'components/Meta'
+import Config from 'main.config'
 
 export default function Doc({ nav, doc, mdx }) {
     if (doc && nav)
         return (
             <>
-                <NextSeo
-                    title="Documentation"
-                    description="A short description goes here."
+                <Meta
+                    title="Pasargad"
+                    description="Home Page"
+                    image={Config.image}
+                    canonical={process.env.NEXT_PUBLIC_URL}
                 />
                 <div className="grid grid-cols-7 gap-4">
                     <Sidebar nav={nav} />

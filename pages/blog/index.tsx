@@ -1,7 +1,8 @@
 import { BlogPostCard } from 'components/BlogPostCard'
+import Meta from 'components/Meta'
 
 import prisma from 'lib/prisma'
-import { NextSeo } from 'next-seo'
+import Config from 'main.config'
 
 export default function Index({ blogs }) {
     if (blogs) {
@@ -9,9 +10,11 @@ export default function Index({ blogs }) {
 
         return (
             <div className="flex flex-col border-gray-200 dark:border-gray-700">
-                <NextSeo
-                    title="Blog"
-                    description="A short description goes here."
+                <Meta
+                    title="Pasargad"
+                    description="Home Page"
+                    image={Config.image}
+                    canonical={process.env.NEXT_PUBLIC_URL}
                 />
                 <h3 className="mb-6 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
                     Blog Posts
