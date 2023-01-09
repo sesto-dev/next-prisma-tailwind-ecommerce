@@ -38,3 +38,6 @@ yarn-error.log*
 prisma/migrations/
 *.db
 *.db-journal
+
+**/public/workbox**
+**/public/sw**

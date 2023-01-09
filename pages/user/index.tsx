@@ -26,8 +26,6 @@ export default function User({ auth, omitted }) {
     const { isAuthenticated, setLocalAuthentication } = useAuth()
     const [userObject, setUserObject] = useState(null)
 
-    console.log({ parsed: JSON.parse(omitted) })
-
     useEffect(() => {
         setLocalAuthentication(auth)
         setUserObject(JSON.parse(omitted))
@@ -271,19 +269,17 @@ export async function getServerSideProps(context) {
 
         const decoded = await getJWTPayload(AJWT)
 
-        console.log({ id: decoded.id.toString() })
-
         const user = await prisma.user.findUnique({
             where: {
                 id: decoded.id.toString(),
             },
+            include: {
+                charges: true,
+                referralsProvided: true,
+            },
         })
 
-        console.log({ user })
-
         const omitted = omitUser(user)
-
-        console.log({ omitted })
 
         return {
             props: {

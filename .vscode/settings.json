@@ -3,6 +3,6 @@
         "**/package-lock.json": true,
         "**/node_modules": true,
         "**/.next": true,
-        "**/yarn-lock": true
+        "**/yarn.lock": true
     }
 }

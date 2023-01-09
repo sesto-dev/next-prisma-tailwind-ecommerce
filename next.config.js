@@ -2,7 +2,13 @@
  * @type {import('next').NextConfig}
  */
 
-module.exports = {
+const runtimeCaching = require('next-pwa/cache')
+const withPWA = require('next-pwa')({
+    dest: 'public',
+    runtimeCaching,
+})
+
+module.exports = withPWA({
     images: {
         remotePatterns: [
             {
@@ -10,20 +16,6 @@ module.exports = {
                 hostname: '**',
             },
         ],
-    },
-    reactStrictMode: true,
-    async headers() {
-        return [
-            {
-                source: '/:path*',
-                headers: [
-                    {
-                        key: 'Referrer-Policy',
-                        value: 'no-referrer-when-downgrade',
-                    },
-                ],
-            },
-        ]
     },
     async redirects() {
         return [
@@ -39,4 +31,4 @@ module.exports = {
             },
         ]
     },
-}
+})
