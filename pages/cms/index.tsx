@@ -12,7 +12,7 @@ export default function Index({ blogs, users, products }) {
         products = JSON.parse(products)
 
         return (
-            <div className="flex flex-col border-gray-200 dark:border-gray-700">
+            <div className="flex flex-col border-neutral-200 dark:border-neutral-700">
                 <h3 className="mb-6 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
                     Recent Blog Posts
                 </h3>

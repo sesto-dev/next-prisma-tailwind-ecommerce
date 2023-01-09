@@ -39,8 +39,8 @@ export default function Header() {
                 href={href}
                 className={`${
                     isActive
-                        ? 'font-semibold text-gray-800 dark:text-gray-200'
-                        : 'font-normal text-gray-600 dark:text-gray-400'
+                        ? 'font-semibold text-neutral-800 dark:text-neutral-200'
+                        : 'font-normal text-neutral-600 dark:text-neutral-400'
                 } ${
                     href == '/' ? 'inline-block' : 'hidden'
                 } transition-all  sm:px-3 sm:py-2 md:inline-block
@@ -60,7 +60,7 @@ export default function Header() {
                 setModalVisibility={setLoginModalVisibility}
             />
             <div className="flex flex-col justify-center">
-                <nav className="relative flex w-full items-center justify-between border-gray-200 bg-opacity-60 pt-4 text-gray-900 dark:border-gray-700 dark:text-gray-100">
+                <nav className="relative flex w-full items-center justify-between border-neutral-200 bg-opacity-60 pt-4 text-neutral-900 dark:border-neutral-700 dark:text-neutral-100">
                     <div className="flex">{ThemeButton()}</div>
                     <div>
                         <Drawer
@@ -99,7 +99,7 @@ export default function Header() {
                             <button
                                 aria-label="Mobile Menu"
                                 type="button"
-                                className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-200 ring-gray-300 transition-all hover:ring-2 dark:bg-gray-700 md:hidden"
+                                className="flex h-9 w-9 items-center justify-center rounded-lg bg-neutral-200 ring-neutral-300 transition-all hover:ring-2 dark:bg-neutral-700 md:hidden"
                                 onClick={() => setShowDrawer(true)}
                             >
                                 <Bars3Icon className="h-5 w-5 " />
@@ -108,13 +108,13 @@ export default function Header() {
                     )}
                 </nav>
             </div>
-            <hr className="border-1 mt-4 mb-8 w-full border-gray-200 dark:border-gray-800" />
+            <hr className="border-1 mt-4 mb-8 w-full border-neutral-200 dark:border-neutral-800" />
         </>
     )
 }
 
 function getHeaderButtonStyles() {
-    return 'h-9 w-9 items-center justify-center rounded-lg bg-gray-200 transition-all hover:bg-purple-600                                             hover:text-white dark:bg-gray-700 hover:dark:bg-purple-600'
+    return 'h-9 w-9 items-center justify-center rounded-lg bg-neutral-200 transition-all hover:bg-purple-600                                             hover:text-white dark:bg-neutral-700 hover:dark:bg-purple-600'
 }
 
 function ThemeButton() {

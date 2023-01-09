@@ -49,7 +49,7 @@ const ProductGrid = ({ products }) => {
 const Product = ({ product }) => {
     return (
         <Link className="" href={`/product/${product.id}`}>
-            <div className="h-full w-full rounded-lg bg-white shadow-md dark:border-gray-700 dark:bg-gray-800">
+            <div className="h-full w-full rounded-lg bg-white dark:border-neutral-700 dark:bg-neutral-800">
                 <div className="relative h-40 w-full">
                     <Image
                         className="rounded-t-lg"
@@ -60,11 +60,11 @@ const Product = ({ product }) => {
                     />
                 </div>
                 <div className="p-5">
-                    <h5 className="text-xl font-medium tracking-tight text-gray-900 dark:text-white">
+                    <h5 className="text-xl font-medium tracking-tight text-neutral-900 dark:text-white">
                         {product.title}
                     </h5>
                     <div className="mt-5 flex items-center justify-between">
-                        <span className="text-3xl font-bold text-gray-900 dark:text-white">
+                        <span className="text-3xl font-bold text-neutral-900 dark:text-white">
                             ${product.listings[0]['price']}
                         </span>
                         <button className="rounded-lg bg-purple-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-black">
@@ -80,20 +80,20 @@ const Product = ({ product }) => {
 export function ProductSkeleton() {
     return (
         <Link href="#">
-            <div className="animate-pulse rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800">
+            <div className="animate-pulse rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
                 <div className="relative h-full w-full">
-                    <div className="flex h-40 w-full items-center justify-center rounded bg-gray-300 dark:bg-gray-700 ">
+                    <div className="flex h-40 w-full items-center justify-center rounded bg-neutral-300 dark:bg-neutral-700 ">
                         <ImageSkeleton />
                     </div>
                 </div>
                 <div className="p-5">
                     <div className="w-full">
-                        <div className="mb-4 h-2.5 w-48 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-                        <div className="mb-2.5 h-2 max-w-[480px] rounded-full bg-gray-200 dark:bg-gray-700"></div>
-                        <div className="mb-2.5 h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-                        <div className="mb-2.5 h-2 max-w-[440px] rounded-full bg-gray-200 dark:bg-gray-700"></div>
-                        <div className="mb-2.5 h-2 max-w-[460px] rounded-full bg-gray-200 dark:bg-gray-700"></div>
-                        <div className="h-2 max-w-[360px] rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                        <div className="mb-4 h-2.5 w-48 rounded-full bg-neutral-200 dark:bg-neutral-700"></div>
+                        <div className="mb-2.5 h-2 max-w-[480px] rounded-full bg-neutral-200 dark:bg-neutral-700"></div>
+                        <div className="mb-2.5 h-2 rounded-full bg-neutral-200 dark:bg-neutral-700"></div>
+                        <div className="mb-2.5 h-2 max-w-[440px] rounded-full bg-neutral-200 dark:bg-neutral-700"></div>
+                        <div className="mb-2.5 h-2 max-w-[460px] rounded-full bg-neutral-200 dark:bg-neutral-700"></div>
+                        <div className="h-2 max-w-[360px] rounded-full bg-neutral-200 dark:bg-neutral-700"></div>
                     </div>
                 </div>
             </div>

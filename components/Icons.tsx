@@ -1,7 +1,7 @@
 export const Spinner = () => (
     <svg
         aria-hidden="true"
-        className="m-auto h-5 w-5 animate-spin fill-neutral-900 text-gray-200 dark:text-gray-600"
+        className="m-auto h-5 w-5 animate-spin fill-neutral-900 text-neutral-200 dark:text-neutral-600"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -198,7 +198,7 @@ export const WarningIcon = () => (
 
 export const ImageSkeleton = () => (
     <svg
-        className="h-12 w-12 text-gray-200"
+        className="h-12 w-12 text-neutral-200"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
         fill="currentColor"
@@ -211,7 +211,7 @@ export const ImageSkeleton = () => (
 export const PlayIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-4 text-gray-500 dark:text-gray-100"
+        className="h-4 w-4 text-neutral-500 dark:text-neutral-100"
         viewBox="0 0 20 20"
         fill="currentColor"
     >
@@ -236,7 +236,7 @@ export const HomeIcon = () => (
 
 export const ChevronRight = () => (
     <svg
-        className="h-6 w-6 text-gray-400"
+        className="h-6 w-6 text-neutral-400"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"

@@ -65,7 +65,7 @@ html {
 
 code[class*='language-'],
 pre[class*='language-'] {
-    @apply text-gray-800 dark:text-gray-50;
+    @apply text-neutral-800 dark:text-neutral-50;
 }
 
 pre::-webkit-scrollbar {
@@ -88,7 +88,7 @@ pre {
 }
 
 .highlight-line {
-    @apply -mx-4 block border-l-4 border-blue-500 bg-gray-100 px-4 dark:bg-gray-800;
+    @apply -mx-4 block border-l-4 border-blue-500 bg-neutral-100 px-4 dark:bg-neutral-800;
 }
 
 /* Remove Safari input shadow on mobile */

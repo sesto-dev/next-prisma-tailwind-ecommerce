@@ -11,7 +11,7 @@ export default ({ seed }) => {
         'from-sky-400 via-rose-400 to-lime-400',
         'from-pink-300 via-purple-300 to-indigo-400',
         'from-indigo-200 via-red-200 to-yellow-100',
-        'from-yellow-400 via-gray-50 to-teal-300',
+        'from-yellow-400 via-neutral-50 to-teal-300',
     ]
 
     return (

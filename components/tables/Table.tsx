@@ -1,8 +1,8 @@
 export default function Table({ children, headers }) {
     return (
         <div className="overflow-x-auto rounded-lg">
-            <table className="text-sm text-gray-500 first-letter:text-left dark:text-gray-400">
-                <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+            <table className="text-sm text-neutral-500 first-letter:text-left dark:text-neutral-400">
+                <thead className="bg-neutral-50 text-xs uppercase text-neutral-700 dark:bg-neutral-700 dark:text-neutral-400">
                     <tr className="">
                         {headers &&
                             headers.map((header) => (

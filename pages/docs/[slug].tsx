@@ -28,14 +28,14 @@ export default function Doc({ nav, doc, mdx }) {
 function Body({ doc, mdx }) {
     const { title, updatedAt } = doc
     return (
-        <div className="col-span-6 rounded-lg bg-gray-100 p-6 dark:bg-gray-800/30 md:col-span-5">
-            <h1 className="text-4xl font-medium text-gray-600 dark:text-gray-200">
+        <div className="col-span-6 rounded-lg bg-neutral-100 p-6 dark:bg-neutral-800/30 md:col-span-5">
+            <h1 className="text-4xl font-medium text-neutral-600 dark:text-neutral-200">
                 {title}
             </h1>
-            <p className="mt-2 text-sm font-medium text-gray-400">
+            <p className="mt-2 text-sm font-medium text-neutral-400">
                 Last Updated @ {format(parseISO(updatedAt), 'MMMM dd, yyyy')}
             </p>
-            <hr className="border-1 mt-4 mb-10 w-full border-gray-200 dark:border-gray-800" />
+            <hr className="border-1 mt-4 mb-10 w-full border-neutral-200 dark:border-neutral-800" />
             <MDXRemote lazy {...mdx} components={MDXComponents} />
         </div>
     )
@@ -43,22 +43,22 @@ function Body({ doc, mdx }) {
 
 function Sidebar({ nav }) {
     return (
-        <div className="no-scrollbar col-span-1 h-full w-full overflow-x-auto rounded-lg bg-gray-100 p-6 dark:bg-gray-800/30  md:col-span-2">
+        <div className="no-scrollbar col-span-1 h-full w-full overflow-x-auto rounded-lg bg-neutral-100 p-6 dark:bg-neutral-800/30  md:col-span-2">
             {Object.keys(nav).map((category) => (
                 <div key={category} className="">
-                    <p className="text-sm font-bold text-gray-400">
+                    <p className="text-sm font-bold text-neutral-400">
                         {category.toUpperCase()}
                     </p>
-                    <hr className="border-1 my-2 w-full border-gray-200 dark:border-gray-800" />
+                    <hr className="border-1 my-2 w-full border-neutral-200 dark:border-neutral-800" />
                     <ul className="my-3 ml-3 mb-6">
                         {nav[category].map((page) => (
                             <li className="mb-2" key={page.title}>
                                 <Link
                                     href={page.route}
-                                    className="whitespace-nowrap rounded-md py-2 px-4 text-sm text-gray-800 
+                                    className="whitespace-nowrap rounded-md py-2 px-4 text-sm text-neutral-800 
                                     hover:bg-purple-600
                                     hover:text-white
-                                    dark:text-gray-200/80 hover:dark:text-white"
+                                    dark:text-neutral-200/80 hover:dark:text-white"
                                 >
                                     {page.title}
                                 </Link>

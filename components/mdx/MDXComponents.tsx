@@ -21,7 +21,7 @@ function MDXImage({ alt, src }) {
 
 function Callout(props) {
     return (
-        <div className="my-8 flex rounded-lg bg-gray-200 p-4 dark:bg-gray-800">
+        <div className="my-8 flex rounded-lg bg-neutral-200 p-4 dark:bg-neutral-800">
             <div className="mr-4 flex w-4 items-center">{props.emoji}</div>
             <div className="callout w-full">{props.children}</div>
         </div>

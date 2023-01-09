@@ -10,24 +10,24 @@ import { getLinkStyles } from 'lib/styles'
 export default function Footer() {
     return (
         <footer>
-            <hr className="border-1 my-10 w-full border-gray-200 dark:border-gray-800" />
+            <hr className="border-1 my-10 w-full border-neutral-200 dark:border-neutral-800" />
             <div className="md:flex md:justify-between">
                 <div className="mb-6 hidden md:mb-0 md:block">
                     <span className="flex flex-col">
                         <h2 className="whitespace-nowrap text-sm font-semibold uppercase text-black dark:text-white">
                             Pasargad
                         </h2>
-                        <span className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                        <span className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
                             © 2022 Pasargad™ . All Rights Reserved.
                         </span>
                     </span>
                 </div>
                 <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-6">
                     <div>
-                        <h2 className="mb-3 text-sm font-semibold uppercase text-gray-900 dark:text-white">
+                        <h2 className="mb-3 text-sm font-semibold uppercase text-neutral-900 dark:text-white">
                             Resources
                         </h2>
-                        <ul className="text-gray-600 dark:text-gray-400">
+                        <ul className="text-neutral-600 dark:text-neutral-400">
                             <li className="mb-2 text-sm">
                                 <Link href="/blog" className={getLinkStyles()}>
                                     Blog
@@ -44,10 +44,10 @@ export default function Footer() {
                         </ul>
                     </div>
                     <div>
-                        <h2 className="mb-3 text-sm font-semibold uppercase text-gray-900 dark:text-white">
+                        <h2 className="mb-3 text-sm font-semibold uppercase text-neutral-900 dark:text-white">
                             Follow us
                         </h2>
-                        <ul className="text-gray-600 dark:text-gray-400">
+                        <ul className="text-neutral-600 dark:text-neutral-400">
                             <li className="mb-2 text-sm">
                                 <a
                                     href="https://github.com/accretence"
@@ -71,10 +71,10 @@ export default function Footer() {
                         </ul>
                     </div>
                     <div>
-                        <h2 className="mb-3 text-sm font-semibold uppercase text-gray-900 dark:text-white">
+                        <h2 className="mb-3 text-sm font-semibold uppercase text-neutral-900 dark:text-white">
                             Legal
                         </h2>
-                        <ul className="text-gray-600 dark:text-gray-400">
+                        <ul className="text-neutral-600 dark:text-neutral-400">
                             <li className="mb-2 text-sm">
                                 <a href="#" className={getLinkStyles()}>
                                     Privacy Policy
@@ -89,13 +89,13 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-            <hr className="mt-8 border-gray-200 dark:border-gray-800 sm:mx-auto" />
+            <hr className="mt-8 border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
             <div className="my-8 flex justify-center space-x-6">
                 <a
                     href="https://facebook.com/accretence"
                     target="_blank"
                     rel="noreferrer"
-                    className={`${getLinkStyles()} + text-gray-500`}
+                    className={`${getLinkStyles()} + text-neutral-500`}
                 >
                     <FacebookIcon />
                     <span className="sr-only">Facebook page</span>
@@ -104,7 +104,7 @@ export default function Footer() {
                     href="https://instagram.com/accretence"
                     target="_blank"
                     rel="noreferrer"
-                    className={`${getLinkStyles()} + text-gray-500`}
+                    className={`${getLinkStyles()} + text-neutral-500`}
                 >
                     <InstagramIcon />
                     <span className="sr-only">Instagram page</span>
@@ -113,7 +113,7 @@ export default function Footer() {
                     href="https://twitter.com/accretence"
                     target="_blank"
                     rel="noreferrer"
-                    className={`${getLinkStyles()} + text-gray-500`}
+                    className={`${getLinkStyles()} + text-neutral-500`}
                 >
                     <TwitterIcon />
                     <span className="sr-only">Twitter page</span>
@@ -122,7 +122,7 @@ export default function Footer() {
                     href="https://github.com/accretence"
                     target="_blank"
                     rel="noreferrer"
-                    className={`${getLinkStyles()} + text-gray-500`}
+                    className={`${getLinkStyles()} + text-neutral-500`}
                 >
                     <GithubIcon />
                     <span className="sr-only">GitHub account</span>

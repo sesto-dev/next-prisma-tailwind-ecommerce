@@ -7,5 +7,5 @@ export function getLinkStyles() {
 }
 
 export function getTableRowStyles() {
-    return 'border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600'
+    return 'border-b bg-white hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:bg-neutral-600'
 }

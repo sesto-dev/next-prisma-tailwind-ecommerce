@@ -9,7 +9,7 @@ import Config from 'main.config'
 
 export default function Index({ blogs }) {
     return (
-        <div className="flex flex-col border-gray-200 dark:border-gray-700">
+        <div className="flex flex-col border-neutral-200 dark:border-neutral-700">
             <Meta
                 title="Pasargad"
                 description="Home Page"
@@ -20,7 +20,7 @@ export default function Index({ blogs }) {
             <h3 className="mb-4 mt-16 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
                 Learn React & Next.js
             </h3>
-            <p className="mb-4 text-gray-600 dark:text-gray-400">
+            <p className="mb-4 text-neutral-600 dark:text-neutral-400">
                 Build and deploy a modern SaaS application using the most
                 popular open-source software. This course is 12 hours long and
                 is completely live streamed.
@@ -53,7 +53,7 @@ export default function Index({ blogs }) {
                 target="_blank"
                 rel="noreferrer"
                 href="https://www.youtube.com/playlist?list=PL6bwFJ82M6FXgctyoWXqj7H0GK8_YIeF1"
-                className="mt-4 flex h-6 rounded-lg leading-7 text-gray-600 transition-all hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                className="mt-4 flex h-6 rounded-lg leading-7 text-neutral-600 transition-all hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
             >
                 Watch all videos...
             </a>
@@ -73,7 +73,7 @@ function Blogs({ blogs }) {
                 ))}
             </div>
             <Link
-                className="mt-4 flex h-6 rounded-lg leading-7 text-gray-600 transition-all hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                className="mt-4 flex h-6 rounded-lg leading-7 text-neutral-600 transition-all hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
                 href="/blog"
             >
                 Read all posts...

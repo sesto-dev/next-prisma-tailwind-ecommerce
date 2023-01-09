@@ -9,7 +9,7 @@ export default function Index({ blogs }) {
         blogs = JSON.parse(blogs)
 
         return (
-            <div className="flex flex-col border-gray-200 dark:border-gray-700">
+            <div className="flex flex-col border-neutral-200 dark:border-neutral-700">
                 <Meta
                     title="Pasargad"
                     description="Home Page"

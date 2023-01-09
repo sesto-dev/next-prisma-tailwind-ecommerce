@@ -60,12 +60,12 @@ function UserInfo({ userObject }) {
         <div>
             <button
                 type="button"
-                className="flex w-full items-center justify-between rounded-t-lg border border-gray-200 p-5 text-left text-xl text-black hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                className="flex w-full items-center justify-between rounded-t-lg border border-neutral-200 p-5 text-left text-xl text-black hover:bg-neutral-100 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700"
                 onClick={() => setVisibility(!visibility)}
             >
                 <span className="flex flex-col">
                     <h1>User Info</h1>
-                    <small className="text-gray-300">
+                    <small className="text-neutral-300">
                         Your personal information.
                     </small>
                 </span>
@@ -76,7 +76,7 @@ function UserInfo({ userObject }) {
                 )}
             </button>
             <div className={!visibility && 'hidden'}>
-                <div className="border border-gray-200 p-5 font-light dark:border-gray-700 "></div>
+                <div className="border border-neutral-200 p-5 font-light dark:border-neutral-700 "></div>
             </div>
         </div>
     )
@@ -89,12 +89,14 @@ function Charges({ userObject }) {
         <div>
             <button
                 type="button"
-                className="flex w-full items-center justify-between border border-gray-200 p-5 text-left text-xl text-black transition-all ease-in-out hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                className="flex w-full items-center justify-between border border-neutral-200 p-5 text-left text-xl text-black transition-all ease-in-out hover:bg-neutral-100 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700"
                 onClick={() => setVisibility(!visibility)}
             >
                 <span className="flex flex-col">
                     <h1>Charges</h1>
-                    <small className="text-gray-300">Your order history.</small>
+                    <small className="text-neutral-300">
+                        Your order history.
+                    </small>
                 </span>
                 {visibility ? (
                     <ChevronUpIcon className="h-5 w-5" />
@@ -103,7 +105,7 @@ function Charges({ userObject }) {
                 )}
             </button>
             <div className={!visibility && 'hidden'}>
-                <div className="border border-gray-200 p-8 font-light dark:border-gray-700">
+                <div className="border border-neutral-200 p-8 font-light dark:border-neutral-700">
                     {userObject && userObject['charges'] && (
                         <OrderTable charges={userObject.charges} />
                     )}
@@ -120,12 +122,12 @@ function Referrals({ userObject }) {
         <div>
             <button
                 type="button"
-                className="flex w-full items-center justify-between border border-gray-200 p-5 text-left text-xl text-black transition-all ease-in-out hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+                className="flex w-full items-center justify-between border border-neutral-200 p-5 text-left text-xl text-black transition-all ease-in-out hover:bg-neutral-100 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700"
                 onClick={() => setVisibility(!visibility)}
             >
                 <span className="flex flex-col">
                     <h1>Referrals</h1>
-                    <small className="text-gray-300">
+                    <small className="text-neutral-300">
                         Your referral history.
                     </small>
                 </span>
@@ -136,7 +138,7 @@ function Referrals({ userObject }) {
                 )}
             </button>
             <div className={!visibility && 'hidden'}>
-                <div className=" border border-gray-200 p-5 font-light dark:border-gray-700"></div>
+                <div className=" border border-neutral-200 p-5 font-light dark:border-neutral-700"></div>
             </div>
         </div>
     )
@@ -155,7 +157,7 @@ function Integrations({ userObject }) {
                     <span className="ml-3 flex-1 whitespace-nowrap font-medium">
                         Discord Integrated
                     </span>
-                    <span className="ml-3 inline-flex items-center justify-center whitespace-nowrap rounded bg-gray-200 px-2 py-1 text-xs font-medium text-purple-600 dark:bg-gray-700 ">
+                    <span className="ml-3 inline-flex items-center justify-center whitespace-nowrap rounded bg-neutral-200 px-2 py-1 text-xs font-medium text-purple-600 dark:bg-neutral-700 ">
                         Integrated with Discord
                     </span>
                 </p>
@@ -213,12 +215,12 @@ function Integrations({ userObject }) {
                 type="button"
                 className={`flex w-full items-center justify-between ${
                     !visibility && 'rounded-b-lg'
-                } border border-gray-200 p-5 text-left text-xl text-black transition-all ease-in-out hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700`}
+                } border border-neutral-200 p-5 text-left text-xl text-black transition-all ease-in-out hover:bg-neutral-100 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700`}
                 onClick={() => setVisibility(!visibility)}
             >
                 <span className="flex flex-col">
                     <h1>Integrations</h1>
-                    <small className="text-gray-300">
+                    <small className="text-neutral-300">
                         Your integrations with third-party services.
                     </small>
                 </span>
@@ -229,7 +231,7 @@ function Integrations({ userObject }) {
                 )}
             </button>
             <div className={!visibility && 'hidden'}>
-                <div className="rounded-b-lg border border-gray-200 p-5 font-light dark:border-gray-700">
+                <div className="rounded-b-lg border border-neutral-200 p-5 font-light dark:border-neutral-700">
                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <DiscordIntegration />
                         <WalletIntegration />
@@ -258,7 +260,7 @@ function Logout() {
 
     return (
         <button
-            className="mt-6 w-min rounded-lg border border-gray-200 bg-neutral-100 px-10 py-2 text-lg text-neutral-400 transition-all duration-300 hover:bg-red-600 hover:text-white dark:border-gray-700 dark:bg-neutral-900 hover:dark:bg-red-600"
+            className="mt-6 w-min rounded-lg border border-neutral-200 bg-neutral-100 px-10 py-2 text-lg text-neutral-400 transition-all duration-300 hover:bg-red-600 hover:text-white dark:border-neutral-700 dark:bg-neutral-900 hover:dark:bg-red-600"
             onClick={onLogout}
         >
             <p>Logout</p>
@@ -297,9 +299,9 @@ export async function getServerSideProps(context) {
 }
 
 function getActiveButtonStyles() {
-    return 'group flex items-center rounded-md bg-purple-700 py-3 px-6 text-gray-100 transition duration-300 hover:bg-black'
+    return 'group flex items-center rounded-md bg-purple-700 py-3 px-6 text-neutral-100 transition duration-300 hover:bg-black'
 }
 
 function getDisabledButtonStyles() {
-    return 'no-scrollbar group flex items-center overflow-x-auto rounded-md border-2 border-solid border-gray-300/50 bg-transparent py-3 px-6 text-gray-300/50 dark:border-gray-500 dark:text-gray-500'
+    return 'no-scrollbar group flex items-center overflow-x-auto rounded-md border-2 border-solid border-neutral-300/50 bg-transparent py-3 px-6 text-neutral-300/50 dark:border-neutral-500 dark:text-neutral-500'
 }

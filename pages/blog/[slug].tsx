@@ -35,12 +35,12 @@ function Content({ blog, mdx }) {
     const { title, updatedAt } = blog
 
     return (
-        <div className="rounded-lg bg-white p-6 text-justify text-gray-900 dark:bg-gray-800 dark:text-gray-200 md:col-span-3">
+        <div className="rounded-lg bg-white p-6 text-justify text-neutral-900 dark:bg-neutral-800 dark:text-neutral-200 md:col-span-3">
             <h1 className="mb-1 text-3xl font-medium">{title}</h1>
-            <p className="mt-2 text-sm font-medium text-gray-400">
+            <p className="mt-2 text-sm font-medium text-neutral-400">
                 Last Updated @ {format(parseISO(updatedAt), 'MMMM dd, yyyy')}
             </p>
-            <hr className="border-1 mt-4 mb-10 w-full border-gray-200 dark:border-gray-600" />
+            <hr className="border-1 mt-4 mb-10 w-full border-neutral-200 dark:border-neutral-600" />
             <MDXRemote lazy {...mdx} components={MDXComponents} />
         </div>
     )
@@ -55,7 +55,7 @@ function Recomendations({ recommendations }) {
                 return (
                     <div key={rec} className="mb-4 w-full">
                         <Link href={`/blog/${slug}`}>
-                            <div className="w-full rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+                            <div className="w-full rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
                                 <div className="relative h-40 w-full">
                                     <Image
                                         className="rounded-t-lg"
@@ -67,10 +67,10 @@ function Recomendations({ recommendations }) {
                                 </div>
                                 <div className="p-5">
                                     <div className="w-full">
-                                        <h5 className="mb-3 text-justify font-medium tracking-tight text-gray-900 dark:text-white">
+                                        <h5 className="mb-3 text-justify font-medium tracking-tight text-neutral-900 dark:text-white">
                                             {title}
                                         </h5>
-                                        <p className="block text-sm text-gray-700 dark:text-gray-400">
+                                        <p className="block text-sm text-neutral-700 dark:text-neutral-400">
                                             {author && author.name && (
                                                 <span>{author.name}, </span>
                                             )}

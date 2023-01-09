@@ -31,7 +31,7 @@ export default function Tweet({
         referenced_tweets && referenced_tweets.find((t) => t.type === 'quoted')
 
     return (
-        <div className="tweet my-4 w-full rounded-lg border border-gray-200 bg-white px-6 py-4 dark:border-gray-800 dark:bg-gray-900">
+        <div className="tweet my-4 w-full rounded-lg border border-neutral-200 bg-white px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
             <div className="flex items-center">
                 <a
                     className="flex h-12 w-12"
@@ -54,14 +54,14 @@ export default function Tweet({
                     className="author ml-4 flex flex-col !no-underline"
                 >
                     <span
-                        className="flex items-center font-bold leading-5 !text-gray-900 dark:!text-gray-100"
+                        className="flex items-center font-bold leading-5 !text-neutral-900 dark:!text-neutral-100"
                         title={author.name}
                     >
                         {author.name}
                         {author.verified ? <VerifiedAccount /> : null}
                     </span>
                     <span
-                        className="!text-gray-500"
+                        className="!text-neutral-500"
                         title={`@${author.username}`}
                     >
                         @{author.username}
@@ -86,7 +86,7 @@ export default function Tweet({
                     </svg>
                 </a>
             </div>
-            <div className="mt-4 mb-1 whitespace-pre-wrap leading-normal  !text-gray-700 dark:!text-gray-200">
+            <div className="mt-4 mb-1 whitespace-pre-wrap leading-normal  !text-neutral-700 dark:!text-neutral-200">
                 {formattedText}
             </div>
             {media && media.length ? (
@@ -111,7 +111,7 @@ export default function Tweet({
             ) : null}
             {quoteTweet ? <Tweet {...quoteTweet} /> : null}
             <a
-                className="text-sm !text-gray-500 hover:!underline"
+                className="text-sm !text-neutral-500 hover:!underline"
                 href={tweetUrl}
                 target="_blank"
                 rel="noreferrer"
@@ -123,9 +123,9 @@ export default function Tweet({
                     {format(createdAt, 'h:mm a - MMM d, y')}
                 </time>
             </a>
-            <div className="mt-2 flex text-sm !text-gray-700 dark:!text-gray-300">
+            <div className="mt-2 flex text-sm !text-neutral-700 dark:!text-neutral-300">
                 <a
-                    className="mr-4 flex items-center !text-gray-500 transition hover:!text-blue-600 hover:!underline"
+                    className="mr-4 flex items-center !text-neutral-500 transition hover:!text-blue-600 hover:!underline"
                     href={replyUrl}
                     target="_blank"
                     rel="noreferrer"
@@ -151,7 +151,7 @@ export default function Tweet({
                     </span>
                 </a>
                 <a
-                    className="mr-4 flex items-center !text-gray-500 transition hover:!text-green-600 hover:!underline"
+                    className="mr-4 flex items-center !text-neutral-500 transition hover:!text-green-600 hover:!underline"
                     href={retweetUrl}
                     target="_blank"
                     rel="noreferrer"
@@ -176,7 +176,7 @@ export default function Tweet({
                     </span>
                 </a>
                 <a
-                    className="flex items-center !text-gray-500 transition hover:!text-red-600 hover:!underline"
+                    className="flex items-center !text-neutral-500 transition hover:!text-red-600 hover:!underline"
                     href={likeUrl}
                     target="_blank"
                     rel="noreferrer"

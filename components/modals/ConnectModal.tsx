@@ -30,7 +30,7 @@ export default function ConnectModal({ modalVisibility, setModalVisibility }) {
                 <div className="my-4">
                     <a
                         href="#"
-                        className="inline-flex items-center text-xs font-normal text-gray-500 hover:underline dark:text-gray-400"
+                        className="inline-flex items-center text-xs font-normal text-neutral-500 hover:underline dark:text-neutral-400"
                     >
                         <QuestionIcon />
                         Why do I need to connect with my wallet?
@@ -106,7 +106,7 @@ function Connector() {
                             disabled={!connector.ready}
                             key={connector.id}
                             onClick={() => connect({ connector })}
-                            className="group flex items-center rounded-lg bg-gray-50 p-3 text-gray-900 hover:bg-gray-100 hover:shadow dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
+                            className="group flex items-center rounded-lg bg-neutral-50 p-3 text-neutral-900 hover:bg-neutral-100 dark:bg-neutral-600 dark:text-white dark:hover:bg-neutral-500"
                         >
                             {!connector.ready && ' (unsupported)'}
                             {isLoading &&

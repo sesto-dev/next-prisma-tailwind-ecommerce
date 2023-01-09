@@ -23,7 +23,7 @@ export default function BlogLayout({
                         src="/avatar.jpg"
                         className="rounded-full"
                     />
-                    <p className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                    <p className="ml-2 text-sm text-neutral-700 dark:text-neutral-300">
                         {'Lee Robinson / '}
                         {format(parseISO(post.date), 'MMMM dd, yyyy')}
                     </p>
@@ -31,20 +31,22 @@ export default function BlogLayout({
             </div>
             <Suspense fallback={null}>
                 <div className="mt-4 w-full max-w-none">{children}</div>
-                <div className="text-sm text-gray-700 dark:text-gray-300">
+                <div className="text-sm text-neutral-700 dark:text-neutral-300">
                     <a
                         href={`https://mobile.twitter.com/search?q=${encodeURIComponent(
                             `https://leerob.io/blog/${post.id}`
                         )}`}
                         target="_blank"
-                        rel="noreferrer"                    >
+                        rel="noreferrer"
+                    >
                         {'Discuss on Twitter'}
                     </a>
                     {` • `}
                     <a
                         href="https://github.com/leerob/leerob.io/issues"
                         target="_blank"
-                        rel="noreferrer"                    >
+                        rel="noreferrer"
+                    >
                         {'Suggest Change'}
                     </a>
                 </div>
