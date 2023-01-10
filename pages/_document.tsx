@@ -8,8 +8,8 @@ export default function Document() {
                 <link href="/manifest.json" rel="manifest" />
                 <link href="/favicon.ico" rel="shortcut icon" />
                 <link href="/ios.png" rel="apple-touch-icon" />
-                <meta content="#fff" name="theme-color" />
-                <meta content="#fff" name="msapplication-TileColor" />
+                <meta content="#0C0C0C" name="theme-color" />
+                <meta content="#0C0C0C" name="msapplication-TileColor" />
                 <GoogleAnalytics />
             </Head>
             <body className="bg-white text-black dark:bg-black dark:text-white">

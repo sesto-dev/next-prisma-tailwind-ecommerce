@@ -1,7 +1,7 @@
 import Config from 'main.config'
 import { NextSeo } from 'next-seo'
 
-const { image, siteName, handle } = Config
+const { siteName, handle } = Config
 
 export default function Meta({ title, description, canonical, image }) {
     return (

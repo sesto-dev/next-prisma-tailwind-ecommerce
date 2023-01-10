@@ -43,10 +43,10 @@ export default function Header() {
                         : 'font-normal text-neutral-600 dark:text-neutral-400'
                 } ${
                     href == '/' ? 'inline-block' : 'hidden'
-                } transition-all  sm:px-3 sm:py-2 md:inline-block
+                } transition-all sm:px-3 sm:py-2 md:inline-block
                 `}
             >
-                <span className="capsize transition duration-300 hover:text-purple-600">
+                <span className="capsize text-xl transition duration-300 hover:text-purple-600 md:text-base">
                     {text}
                 </span>
             </Link>
@@ -91,7 +91,7 @@ export default function Header() {
                                     }
                                     aria-label="Authentication"
                                     type="button"
-                                    className={`flex ${getHeaderButtonStyles()}`}
+                                    className={`hidden md:flex ${getHeaderButtonStyles()}`}
                                 >
                                     <UserPlusIcon className="h-5 w-5" />
                                 </button>

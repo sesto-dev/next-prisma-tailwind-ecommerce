@@ -90,7 +90,7 @@ export default function Footer() {
                 </div>
             </div>
             <hr className="mt-8 border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
-            <div className="my-8 flex justify-center space-x-6">
+            <div className="mt-8 mb-12 flex justify-center space-x-6">
                 <a
                     href="https://facebook.com/accretence"
                     target="_blank"
