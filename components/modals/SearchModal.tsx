@@ -1,6 +1,6 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { useEffect, useState } from 'react'
 import Modal from './Modal'
+import { Search } from 'react-feather'
 
 export default function SearchModal({ modalVisibility, setModalVisibility }) {
     return (
@@ -25,7 +25,7 @@ export default function SearchModal({ modalVisibility, setModalVisibility }) {
                         type="submit"
                         className="rounded-lg bg-purple-600 px-6 py-2 text-sm font-medium text-white transition duration-300 hover:bg-black"
                     >
-                        <MagnifyingGlassIcon className="h-6 w-6" />
+                        <Search className="h-6 w-6" />
                     </button>
                 </div>
             </form>

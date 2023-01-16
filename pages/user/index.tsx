@@ -1,27 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import prisma from 'lib/prisma'
-import {
-    ChevronDownIcon,
-    ChevronUpIcon,
-    WalletIcon,
-} from '@heroicons/react/24/solid'
 import { useRouter } from 'next/router'
-import { getGoogleURL } from 'lib/google'
 import { useAuth } from 'state/Auth'
 import { getJWTPayload } from 'lib/jwt'
 import { omitUser } from 'lib/omit'
-import {
-    DiscordIcon,
-    GoogleBAWIcon,
-    MetamaskIcon,
-    Spinner,
-} from 'components/Icons'
+import { DiscordIcon } from 'components/Icons'
 import ConnectModal from 'components/modals/ConnectModal'
 import OrderTable from 'components/tables/OrderTable'
 import { getDiscordURL } from 'lib/discord'
 import Meta from 'components/Meta'
 import Config from 'main.config'
+import { ChevronDown, ChevronUp, DollarSign } from 'react-feather'
 
 export default function User({ auth, omitted }) {
     const { isAuthenticated, setLocalAuthentication } = useAuth()
@@ -70,9 +60,9 @@ function UserInfo({ userObject }) {
                     </small>
                 </span>
                 {visibility ? (
-                    <ChevronUpIcon className="h-5 w-5" />
+                    <ChevronUp className="h-5 w-5" />
                 ) : (
-                    <ChevronDownIcon className="h-5 w-5" />
+                    <ChevronDown className="h-5 w-5" />
                 )}
             </button>
             <div className={!visibility && 'hidden'}>
@@ -99,9 +89,9 @@ function Charges({ userObject }) {
                     </small>
                 </span>
                 {visibility ? (
-                    <ChevronUpIcon className="h-5 w-5" />
+                    <ChevronUp className="h-5 w-5" />
                 ) : (
-                    <ChevronDownIcon className="h-5 w-5" />
+                    <ChevronDown className="h-5 w-5" />
                 )}
             </button>
             <div className={!visibility && 'hidden'}>
@@ -132,9 +122,9 @@ function Referrals({ userObject }) {
                     </small>
                 </span>
                 {visibility ? (
-                    <ChevronUpIcon className="h-5 w-5" />
+                    <ChevronUp className="h-5 w-5" />
                 ) : (
-                    <ChevronDownIcon className="h-5 w-5" />
+                    <ChevronDown className="h-5 w-5" />
                 )}
             </button>
             <div className={!visibility && 'hidden'}>
@@ -184,7 +174,7 @@ function Integrations({ userObject }) {
                     onClick={() => setConnectModalVisibility(true)}
                     className={getDisabledButtonStyles()}
                 >
-                    <WalletIcon className="h-6 w-5" />
+                    <DollarSign className="h-6 w-5" />
                     <span className=" ml-3 flex-1 whitespace-nowrap text-left font-medium">
                         Web3 Wallet Integrated
                     </span>
@@ -197,7 +187,7 @@ function Integrations({ userObject }) {
                     onClick={() => setConnectModalVisibility(true)}
                     className={getActiveButtonStyles()}
                 >
-                    <WalletIcon className="h-6 w-5" />
+                    <DollarSign className="h-6 w-5" />
                     <span className="ml-3 flex-1 whitespace-nowrap text-left font-medium">
                         Integrate your Web3 Wallet
                     </span>
@@ -225,9 +215,9 @@ function Integrations({ userObject }) {
                     </small>
                 </span>
                 {visibility ? (
-                    <ChevronUpIcon className="h-5 w-5" />
+                    <ChevronUp className="h-5 w-5" />
                 ) : (
-                    <ChevronDownIcon className="h-5 w-5" />
+                    <ChevronDown className="h-5 w-5" />
                 )}
             </button>
             <div className={!visibility && 'hidden'}>

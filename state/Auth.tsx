@@ -5,6 +5,8 @@ import {
     useEffect,
     useCallback,
 } from 'react'
+import { configureChains } from 'wagmi'
+import { mainnet, polygon, optimism } from 'wagmi/chains'
 
 const AuthContext = createContext({
     isAuthenticated: false,

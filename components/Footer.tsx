@@ -18,7 +18,7 @@ export default function Footer() {
                             Pasargad
                         </h2>
                         <span className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-                            © 2022 Pasargad™ . All Rights Reserved.
+                            © {new Date().getFullYear()} Pasargad™ . All Rights Reserved.
                         </span>
                     </span>
                 </div>

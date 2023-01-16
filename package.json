@@ -20,8 +20,10 @@
         "db:seed": "npm run db:reset && npx prisma db seed"
     },
     "dependencies": {
-        "@heroicons/react": "^2.0.13",
         "@prisma/client": "^4.8.1",
+        "@rainbow-me/rainbowkit": "^0.8.1",
+        "@vercel/analytics": "^0.1.8",
+        "@vercel/og": "^0.0.27",
         "angra": "^0.4.6",
         "bcryptjs": "^2.4.3",
         "cookie": "^0.5.0",
@@ -36,6 +38,7 @@
         "next-themes": "^0.2.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
+        "react-feather": "^2.0.10",
         "swr": "^2.0.0",
         "wagmi": "^0.10.8"
     },

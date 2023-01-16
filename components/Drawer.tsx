@@ -1,11 +1,4 @@
-import {
-    UserIcon,
-    UserMinusIcon,
-    UserPlusIcon,
-    ShoppingCartIcon,
-    SunIcon,
-    MoonIcon,
-} from '@heroicons/react/24/solid'
+import { User, UserMinus, UserPlus, Sun, Moon } from 'react-feather'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -58,9 +51,9 @@ export default function Drawer({ showDrawer, setShowDrawer }) {
                         }
                     >
                         {resolvedTheme === 'dark' ? (
-                            <SunIcon className="h-5 w-5" />
+                            <Sun className="h-5 w-5" />
                         ) : (
-                            <MoonIcon className="h-5 w-5" />
+                            <Moon className="h-5 w-5" />
                         )}
                     </button>
                     {isAuthenticated ? (
@@ -71,7 +64,7 @@ export default function Drawer({ showDrawer, setShowDrawer }) {
                                     type="button"
                                     className="flex h-14 w-full items-center justify-center rounded-lg bg-neutral-200 ring-neutral-300 transition-all hover:ring-2 dark:bg-neutral-700"
                                 >
-                                    <UserIcon className="h-5 w-5" />
+                                    <User className="h-5 w-5" />
                                 </button>
                             </Link>
                             <div className="inline-flex w-full items-center justify-center">
@@ -83,7 +76,7 @@ export default function Drawer({ showDrawer, setShowDrawer }) {
                                 className="flex h-14 w-full items-center justify-center rounded-lg bg-neutral-200 ring-neutral-300 transition-all hover:ring-2 dark:bg-neutral-700"
                                 onClick={onLogout}
                             >
-                                <UserMinusIcon className="h-5 w-5" />
+                                <UserMinus className="h-5 w-5" />
                             </button>
                         </>
                     ) : (
@@ -96,7 +89,7 @@ export default function Drawer({ showDrawer, setShowDrawer }) {
                             type="button"
                             className="flex h-14 w-full items-center justify-center rounded-lg bg-neutral-200 ring-neutral-300 transition-all hover:ring-2 dark:bg-neutral-700"
                         >
-                            <UserPlusIcon className="h-5 w-5" />
+                            <UserPlus className="h-5 w-5" />
                         </button>
                     )}
                 </div>
