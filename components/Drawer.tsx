@@ -2,7 +2,7 @@ import { User, UserMinus, UserPlus, Sun, Moon } from 'react-feather'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from 'state/Auth'
 import Toast from 'components/Toast'
 import LoginModal from 'components/modals/LoginModal'
@@ -13,7 +13,8 @@ export default function Drawer({ showDrawer, setShowDrawer }) {
 
     const [toast, setToast] = useState(null)
     const { isAuthenticated, setLocalAuthentication } = useAuth()
-    const [loading, setLoading] = useState(false)
+    const [mounted, setMounted] = useState(false)
+    useEffect(() => setMounted(true), [])
     const [loginModalVisibility, setLoginModalVisibility] = useState(false)
 
     async function onLogout() {
@@ -40,22 +41,12 @@ export default function Drawer({ showDrawer, setShowDrawer }) {
                 onClick={() => setShowDrawer(false)}
             >
                 <div className="top-0 left-0 z-20 flex h-full w-[70vw] flex-col gap-2 border-r border-r-neutral-300 bg-neutral-100/95 p-10 dark:border-r-neutral-700 dark:bg-neutral-900/95">
-                    <button
-                        aria-label="Toggle Dark Mode"
-                        type="button"
-                        className="flex h-14 w-full items-center justify-center rounded-lg border border-neutral-400 bg-neutral-200 ring-neutral-300 transition-all hover:ring-2 dark:border-neutral-500 dark:bg-neutral-700"
-                        onClick={() =>
-                            setTheme(
-                                resolvedTheme === 'dark' ? 'light' : 'dark'
-                            )
-                        }
-                    >
-                        {resolvedTheme === 'dark' ? (
-                            <Sun className="h-5 w-5" />
-                        ) : (
-                            <Moon className="h-5 w-5" />
-                        )}
-                    </button>
+                    {mounted && resolvedTheme && (
+                        <ThemeButton
+                            setTheme={setTheme}
+                            resolvedTheme={resolvedTheme}
+                        />
+                    )}
                     {isAuthenticated ? (
                         <>
                             <Link href="/user">
@@ -95,5 +86,27 @@ export default function Drawer({ showDrawer, setShowDrawer }) {
                 </div>
             </div>
         </>
+    )
+}
+
+function ThemeButton({ setTheme, resolvedTheme }) {
+    return (
+        <button
+            aria-label="Toggle Dark Mode"
+            type="button"
+            className="flex h-12 w-full items-center justify-center rounded-lg bg-[#ffd400] text-black transition-all"
+            onClick={() =>
+                setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
+            }
+        >
+            <div className="mr-4">
+                {resolvedTheme === 'dark' ? (
+                    <Sun className=" h-5 w-5" />
+                ) : (
+                    <Moon className=" h-5 w-5" />
+                )}
+            </div>
+            <h2>Theme</h2>
+        </button>
     )
 }
