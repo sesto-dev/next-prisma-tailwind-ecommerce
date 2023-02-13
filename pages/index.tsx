@@ -70,7 +70,10 @@ function Comparisons({ items }) {
             </h3>
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                 {items.map((item: any) => (
-                    <div className="h-full w-full rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
+                    <div
+                        className="h-full w-full rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800"
+                        key={item.prompt}
+                    >
                         <div className="relative h-96 w-full">
                             <CompareImage
                                 key={item.right}
