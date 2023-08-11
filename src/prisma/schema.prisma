@@ -8,10 +8,13 @@ datasource db {
 }
 
 model User {
-  id                String  @id @default(cuid())
-  credit            Float   @default(0)
-  email             String  @unique
-  name              String?
+  id    String @id @default(cuid())
+  email String @unique
+
+  name     String?
+  birthday String?
+
+  OTP               String?
   referralCode      String? @unique
   MFAMethod         String?
   isMFA             Boolean @default(false)
@@ -22,23 +25,163 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  payments           Payment[]
-  errors    Error[]
-  files     File[]
+  cart Cart?
+
+  orders        Order[]
+  addresses     Address[]
+  payments      Payment[]
+  wishlist      ProductVariant[] @relation("Wishlist")
+  notifications Notification[]
+  reviews       Review[]
+
+  errors Error[]
+  files  File[]
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  title        String
+  description String
+  imageUrl    String?
+
+  categories Category[]
+  variants   ProductVariant[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductVariant {
+  id          String  @id @default(cuid())
+  title        String
+  description String
+  price       Float
+  imageUrl    String?
+  stock       Int
+  reserved    Int
+
+  reviews   Review[]
+  discounts Discount[]
+
+  orderItem OrderItem[]
+  cartItem  CartItem[]
+  wishlists User[]      @relation("Wishlist")
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  products Product[]
+}
+
+model Review {
+  id        String         @id @default(cuid())
+  text      String
+  rating    Int
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  product   ProductVariant @relation(fields: [productId], references: [id])
+  productId String
+  user      User           @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  status      String
+  totalAmount Float
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  user        User        @relation(fields: [userId], references: [id])
+  userId      String
+  items       OrderItem[]
+
+  refund Refund?
+}
+
+model OrderItem {
+  id        String         @id @default(cuid())
+  quantity  Int
+  price     Float
+  product   ProductVariant @relation(fields: [productId], references: [id])
+  productId String
+  order     Order          @relation(fields: [orderId], references: [id])
+  orderId   String
+}
+
+model Cart {
+  id     String     @id @default(cuid())
+  user   User       @relation(fields: [userId], references: [id])
+  userId String     @unique
+  items  CartItem[]
+}
+
+model CartItem {
+  id        String         @id @default(cuid())
+  quantity  Int
+  product   ProductVariant @relation(fields: [productId], references: [id])
+  productId String
+  cart      Cart           @relation(fields: [cartId], references: [id])
+  cartId    String
+}
+
+model Address {
+  id         String @id @default(cuid())
+  street     String
+  city       String
+  state      String
+  postalCode String
+  country    String
+  user       User   @relation(fields: [userId], references: [id])
+  userId     String
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  content   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+model Discount {
+  id          String           @id @default(cuid())
+  code        String           @unique
+  description String
+  percent     Int
+  startDate   DateTime
+  endDate     DateTime
+  products    ProductVariant[]
+}
+
+model Refund {
+  id        String   @id @default(cuid())
+  amount    Float
+  reason    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Order    @relation(fields: [orderId], references: [id])
+  orderId   String   @unique
 }
 
 model Payment {
-  id String @id
+  id String @id @default(cuid())
 
-  payableAmount   Float
+  payableAmount Float
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  user         User      @relation(fields: [userId], references: [id])
-  userId       String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
-
 
 model Error {
   id String @id @default(cuid())

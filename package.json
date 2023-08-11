@@ -2,9 +2,6 @@
     "name": "pasargad",
     "author": "@accretence",
     "license": "MIT",
-    "prisma": {
-        "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
-    },
     "scripts": {
         "dev": "next dev",
         "build": "prisma generate && next build",
@@ -16,7 +13,7 @@
         "db:reset": "npx prisma db push --force-reset",
         "db:push": "npx prisma db push",
         "db:studio": "npx prisma studio",
-        "db:seed": "npm run db:reset && npx prisma db seed"
+        "db:seed": "npx prisma db seed"
     },
     "dependencies": {
         "@prisma/client": "^5.1.1",
@@ -63,5 +60,9 @@
         "tailwindcss": "^3.3.3",
         "ts-node": "^10.9.1",
         "typescript": "^5.1.6"
+    },
+    "prisma": {
+        "schema": "src/prisma/schema.prisma",
+        "seed": "npx ts-node --compiler-options {\"module\":\"CommonJS\"} src/prisma/seed.ts"
     }
 }
