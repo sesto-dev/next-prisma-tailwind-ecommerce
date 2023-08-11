@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String  @id @default(cuid())
+  credit            Float   @default(0)
+  email             String  @unique
+  name              String?
+  referralCode      String? @unique
+  MFAMethod         String?
+  isMFA             Boolean @default(false)
+  isAdmin           Boolean @default(false)
+  isBanned          Boolean @default(false)
+  isEmailSubscribed Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  payments           Payment[]
+  errors    Error[]
+  files     File[]
+}
+
+model Payment {
+  id String @id
+
+  payableAmount   Float
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user         User      @relation(fields: [userId], references: [id])
+  userId       String
+}
+
+
+model Error {
+  id String @id @default(cuid())
+
+  error String
+
+  createdAt DateTime @default(now())
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+}
+
+model File {
+  id String @id @default(cuid())
+
+  url String
+
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
