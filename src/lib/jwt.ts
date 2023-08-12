@@ -1,20 +1,29 @@
-import * as jose from 'jose'
+import jwt from 'jsonwebtoken'
 
-const secret = process.env.JWT_SECRET
-
-export async function signJWT(id) {
-    return await new jose.SignJWT({ id })
-        .setProtectedHeader({ alg: 'HS256' })
-        .setIssuedAt()
-        .setExpirationTime('30d')
-        .sign(new TextEncoder().encode(secret))
+export async function signJWT({ id, secret, expiresIn }) {
+    return jwt.sign(
+        {
+            id,
+        },
+        secret,
+        { expiresIn }
+    )
 }
 
-export async function getJWTPayload(jwt) {
-    const { payload } = await jose.jwtVerify(
-        jwt,
-        new TextEncoder().encode(secret)
-    )
+export async function verifyAndGetJWTPayload({ token, secret }) {
+    return jwt.verify(token, secret)
+}
 
-    return payload
+export async function IdentifyRequest({ req }) {
+    const authHeader = req.headers['authorization']
+
+    const token =
+        authHeader && authHeader.startsWith('Bearer ')
+            ? authHeader.split(' ')[1]
+            : null
+
+    return await verifyAndGetJWTPayload({
+        token,
+        secret: process.env.ACCESS_TOKEN_SECRET,
+    })
 }

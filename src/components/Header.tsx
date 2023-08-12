@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { siteConfig } from 'config/site'
+import Config from 'config/site'
 import { cn } from 'lib/utils'
 import { CommandMenu } from 'components/composites/command'
 import { Icons } from 'components/icons'
@@ -11,7 +11,7 @@ import { ModeToggle } from 'components/composites/mode-toggle'
 
 export default function Header() {
     return (
-        <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
+        <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur mb-4">
             <div className="flex h-14 items-center">
                 <MainNav />
                 <MobileNav />
@@ -21,7 +21,7 @@ export default function Header() {
                     </div>
                     <nav className="flex items-center">
                         <Link
-                            href={siteConfig.links.github}
+                            href={Config.links.github}
                             target="_blank"
                             rel="noreferrer"
                         >
@@ -38,7 +38,7 @@ export default function Header() {
                             </div>
                         </Link>
                         <Link
-                            href={siteConfig.links.twitter}
+                            href={Config.links.twitter}
                             target="_blank"
                             rel="noreferrer"
                         >

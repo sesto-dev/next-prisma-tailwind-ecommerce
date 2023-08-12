@@ -7,11 +7,25 @@ import fetcher from 'lib/fetcher'
 import { ProductsList } from 'lib/types'
 import Image from 'next/image'
 import { ImageSkeleton } from 'components/icons'
-import Config from 'main.config'
+import Config from 'config/site'
 import Meta from 'components/Meta'
+import { Icons } from 'components/icons'
+import { Button } from 'components/ui/button'
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from 'components/ui/card'
+import { Input } from 'components/ui/input'
+import { Label } from 'components/ui/label'
 
 export default function Products({ currentPage, category, tags, sort }) {
-    const { data } = useSWR<ProductsList>(`/api/products/list`, fetcher)
+    const { data } = useSWR(`/api/products/list`, fetcher) as any
+
+    console.log({ data })
 
     const products = data?.products
     const totalPages = data?.totalPages
@@ -24,7 +38,7 @@ export default function Products({ currentPage, category, tags, sort }) {
             <Meta
                 title="Pasargad"
                 description="Home Page"
-                image={Config.image}
+                image={Config.ogImage}
                 canonical={process.env.NEXT_PUBLIC_URL}
             />
             <ProductGrid products={products} />
@@ -34,7 +48,7 @@ export default function Products({ currentPage, category, tags, sort }) {
 
 const ProductGrid = ({ products }) => {
     return (
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
             {products
                 ? products.map((product) => (
                       <Product product={product} key={product.id} />
@@ -49,30 +63,28 @@ const ProductGrid = ({ products }) => {
 const Product = ({ product }) => {
     return (
         <Link className="" href={`/product/${product.id}`}>
-            <div className="h-full w-full rounded-lg bg-white dark:border-neutral-700 dark:bg-neutral-800">
-                <div className="relative h-40 w-full">
-                    <Image
-                        className="rounded-t-lg"
-                        src={product.images[0]['url']}
-                        alt="product image"
-                        fill
-                        style={{ objectFit: 'cover' }}
-                    />
-                </div>
-                <div className="p-5">
-                    <h5 className="text-xl font-medium tracking-tight text-neutral-900 dark:text-white">
-                        {product.title}
-                    </h5>
-                    <div className="mt-5 flex items-center justify-between">
-                        <span className="text-3xl font-bold text-neutral-900 dark:text-white">
-                            ${product.listings[0]['price']}
-                        </span>
-                        <button className="rounded-lg bg-purple-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-black">
-                            Add to cart
-                        </button>
+            <Card>
+                <CardHeader className="p-0">
+                    <div className="relative h-40 w-full">
+                        <Image
+                            className="rounded-t-lg"
+                            src={product.images[0]}
+                            alt="product image"
+                            fill
+                            style={{ objectFit: 'cover' }}
+                        />
                     </div>
-                </div>
-            </div>
+                </CardHeader>
+                <CardContent className="grid gap-4 p-4">
+                    <h2>{product.title}</h2>
+                    <p className="text-sm">{product.description}</p>
+                </CardContent>
+                <CardFooter>
+                    <Button className="w-full">
+                        $ {product.variants[0]['price']}
+                    </Button>
+                </CardFooter>
+            </Card>
         </Link>
     )
 }

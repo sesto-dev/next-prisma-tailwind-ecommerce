@@ -17,6 +17,7 @@
         "incremental": true,
         "paths": {
             "src/": ["src"],
+            "middlewares/*": ["src/middlewares/*"],
             "components/*": ["src/components/*"],
             "styles/*": ["src/styles/*"],
             "config/*": ["src/config/*"],

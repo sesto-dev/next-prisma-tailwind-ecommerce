@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, HomeIcon } from 'components/icons'
 import Meta from 'components/Meta'
-import Config from 'main.config'
 
 export default function Product({ unserialized }) {
     const [product, setProduct] = useState(JSON.parse(unserialized) || null)

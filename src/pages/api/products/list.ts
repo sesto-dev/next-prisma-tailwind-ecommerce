@@ -1,16 +1,18 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
+
 import prisma from 'lib/prisma'
 
-export default async function (req, res) {
-    const take = 5
+export default async function API(req: NextApiRequest, res: NextApiResponse) {
+    try {
+        const products = await prisma.product.findMany({
+            include: { variants: true, categories: true },
+        })
 
-    if (take) {
         return res.status(200).json({
-            take,
+            products,
         })
-    } else {
-        return res.status(400).json({
-            Success: false,
-            Message: 'Internal error.',
-        })
+    } catch (error) {
+        const message = error.message
+        return res.status(400).json({ error, message })
     }
 }

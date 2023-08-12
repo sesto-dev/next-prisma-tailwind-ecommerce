@@ -22,9 +22,6 @@ model User {
   isBanned          Boolean @default(false)
   isEmailSubscribed Boolean @default(false)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
   cart Cart?
 
   orders        Order[]
@@ -33,16 +30,18 @@ model User {
   wishlist      ProductVariant[] @relation("Wishlist")
   notifications Notification[]
   reviews       Review[]
+  errors        Error[]
+  files         File[]
 
-  errors Error[]
-  files  File[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
-  id          String  @id @default(cuid())
-  title        String
+  id          String   @id @default(cuid())
+  title       String
   description String
-  imageUrl    String?
+  images      String[]
 
   categories Category[]
   variants   ProductVariant[]
@@ -52,20 +51,19 @@ model Product {
 }
 
 model ProductVariant {
-  id          String  @id @default(cuid())
-  title        String
+  id          String   @id @default(cuid())
+  title       String
   description String
   price       Float
-  imageUrl    String?
+  images      String[]
   stock       Int
   reserved    Int
 
   reviews   Review[]
   discounts Discount[]
-
-  orderItem OrderItem[]
-  cartItem  CartItem[]
-  wishlists User[]      @relation("Wishlist")
+  orders    Order[]
+  carts     Cart[]
+  wishlists User[]     @relation("Wishlist")
 
   product   Product @relation(fields: [productId], references: [id])
   productId String
@@ -75,60 +73,50 @@ model ProductVariant {
 }
 
 model Category {
-  id       String    @id @default(cuid())
-  name     String    @unique
+  id   String @id @default(cuid())
+  name String @unique
+
   products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Review {
   id        String         @id @default(cuid())
   text      String
   rating    Int
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
   product   ProductVariant @relation(fields: [productId], references: [id])
   productId String
   user      User           @relation(fields: [userId], references: [id])
   userId    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Order {
-  id          String      @id @default(cuid())
+  id          String           @id @default(cuid())
   status      String
   totalAmount Float
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  user        User        @relation(fields: [userId], references: [id])
+  user        User             @relation(fields: [userId], references: [id])
   userId      String
-  items       OrderItem[]
+  items       ProductVariant[]
 
   refund Refund?
-}
 
-model OrderItem {
-  id        String         @id @default(cuid())
-  quantity  Int
-  price     Float
-  product   ProductVariant @relation(fields: [productId], references: [id])
-  productId String
-  order     Order          @relation(fields: [orderId], references: [id])
-  orderId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Cart {
-  id     String     @id @default(cuid())
-  user   User       @relation(fields: [userId], references: [id])
-  userId String     @unique
-  items  CartItem[]
-}
+  id     String           @id @default(cuid())
+  user   User             @relation(fields: [userId], references: [id])
+  userId String           @unique
+  items  ProductVariant[]
 
-model CartItem {
-  id        String         @id @default(cuid())
-  quantity  Int
-  product   ProductVariant @relation(fields: [productId], references: [id])
-  productId String
-  cart      Cart           @relation(fields: [cartId], references: [id])
-  cartId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Address {
@@ -140,15 +128,18 @@ model Address {
   country    String
   user       User   @relation(fields: [userId], references: [id])
   userId     String
+
+  createdAt DateTime @default(now())
 }
 
 model Notification {
-  id        String   @id @default(cuid())
-  content   String
-  read      Boolean  @default(false)
+  id      String  @id @default(cuid())
+  content String
+  read    Boolean @default(false)
+  user    User    @relation(fields: [userId], references: [id])
+  userId  String
+
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
 }
 
 model Discount {
@@ -159,16 +150,19 @@ model Discount {
   startDate   DateTime
   endDate     DateTime
   products    ProductVariant[]
+
+  createdAt DateTime @default(now())
 }
 
 model Refund {
-  id        String   @id @default(cuid())
-  amount    Float
-  reason    String
+  id      String @id @default(cuid())
+  amount  Float
+  reason  String
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String @unique
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  order     Order    @relation(fields: [orderId], references: [id])
-  orderId   String   @unique
 }
 
 model Payment {
@@ -176,11 +170,11 @@ model Payment {
 
   payableAmount Float
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
   user   User   @relation(fields: [userId], references: [id])
   userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Error {

@@ -29,7 +29,7 @@ async function main() {
             data: {
                 title: faker.commerce.product(),
                 description: faker.commerce.productDescription(),
-                imageUrl: faker.image.url(),
+                images: [faker.image.url(), faker.image.url()],
                 categories: {
                     connect: {
                         name: categories[
@@ -42,7 +42,7 @@ async function main() {
                         title: faker.commerce.productName(),
                         description: faker.commerce.productDescription(),
                         price: getRandomIntInRange(0, 100),
-                        imageUrl: faker.image.url(),
+                        images: [faker.image.url(), faker.image.url()],
                         stock: getRandomIntInRange(2, 10),
                         reserved: getRandomIntInRange(0, 1),
                     },

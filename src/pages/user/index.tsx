@@ -3,14 +3,12 @@ import { useEffect, useState } from 'react'
 import prisma from 'lib/prisma'
 import { useRouter } from 'next/router'
 import { useAuth } from 'state/Auth'
-import { getJWTPayload } from 'lib/jwt'
 import { omitUser } from 'lib/omit'
 import { DiscordIcon } from 'components/icons'
-import ConnectModal from 'components/modals/ConnectModal'
 import OrderTable from 'components/tables/OrderTable'
 import { getDiscordURL } from 'lib/discord'
 import Meta from 'components/Meta'
-import Config from 'main.config'
+import Config from 'config/site'
 import { ChevronDown, ChevronUp, DollarSign } from 'react-feather'
 
 export default function User({ auth, omitted }) {
@@ -27,7 +25,7 @@ export default function User({ auth, omitted }) {
             <Meta
                 title="Pasargad"
                 description="Home Page"
-                image={Config.image}
+                image={Config.ogImage}
                 canonical={process.env.NEXT_PUBLIC_URL}
             />
             {userObject && (
@@ -197,10 +195,6 @@ function Integrations({ userObject }) {
 
     return (
         <>
-            <ConnectModal
-                modalVisibility={connectModalVisibility}
-                setModalVisibility={setConnectModalVisibility}
-            />
             <button
                 type="button"
                 className={`flex w-full items-center justify-between ${
@@ -256,36 +250,6 @@ function Logout() {
             <p>Logout</p>
         </button>
     )
-}
-
-export async function getServerSideProps(context) {
-    try {
-        const { AJWT } = context.req.cookies
-
-        const decoded = await getJWTPayload(AJWT)
-
-        const user = await prisma.user.findUnique({
-            where: {
-                id: decoded.id.toString(),
-            },
-            include: {
-                charges: true,
-                referralsProvided: true,
-            },
-        })
-
-        const omitted = omitUser(user)
-
-        return {
-            props: {
-                auth: omitted ? true : false,
-                omitted: JSON.stringify(omitted),
-            },
-        }
-    } catch (error) {
-        console.log({ error })
-        return { props: {} }
-    }
 }
 
 function getActiveButtonStyles() {

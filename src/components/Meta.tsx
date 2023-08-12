@@ -1,7 +1,7 @@
-import Config from 'main.config'
+import Config from 'config/site'
 import { NextSeo } from 'next-seo'
 
-const { siteName, handle } = Config
+const { name, handle } = Config
 
 export default function Meta({ title, description, canonical, image }) {
     return (
@@ -22,7 +22,7 @@ export default function Meta({ title, description, canonical, image }) {
                         type: 'image/jpeg',
                     },
                 ],
-                siteName,
+                siteName: name,
             }}
             twitter={{
                 handle,
