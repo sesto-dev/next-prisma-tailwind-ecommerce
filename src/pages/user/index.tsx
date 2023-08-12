@@ -33,7 +33,6 @@ export default function User({ auth, omitted }) {
                     <UserInfo userObject={userObject} />
                     <Charges userObject={userObject} />
                     <Referrals userObject={userObject} />
-                    <Integrations userObject={userObject} />
                 </div>
             )}
             <Logout />
@@ -129,100 +128,6 @@ function Referrals({ userObject }) {
                 <div className=" border border-neutral-200 p-5 font-light dark:border-neutral-700"></div>
             </div>
         </div>
-    )
-}
-
-function Integrations({ userObject }) {
-    const [visibility, setVisibility] = useState(false)
-    const [connectModalVisibility, setConnectModalVisibility] = useState(false)
-    const { wallet } = userObject
-
-    function DiscordIntegration() {
-        if (userObject.discordId)
-            return (
-                <p className={getDisabledButtonStyles()}>
-                    <DiscordIcon />
-                    <span className="ml-3 flex-1 whitespace-nowrap font-medium">
-                        Discord Integrated
-                    </span>
-                    <span className="ml-3 inline-flex items-center justify-center whitespace-nowrap rounded bg-neutral-200 px-2 py-1 text-xs font-medium text-purple-600 dark:bg-neutral-700 ">
-                        Integrated with Discord
-                    </span>
-                </p>
-            )
-
-        if (!userObject.discordId)
-            return (
-                <a
-                    href={getDiscordURL({ id: userObject['id'] })}
-                    className={getActiveButtonStyles()}
-                >
-                    <DiscordIcon />
-                    <span className="ml-4 flex-1 whitespace-nowrap font-medium">
-                        Integrate your Discord Account
-                    </span>
-                </a>
-            )
-    }
-
-    function WalletIntegration() {
-        if (wallet)
-            return (
-                <button
-                    onClick={() => setConnectModalVisibility(true)}
-                    className={getDisabledButtonStyles()}
-                >
-                    <DollarSign className="h-6 w-5" />
-                    <span className=" ml-3 flex-1 whitespace-nowrap text-left font-medium">
-                        Web3 Wallet Integrated
-                    </span>
-                </button>
-            )
-
-        if (!wallet)
-            return (
-                <button
-                    onClick={() => setConnectModalVisibility(true)}
-                    className={getActiveButtonStyles()}
-                >
-                    <DollarSign className="h-6 w-5" />
-                    <span className="ml-3 flex-1 whitespace-nowrap text-left font-medium">
-                        Integrate your Web3 Wallet
-                    </span>
-                </button>
-            )
-    }
-
-    return (
-        <>
-            <button
-                type="button"
-                className={`flex w-full items-center justify-between ${
-                    !visibility && 'rounded-b-lg'
-                } border border-neutral-200 p-5 text-left text-xl text-black transition-all ease-in-out hover:bg-neutral-100 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700`}
-                onClick={() => setVisibility(!visibility)}
-            >
-                <span className="flex flex-col">
-                    <h1>Integrations</h1>
-                    <small className="text-neutral-300">
-                        Your integrations with third-party services.
-                    </small>
-                </span>
-                {visibility ? (
-                    <ChevronUp className="h-5 w-5" />
-                ) : (
-                    <ChevronDown className="h-5 w-5" />
-                )}
-            </button>
-            <div className={!visibility && 'hidden'}>
-                <div className="rounded-b-lg border border-neutral-200 p-5 font-light dark:border-neutral-700">
-                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                        <DiscordIntegration />
-                        <WalletIntegration />
-                    </div>
-                </div>
-            </div>
-        </>
     )
 }
 

@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useAuth } from 'state/Auth'
 import Toast from 'components/Toast'
-import LoginModal from 'components/modals/LoginModal'
 
 export default function Drawer({ showDrawer, setShowDrawer }) {
     const router = useRouter()
@@ -29,10 +28,6 @@ export default function Drawer({ showDrawer, setShowDrawer }) {
 
     return (
         <>
-            <LoginModal
-                modalVisibility={loginModalVisibility}
-                setModalVisibility={setLoginModalVisibility}
-            />
             {toast && <Toast message={toast} />}
             <div
                 className={`${
