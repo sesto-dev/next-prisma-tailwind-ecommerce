@@ -37,11 +37,24 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Brand {
+  id          String @id @default(cuid())
+  title       String @unique
+  description String
+  logo        String
+
+  products Product[]
+}
+
 model Product {
   id          String   @id @default(cuid())
   title       String
   description String
   images      String[]
+  tags        String[]
+
+  brand   Brand?  @relation(fields: [brandId], references: [id])
+  brandId String?
 
   categories Category[]
   variants   ProductVariant[]

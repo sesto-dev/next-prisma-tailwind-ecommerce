@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { format } from 'date-fns'
-import { VerifiedAccount } from 'components/icons'
+import { VerifiedAccount } from 'components/native/icons'
 
 /**
  * Supports plain text, images, quote tweets.

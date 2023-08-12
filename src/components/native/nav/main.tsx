@@ -6,8 +6,6 @@ import { usePathname } from 'next/navigation'
 
 import Config from 'config/site'
 import { cn } from 'lib/utils'
-import { Icons } from 'components/icons'
-import { Badge } from 'components/ui/badge'
 
 export function MainNav() {
     const pathname = usePathname()

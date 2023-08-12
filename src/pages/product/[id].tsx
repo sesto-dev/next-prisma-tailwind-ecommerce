@@ -2,8 +2,9 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 import Image from 'next/image'
-import { ChevronRight, HomeIcon } from 'components/icons'
-import Meta from 'components/Meta'
+import { ChevronRight, HomeIcon } from 'components/native/icons'
+import Meta from 'components/native/Meta'
+import prisma from 'lib/prisma'
 
 export default function Product({ unserialized }) {
     const [product, setProduct] = useState(JSON.parse(unserialized) || null)
@@ -96,8 +97,15 @@ export async function getServerSideProps(context) {
     const { id } = context.query
 
     try {
+        const product = await prisma.product.findUnique({
+            where: { id },
+            include: {
+                variants: true,
+                categories: true,
+            },
+        })
         return {
-            props: {},
+            props: { unserialized: JSON.stringify(product) },
         }
     } catch (error) {
         return { props: {} }

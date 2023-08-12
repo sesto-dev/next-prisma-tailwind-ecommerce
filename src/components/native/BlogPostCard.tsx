@@ -1,4 +1,4 @@
-import { ImageSkeleton } from 'components/icons'
+import { ImageSkeleton } from 'components/native/icons'
 import Image from 'next/image'
 import Link from 'next/link'
 import { parseISO, format } from 'date-fns'

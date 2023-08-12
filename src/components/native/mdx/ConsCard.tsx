@@ -1,4 +1,4 @@
-import { Checkbox } from 'components/icons'
+import { Checkbox } from 'components/native/icons'
 
 export default function ConsCard({ title, cons }) {
     return (

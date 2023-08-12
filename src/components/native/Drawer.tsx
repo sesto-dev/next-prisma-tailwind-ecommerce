@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useAuth } from 'state/Auth'
-import Toast from 'components/Toast'
+import Toast from 'components/native/Toast'
 
 export default function Drawer({ showDrawer, setShowDrawer }) {
     const router = useRouter()

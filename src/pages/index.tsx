@@ -1,13 +1,21 @@
 import Link from 'next/link'
 
-import { BlogPostCard } from 'components/BlogPostCard'
-import VideoCard from 'components/VideoCard'
+import { BlogPostCard } from 'components/native/BlogPostCard'
+import VideoCard from 'components/native/VideoCard'
+import useSWR from 'swr'
 
-import Meta from 'components/Meta'
+import fetcher from 'lib/fetcher'
+import Meta from 'components/native/Meta'
 import Config from 'config/site'
-import CompareImage from 'components/CompareImage'
+import prisma from 'lib/prisma'
 
-export default function Index({}) {
+import { ProductGrid } from 'components/native/Product'
+
+export default function Index({ unserialized }) {
+    const { data } = useSWR(`/api/products/list`, fetcher) as any
+
+    const products = data?.products
+
     return (
         <div className="flex flex-col border-neutral-200 dark:border-neutral-700">
             <Meta
@@ -16,6 +24,7 @@ export default function Index({}) {
                 image={Config.ogImage}
                 canonical={process.env.NEXT_PUBLIC_URL}
             />
+            <ProductGrid products={products} />
             <h3 className="mb-4 mt-16 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
                 Learn React & Next.js
             </h3>
@@ -60,48 +69,6 @@ export default function Index({}) {
     )
 }
 
-function Comparisons({ items }) {
-    return (
-        <>
-            <h3 className="my-6 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
-                Recent Blog Posts
-            </h3>
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                {items.map((item: any) => (
-                    <div
-                        className="h-full w-full rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800"
-                        key={item.prompt}
-                    >
-                        <div className="relative h-96 w-full">
-                            <CompareImage
-                                key={item.right}
-                                leftImage={item.left}
-                                rightImage={item.right}
-                            />
-                        </div>
-                        <div className="p-5">
-                            <div className="w-full">
-                                <h5 className="mb-3 text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
-                                    Prompt
-                                </h5>
-                                <p className="block text-neutral-700 dark:text-neutral-400">
-                                    {item.prompt}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <Link
-                className="mt-4 flex h-6 rounded-lg leading-7 text-neutral-600 transition-all hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
-                href="/blog"
-            >
-                Read all posts...
-            </Link>
-        </>
-    )
-}
-
 function Blogs({ blogs }) {
     return (
         <>
@@ -123,14 +90,22 @@ function Blogs({ blogs }) {
     )
 }
 
-export async function getStaticProps() {
-    let props
+export async function getServerSideProps(context) {
+    const { id } = context.query
 
     try {
-        props = {}
+        const product = await prisma.product.findMany({
+            take: 6,
+            where: { id },
+            include: {
+                variants: true,
+                categories: true,
+            },
+        })
+        return {
+            props: { unserialized: JSON.stringify(product) },
+        }
     } catch (error) {
-        props = {}
+        return { props: {} }
     }
-
-    return { props }
 }

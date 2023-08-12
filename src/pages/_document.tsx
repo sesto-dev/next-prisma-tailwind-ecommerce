@@ -1,4 +1,4 @@
-import GoogleAnalytics from 'components/GoogleAnalytics'
+import GoogleAnalytics from 'components/native/GoogleAnalytics'
 import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {

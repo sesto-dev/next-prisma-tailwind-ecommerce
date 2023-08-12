@@ -1,5 +1,5 @@
-import Footer from 'components/Footer'
-import Header from 'components/Header'
+import Footer from 'components/native/Footer'
+import Header from 'components/native/Header'
 
 export default function Container({ children }) {
     return (

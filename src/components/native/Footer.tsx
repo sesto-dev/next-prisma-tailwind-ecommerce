@@ -4,7 +4,7 @@ import {
     GithubIcon,
     InstagramIcon,
     TwitterIcon,
-} from 'components/icons'
+} from 'components/native/icons'
 import { getLinkStyles } from 'lib/styles'
 
 export default function Footer() {
@@ -18,7 +18,8 @@ export default function Footer() {
                             Pasargad
                         </h2>
                         <span className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-                            © {new Date().getFullYear()} Pasargad™ . All Rights Reserved.
+                            © {new Date().getFullYear()} Pasargad™ . All
+                            Rights Reserved.
                         </span>
                     </span>
                 </div>
