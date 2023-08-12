@@ -32,6 +32,7 @@ model User {
   reviews       Review[]
   errors        Error[]
   files         File[]
+  blogPost      BlogPost[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -195,10 +196,10 @@ model Error {
 
   error String
 
-  createdAt DateTime @default(now())
-
   user   User?   @relation(fields: [userId], references: [id])
   userId String?
+
+  createdAt DateTime @default(now())
 }
 
 model File {
@@ -206,8 +207,25 @@ model File {
 
   url String
 
-  createdAt DateTime @default(now())
-
   user   User   @relation(fields: [userId], references: [id])
   userId String
+
+  createdAt DateTime @default(now())
+}
+
+model BlogPost {
+  slug        String  @id
+  title       String
+  image       String
+  description String
+  content     String? @db.Text
+
+  categories String[]
+  tags       String[]
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

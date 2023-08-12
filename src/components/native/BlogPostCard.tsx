@@ -2,36 +2,42 @@ import { ImageSkeleton } from 'components/native/icons'
 import Image from 'next/image'
 import Link from 'next/link'
 import { parseISO, format } from 'date-fns'
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from 'components/ui/card'
 
 export function BlogPostCard({ post }) {
     const { title, description, image, slug, createdAt, author } = post
 
     return (
         <Link href={`/blog/${slug}`}>
-            <div className="h-full w-full rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
-                <div className="relative h-40 w-full">
-                    <Image
-                        className="rounded-t-lg"
-                        src={image}
-                        alt="Blog Post Cover"
-                        fill
-                        style={{ objectFit: 'cover' }}
-                    />
-                </div>
-                <div className="p-5">
-                    <div className="w-full">
-                        <h5 className="mb-3 text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
-                            {title}
-                        </h5>
-                        <p className="block text-neutral-700 dark:text-neutral-400">
-                            {author && author.name && (
-                                <span>{author.name}, </span>
-                            )}
-                            {format(parseISO(createdAt), 'MMMM dd, yyyy')}
-                        </p>
+            <Card className="h-full">
+                <CardHeader className="p-0">
+                    <div className="relative h-60 w-full">
+                        <Image
+                            className="rounded-t-lg"
+                            src={image}
+                            alt="product image"
+                            fill
+                            style={{ objectFit: 'cover' }}
+                        />
                     </div>
-                </div>
-            </div>
+                </CardHeader>
+                <CardContent className="grid gap-4 p-4">
+                    <h5 className="">{title}</h5>
+                </CardContent>
+                <CardFooter>
+                    <p className="block text-sm text-neutral-700 dark:text-neutral-400">
+                        {author && author.name && <span>{author.name}, </span>}
+                        {format(parseISO(createdAt), 'MMMM dd, yyyy')}
+                    </p>
+                </CardFooter>
+            </Card>
         </Link>
     )
 }

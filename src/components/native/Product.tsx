@@ -19,15 +19,23 @@ import { Label } from 'components/ui/label'
 
 export const ProductGrid = ({ products }) => {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
-            {products
-                ? products.map((product) => (
-                      <Product product={product} key={product.id} />
-                  ))
-                : [...Array(15)].map(() => (
-                      <ProductSkeleton key={Math.random()} />
-                  ))}
-        </div>
+        <>
+            <h3 className="mb-1 text-xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
+                Products
+            </h3>
+            <p className="mb-4 text-xs text-neutral-500 text-justify">
+                Below is a list of products we have available for you.
+            </p>
+            <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
+                {products
+                    ? products.map((product) => (
+                          <Product product={product} key={product.id} />
+                      ))
+                    : [...Array(15)].map(() => (
+                          <ProductSkeleton key={Math.random()} />
+                      ))}
+            </div>
+        </>
     )
 }
 
