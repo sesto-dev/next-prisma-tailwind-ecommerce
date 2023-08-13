@@ -1,11 +1,10 @@
 import Link from 'next/link'
-import {
-    FacebookIcon,
-    GithubIcon,
-    InstagramIcon,
-    TwitterIcon,
-} from 'components/native/icons'
 import { getLinkStyles } from 'lib/styles'
+import {
+    GitHubLogoIcon,
+    InstagramLogoIcon,
+    TwitterLogoIcon,
+} from '@radix-ui/react-icons'
 
 export default function Footer() {
     return (
@@ -93,21 +92,12 @@ export default function Footer() {
             <hr className="mt-8 border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
             <div className="mt-8 mb-12 flex justify-center space-x-6">
                 <a
-                    href="https://facebook.com/accretence"
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`${getLinkStyles()} + text-neutral-500`}
-                >
-                    <FacebookIcon />
-                    <span className="sr-only">Facebook page</span>
-                </a>
-                <a
                     href="https://instagram.com/accretence"
                     target="_blank"
                     rel="noreferrer"
                     className={`${getLinkStyles()} + text-neutral-500`}
                 >
-                    <InstagramIcon />
+                    <InstagramLogoIcon />
                     <span className="sr-only">Instagram page</span>
                 </a>
                 <a
@@ -116,7 +106,7 @@ export default function Footer() {
                     rel="noreferrer"
                     className={`${getLinkStyles()} + text-neutral-500`}
                 >
-                    <TwitterIcon />
+                    <TwitterLogoIcon />
                     <span className="sr-only">Twitter page</span>
                 </a>
                 <a
@@ -125,7 +115,7 @@ export default function Footer() {
                     rel="noreferrer"
                     className={`${getLinkStyles()} + text-neutral-500`}
                 >
-                    <GithubIcon />
+                    <GitHubLogoIcon className="h-4 w-4" />
                     <span className="sr-only">GitHub account</span>
                 </a>
             </div>

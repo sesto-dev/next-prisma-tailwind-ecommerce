@@ -16,8 +16,7 @@ model User {
 
   OTP               String?
   referralCode      String? @unique
-  MFAMethod         String?
-  isMFA             Boolean @default(false)
+  isVerified        Boolean @default(false)
   isAdmin           Boolean @default(false)
   isBanned          Boolean @default(false)
   isEmailSubscribed Boolean @default(false)

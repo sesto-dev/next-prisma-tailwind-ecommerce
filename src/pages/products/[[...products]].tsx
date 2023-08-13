@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 
-import fetcher from 'lib/fetcher'
+import { fetcher } from 'lib/fetcher'
 import Config from 'config/site'
 import Meta from 'components/native/Meta'
 

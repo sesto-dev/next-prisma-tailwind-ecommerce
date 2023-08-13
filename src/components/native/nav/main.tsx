@@ -13,11 +13,11 @@ export function MainNav() {
     return (
         <div className="hidden md:flex">
             <Link href="/" className="mr-6 flex items-center space-x-2">
-                <span className="hidden font-bold sm:inline-block">
+                <span className="hidden font-medium sm:inline-block">
                     {Config.name}
                 </span>
             </Link>
-            <nav className="flex items-center space-x-6 text-sm font-medium">
+            <nav className="flex items-center space-x-6 text-sm font-light tracking-wider">
                 <Link
                     href="/products"
                     className={cn(

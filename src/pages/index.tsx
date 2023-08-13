@@ -1,15 +1,13 @@
 import Link from 'next/link'
 
 import { BlogPostCard } from 'components/native/BlogPostCard'
-import VideoCard from 'components/native/VideoCard'
-import useSWR from 'swr'
 
-import fetcher from 'lib/fetcher'
 import Meta from 'components/native/Meta'
 import Config from 'config/site'
 import prisma from 'lib/prisma'
 
 import { ProductGrid } from 'components/native/Product'
+import { isVariableValid } from 'lib/utils'
 
 export default function Index({ products, blogs }) {
     return (
@@ -20,9 +18,11 @@ export default function Index({ products, blogs }) {
                 image={Config.ogImage}
                 canonical={process.env.NEXT_PUBLIC_URL}
             />
-            <ProductGrid products={JSON.parse(products)} />
+            {isVariableValid(products) && (
+                <ProductGrid products={JSON.parse(products)} />
+            )}
             <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-            <Blogs blogs={JSON.parse(blogs)} />
+            {isVariableValid(blogs) && <Blogs blogs={JSON.parse(blogs)} />}
         </div>
     )
 }

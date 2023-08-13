@@ -1,10 +1,7 @@
 import Link from 'next/link'
 
-import fetcher from 'lib/fetcher'
 import Image from 'next/image'
 import { ImageSkeleton } from 'components/native/icons'
-import Config from 'config/site'
-import Meta from 'components/native/Meta'
 import { Button } from 'components/ui/button'
 import {
     Card,
@@ -14,8 +11,6 @@ import {
     CardHeader,
     CardTitle,
 } from 'components/ui/card'
-import { Input } from 'components/ui/input'
-import { Label } from 'components/ui/label'
 
 export const ProductGrid = ({ products }) => {
     return (
