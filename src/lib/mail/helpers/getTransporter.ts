@@ -10,25 +10,25 @@ const cipher = process.env.MAIL_SMTP_TLS_CIPHER
 const service = process.env.MAIL_SMTP_SERVICE
 const verbose = process.env.MAIL_SMTP_VERBOSE
 
-export default async function () {
-	const options = {
-		host: host ? host : null,
-		port: port ? port : null,
-		secure: secure ? (secure == 'true' ? true : false) : null,
-		auth: {
-			user: user ? user : null,
-			pass: pass ? pass : null,
-		},
-		tls: {
-			rejectUnauthorized: tls ? (tls == 'true' ? true : false) : null,
-			ciphers: cipher ? cipher : null,
-		},
-		service: service ? service : null,
-	}
+export default async function getTransporter() {
+    const options = {
+        host: host ? host : null,
+        port: port ? port : null,
+        secure: secure ? (secure == 'true' ? true : false) : null,
+        auth: {
+            user: user ? user : null,
+            pass: pass ? pass : null,
+        },
+        tls: {
+            rejectUnauthorized: tls ? (tls == 'true' ? true : false) : null,
+            ciphers: cipher ? cipher : null,
+        },
+        service: service ? service : null,
+    }
 
-	if (verbose && verbose == 'true') {
-		console.log({ options })
-	}
+    if (verbose && verbose == 'true') {
+        console.log({ options })
+    }
 
-	return nodemailer.createTransport(options)
+    return nodemailer.createTransport(options)
 }

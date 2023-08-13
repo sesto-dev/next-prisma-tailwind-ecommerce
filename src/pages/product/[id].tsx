@@ -2,9 +2,10 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 import Image from 'next/image'
-import { ChevronRight, HomeIcon } from 'components/native/icons'
+
 import Meta from 'components/native/Meta'
 import prisma from 'lib/prisma'
+import { ChevronRightIcon, HomeIcon } from '@radix-ui/react-icons'
 
 export default function Product({ unserialized }) {
     const [product, setProduct] = useState(JSON.parse(unserialized) || null)
@@ -71,7 +72,7 @@ const Breadcrumbs = ({ product }) => {
                 </li>
                 <li>
                     <div className="flex items-center">
-                        <ChevronRight />
+                        <ChevronRightIcon />
                         <Link
                             className="ml-1 text-sm font-medium text-neutral-700 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white md:ml-2"
                             href="/products"
@@ -82,7 +83,7 @@ const Breadcrumbs = ({ product }) => {
                 </li>
                 <li aria-current="page">
                     <div className="flex items-center">
-                        <ChevronRight />
+                        <ChevronRightIcon />
                         <span className="ml-1 text-sm font-medium text-neutral-500 dark:text-neutral-400 md:ml-2">
                             {product.title || '---'}
                         </span>

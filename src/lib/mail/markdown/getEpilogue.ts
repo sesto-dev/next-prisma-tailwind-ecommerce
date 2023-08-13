@@ -1,5 +1,5 @@
-export default function ({ unsubscribe_url }) {
-  return `<p>Regards, Oneli.</p>
+export default function getEpilogue({ unsubscribe_url }) {
+    return `<p>Regards, Oneli.</p>
 											</td>
 										</tr>
 									</table>
