@@ -186,6 +186,31 @@ const DataColumn = ({ product }) => {
         }
     }
 
+    function CartButton() {
+        if (fetchingCart)
+            return (
+                <Button disabled>
+                    <Spinner />
+                </Button>
+            )
+
+        if (isVariantInArray(cart)) {
+            return (
+                <Button disabled={variantId == ''} onClick={onRemoveFromCart}>
+                    🛒 Remove from Cart
+                </Button>
+            )
+        }
+
+        if (!isVariantInArray(cart)) {
+            return (
+                <Button disabled={variantId == ''} onClick={onAddToCart}>
+                    🛒 Add to Cart
+                </Button>
+            )
+        }
+    }
+
     return (
         <div className="col-span-2 w-full rounded-lg bg-neutral-100 p-6 dark:bg-neutral-900">
             <h3 className="mb-4 text-xl font-medium text-black dark:text-white">
@@ -213,25 +238,7 @@ const DataColumn = ({ product }) => {
 
             {isVariableValid(cart) && isVariableValid(wishlist) && (
                 <div className="flex gap-2">
-                    {fetchingCart ? (
-                        <Button disabled>
-                            <Spinner />
-                        </Button>
-                    ) : isVariantInArray(cart) ? (
-                        <Button
-                            disabled={variantId == ''}
-                            onClick={onRemoveFromCart}
-                        >
-                            🛒 Remove from Cart
-                        </Button>
-                    ) : (
-                        <Button
-                            disabled={variantId == ''}
-                            onClick={onAddToCart}
-                        >
-                            🛒 Add to Cart
-                        </Button>
-                    )}
+                    <CartButton />
                     {fetchingWishlist ? (
                         <Button disabled>
                             <Spinner />

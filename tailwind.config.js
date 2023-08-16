@@ -3,7 +3,10 @@ const { fontFamily } = require('tailwindcss/defaultTheme')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     darkMode: ['class'],
-    content: ['src/**/*.{ts,tsx}'],
+    content: [
+        'src/**/*.{ts,tsx}',
+        'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
+    ],
     theme: {
         container: {
             center: true,
@@ -74,5 +77,5 @@ module.exports = {
             },
         },
     },
-    plugins: [require('tailwindcss-animate')],
+    plugins: [require('flowbite/plugin'), require('tailwindcss-animate')],
 }

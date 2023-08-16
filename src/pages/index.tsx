@@ -8,6 +8,7 @@ import prisma from 'lib/prisma'
 
 import { ProductGrid } from 'components/native/Product'
 import { isVariableValid } from 'lib/utils'
+import Carousel from 'components/native/Carousel'
 
 export default function Index({ products, blogs }) {
     return (
@@ -18,6 +19,14 @@ export default function Index({ products, blogs }) {
                 image={Config.ogImage}
                 canonical={process.env.NEXT_PUBLIC_URL}
             />
+            <Carousel
+                images={[
+                    'https://i0.wp.com/allhomecinema.com/storage/2020/01/1580026175_review-bang-olufsen-beoplay-a9-wireless-speaker.jpg?fit=1320%2C759&ssl=1',
+                    'https://globaltv.es/wp-content/uploads/2022/10/bang-olufsen-salon.webp',
+                    'https://thevinylfactory.com/wp-content/uploads/2023/06/2.webp',
+                ]}
+            />
+            <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
             {isVariableValid(products) && (
                 <ProductGrid products={JSON.parse(products)} />
             )}
