@@ -3,7 +3,7 @@ import { MainNav } from 'components/native/nav/main'
 import { MobileNav } from 'components/native/nav/mobile'
 import { ModeToggle } from 'components/composites/mode-toggle'
 import LoginDialog from 'components/composites/login-dialog'
-import { useValidAccessToken } from 'src/hooks/useAccessToken'
+import { useValidAccessToken } from 'hooks/useAccessToken'
 import { UserNav } from 'components/native//nav/user'
 
 export default function Header() {

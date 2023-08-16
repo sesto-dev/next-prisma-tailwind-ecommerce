@@ -22,7 +22,6 @@ export function useValidAccessToken() {
 
                     async function fetchData() {
                         if (exp < Math.floor(new Date().getTime() / 1000)) {
-                            console.log('JWT expired')
                             const response = await fetch(`/api/auth/refresh`, {
                                 headers: {
                                     Authorization: `Bearer ${RefreshToken}`,
@@ -44,7 +43,6 @@ export function useValidAccessToken() {
                                 setReturnAccessToken(RefreshedAccessToken)
                             }
                         } else {
-                            console.log('JWT valid')
                             setAuthenticated(true)
                             setReturnAccessToken(AccessToken)
                         }

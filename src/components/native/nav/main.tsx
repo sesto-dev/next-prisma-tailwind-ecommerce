@@ -22,53 +22,23 @@ export function MainNav() {
                     href="/products"
                     className={cn(
                         'transition-colors hover:text-foreground/80',
-                        pathname === '/docs'
-                            ? 'text-foreground'
+                        pathname?.startsWith('/product')
+                            ? 'text-foreground font-semibold'
                             : 'text-foreground/60'
                     )}
                 >
                     Products
                 </Link>
                 <Link
-                    href="/docs/components"
+                    href="/blog"
                     className={cn(
                         'transition-colors hover:text-foreground/80',
-                        pathname?.startsWith('/docs/components')
-                            ? 'text-foreground'
+                        pathname?.startsWith('/blog')
+                            ? 'text-foreground font-semibold'
                             : 'text-foreground/60'
                     )}
                 >
-                    Components
-                </Link>
-                <Link
-                    href="/themes"
-                    className={cn(
-                        'transition-colors hover:text-foreground/80',
-                        pathname?.startsWith('/themes')
-                            ? 'text-foreground'
-                            : 'text-foreground/60'
-                    )}
-                >
-                    Themes
-                </Link>
-                <Link
-                    href="/examples"
-                    className={cn(
-                        'transition-colors hover:text-foreground/80',
-                        pathname?.startsWith('/examples')
-                            ? 'text-foreground'
-                            : 'text-foreground/60'
-                    )}
-                >
-                    Examples
-                </Link>
-                <Link
-                    href={Config.links.github}
-                    className={cn(
-                        'hidden text-foreground/60 transition-colors hover:text-foreground/80 lg:block'
-                    )}
-                >
-                    GitHub
+                    Blog
                 </Link>
             </nav>
         </div>

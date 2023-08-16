@@ -1,3 +1,4 @@
+import Config from 'config/site'
 import sendMail from 'lib/mail/helpers/sendMail'
 
 export default async function sendVerifyMail({
@@ -18,7 +19,7 @@ export default async function sendVerifyMail({
 
 function getBody({ email_verification_code, verify_url }) {
     return `
-		<h4>Hello! Welcome to Oneli!</h4>
+		<h4>Hello! Welcome to ${Config.name}!</h4>
 		<p>
 			There’s one quick step you need to complete before gaining full
 			access to your account. Let’s make sure this is the right address we

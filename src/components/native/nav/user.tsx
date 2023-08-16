@@ -1,4 +1,3 @@
-import { RocketIcon } from '@radix-ui/react-icons'
 import { Avatar, AvatarFallback, AvatarImage } from 'components/ui/avatar'
 import { Button } from 'components/ui/button'
 import {
@@ -29,10 +28,10 @@ export function UserNav() {
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="ghost"
-                    className="relative h-8 w-8 rounded-full"
+                    className="relative h-9 w-9 rounded-full"
                 >
-                    <Avatar className="h-8 w-8">
-                        <AvatarFallback>🧑</AvatarFallback>
+                    <Avatar className="h-9 w-9 border-2">
+                        <AvatarFallback>O</AvatarFallback>
                     </Avatar>
                 </Button>
             </DropdownMenuTrigger>
@@ -49,25 +48,19 @@ export function UserNav() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <Link href="/user">Profile</Link>
-                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        Billing
-                        <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        Settings
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>New Team</DropdownMenuItem>
+                    <Link href="/user">
+                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                    </Link>
+                    <Link href="/cart">
+                        <DropdownMenuItem>Cart</DropdownMenuItem>
+                    </Link>
+                    <Link href="/wishlist">
+                        <DropdownMenuItem>Wishlist</DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuItem>Settings</DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={onLogout}>
-                    Log out
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                </DropdownMenuItem>
+                <DropdownMenuItem onClick={onLogout}>Log out</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )

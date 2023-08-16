@@ -1,3 +1,4 @@
+import Config from 'config/site'
 import getTransporter from 'lib/mail/helpers/getTransporter'
 import getEpilogue from 'lib/mail/markdown/getEpilogue'
 import getPrologue from 'lib/mail/markdown/getPrologue'
@@ -22,7 +23,7 @@ export default async function SendMail({
 
     const mail = await transporter.sendMail({
         from: {
-            name: 'Oneli',
+            name: Config.name,
             address,
         },
         to,

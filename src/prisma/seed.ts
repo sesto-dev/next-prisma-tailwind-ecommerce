@@ -8,6 +8,8 @@ function getRandomIntInRange(min: number, max: number) {
 const prisma = new PrismaClient()
 
 async function main() {
+    let createdProducts = []
+
     const categories = [
         'Electronics',
         'Clothing',
@@ -23,12 +25,14 @@ async function main() {
             title: 'BKID Pipe',
             categories: ['Accessories'],
             tags: ['pipe', 'brushed', 'wood'],
+            price: 69.99,
             images: ['https://lemanoosh.com/app/uploads/bkid-pipe-01.jpg'],
         },
         {
             title: 'Bang and Olufsen Speaker',
             categories: ['Electronics'],
             tags: ['speaker', 'brushed', 'mechanical'],
+            price: 9.99,
             images: [
                 'https://lemanoosh.com/app/uploads/BO_2019_A1_Natural_Brushed_05-768x1156.jpg',
             ],
@@ -37,6 +41,7 @@ async function main() {
             title: 'Audio Technical Turn-table',
             categories: ['Electronics'],
             tags: ['music', 'brushed', 'mechanical'],
+            price: 12.99,
             images: [
                 'https://lemanoosh.com/app/uploads/gerhardt-kellermann-zeitmagazin-10.jpg',
             ],
@@ -45,6 +50,7 @@ async function main() {
             title: 'Monocle Sneakers',
             categories: ['Electronics'],
             tags: ['shoes', 'brushed', 'mechanical'],
+            price: 1.99,
             images: [
                 'https://lemanoosh.com/app/uploads/plp-women-footwear-sneakers-04-07-768x1246.jpg',
             ],
@@ -53,12 +59,14 @@ async function main() {
             title: 'Zone2 Mens Watch',
             categories: ['Electronics'],
             tags: ['shoes', 'brushed', 'mechanical'],
+            price: 129.99,
             images: ['https://lemanoosh.com/app/uploads/0055-768x1023.jpg'],
         },
         {
             title: 'Carl Hauser L1 Phone',
             categories: ['Electronics'],
             tags: ['shoes', 'brushed', 'mechanical'],
+            price: 5.99,
             images: [
                 'https://lemanoosh.com/app/uploads/carl-hauser-0121-768x993.jpg',
             ],
@@ -67,6 +75,7 @@ async function main() {
             title: 'Carl Hauser Scanner',
             categories: ['Electronics'],
             tags: ['shoes', 'brushed', 'mechanical'],
+            price: 22.99,
             images: [
                 'https://lemanoosh.com/app/uploads/carl-hauser-020-768x973.jpg',
             ],
@@ -75,6 +84,7 @@ async function main() {
             title: 'Bright Neon Helmet',
             categories: ['Electronics'],
             tags: ['shoes', 'brushed', 'mechanical'],
+            price: 17.99,
             images: [
                 'https://lemanoosh.com/app/uploads/Orange_white-_Helmet_01.jpg',
             ],
@@ -120,8 +130,10 @@ async function main() {
         })
     }
 
+    console.log('Created Categories...')
+
     for (const product of products) {
-        await prisma.product.create({
+        const createdProduct = await prisma.product.create({
             data: {
                 title: product.title,
                 description: faker.commerce.productDescription(),
@@ -136,7 +148,7 @@ async function main() {
                     create: {
                         title: product.title,
                         description: faker.commerce.productDescription(),
-                        price: getRandomIntInRange(0, 100),
+                        price: product.price,
                         images: product.images,
                         stock: getRandomIntInRange(2, 10),
                         reserved: getRandomIntInRange(0, 1),
@@ -148,6 +160,8 @@ async function main() {
                 variants: true,
             },
         })
+
+        createdProducts.push(createdProduct)
     }
 
     console.log('Created Products...')
@@ -158,6 +172,24 @@ async function main() {
             name: 'Amirhossein Mohammadi',
             blogPost: {
                 create: blogPosts,
+            },
+            wishlist: {
+                create: {
+                    items: {
+                        connect: {
+                            id: createdProducts[0]['variants'][0]['id'],
+                        },
+                    },
+                },
+            },
+            cart: {
+                create: {
+                    items: {
+                        connect: {
+                            id: createdProducts[0]['variants'][0]['id'],
+                        },
+                    },
+                },
             },
         },
     })

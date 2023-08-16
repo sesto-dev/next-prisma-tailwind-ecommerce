@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import Meta from 'components/native/Meta'
 import Config from 'config/site'
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
-import { useValidAccessToken } from 'src/hooks/useAccessToken'
+import { useValidAccessToken } from 'hooks/useAccessToken'
 import { isVariableValid } from 'lib/utils'
 import {
     Table,
@@ -14,10 +14,19 @@ import {
     TableHeader,
     TableRow,
 } from 'components/ui/table'
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from 'components/ui/accordion'
+import { Spinner } from 'components/native/icons'
+import { useRouter } from 'next/navigation'
 
 export default function User({}) {
-    const { AccessToken } = useValidAccessToken()
+    const { Authenticated, AccessToken } = useValidAccessToken()
     const [user, setUser] = useState(null)
+    const router = useRouter()
 
     useEffect(() => {
         async function getUser() {
@@ -31,8 +40,9 @@ export default function User({}) {
             setUser(returnedUser)
         }
 
-        getUser()
-    }, [AccessToken])
+        if (!Authenticated) router.push('/')
+        if (isVariableValid(AccessToken)) getUser()
+    }, [AccessToken, Authenticated, router])
 
     return (
         <>
@@ -42,11 +52,50 @@ export default function User({}) {
                 image={Config.ogImage}
                 canonical={process.env.NEXT_PUBLIC_URL}
             />
-            {isVariableValid(user) && (
-                <div className="rounded-lg bg-neutral-100 dark:bg-neutral-900">
-                    <UserInfo user={user} />
-                    <Payments user={user} />
-                </div>
+            {isVariableValid(user) ? (
+                <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>
+                            <h2 className="text-lg">Wishlist</h2>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            Yes. It adheres to the WAI-ARIA design pattern.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>
+                            <h2 className="text-lg">Orders</h2>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            Yes. It comes with default styles that matches the
+                            other components&apos; aesthetic.
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+            ) : (
+                <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>
+                            <h2 className="text-lg">
+                                <Spinner />
+                            </h2>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            Yes. It adheres to the WAI-ARIA design pattern.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>
+                            <h2 className="text-lg">
+                                <Spinner />
+                            </h2>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            Yes. It comes with default styles that matches the
+                            other components&apos; aesthetic.
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             )}
         </>
     )

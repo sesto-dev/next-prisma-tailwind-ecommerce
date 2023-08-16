@@ -22,11 +22,11 @@ model User {
   isEmailSubscribed Boolean @default(false)
 
   cart Cart?
+  wishlist      Wishlist?
 
   orders        Order[]
   addresses     Address[]
   payments      Payment[]
-  wishlist      ProductVariant[] @relation("Wishlist")
   notifications Notification[]
   reviews       Review[]
   errors        Error[]
@@ -76,7 +76,7 @@ model ProductVariant {
   discounts Discount[]
   orders    Order[]
   carts     Cart[]
-  wishlists User[]     @relation("Wishlist")
+  wishlists Wishlist[]
 
   product   Product @relation(fields: [productId], references: [id])
   productId String
@@ -122,10 +122,18 @@ model Order {
   updatedAt DateTime @updatedAt
 }
 
-model Cart {
-  id     String           @id @default(cuid())
+model Wishlist {
   user   User             @relation(fields: [userId], references: [id])
-  userId String           @unique
+  userId String           @id
+  items  ProductVariant[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  user   User             @relation(fields: [userId], references: [id])
+  userId String           @id
   items  ProductVariant[]
 
   createdAt DateTime @default(now())

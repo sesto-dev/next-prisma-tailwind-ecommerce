@@ -8,12 +8,12 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const { id } = await IdentifyRequest({ req })
 
-        const messages = await prisma.cart.update({
+        const cart = await prisma.cart.findUniqueOrThrow({
             where: { userId: id },
-            data: {},
+            include: { items: true },
         })
 
-        return res.status(200).json({ messages })
+        return res.status(200).json({ cart })
     } catch (error) {
         const message = error.message
         return res.status(400).json({ error, message })

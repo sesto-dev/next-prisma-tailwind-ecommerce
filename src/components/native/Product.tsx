@@ -11,6 +11,7 @@ import {
     CardHeader,
     CardTitle,
 } from 'components/ui/card'
+import { Badge } from 'components/ui/badge'
 
 export const ProductGrid = ({ products }) => {
     return (
@@ -49,16 +50,20 @@ export const Product = ({ product }) => {
                         />
                     </div>
                 </CardHeader>
-                <CardContent className="grid gap-4 p-4">
-                    <h2 className="">{product.title}</h2>
+                <CardContent className="grid gap-1 p-4">
+                    <Badge variant="outline" className="w-min text-neutral-500">
+                        {product['categories'][0]['name']}
+                    </Badge>
+
+                    <h2 className="mt-2">{product.title}</h2>
                     <p className="text-xs text-neutral-500 text-justify">
                         {product.description}
                     </p>
                 </CardContent>
                 <CardFooter>
-                    <Button variant="outline" className="w-full">
-                        $ {product.variants[0]['price'].toPrecision(4)}
-                    </Button>
+                    <h2 className="text-lg">
+                        ${product['variants'][0]['price']}
+                    </h2>
                 </CardFooter>
             </Card>
         </Link>

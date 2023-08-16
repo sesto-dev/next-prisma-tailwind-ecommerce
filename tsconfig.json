@@ -22,6 +22,7 @@
             "styles/*": ["src/styles/*"],
             "config/*": ["src/config/*"],
             "state/*": ["src/state/*"],
+            "hooks/*": ["src/hooks/*"],
             "types/*": ["src/types/*"],
             "lib/*": ["src/lib/*"],
             "ui/*": ["src/ui/*"]

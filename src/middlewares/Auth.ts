@@ -1,21 +1,25 @@
 import { verifyAndGetJWTPayload } from 'lib/jwt'
+import { isVariableValid } from 'lib/utils'
 
 const Auth = (handler) => async (req, res) => {
-    const authHeader = req.headers['authorization']
+    const header = req.headers['authorization']
+
+    if (!isVariableValid(header))
+        return res.status(401).json({ error: 'Unauthorized' })
 
     const token =
-        authHeader && authHeader.startsWith('Bearer ')
-            ? authHeader.split(' ')[1]
-            : null
+        header && header.startsWith('Bearer ') ? header.split(' ')[1] : null
 
-    if (!token) return res.status(401).json({ error: 'Unauthorized' })
+    if (!isVariableValid(token))
+        return res.status(401).json({ error: 'Unauthorized' })
 
-    const decodedToken = await verifyAndGetJWTPayload({
+    const decoded = await verifyAndGetJWTPayload({
         token,
         secret: process.env.ACCESS_TOKEN_SECRET,
     })
 
-    if (!decodedToken) return res.status(401).json({ error: 'Invalid token' })
+    if (!isVariableValid(decoded))
+        return res.status(401).json({ error: 'Invalid token' })
 
     return handler(req, res)
 }
