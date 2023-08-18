@@ -5,6 +5,7 @@ import {
     InstagramLogoIcon,
     TwitterLogoIcon,
 } from '@radix-ui/react-icons'
+import Config from 'config/site'
 
 export default function Footer() {
     return (
@@ -14,10 +15,10 @@ export default function Footer() {
                 <div className="mb-6 hidden md:mb-0 md:block">
                     <span className="flex flex-col">
                         <h2 className="whitespace-nowrap text-sm font-semibold uppercase text-black dark:text-white">
-                            Pasargad
+                            {Config.name}
                         </h2>
                         <span className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-                            © {new Date().getFullYear()} Pasargad™ . All
+                            © {new Date().getFullYear()} {Config.name}™ . All
                             Rights Reserved.
                         </span>
                     </span>
@@ -89,8 +90,8 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-            <hr className="mt-8 border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
-            <div className="mt-8 mb-12 flex justify-center space-x-6">
+            <hr className="my-8 border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
+            <div className="mb-12 flex justify-center space-x-6">
                 <a
                     href="https://instagram.com/accretence"
                     target="_blank"

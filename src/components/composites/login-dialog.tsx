@@ -1,3 +1,4 @@
+import { EnterIcon } from '@radix-ui/react-icons'
 import { Icons, Spinner } from 'components/native/icons'
 import { Button } from 'components/ui/button'
 import {
@@ -61,7 +62,7 @@ export default function LoginDialog() {
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant="outline" className="font-thin tracking-wider">
-                    Login
+                    <EnterIcon /> Login
                 </Button>
             </DialogTrigger>
             {usingOTP ? (

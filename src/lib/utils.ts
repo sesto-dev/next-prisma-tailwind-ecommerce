@@ -21,15 +21,3 @@ export function absoluteUrl(path: string) {
 export function isVariableValid(variable) {
     return variable !== null && variable !== undefined
 }
-
-export function countObjectsWithIdMatch(arrayOfObjects, variantid) {
-    const count = arrayOfObjects.reduce((accumulator, currentObject) => {
-        if (currentObject['variant']['id'] === variantid) {
-            return accumulator + 1
-        }
-        return accumulator
-    }, 0)
-
-    console.log({ count })
-    return count
-}

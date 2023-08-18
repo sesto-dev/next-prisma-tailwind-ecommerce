@@ -1,3 +1,12 @@
+import {
+    ArchiveIcon,
+    ExitIcon,
+    GearIcon,
+    HeartIcon,
+    LockClosedIcon,
+    PersonIcon,
+} from '@radix-ui/react-icons'
+import { ModeToggle } from 'components/composites/mode-toggle'
 import { Avatar, AvatarFallback, AvatarImage } from 'components/ui/avatar'
 import { Button } from 'components/ui/button'
 import {
@@ -26,41 +35,48 @@ export function UserNav() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button
-                    variant="ghost"
-                    className="relative h-9 w-9 rounded-full"
-                >
-                    <Avatar className="h-9 w-9 border-2">
-                        <AvatarFallback>O</AvatarFallback>
-                    </Avatar>
+                <Button size="icon" variant="outline" className="h-9">
+                    <PersonIcon />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                            shadcn
-                        </p>
+                        <p className="text-sm font-medium leading-none">User</p>
                         <p className="text-xs leading-none text-muted-foreground">
-                            m@example.com
+                            User profile.
                         </p>
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <Link href="/user">
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <PersonIcon className="h-4 mr-2" />
+                            Profile
+                        </DropdownMenuItem>
                     </Link>
                     <Link href="/cart">
-                        <DropdownMenuItem>Cart</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <LockClosedIcon className="h-4 mr-2" /> Cart
+                        </DropdownMenuItem>
                     </Link>
                     <Link href="/wishlist">
-                        <DropdownMenuItem>Wishlist</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <HeartIcon className="h-4 mr-2" /> Wishlist
+                        </DropdownMenuItem>
                     </Link>
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <GearIcon className="h-4 mr-2" /> Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <ModeToggle />
+                    </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={onLogout}>Log out</DropdownMenuItem>
+                <DropdownMenuItem onClick={onLogout}>
+                    <ExitIcon className="h-4 mr-2" /> Logout
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )

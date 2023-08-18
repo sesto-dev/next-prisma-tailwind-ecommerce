@@ -15,26 +15,16 @@ import { Badge } from 'components/ui/badge'
 
 export const CartGrid = ({ items }) => {
     return (
-        <>
-            <h3 className="mb-1 text-xl font-bold tracking-tight md:text-4xl">
-                Cart
-            </h3>
-            <p className="mb-4 text-xs text-neutral-500 text-justify">
-                Below is a list of products you have in your cart.
-            </p>
-            <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div className="md:col-span-2">
-                    {items
-                        ? items.map((item) => (
-                              <Variant item={item} key={item.id} />
-                          ))
-                        : [...Array(15)].map(() => (
-                              <ProductSkeleton key={Math.random()} />
-                          ))}
-                </div>
-                <Receipt />
+        <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="md:col-span-2">
+                {items
+                    ? items.map((item) => <Variant item={item} key={item.id} />)
+                    : [...Array(5)].map(() => (
+                          <ProductSkeleton key={Math.random()} />
+                      ))}
             </div>
-        </>
+            <Receipt />
+        </div>
     )
 }
 
@@ -50,7 +40,11 @@ function Receipt() {
                     <h3>$19.99 </h3>
                 </div>
             </CardContent>
-            <CardFooter></CardFooter>
+            <hr className="my-4 w-[80%] border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
+
+            <CardFooter>
+                <Button className="w-full">Proceed</Button>
+            </CardFooter>
         </Card>
     )
 }
@@ -90,7 +84,7 @@ export const Variant = ({ item }) => {
 export function ProductSkeleton() {
     return (
         <Link href="#">
-            <div className="animate-pulse rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
+            <div className="animate-pulse rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800 mb-4">
                 <div className="relative h-full w-full">
                     <div className="flex h-40 w-full items-center justify-center rounded bg-neutral-300 dark:bg-neutral-700 ">
                         <ImageSkeleton />

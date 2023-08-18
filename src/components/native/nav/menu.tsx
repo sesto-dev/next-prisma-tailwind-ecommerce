@@ -60,7 +60,7 @@ export function NavigationMenuDemo() {
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>
                         <div className="font-normal text-foreground/70">
-                            Getting started
+                            Products
                         </div>
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>

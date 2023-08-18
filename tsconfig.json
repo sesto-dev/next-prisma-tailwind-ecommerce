@@ -24,6 +24,7 @@
             "state/*": ["src/state/*"],
             "hooks/*": ["src/hooks/*"],
             "types/*": ["src/types/*"],
+            "nav/*": ["src/components/native/nav/*"],
             "lib/*": ["src/lib/*"],
             "ui/*": ["src/ui/*"]
         }

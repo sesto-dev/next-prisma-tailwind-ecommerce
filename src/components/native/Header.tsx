@@ -1,10 +1,12 @@
 import { CommandMenu } from 'components/composites/command'
-import { MainNav } from 'components/native/nav/main'
-import { MobileNav } from 'components/native/nav/mobile'
-import { ModeToggle } from 'components/composites/mode-toggle'
+import { MainNav } from 'nav/main'
+import { MobileNav } from 'nav/mobile'
 import LoginDialog from 'components/composites/login-dialog'
 import { useValidAccessToken } from 'hooks/useAccessToken'
-import { UserNav } from 'components/native//nav/user'
+import { UserNav } from 'nav/user'
+import { Button } from 'components/ui/button'
+import { LockClosedIcon } from '@radix-ui/react-icons'
+import { CartNav } from 'nav/cart'
 
 export default function Header() {
     const { Authenticated, AccessToken } = useValidAccessToken()
@@ -14,12 +16,18 @@ export default function Header() {
             <div className="flex h-14 items-center">
                 <MainNav />
                 <MobileNav />
-                <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-                    <div className="flex-1 w-auto md:flex-none">
+                <div className="flex flex-1 items-center space-x-2 justify-end">
+                    <div className="flex-none">
                         <CommandMenu />
                     </div>
-                    {Authenticated ? <UserNav /> : <LoginDialog />}
-                    <ModeToggle />
+                    {Authenticated ? (
+                        <>
+                            <CartNav />
+                            <UserNav />
+                        </>
+                    ) : (
+                        <LoginDialog />
+                    )}
                 </div>
             </div>
         </header>
