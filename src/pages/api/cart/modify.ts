@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'lib/prisma'
 import { IdentifyRequest } from 'lib/jwt'
 import Auth from 'middlewares/Auth'
+import { isVariableValid } from 'lib/utils'
 
 export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -10,42 +11,81 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
         const { variantId } = JSON.parse(req.body)
 
         if (req.method == 'DELETE') {
-            const cart = await prisma.cart.update({
+            await prisma.cartItem.delete({
+                where: { UniqueCartItem: { cartId: id, variantId } },
+            })
+        }
+
+        if (req.method == 'PATCH') {
+            await prisma.cartItem.update({
                 where: {
-                    userId: id,
-                },
-                data: {
-                    items: {
-                        disconnect: {
-                            id: variantId,
-                        },
+                    UniqueCartItem: {
+                        cartId: id,
+                        variantId,
                     },
                 },
-                include: { items: true },
+                data: {
+                    count: { decrement: 1 },
+                },
             })
-
-            return res.status(200).json({ cart })
         }
 
         if (req.method == 'POST') {
-            const cart = await prisma.cart.update({
+            await prisma.cart.upsert({
                 where: {
                     userId: id,
                 },
-                data: {
-                    items: {
+                create: {
+                    user: {
                         connect: {
-                            id: variantId,
+                            id,
                         },
                     },
                 },
-                include: { items: true },
+                update: {
+                    items: {
+                        connectOrCreate: {
+                            where: {
+                                UniqueCartItem: {
+                                    variantId,
+                                    cartId: id,
+                                },
+                            },
+                            create: {
+                                variantId,
+                                count: 1,
+                            },
+                        },
+                    },
+                },
             })
-
-            return res.status(200).json({ cart })
         }
+
+        if (req.method == 'PUT') {
+            await prisma.cartItem.update({
+                where: {
+                    UniqueCartItem: {
+                        cartId: id,
+                        variantId,
+                    },
+                },
+                data: {
+                    count: { increment: 1 },
+                },
+            })
+        }
+
+        const cart = await prisma.cart.findUniqueOrThrow({
+            where: {
+                userId: id,
+            },
+            include: { items: { include: { variant: true } } },
+        })
+
+        return res.status(200).json({ cart })
     } catch (error) {
         const message = error.message
+        console.error({ error, message })
         return res.status(400).json({ error, message })
     }
 })

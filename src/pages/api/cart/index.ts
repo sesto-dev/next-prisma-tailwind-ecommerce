@@ -10,7 +10,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
 
         const cart = await prisma.cart.findUniqueOrThrow({
             where: { userId: id },
-            include: { items: true },
+            include: { items: { include: { variant: true } } },
         })
 
         return res.status(200).json({ cart })

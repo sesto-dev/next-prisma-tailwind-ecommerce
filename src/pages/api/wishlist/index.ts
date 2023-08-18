@@ -13,8 +13,6 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             include: { items: true },
         })
 
-        console.log({ wishlist })
-
         return res.status(200).json({ wishlist })
     } catch (error) {
         const message = error.message

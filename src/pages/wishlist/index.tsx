@@ -10,7 +10,7 @@ import { CartGrid } from 'components/native/Cart'
 
 export default function User({}) {
     const { Authenticated, AccessToken } = useValidAccessToken()
-    const [variants, setVariants] = useState(null)
+    const [items, setItems] = useState(null)
     const router = useRouter()
 
     // useEffect(() => {
@@ -20,8 +20,6 @@ export default function User({}) {
     useEffect(() => {
         async function getWishlist() {
             try {
-                console.log('Calling Wishlist API')
-
                 const answer = await fetch(`/api/wishlist`, {
                     headers: {
                         Authorization: `Bearer ${AccessToken}`,
@@ -32,7 +30,7 @@ export default function User({}) {
                     wishlist: { items },
                 } = await answer.json()
 
-                setVariants(items)
+                setItems(items)
             } catch (error) {
                 console.error({ error })
             }
@@ -49,7 +47,7 @@ export default function User({}) {
                 image={Config.ogImage}
                 canonical={process.env.NEXT_PUBLIC_URL}
             />
-            <CartGrid variants={variants} />
+            <CartGrid items={items} />
         </>
     )
 }

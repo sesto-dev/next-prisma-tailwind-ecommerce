@@ -13,7 +13,7 @@ import {
 } from 'components/ui/card'
 import { Badge } from 'components/ui/badge'
 
-export const CartGrid = ({ variants }) => {
+export const CartGrid = ({ items }) => {
     return (
         <>
             <h3 className="mb-1 text-xl font-bold tracking-tight md:text-4xl">
@@ -24,9 +24,9 @@ export const CartGrid = ({ variants }) => {
             </p>
             <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="md:col-span-2">
-                    {variants
-                        ? variants.map((variant) => (
-                              <Variant variant={variant} key={variant.id} />
+                    {items
+                        ? items.map((item) => (
+                              <Variant item={item} key={item.id} />
                           ))
                         : [...Array(15)].map(() => (
                               <ProductSkeleton key={Math.random()} />
@@ -55,31 +55,31 @@ function Receipt() {
     )
 }
 
-export const Variant = ({ variant }) => {
+export const Variant = ({ item }) => {
     return (
-        <Link className="" href={`/product/${variant.productId}`}>
+        <Link className="" href={`/product/${item.productId}`}>
             <Card className="">
                 <CardContent className="grid grid-cols-6 gap-4 p-3">
                     <div className="relative w-full col-span-1">
                         <Image
                             className="rounded-lg"
-                            src={variant.images[0]}
-                            alt="variant image"
+                            src={item['variant']['images'][0]}
+                            alt="item image"
                             fill
                             style={{ objectFit: 'cover' }}
                         />
                     </div>
                     <div className="col-span-5">
                         <div className="flex flex-1 items-center justify-between">
-                            <h2>{variant.title}</h2>
+                            <h2>{item.title}</h2>
                             <Button size="icon" variant="outline">
                                 <CloseIcon />
                             </Button>
                         </div>
                         <p className="my-2 text-xs text-neutral-500 text-justify w-2/3">
-                            {variant.description}
+                            {item.description}
                         </p>
-                        <h2 className="text-lg">${variant['price']}</h2>
+                        <h2 className="text-lg">${item['price']}</h2>
                     </div>
                 </CardContent>
             </Card>

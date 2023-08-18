@@ -21,8 +21,8 @@ model User {
   isBanned          Boolean @default(false)
   isEmailSubscribed Boolean @default(false)
 
-  cart Cart?
-  wishlist      Wishlist?
+  cart     Cart?
+  wishlist Wishlist?
 
   orders        Order[]
   addresses     Address[]
@@ -75,7 +75,7 @@ model ProductVariant {
   reviews   Review[]
   discounts Discount[]
   orders    Order[]
-  carts     Cart[]
+  cartItems CartItem[]
   wishlists Wishlist[]
 
   product   Product @relation(fields: [productId], references: [id])
@@ -132,12 +132,22 @@ model Wishlist {
 }
 
 model Cart {
-  user   User             @relation(fields: [userId], references: [id])
-  userId String           @id
-  items  ProductVariant[]
+  user   User       @relation(fields: [userId], references: [id])
+  userId String     @id
+  items  CartItem[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+  cart      Cart           @relation(fields: [cartId], references: [userId])
+  cartId    String
+  variant   ProductVariant @relation(fields: [variantId], references: [id])
+  variantId String
+  count     Int
+
+  @@unique([cartId, variantId], name: "UniqueCartItem")
 }
 
 model Address {

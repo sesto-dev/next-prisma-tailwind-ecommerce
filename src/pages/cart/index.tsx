@@ -26,7 +26,7 @@ import { CartGrid } from 'components/native/Cart'
 
 export default function User({}) {
     const { Authenticated, AccessToken } = useValidAccessToken()
-    const [variants, setVariants] = useState(null)
+    const [items, setItems] = useState(null)
     const router = useRouter()
 
     // useEffect(() => {
@@ -42,11 +42,9 @@ export default function User({}) {
                     },
                 })
 
-                const {
-                    cart: { items },
-                } = await answer.json()
-
-                setVariants(items)
+                const json = await answer.json()
+                console.log({ json })
+                setItems(json?.cart?.items)
             } catch (error) {}
         }
 
@@ -61,7 +59,7 @@ export default function User({}) {
                 image={Config.ogImage}
                 canonical={process.env.NEXT_PUBLIC_URL}
             />
-            <CartGrid variants={variants} />
+            <CartGrid items={items} />
         </>
     )
 }

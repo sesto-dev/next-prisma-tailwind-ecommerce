@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 
 import Config from 'config/site'
 import { cn } from 'lib/utils'
+import { NavigationMenuDemo } from 'components/native/nav/menu'
 
 export function MainNav() {
     const pathname = usePathname()
@@ -17,30 +18,7 @@ export function MainNav() {
                     {Config.name}
                 </span>
             </Link>
-            <nav className="flex items-center space-x-6 text-sm font-light tracking-wider">
-                <Link
-                    href="/products"
-                    className={cn(
-                        'transition-colors hover:text-foreground/80',
-                        pathname?.startsWith('/product')
-                            ? 'text-foreground font-semibold'
-                            : 'text-foreground/60'
-                    )}
-                >
-                    Products
-                </Link>
-                <Link
-                    href="/blog"
-                    className={cn(
-                        'transition-colors hover:text-foreground/80',
-                        pathname?.startsWith('/blog')
-                            ? 'text-foreground font-semibold'
-                            : 'text-foreground/60'
-                    )}
-                >
-                    Blog
-                </Link>
-            </nav>
+            <NavigationMenuDemo />
         </div>
     )
 }

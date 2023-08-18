@@ -5,7 +5,14 @@ import Image from 'next/image'
 
 import Meta from 'components/native/Meta'
 import prisma from 'lib/prisma'
-import { ChevronRightIcon, HomeIcon } from '@radix-ui/react-icons'
+import {
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    Cross2Icon,
+    HomeIcon,
+    MinusIcon,
+    PlusIcon,
+} from '@radix-ui/react-icons'
 import { Button } from 'components/ui/button'
 import { useValidAccessToken } from 'hooks/useAccessToken'
 import {
@@ -16,18 +23,22 @@ import {
     SelectValue,
 } from 'components/ui/select'
 import { isVariableValid } from 'lib/utils'
-import { Spinner } from 'components/native/icons'
+import { CloseIcon, Spinner } from 'components/native/icons'
 
 export default function Product({ unserialized }) {
-    const [product, setProduct] = useState(JSON.parse(unserialized) || null)
+    const [product, setProduct] = useState(null)
+
+    useEffect(() => {
+        if (unserialized) setProduct(JSON.parse(unserialized))
+    }, [unserialized])
 
     return (
         <>
             {isVariableValid(product) && (
                 <>
                     <Meta
-                        title={product.title || 'Product'}
-                        description={product.description || 'Product Page'}
+                        title={product.title}
+                        description={product.description}
                         image={product.images[0]}
                         canonical={process.env.NEXT_PUBLIC_URL}
                     />
@@ -89,13 +100,35 @@ const DataColumn = ({ product }) => {
         if (isVariableValid(AccessToken)) getWishlist()
     }, [AccessToken])
 
-    function isVariantInArray(array) {
-        for (let i = 0; i < array.length; i++) {
-            if (array[i].id === variantId) {
+    useEffect(() => {
+        console.log({ cart })
+    }, [cart])
+
+    function isVariantInWishlist() {
+        for (let i = 0; i < wishlist.length; i++) {
+            if (wishlist[i]['id'] === variantId) {
                 return true
             }
         }
         return false
+    }
+
+    function isVariantInCart() {
+        for (let i = 0; i < cart.length; i++) {
+            if (cart[i]['variant']['id'] === variantId) {
+                return true
+            }
+        }
+        return false
+    }
+
+    function getCountInCart() {
+        for (let i = 0; i < cart.length; i++) {
+            if (cart[i]['variant']['id'] === variantId) {
+                return cart[i]['count']
+            }
+        }
+        return 0
     }
 
     async function onAddToCart() {
@@ -103,7 +136,7 @@ const DataColumn = ({ product }) => {
             setFetchingCart(true)
 
             const response = await fetch(`/api/cart/modify`, {
-                method: 'POST',
+                method: getCountInCart() > 0 ? 'PUT' : 'POST',
                 body: JSON.stringify({ variantId }),
                 headers: {
                     Authorization: `Bearer ${AccessToken}`,
@@ -111,6 +144,8 @@ const DataColumn = ({ product }) => {
             })
 
             const json = await response.json()
+
+            console.log({ json })
 
             setCart(json?.cart?.items)
             setFetchingCart(false)
@@ -124,7 +159,7 @@ const DataColumn = ({ product }) => {
             setFetchingCart(true)
 
             const response = await fetch(`/api/cart/modify`, {
-                method: 'DELETE',
+                method: getCountInCart() > 1 ? 'PATCH' : 'DELETE',
                 body: JSON.stringify({ variantId }),
                 headers: {
                     Authorization: `Bearer ${AccessToken}`,
@@ -194,18 +229,69 @@ const DataColumn = ({ product }) => {
                 </Button>
             )
 
-        if (isVariantInArray(cart)) {
+        if (!isVariantInCart()) {
             return (
-                <Button disabled={variantId == ''} onClick={onRemoveFromCart}>
-                    🛒 Remove from Cart
+                <Button disabled={variantId == ''} onClick={onAddToCart}>
+                    🛒 Add to Cart
                 </Button>
             )
         }
 
-        if (!isVariantInArray(cart)) {
+        if (isVariantInCart()) {
             return (
-                <Button disabled={variantId == ''} onClick={onAddToCart}>
-                    🛒 Add to Cart
+                <>
+                    <Button
+                        disabled={variantId == ''}
+                        variant="outline"
+                        size="icon"
+                        onClick={onRemoveFromCart}
+                    >
+                        {getCountInCart() == 1 ? (
+                            <Cross2Icon className="h-4 w-4" />
+                        ) : (
+                            <MinusIcon className="h-4 w-4" />
+                        )}
+                    </Button>
+
+                    <Button disabled variant="outline" size="icon">
+                        {getCountInCart()}
+                    </Button>
+                    <Button
+                        disabled={variantId == ''}
+                        variant="outline"
+                        size="icon"
+                        onClick={onAddToCart}
+                    >
+                        <PlusIcon className="h-4 w-4" />
+                    </Button>
+                </>
+            )
+        }
+    }
+
+    function WishlistButton() {
+        if (fetchingWishlist)
+            return (
+                <Button disabled>
+                    <Spinner />
+                </Button>
+            )
+
+        if (!isVariantInWishlist()) {
+            return (
+                <Button disabled={variantId == ''} onClick={onAddToWishlist}>
+                    🛒 Add to Wishlist
+                </Button>
+            )
+        }
+
+        if (isVariantInWishlist()) {
+            return (
+                <Button
+                    disabled={variantId == ''}
+                    onClick={onRemoveFromWishlist}
+                >
+                    🛒 Remove from Wishlist
                 </Button>
             )
         }
@@ -224,7 +310,7 @@ const DataColumn = ({ product }) => {
                 Select an option
             </label>
             <Select onValueChange={(e) => setVariantId(e)}>
-                <SelectTrigger className="w-[50%] my-3">
+                <SelectTrigger className="w-full md:w-[50%] my-3">
                     <SelectValue placeholder="Theme" />
                 </SelectTrigger>
                 <SelectContent>
@@ -239,25 +325,7 @@ const DataColumn = ({ product }) => {
             {isVariableValid(cart) && isVariableValid(wishlist) && (
                 <div className="flex gap-2">
                     <CartButton />
-                    {fetchingWishlist ? (
-                        <Button disabled>
-                            <Spinner />
-                        </Button>
-                    ) : isVariantInArray(wishlist) ? (
-                        <Button
-                            disabled={variantId == ''}
-                            onClick={onRemoveFromWishlist}
-                        >
-                            🤍 Remove from Wishlist
-                        </Button>
-                    ) : (
-                        <Button
-                            disabled={variantId == ''}
-                            onClick={onAddToWishlist}
-                        >
-                            🤍 Add to Wishlist
-                        </Button>
-                    )}
+                    <WishlistButton />
                 </div>
             )}
         </div>
@@ -266,7 +334,7 @@ const DataColumn = ({ product }) => {
 
 const ImageColumn = ({ product }) => {
     return (
-        <div className="relative w-full col-span-1">
+        <div className="relative min-h-[50vh] w-full col-span-1">
             <Image
                 src={product['variants'][0]['images'][0]}
                 alt="Product Image"
@@ -329,6 +397,7 @@ export async function getServerSideProps(context) {
             props: { unserialized: JSON.stringify(product) },
         }
     } catch (error) {
+        console.error({ error })
         return { props: {} }
     }
 }

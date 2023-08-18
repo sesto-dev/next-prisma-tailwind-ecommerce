@@ -182,15 +182,6 @@ async function main() {
                     },
                 },
             },
-            cart: {
-                create: {
-                    items: {
-                        connect: {
-                            id: createdProducts[0]['variants'][0]['id'],
-                        },
-                    },
-                },
-            },
         },
     })
 
