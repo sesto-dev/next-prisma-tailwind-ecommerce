@@ -2,25 +2,9 @@ import { useEffect, useState } from 'react'
 
 import Meta from 'components/native/Meta'
 import Config from 'config/site'
-import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import { useValidAccessToken } from 'hooks/useAccessToken'
 import { isVariableValid } from 'lib/utils'
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from 'components/ui/table'
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from 'components/ui/accordion'
-import { Spinner } from 'components/native/icons'
+
 import { useRouter } from 'next/navigation'
 import { CartGrid } from 'components/native/Cart'
 
@@ -29,9 +13,9 @@ export default function User({}) {
     const [items, setItems] = useState(null)
     const router = useRouter()
 
-    // useEffect(() => {
-    //     if (!Authenticated) router.push('/')
-    // }, [])
+    useEffect(() => {
+        if (!Authenticated) router.push('/')
+    }, [])
 
     useEffect(() => {
         async function getUser() {

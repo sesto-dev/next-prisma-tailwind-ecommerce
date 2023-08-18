@@ -44,6 +44,7 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
         }
     } catch (error) {
         const message = error.message
+        console.error({ error, message })
         return res.status(400).json({ error, message })
     }
 }

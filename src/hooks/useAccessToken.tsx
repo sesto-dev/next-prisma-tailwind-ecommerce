@@ -1,50 +1,47 @@
 import jwt from 'jsonwebtoken'
-import { useEffect, useState } from 'react'
+import { isVariableValid } from 'lib/utils'
+import { useEffect, useState, useRef } from 'react'
 
 export function useValidAccessToken() {
-    const [returnAccessToken, setReturnAccessToken] = useState(null)
-    const [Authenticated, setAuthenticated] = useState(false)
-    let AccessToken: string, RefreshToken: string
+    const Authenticated = useRef(false)
+    const AccessToken = useRef(null)
+    const RefreshToken = useRef(null)
 
     useEffect(() => {
         try {
             if (typeof window !== 'undefined' && window.localStorage) {
-                AccessToken = window.localStorage.getItem('AccessToken')
-                RefreshToken = window.localStorage.getItem('RefreshToken')
+                AccessToken.current = window.localStorage.getItem('AccessToken')
+                RefreshToken.current =
+                    window.localStorage.getItem('RefreshToken')
 
                 if (
-                    AccessToken &&
-                    RefreshToken &&
-                    AccessToken !== undefined &&
-                    RefreshToken !== undefined
+                    isVariableValid(AccessToken.current) &&
+                    isVariableValid(RefreshToken.current)
                 ) {
-                    const { exp, iat } = jwt.decode(AccessToken)
+                    const { exp, iat } = jwt.decode(AccessToken.current)
 
                     async function fetchData() {
                         if (exp < Math.floor(new Date().getTime() / 1000)) {
                             const response = await fetch(`/api/auth/refresh`, {
                                 headers: {
-                                    Authorization: `Bearer ${RefreshToken}`,
+                                    Authorization: `Bearer ${RefreshToken.current}`,
                                 },
                             })
 
-                            const { AccessToken: RefreshedAccessToken } =
-                                await response.json()
+                            const json = await response.json()
 
-                            if (
-                                RefreshedAccessToken &&
-                                RefreshedAccessToken !== undefined
-                            ) {
+                            const RefreshedAccessToken = json?.AccessToken
+
+                            if (isVariableValid(RefreshedAccessToken)) {
                                 window.localStorage.setItem(
                                     'AccessToken',
                                     RefreshedAccessToken
                                 )
-                                setAuthenticated(true)
-                                setReturnAccessToken(RefreshedAccessToken)
+                                Authenticated.current = true
+                                AccessToken.current = RefreshedAccessToken
                             }
                         } else {
-                            setAuthenticated(true)
-                            setReturnAccessToken(AccessToken)
+                            Authenticated.current = true
                         }
                     }
 
@@ -52,9 +49,12 @@ export function useValidAccessToken() {
                 }
             }
         } catch (error) {
-            console.log({ error })
+            console.error({ error })
         }
     }, [])
 
-    return { Authenticated, AccessToken: returnAccessToken }
+    return {
+        Authenticated: Authenticated.current,
+        AccessToken: AccessToken.current,
+    }
 }

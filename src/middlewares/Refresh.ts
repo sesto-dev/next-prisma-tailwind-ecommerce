@@ -1,7 +1,7 @@
 import { getAuthHeaderToken, verifyAndGetJWTPayload } from 'lib/jwt'
 import { isVariableValid } from 'lib/utils'
 
-const Auth = (handler) => async (req, res) => {
+const Refresh = (handler) => async (req, res) => {
     const token = getAuthHeaderToken({ req })
 
     if (!isVariableValid(token))
@@ -9,7 +9,7 @@ const Auth = (handler) => async (req, res) => {
 
     const decoded = await verifyAndGetJWTPayload({
         token,
-        secret: process.env.ACCESS_TOKEN_SECRET,
+        secret: process.env.REFRESH_TOKEN_SECRET,
     })
 
     if (!isVariableValid(decoded))
@@ -18,4 +18,4 @@ const Auth = (handler) => async (req, res) => {
     return handler(req, res)
 }
 
-export default Auth
+export default Refresh

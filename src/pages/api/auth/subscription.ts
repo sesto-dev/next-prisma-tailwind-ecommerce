@@ -1,12 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { IdentifyRequest, signJWT } from 'lib/jwt'
+import { IdentifyAccess } from 'lib/jwt'
 import prisma from 'lib/prisma'
 import Auth from 'middlewares/Auth'
 
 export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const { id } = await IdentifyRequest({ req })
+        const { id } = await IdentifyAccess({
+            req,
+            secret: process.env.ACCESS_TOKEN_SECRET,
+        })
 
         const { isEmailSubscribed } = JSON.parse(req.body)
 

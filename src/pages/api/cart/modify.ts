@@ -1,13 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import prisma from 'lib/prisma'
-import { IdentifyRequest } from 'lib/jwt'
+import { IdentifyAccess } from 'lib/jwt'
 import Auth from 'middlewares/Auth'
 import { isVariableValid } from 'lib/utils'
 
 export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const { id } = await IdentifyRequest({ req })
+        const { id } = await IdentifyAccess({
+            req,
+            secret: process.env.ACCESS_TOKEN_SECRET,
+        })
+
         const { variantId } = JSON.parse(req.body)
 
         if (req.method == 'DELETE') {

@@ -61,8 +61,8 @@ export default function LoginDialog() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline" className="font-thin tracking-wider">
-                    <EnterIcon /> Login
+                <Button className="font-light">
+                    <EnterIcon className="h-3 mr-2" /> Login
                 </Button>
             </DialogTrigger>
             {usingOTP ? (

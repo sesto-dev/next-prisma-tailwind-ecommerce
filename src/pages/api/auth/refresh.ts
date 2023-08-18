@@ -1,38 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { signJWT, verifyAndGetJWTPayload } from 'lib/jwt'
+import { IdentifyAccess, signJWT, verifyAndGetJWTPayload } from 'lib/jwt'
+import { isVariableValid } from 'lib/utils'
+import Refresh from 'middlewares/Refresh'
 
-export default async function API(req: NextApiRequest, res: NextApiResponse) {
+export default Refresh(async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const authHeader = req.headers['authorization']
-
-        const token =
-            authHeader && authHeader.startsWith('Bearer ')
-                ? authHeader.split(' ')[1]
-                : null
-
-        if (token == null) return res.status(401)
-
-        const { id } = await verifyAndGetJWTPayload({
-            token,
+        const { id } = await IdentifyAccess({
+            req,
             secret: process.env.REFRESH_TOKEN_SECRET,
         })
 
-        if (id) {
-            return res.status(200).json({
-                AccessToken: await signJWT({
-                    id,
-                    secret: process.env.ACCESS_TOKEN_SECRET,
-                    expiresIn: '30d',
-                }),
-            })
-        } else {
-            return res
-                .status(401)
-                .json({ message: 'Incorrect Authentication.' })
-        }
+        return res.status(200).json({
+            AccessToken: await signJWT({
+                id,
+                secret: process.env.ACCESS_TOKEN_SECRET,
+                expiresIn: '30d',
+            }),
+        })
     } catch (error) {
         const message = error.message
+        console.error({ error, message })
         return res.status(400).json({ error, message })
     }
-}
+})

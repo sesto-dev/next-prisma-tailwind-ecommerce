@@ -14,16 +14,13 @@ export async function verifyAndGetJWTPayload({ token, secret }) {
     return jwt.verify(token, secret)
 }
 
-export async function IdentifyRequest({ req }) {
-    const authHeader = req.headers['authorization']
+export function getAuthHeaderToken({ req }) {
+    return req.headers['authorization'].split(' ')[1]
+}
 
-    const token =
-        authHeader && authHeader.startsWith('Bearer ')
-            ? authHeader.split(' ')[1]
-            : null
-
+export async function IdentifyAccess({ req, secret }) {
     return await verifyAndGetJWTPayload({
-        token,
-        secret: process.env.ACCESS_TOKEN_SECRET,
+        token: getAuthHeaderToken({ req }),
+        secret,
     })
 }

@@ -1,13 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { IdentifyRequest } from 'lib/jwt'
+import { IdentifyAccess } from 'lib/jwt'
 import prisma from 'lib/prisma'
 import Auth from 'middlewares/Auth'
 import { isVariableValid } from 'lib/utils'
 
 export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const { id } = await IdentifyRequest({ req })
+        const { id } = await IdentifyAccess({
+            req,
+            secret: process.env.ACCESS_TOKEN_SECRET,
+        })
 
         if (!isVariableValid(id))
             return res.status(401).json({ error: 'Unauthorized' })
