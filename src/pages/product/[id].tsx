@@ -24,38 +24,43 @@ import {
 } from 'components/ui/select'
 import { isVariableValid } from 'lib/utils'
 import { CloseIcon, Spinner } from 'components/native/icons'
+import type {
+    ProductWithAllVariants,
+    CartItemWithVendorVariant,
+} from 'types/prisma'
+import { Badge } from 'components/ui/badge'
 
 export default function Product({ unserialized }) {
-    const [product, setProduct] = useState(null)
+    const [product, setProduct] = useState<ProductWithAllVariants | null>(null)
 
     useEffect(() => {
         if (unserialized) setProduct(JSON.parse(unserialized))
     }, [unserialized])
 
-    return (
-        <>
-            {isVariableValid(product) && (
-                <>
-                    <Meta
-                        title={product.title}
-                        description={product.description}
-                        image={product.images[0]}
-                        canonical={process.env.NEXT_PUBLIC_URL}
-                    />
-                    <Breadcrumbs product={product} />
-                    <div className="mt-6 grid grid-cols-1 gap-2 md:grid-cols-3">
-                        <ImageColumn product={product} />
-                        <DataColumn product={product} />
-                    </div>
-                </>
-            )}
-        </>
-    )
+    if (isVariableValid(product)) {
+        return (
+            <>
+                <Meta
+                    title={product.title}
+                    description={product.description}
+                    image={product.images[0]}
+                    canonical={process.env.NEXT_PUBLIC_URL}
+                />
+                <Breadcrumbs product={product} />
+                <div className="mt-6 grid grid-cols-1 gap-2 md:grid-cols-3">
+                    <ImageColumn product={product} />
+                    <DataColumn product={product} />
+                </div>
+            </>
+        )
+    }
 }
 
-const DataColumn = ({ product }) => {
-    const { AccessToken } = useValidAccessToken()
-    const [cart, setCart] = useState(null)
+const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
+    const { Authenticated, AccessToken } = useValidAccessToken()
+    const [items, setCartItems] = useState<CartItemWithVendorVariant[] | null>(
+        null
+    )
     const [wishlist, setWishlist] = useState(null)
     const [variantId, setVariantId] = useState('')
     const [fetchingCart, setFetchingCart] = useState(true)
@@ -70,11 +75,8 @@ const DataColumn = ({ product }) => {
                     },
                 })
 
-                const {
-                    cart: { items },
-                } = await answer.json()
-
-                setCart(items)
+                const json = await answer.json()
+                setCartItems(json?.cart?.items)
                 setFetchingCart(false)
             } catch (error) {}
         }
@@ -87,22 +89,17 @@ const DataColumn = ({ product }) => {
                     },
                 })
 
-                const {
-                    wishlist: { items },
-                } = await answer.json()
-
-                setWishlist(items)
+                const json = await answer.json()
+                setWishlist(json?.wishlist?.items)
                 setFetchingWishlist(false)
             } catch (error) {}
         }
 
-        if (isVariableValid(AccessToken)) getCart()
-        if (isVariableValid(AccessToken)) getWishlist()
+        if (isVariableValid(AccessToken)) {
+            getCart()
+            getWishlist()
+        }
     }, [AccessToken])
-
-    useEffect(() => {
-        console.log({ cart })
-    }, [cart])
 
     function isVariantInWishlist() {
         for (let i = 0; i < wishlist.length; i++) {
@@ -114,8 +111,8 @@ const DataColumn = ({ product }) => {
     }
 
     function isVariantInCart() {
-        for (let i = 0; i < cart.length; i++) {
-            if (cart[i]['variant']['id'] === variantId) {
+        for (let i = 0; i < items.length; i++) {
+            if (items[i]['variant']['id'] === variantId) {
                 return true
             }
         }
@@ -123,9 +120,9 @@ const DataColumn = ({ product }) => {
     }
 
     function getCountInCart() {
-        for (let i = 0; i < cart.length; i++) {
-            if (cart[i]['variant']['id'] === variantId) {
-                return cart[i]['count']
+        for (let i = 0; i < items.length; i++) {
+            if (items[i]['variant']['id'] === variantId) {
+                return items[i]['count']
             }
         }
         return 0
@@ -145,9 +142,7 @@ const DataColumn = ({ product }) => {
 
             const json = await response.json()
 
-            console.log({ json })
-
-            setCart(json?.cart?.items)
+            setCartItems(json?.cart?.items)
             setFetchingCart(false)
         } catch (error) {
             console.error({ error })
@@ -168,7 +163,7 @@ const DataColumn = ({ product }) => {
 
             const json = await response.json()
 
-            setCart(json?.cart?.items)
+            setCartItems(json?.cart?.items)
             setFetchingCart(false)
         } catch (error) {
             console.error({ error })
@@ -222,6 +217,14 @@ const DataColumn = ({ product }) => {
     }
 
     function CartButton() {
+        if (!Authenticated)
+            return (
+                <Button disabled>
+                    Please log in to be able to add products to your shopping
+                    cart.
+                </Button>
+            )
+
         if (fetchingCart)
             return (
                 <Button disabled>
@@ -270,6 +273,7 @@ const DataColumn = ({ product }) => {
     }
 
     function WishlistButton() {
+        if (!Authenticated) return null
         if (fetchingWishlist)
             return (
                 <Button disabled>
@@ -302,10 +306,24 @@ const DataColumn = ({ product }) => {
             <h3 className="mb-4 text-xl font-medium text-black dark:text-white">
                 {product.title}
             </h3>
+            <hr className="my-4 w-full border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
+            <div className="flex gap-2 mb-2">
+                <p className="text-sm">Brand:</p>
+                <Badge variant="outline">{product.brand.title}</Badge>
+            </div>
+            <div className="flex gap-2">
+                <p className="text-sm">Categories:</p>
+                {product.categories.map(({ title }, index) => (
+                    <Badge variant="outline" key={index}>
+                        {title}
+                    </Badge>
+                ))}
+            </div>
+            <hr className="my-4 w-full border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
             <small className="text-black dark:text-white">
                 {product.description}
             </small>
-            <hr className="my-4 h-px w-64 border-0 bg-neutral-300 dark:bg-neutral-600" />
+            <hr className="my-4 w-full border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
             <label className="mb-2 block text-sm font-medium text-neutral-900 dark:text-white">
                 Select an option
             </label>
@@ -314,20 +332,27 @@ const DataColumn = ({ product }) => {
                     <SelectValue placeholder="Theme" />
                 </SelectTrigger>
                 <SelectContent>
-                    {product.variants.map((variant) => (
-                        <SelectItem key={variant.id} value={variant.id}>
-                            {variant.title} - ${variant.price}
-                        </SelectItem>
-                    ))}
+                    {product.variants.map(
+                        ({ title, vendorVariants }, index) => (
+                            <div key={index}>
+                                {vendorVariants.map((item, innerIndex) => (
+                                    <SelectItem
+                                        key={innerIndex}
+                                        value={item.id}
+                                    >
+                                        {title} - ${item.price}
+                                    </SelectItem>
+                                ))}
+                            </div>
+                        )
+                    )}
                 </SelectContent>
             </Select>
 
-            {isVariableValid(cart) && isVariableValid(wishlist) && (
-                <div className="flex gap-2">
-                    <CartButton />
-                    <WishlistButton />
-                </div>
-            )}
+            <div className="flex gap-2">
+                <CartButton />
+                <WishlistButton />
+            </div>
         </div>
     )
 }
@@ -389,7 +414,12 @@ export async function getServerSideProps(context) {
         const product = await prisma.product.findUnique({
             where: { id },
             include: {
-                variants: true,
+                brand: true,
+                variants: {
+                    include: {
+                        vendorVariants: true,
+                    },
+                },
                 categories: true,
             },
         })

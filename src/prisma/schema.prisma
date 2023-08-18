@@ -16,11 +16,13 @@ model User {
 
   OTP               String?
   referralCode      String? @unique
-  isVerified        Boolean @default(false)
+  isVendor          Boolean @default(false)
   isAdmin           Boolean @default(false)
   isBanned          Boolean @default(false)
+  isEmailVerified   Boolean @default(false)
   isEmailSubscribed Boolean @default(false)
 
+  vendor   Vendor?
   cart     Cart?
   wishlist Wishlist?
 
@@ -37,7 +39,21 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model Brand {
+model Vendor {
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @id
+
+  vendorVariants VendorVariant[]
+
+  title       String @unique
+  description String
+  logo        String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+modelBrand {
   id          String @id @default(cuid())
   title       String @unique
   description String
@@ -52,9 +68,13 @@ model Product {
   description String
   images      String[]
   tags        String[]
+  metadata    Json?
 
-  brand   Brand?  @relation(fields: [brandId], references: [id])
-  brandId String?
+  wishlists Wishlist[]
+  reviews   Review[]
+
+  brand   Brand  @relation(fields: [brandId], references: [id])
+  brandId String
 
   categories Category[]
   variants   ProductVariant[]
@@ -67,16 +87,11 @@ model ProductVariant {
   id          String   @id @default(cuid())
   title       String
   description String
-  price       Float
   images      String[]
-  stock       Int
-  reserved    Int
+  metadata    Json?
 
-  reviews   Review[]
-  discounts Discount[]
-  orders    Order[]
-  cartItems CartItem[]
-  wishlists Wishlist[]
+  vendorVariants VendorVariant[]
+  discounts      Discount[]
 
   product   Product @relation(fields: [productId], references: [id])
   productId String
@@ -85,9 +100,30 @@ model ProductVariant {
   updatedAt DateTime @updatedAt
 }
 
+model VendorVariant {
+  id    String @id @default(cuid())
+  price Float
+  stock Int
+
+  orders    Order[]
+  cartItems CartItem[]
+
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+  productVariantId String
+
+  vendor   Vendor @relation(fields: [vendorId], references: [userId])
+  vendorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([productVariantId, vendorId], name: "UniqueVendorVariant")
+}
+
 model Category {
   id   String @id @default(cuid())
-  name String @unique
+  title String @unique
+  description String?
 
   products Product[]
 
@@ -99,22 +135,25 @@ model Review {
   id        String         @id @default(cuid())
   text      String
   rating    Int
-  product   ProductVariant @relation(fields: [productId], references: [id])
+
+  product   Product @relation(fields: [productId], references: [id])
   productId String
   user      User           @relation(fields: [userId], references: [id])
   userId    String
+
+  @@unique([productId, userId], name: "UniqueProductReview")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Order {
-  id          String           @id @default(cuid())
+  id          String                 @id @default(cuid())
   status      String
   totalAmount Float
-  user        User             @relation(fields: [userId], references: [id])
+  user        User                   @relation(fields: [userId], references: [id])
   userId      String
-  items       ProductVariant[]
+  items       VendorVariant[]
 
   refund Refund?
 
@@ -125,7 +164,7 @@ model Order {
 model Wishlist {
   user   User             @relation(fields: [userId], references: [id])
   userId String           @id
-  items  ProductVariant[]
+  items  Product[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -141,13 +180,13 @@ model Cart {
 }
 
 model CartItem {
-  cart      Cart           @relation(fields: [cartId], references: [userId])
+  cart      Cart                 @relation(fields: [cartId], references: [userId])
   cartId    String
-  variant   ProductVariant @relation(fields: [variantId], references: [id])
-  variantId String
+  vendorVariant   VendorVariant @relation(fields: [vendorVariantId], references: [id])
+  vendorVariantId String
   count     Int
 
-  @@unique([cartId, variantId], name: "UniqueCartItem")
+  @@unique([cartId, vendorVariantId], name: "UniqueCartItem")
 }
 
 model Address {

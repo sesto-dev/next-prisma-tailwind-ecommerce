@@ -19,7 +19,7 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
                     email,
                 },
                 data: {
-                    isVerified: true,
+                    isEmailVerified: true,
                     OTP: null,
                 },
             })

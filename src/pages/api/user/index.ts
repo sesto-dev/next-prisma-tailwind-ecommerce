@@ -16,7 +16,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             return res.status(401).json({ error: 'Unauthorized' })
 
         const user = await prisma.user.findUnique({
-            where: { id, isVerified: true },
+            where: { id, isEmailVerified: true },
             include: {
                 cart: true,
                 orders: true,

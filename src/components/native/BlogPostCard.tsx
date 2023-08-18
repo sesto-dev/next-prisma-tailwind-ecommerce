@@ -11,6 +11,26 @@ import {
     CardTitle,
 } from 'components/ui/card'
 
+export function BlogPostGrid({ blogs }) {
+    return (
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+            {blogs.map((post: any) => (
+                <BlogPostCard key={post.slug} post={post} />
+            ))}
+        </div>
+    )
+}
+
+export function BlogPostSkeletonGrid() {
+    return (
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+            {[...Array(3)].map(() => (
+                <BlogPostSkeleton key={Math.random()} />
+            ))}
+        </div>
+    )
+}
+
 export function BlogPostCard({ post }) {
     const { title, description, image, slug, createdAt, author } = post
 
@@ -42,7 +62,7 @@ export function BlogPostCard({ post }) {
     )
 }
 
-export const BlogPostCardSkeleton = () => {
+export const BlogPostSkeleton = () => {
     return (
         <Link href="#">
             <div className="animate-pulse rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">

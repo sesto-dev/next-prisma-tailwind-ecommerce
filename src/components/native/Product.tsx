@@ -12,30 +12,33 @@ import {
     CardTitle,
 } from 'components/ui/card'
 import { Badge } from 'components/ui/badge'
+import { ProductWithAllVariants } from 'types/prisma'
 
-export const ProductGrid = ({ products }) => {
+export const ProductGrid = ({
+    products,
+}: {
+    products: ProductWithAllVariants[]
+}) => {
     return (
-        <>
-            <h3 className="mb-1 text-xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
-                Products
-            </h3>
-            <p className="mb-4 text-xs text-neutral-500 text-justify">
-                Below is a list of products we have available for you.
-            </p>
-            <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
-                {products
-                    ? products.map((product) => (
-                          <Product product={product} key={product.id} />
-                      ))
-                    : [...Array(15)].map(() => (
-                          <ProductSkeleton key={Math.random()} />
-                      ))}
-            </div>
-        </>
+        <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
+            {products.map((product) => (
+                <Product product={product} key={product.id} />
+            ))}
+        </div>
     )
 }
 
-export const Product = ({ product }) => {
+export const ProductSkeletonGrid = () => {
+    return (
+        <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
+            {[...Array(12)].map(() => (
+                <ProductSkeleton key={Math.random()} />
+            ))}
+        </div>
+    )
+}
+
+export const Product = ({ product }: { product: ProductWithAllVariants }) => {
     return (
         <Link className="" href={`/product/${product.id}`}>
             <Card className="h-full">
@@ -62,7 +65,7 @@ export const Product = ({ product }) => {
                 </CardContent>
                 <CardFooter>
                     <h2 className="text-lg">
-                        ${product['variants'][0]['price']}
+                        ${product?.variants[0]?.vendorVariants[0]?.price}
                     </h2>
                 </CardFooter>
             </Card>

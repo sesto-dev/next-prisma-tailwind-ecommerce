@@ -12,11 +12,11 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             secret: process.env.ACCESS_TOKEN_SECRET,
         })
 
-        const { variantId } = JSON.parse(req.body)
+        const { vendorVariantId } = JSON.parse(req.body)
 
         if (req.method == 'DELETE') {
             await prisma.cartItem.delete({
-                where: { UniqueCartItem: { cartId: id, variantId } },
+                where: { UniqueCartItem: { cartId: id, vendorVariantId } },
             })
         }
 
@@ -25,7 +25,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                 where: {
                     UniqueCartItem: {
                         cartId: id,
-                        variantId,
+                        vendorVariantId,
                     },
                 },
                 data: {
@@ -51,12 +51,12 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                         connectOrCreate: {
                             where: {
                                 UniqueCartItem: {
-                                    variantId,
+                                    vendorVariantId,
                                     cartId: id,
                                 },
                             },
                             create: {
-                                variantId,
+                                vendorVariantId,
                                 count: 1,
                             },
                         },
@@ -70,7 +70,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                 where: {
                     UniqueCartItem: {
                         cartId: id,
-                        variantId,
+                        vendorVariantId,
                     },
                 },
                 data: {
@@ -83,7 +83,17 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             where: {
                 userId: id,
             },
-            include: { items: { include: { variant: true } } },
+            include: {
+                items: {
+                    include: {
+                        vendorVariant: {
+                            include: {
+                                productVariant: { include: { product: true } },
+                            },
+                        },
+                    },
+                },
+            },
         })
 
         return res.status(200).json({ cart })

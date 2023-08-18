@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-import {
-    BlogPostCard,
-    BlogPostCardSkeleton,
-} from 'components/native/BlogPostCard'
+import { BlogPostCard } from 'components/native/BlogPostCard'
 
 import prisma from 'lib/prisma'
 

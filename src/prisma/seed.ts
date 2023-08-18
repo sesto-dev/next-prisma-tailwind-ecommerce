@@ -1,6 +1,19 @@
 import { PrismaClient } from '@prisma/client'
 import { faker } from '@faker-js/faker'
 
+function getRandomFloat(min, max, precision) {
+    if (min >= max || precision < 0) {
+        throw new Error(
+            'Invalid input: min should be less than max and precision should be non-negative.'
+        )
+    }
+
+    const range = max - min
+    const randomValue = Math.random() * range + min
+
+    return parseFloat(randomValue.toFixed(precision))
+}
+
 function getRandomIntInRange(min: number, max: number) {
     return Math.floor(Math.random() * (max - min) + min)
 }
@@ -23,6 +36,7 @@ async function main() {
     const products = [
         {
             title: 'BKID Pipe',
+            brand: 'BKID',
             categories: ['Accessories'],
             tags: ['pipe', 'brushed', 'wood'],
             price: 69.99,
@@ -30,6 +44,7 @@ async function main() {
         },
         {
             title: 'Bang and Olufsen Speaker',
+            brand: 'Bang and Olufsen',
             categories: ['Electronics'],
             tags: ['speaker', 'brushed', 'mechanical'],
             price: 9.99,
@@ -38,7 +53,9 @@ async function main() {
             ],
         },
         {
-            title: 'Audio Technical Turn-table',
+            title: 'Audio Technica Turn-table',
+            brand: 'Audio Technica',
+
             categories: ['Electronics'],
             tags: ['music', 'brushed', 'mechanical'],
             price: 12.99,
@@ -48,6 +65,8 @@ async function main() {
         },
         {
             title: 'Monocle Sneakers',
+            brand: '',
+
             categories: ['Electronics'],
             tags: ['shoes', 'brushed', 'mechanical'],
             price: 1.99,
@@ -57,6 +76,8 @@ async function main() {
         },
         {
             title: 'Zone2 Mens Watch',
+            brand: '',
+
             categories: ['Electronics'],
             tags: ['shoes', 'brushed', 'mechanical'],
             price: 129.99,
@@ -64,6 +85,7 @@ async function main() {
         },
         {
             title: 'Carl Hauser L1 Phone',
+            brand: 'Carl Hauser',
             categories: ['Electronics'],
             tags: ['shoes', 'brushed', 'mechanical'],
             price: 5.99,
@@ -73,6 +95,7 @@ async function main() {
         },
         {
             title: 'Carl Hauser Scanner',
+            brand: 'Carl Hauser',
             categories: ['Electronics'],
             tags: ['shoes', 'brushed', 'mechanical'],
             price: 22.99,
@@ -82,6 +105,7 @@ async function main() {
         },
         {
             title: 'Bright Neon Helmet',
+            brand: 'Bright',
             categories: ['Electronics'],
             tags: ['shoes', 'brushed', 'mechanical'],
             price: 17.99,
@@ -125,7 +149,7 @@ async function main() {
     for (const category of categories) {
         await prisma.category.create({
             data: {
-                name: category,
+                title: category,
             },
         })
     }
@@ -136,22 +160,31 @@ async function main() {
         const createdProduct = await prisma.product.create({
             data: {
                 title: product.title,
+                brand: {
+                    connectOrCreate: {
+                        where: {
+                            title: product.brand,
+                        },
+                        create: {
+                            title: product.brand,
+                            description: faker.commerce.productDescription(),
+                            logo: 'https://cdn.logojoy.com/wp-content/uploads/20221122125557/morridge-coffee-vintage-logo-600x392.png',
+                        },
+                    },
+                },
                 description: faker.commerce.productDescription(),
                 images: product.images,
                 tags: product.tags,
                 categories: {
                     connect: {
-                        name: product.categories[0],
+                        title: product.categories[0],
                     },
                 },
                 variants: {
                     create: {
                         title: product.title,
                         description: faker.commerce.productDescription(),
-                        price: product.price,
                         images: product.images,
-                        stock: getRandomIntInRange(2, 10),
-                        reserved: getRandomIntInRange(0, 1),
                     },
                 },
             },
@@ -170,6 +203,22 @@ async function main() {
         data: {
             email: 'accretence@gmail.com',
             name: 'Amirhossein Mohammadi',
+            isVendor: true,
+            vendor: {
+                create: {
+                    title: 'Pasargad Vendor',
+                    description: 'We are a vendor.',
+                    logo: 'https://cdn.logojoy.com/wp-content/uploads/20221122125557/morridge-coffee-vintage-logo-600x392.png',
+                    vendorVariants: {
+                        create: {
+                            price: getRandomFloat(4, 100, 2),
+                            stock: getRandomIntInRange(1, 20),
+                            productVariantId:
+                                createdProducts[0]['variants'][0]['id'],
+                        },
+                    },
+                },
+            },
             blogPost: {
                 create: blogPosts,
             },
@@ -177,7 +226,7 @@ async function main() {
                 create: {
                     items: {
                         connect: {
-                            id: createdProducts[0]['variants'][0]['id'],
+                            id: createdProducts[0]['id'],
                         },
                     },
                 },

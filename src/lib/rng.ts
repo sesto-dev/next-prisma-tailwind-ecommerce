@@ -1,3 +1,16 @@
+export function getRandomFloat(min, max, precision) {
+    if (min >= max || precision < 0) {
+        throw new Error(
+            'Invalid input: min should be less than max and precision should be non-negative.'
+        )
+    }
+
+    const range = max - min
+    const randomValue = Math.random() * range + min
+
+    return parseFloat(randomValue.toFixed(precision))
+}
+
 export function cyrb128(seed: string) {
     let h1 = 1779033703,
         h2 = 3144134277,

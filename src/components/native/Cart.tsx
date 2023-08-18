@@ -12,15 +12,22 @@ import {
     CardTitle,
 } from 'components/ui/card'
 import { Badge } from 'components/ui/badge'
+import type { CartItemWithVendorVariant } from 'types/prisma'
 
-export const CartGrid = ({ items }) => {
+export const CartGrid = ({ items }: { items: CartItemWithVendorVariant[] }) => {
     return (
         <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="md:col-span-2">
                 {items
-                    ? items.map((item) => <Variant item={item} key={item.id} />)
+                    ? items.map(({ count, vendorVariant, vendorVariantId }) => (
+                          <CartVendorVariant
+                              count={count}
+                              vendorVariant={vendorVariant}
+                              key={vendorVariantId}
+                          />
+                      ))
                     : [...Array(5)].map(() => (
-                          <ProductSkeleton key={Math.random()} />
+                          <CartVendorVariantSkeleton key={Math.random()} />
                       ))}
             </div>
             <Receipt />
@@ -49,15 +56,18 @@ function Receipt() {
     )
 }
 
-export const Variant = ({ item }) => {
+export const CartVendorVariant = ({ count, vendorVariant }) => {
     return (
-        <Link className="" href={`/product/${item.productId}`}>
+        <Link
+            className=""
+            href={`/product/${vendorVariant?.productVariant?.product?.id}`}
+        >
             <Card className="">
                 <CardContent className="grid grid-cols-6 gap-4 p-3">
                     <div className="relative w-full col-span-1">
                         <Image
                             className="rounded-lg"
-                            src={item['variant']['images'][0]}
+                            src={vendorVariant?.productVariant?.images[0]}
                             alt="item image"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -65,15 +75,15 @@ export const Variant = ({ item }) => {
                     </div>
                     <div className="col-span-5">
                         <div className="flex flex-1 items-center justify-between">
-                            <h2>{item.title}</h2>
+                            <h2>{vendorVariant?.productVariant?.title}</h2>
                             <Button size="icon" variant="outline">
                                 <CloseIcon />
                             </Button>
                         </div>
                         <p className="my-2 text-xs text-neutral-500 text-justify w-2/3">
-                            {item.description}
+                            {vendorVariant?.productVariant?.description}
                         </p>
-                        <h2 className="text-lg">${item['price']}</h2>
+                        <h2 className="text-lg">${vendorVariant?.price}</h2>
                     </div>
                 </CardContent>
             </Card>
@@ -81,7 +91,7 @@ export const Variant = ({ item }) => {
     )
 }
 
-export function ProductSkeleton() {
+export function CartVendorVariantSkeleton() {
     return (
         <Link href="#">
             <div className="animate-pulse rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800 mb-4">

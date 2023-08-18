@@ -7,10 +7,11 @@ import { isVariableValid } from 'lib/utils'
 
 import { useRouter } from 'next/navigation'
 import { CartGrid } from 'components/native/Cart'
+import type { CartItemWithVendorVariant } from 'types/prisma'
 
 export default function User({}) {
     const { Authenticated, AccessToken } = useValidAccessToken()
-    const [items, setItems] = useState(null)
+    const [items, setItems] = useState<CartItemWithVendorVariant[] | null>(null)
     const router = useRouter()
 
     useEffect(() => {
@@ -27,7 +28,6 @@ export default function User({}) {
                 })
 
                 const json = await answer.json()
-                console.log({ json })
                 setItems(json?.cart?.items)
             } catch (error) {}
         }
