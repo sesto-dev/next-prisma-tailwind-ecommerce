@@ -20,6 +20,7 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
                 create: {
                     email,
                     OTP,
+                    cart: { create: {} },
                 },
             })
 
@@ -36,7 +37,7 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
         }
 
         if (!isEmailValid(email)) {
-            return res.status(401).json({ message: 'Incorrect Email.' })
+            return res.status(401).json({ error: 'Incorrect Email.' })
         }
     } catch (error) {
         const message = error.message

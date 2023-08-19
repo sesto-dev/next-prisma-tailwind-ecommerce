@@ -3,23 +3,17 @@ import { useEffect, useState } from 'react'
 import Meta from 'components/native/Meta'
 import Config from 'config/site'
 import { useValidAccessToken } from 'hooks/useAccessToken'
-import { isVariableValid } from 'lib/utils'
 
-import { useRouter } from 'next/navigation'
 import { CartGrid } from 'components/native/Cart'
 import type { CartItemWithVendorVariant } from 'types/prisma'
+import { getLocalCart, writeLocalCart } from 'lib/cart'
 
-export default function User({}) {
+export default function Cart() {
     const { Authenticated, AccessToken } = useValidAccessToken()
     const [items, setItems] = useState<CartItemWithVendorVariant[] | null>(null)
-    const router = useRouter()
 
     useEffect(() => {
-        if (!Authenticated) router.push('/')
-    }, [])
-
-    useEffect(() => {
-        async function getUser() {
+        async function getCart() {
             try {
                 const answer = await fetch(`/api/cart`, {
                     headers: {
@@ -29,11 +23,15 @@ export default function User({}) {
 
                 const json = await answer.json()
                 setItems(json?.cart?.items)
-            } catch (error) {}
+                writeLocalCart(json?.cart?.items)
+            } catch (error) {
+                console.error({ error })
+            }
         }
 
-        if (isVariableValid(AccessToken)) getUser()
-    }, [AccessToken])
+        if (Authenticated) getCart()
+        if (!Authenticated) setItems(getLocalCart())
+    }, [AccessToken, Authenticated])
 
     return (
         <>

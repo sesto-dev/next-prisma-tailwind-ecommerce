@@ -1,51 +1,55 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import jwt from 'jsonwebtoken'
 import { isVariableValid } from 'lib/utils'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
 export function useValidAccessToken() {
-    const Authenticated = useRef(false)
-    const AccessToken = useRef(null)
-    const RefreshToken = useRef(null)
+    const [returnAccessToken, setReturnAccessToken] = useState(null)
+    const [Authenticated, setAuthenticated] = useState(null)
+    let AccessToken: string, RefreshToken: string
 
     useEffect(() => {
         try {
             if (typeof window !== 'undefined' && window.localStorage) {
-                AccessToken.current = window.localStorage.getItem('AccessToken')
-                RefreshToken.current =
-                    window.localStorage.getItem('RefreshToken')
+                AccessToken = window.localStorage.getItem('AccessToken')
+                RefreshToken = window.localStorage.getItem('RefreshToken')
 
                 if (
-                    isVariableValid(AccessToken.current) &&
-                    isVariableValid(RefreshToken.current)
+                    isVariableValid(AccessToken) &&
+                    isVariableValid(RefreshToken)
                 ) {
-                    const { exp, iat } = jwt.decode(AccessToken.current)
+                    const { exp, iat } = jwt.decode(AccessToken)
 
                     async function fetchData() {
                         if (exp < Math.floor(new Date().getTime() / 1000)) {
                             const response = await fetch(`/api/auth/refresh`, {
                                 headers: {
-                                    Authorization: `Bearer ${RefreshToken.current}`,
+                                    Authorization: `Bearer ${RefreshToken}`,
                                 },
                             })
 
-                            const json = await response.json()
-
-                            const RefreshedAccessToken = json?.AccessToken
+                            const { AccessToken: RefreshedAccessToken } =
+                                await response.json()
 
                             if (isVariableValid(RefreshedAccessToken)) {
                                 window.localStorage.setItem(
                                     'AccessToken',
                                     RefreshedAccessToken
                                 )
-                                Authenticated.current = true
-                                AccessToken.current = RefreshedAccessToken
+                                setAuthenticated(true)
+                                setReturnAccessToken(RefreshedAccessToken)
+                            } else {
+                                setAuthenticated(false)
                             }
                         } else {
-                            Authenticated.current = true
+                            setAuthenticated(true)
+                            setReturnAccessToken(AccessToken)
                         }
                     }
 
                     fetchData()
+                } else {
+                    setAuthenticated(false)
                 }
             }
         } catch (error) {
@@ -53,8 +57,5 @@ export function useValidAccessToken() {
         }
     }, [])
 
-    return {
-        Authenticated: Authenticated.current,
-        AccessToken: AccessToken.current,
-    }
+    return { Authenticated, AccessToken: returnAccessToken }
 }

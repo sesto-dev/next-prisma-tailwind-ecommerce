@@ -9,7 +9,7 @@ import { LockClosedIcon } from '@radix-ui/react-icons'
 import { CartNav } from 'nav/cart'
 
 export default function Header() {
-    const { Authenticated, AccessToken } = useValidAccessToken()
+    const { Authenticated } = useValidAccessToken()
 
     return (
         <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur mb-4">
@@ -20,14 +20,8 @@ export default function Header() {
                     <div className="flex-none">
                         <CommandMenu />
                     </div>
-                    {Authenticated ? (
-                        <>
-                            <CartNav />
-                            <UserNav />
-                        </>
-                    ) : (
-                        <LoginDialog />
-                    )}
+                    <CartNav />
+                    {Authenticated ? <UserNav /> : <LoginDialog />}
                 </div>
             </div>
         </header>

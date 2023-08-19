@@ -6,16 +6,25 @@ import { fetcher } from 'lib/fetcher'
 import Config from 'config/site'
 import Meta from 'components/native/Meta'
 
-import { ProductGrid } from 'components/native/Product'
+import { ProductGrid, ProductSkeletonGrid } from 'components/native/Product'
+import { ProductWithAllVariants } from 'types/prisma'
+import { isVariableValid } from 'lib/utils'
 
-export default function Products({ currentPage, category, tags, sort }) {
-    const { data } = useSWR(`/api/products/list`, fetcher) as any
+export default function Products() {
+    const [products, setProduct] = useState<ProductWithAllVariants[] | null>(
+        null
+    )
 
-    const products = data?.products
-    const totalPages = data?.totalPages
+    useEffect(() => {
+        async function getProducts() {
+            const response = await fetch(`/api/products`)
 
-    const [keyword, setKeyword] = useState(null)
-    const [loading, setLoading] = useState(false)
+            const json = await response.json()
+            setProduct(json?.products)
+        }
+
+        getProducts()
+    }, [])
 
     return (
         <>
@@ -25,25 +34,11 @@ export default function Products({ currentPage, category, tags, sort }) {
                 image={Config.ogImage}
                 canonical={process.env.NEXT_PUBLIC_URL}
             />
-            <ProductGrid products={products} />
+            {isVariableValid(products) ? (
+                <ProductGrid products={products} />
+            ) : (
+                <ProductSkeletonGrid />
+            )}
         </>
     )
-}
-
-const Paginated = ({ totalPages, currentPage }) => {
-    const router = useRouter()
-
-    return <div></div>
-}
-
-const Filters = () => {
-    return <div></div>
-}
-
-export async function getServerSideProps(ctx) {
-    const { page = 1, category = '', tags = [], sort = '' } = ctx.query
-
-    return {
-        props: { currentPage: parseInt(page), category, tags, sort },
-    }
 }

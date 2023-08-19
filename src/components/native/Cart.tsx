@@ -13,12 +13,13 @@ import {
 } from 'components/ui/card'
 import { Badge } from 'components/ui/badge'
 import type { CartItemWithVendorVariant } from 'types/prisma'
+import { isVariableValid } from 'lib/utils'
 
 export const CartGrid = ({ items }: { items: CartItemWithVendorVariant[] }) => {
     return (
         <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="md:col-span-2">
-                {items
+                {isVariableValid(items)
                     ? items.map(({ count, vendorVariant, vendorVariantId }) => (
                           <CartVendorVariant
                               count={count}
@@ -50,7 +51,7 @@ function Receipt() {
             <hr className="my-4 w-[80%] border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
 
             <CardFooter>
-                <Button className="w-full">Proceed</Button>
+                <Button className="w-full">Checkout</Button>
             </CardFooter>
         </Card>
     )
@@ -63,8 +64,19 @@ export const CartVendorVariant = ({ count, vendorVariant }) => {
             href={`/product/${vendorVariant?.productVariant?.product?.id}`}
         >
             <Card className="">
+                <CardHeader className="p-0 md:hidden">
+                    <div className="relative h-32 w-full">
+                        <Image
+                            className="rounded-t-lg"
+                            src={vendorVariant.productVariant.images[0]}
+                            alt="product image"
+                            fill
+                            style={{ objectFit: 'cover' }}
+                        />
+                    </div>
+                </CardHeader>
                 <CardContent className="grid grid-cols-6 gap-4 p-3">
-                    <div className="relative w-full col-span-1">
+                    <div className="relative w-full col-span-1 hidden md:inline-flex">
                         <Image
                             className="rounded-lg"
                             src={vendorVariant?.productVariant?.images[0]}

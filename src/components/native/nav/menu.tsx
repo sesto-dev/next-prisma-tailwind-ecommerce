@@ -58,9 +58,20 @@ export function NavigationMenuDemo() {
         <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
+                    <Link href="/products" legacyBehavior passHref>
+                        <NavigationMenuLink
+                            className={navigationMenuTriggerStyle()}
+                        >
+                            <div className="font-normal text-foreground/70">
+                                Products
+                            </div>
+                        </NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
                     <NavigationMenuTrigger>
                         <div className="font-normal text-foreground/70">
-                            Products
+                            Categories
                         </div>
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
@@ -106,7 +117,7 @@ export function NavigationMenuDemo() {
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>
                         <div className="font-normal text-foreground/70">
-                            Components
+                            Brands
                         </div>
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
@@ -122,17 +133,6 @@ export function NavigationMenuDemo() {
                             ))}
                         </ul>
                     </NavigationMenuContent>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href="/docs" legacyBehavior passHref>
-                        <NavigationMenuLink
-                            className={navigationMenuTriggerStyle()}
-                        >
-                            <div className="font-normal text-foreground/70">
-                                Documentation
-                            </div>
-                        </NavigationMenuLink>
-                    </Link>
                 </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>

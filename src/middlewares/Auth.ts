@@ -5,7 +5,7 @@ const Auth = (handler) => async (req, res) => {
     const token = getAuthHeaderToken({ req })
 
     if (!isVariableValid(token))
-        return res.status(401).json({ error: 'Unauthorized' })
+        return res.status(401).json({ error: 'Invalid header authorization.' })
 
     const decoded = await verifyAndGetJWTPayload({
         token,
@@ -13,7 +13,7 @@ const Auth = (handler) => async (req, res) => {
     })
 
     if (!isVariableValid(decoded))
-        return res.status(401).json({ error: 'Invalid token' })
+        return res.status(401).json({ error: 'Invalid token.' })
 
     return handler(req, res)
 }

@@ -46,11 +46,12 @@ export default function LoginDialog() {
             body: JSON.stringify({ email, OTP }),
         })
 
-        const { AccessToken, RefreshToken } = await response.json()
+        const json = await response.json()
 
         if (typeof window !== 'undefined' && window.localStorage) {
-            window.localStorage.setItem('AccessToken', AccessToken)
-            window.localStorage.setItem('RefreshToken', RefreshToken)
+            for (const key in json) {
+                window.localStorage.setItem(key, json[key])
+            }
         }
 
         router.reload()

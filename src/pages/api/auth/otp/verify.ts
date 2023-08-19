@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { signJWT } from 'lib/jwt'
 import prisma from 'lib/prisma'
+import { isVariableValid } from 'lib/utils'
 
 export default async function API(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -13,14 +14,17 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
             where: { email, OTP: OTP.toString() },
         })
 
-        if (id) {
-            await prisma.user.update({
+        if (isVariableValid(id)) {
+            const user = await prisma.user.update({
                 where: {
                     email,
                 },
                 data: {
                     isEmailVerified: true,
                     OTP: null,
+                },
+                include: {
+                    vendor: true,
                 },
             })
 
@@ -36,11 +40,14 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
                     secret: process.env.REFRESH_TOKEN_SECRET,
                     expiresIn: '30d',
                 }),
+                isVendor: user.isVendor,
+                isAdmin: user.isAdmin,
+                vendor: JSON.stringify(user.vendor),
             })
         } else {
             return res
                 .status(401)
-                .json({ message: 'Incorrect Verification Code.' })
+                .json({ error: 'Incorrect Verification Code.' })
         }
     } catch (error) {
         const message = error.message

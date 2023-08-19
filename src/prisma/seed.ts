@@ -204,6 +204,9 @@ async function main() {
             email: 'accretence@gmail.com',
             name: 'Amirhossein Mohammadi',
             isVendor: true,
+            cart: {
+                create: {},
+            },
             vendor: {
                 create: {
                     title: 'Pasargad Vendor',

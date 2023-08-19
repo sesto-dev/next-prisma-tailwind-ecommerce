@@ -5,7 +5,11 @@ import prisma from 'lib/prisma'
 export default async function API(req: NextApiRequest, res: NextApiResponse) {
     try {
         const products = await prisma.product.findMany({
-            include: { variants: true, categories: true },
+            include: {
+                brand: true,
+                variants: { include: { vendorVariants: true } },
+                categories: true,
+            },
         })
 
         return res.status(200).json({
@@ -13,6 +17,7 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
         })
     } catch (error) {
         const message = error.message
+        console.error({ error, message })
         return res.status(400).json({ error, message })
     }
 }

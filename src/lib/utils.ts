@@ -21,3 +21,7 @@ export function absoluteUrl(path: string) {
 export function isVariableValid(variable) {
     return variable !== null && variable !== undefined
 }
+
+export function isMacOs() {
+    return window.navigator.userAgent.includes('Mac')
+}

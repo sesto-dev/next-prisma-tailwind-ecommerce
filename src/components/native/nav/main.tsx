@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import Config from 'config/site'
-import { cn } from 'lib/utils'
 import { NavigationMenuDemo } from 'components/native/nav/menu'
 
 export function MainNav() {

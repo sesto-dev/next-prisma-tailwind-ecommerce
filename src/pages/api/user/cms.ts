@@ -3,7 +3,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { IdentifyAccess } from 'lib/jwt'
 import prisma from 'lib/prisma'
 import Auth from 'middlewares/Auth'
-import { isVariableValid } from 'lib/utils'
 
 export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -15,13 +14,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
         const user = await prisma.user.findUnique({
             where: { id, isEmailVerified: true },
             include: {
-                cart: true,
-                orders: true,
-                addresses: true,
-                payments: true,
-                wishlist: true,
-                notifications: true,
-                errors: true,
+                vendor: true,
             },
         })
 

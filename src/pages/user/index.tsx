@@ -40,8 +40,13 @@ export default function User({}) {
             setUser(returnedUser)
         }
 
-        if (!Authenticated) router.push('/')
-        if (isVariableValid(AccessToken)) getUser()
+        if (isVariableValid(Authenticated) && !Authenticated) router.push('/')
+        if (
+            isVariableValid(AccessToken) &&
+            isVariableValid(Authenticated) &&
+            Authenticated
+        )
+            getUser()
     }, [AccessToken, Authenticated, router])
 
     return (

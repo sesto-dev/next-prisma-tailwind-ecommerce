@@ -55,7 +55,7 @@ export const Product = ({ product }: { product: ProductWithAllVariants }) => {
                 </CardHeader>
                 <CardContent className="grid gap-1 p-4">
                     <Badge variant="outline" className="w-min text-neutral-500">
-                        {product['categories'][0]['name']}
+                        {product?.categories[0]?.title}
                     </Badge>
 
                     <h2 className="mt-2">{product.title}</h2>
