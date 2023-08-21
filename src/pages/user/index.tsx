@@ -30,14 +30,14 @@ export default function User({}) {
 
     useEffect(() => {
         async function getUser() {
-            const answer = await fetch(`/api/user`, {
+            const response = await fetch(`/api/user`, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`,
                 },
             })
 
-            const { user: returnedUser } = await answer.json()
-            setUser(returnedUser)
+            const json = await response.json()
+            setUser(json?.user)
         }
 
         if (isVariableValid(Authenticated) && !Authenticated) router.push('/')
@@ -55,7 +55,6 @@ export default function User({}) {
                 title="Pasargad"
                 description="Home Page"
                 image={Config.ogImage}
-                canonical={process.env.NEXT_PUBLIC_URL}
             />
             {isVariableValid(user) ? (
                 <Accordion type="single" collapsible className="w-full">

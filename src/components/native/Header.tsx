@@ -5,7 +5,6 @@ import LoginDialog from 'components/composites/login-dialog'
 import { useValidAccessToken } from 'hooks/useAccessToken'
 import { UserNav } from 'nav/user'
 import { Button } from 'components/ui/button'
-import { LockClosedIcon } from '@radix-ui/react-icons'
 import { CartNav } from 'nav/cart'
 
 export default function Header() {

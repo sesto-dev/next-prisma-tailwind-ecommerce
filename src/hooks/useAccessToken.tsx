@@ -28,8 +28,9 @@ export function useValidAccessToken() {
                                 },
                             })
 
-                            const { AccessToken: RefreshedAccessToken } =
-                                await response.json()
+                            const json = await response.json()
+
+                            const RefreshedAccessToken = json?.AccessToken
 
                             if (isVariableValid(RefreshedAccessToken)) {
                                 window.localStorage.setItem(

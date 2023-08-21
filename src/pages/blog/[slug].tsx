@@ -16,12 +16,7 @@ export default function BlogPost({ blog, mdx, recommendations }) {
 
         return (
             <>
-                <Meta
-                    title={title}
-                    description={description}
-                    image={image}
-                    canonical={process.env.NEXT_PUBLIC_URL + '/blog/' + slug}
-                />
+                <Meta title={title} description={description} image={image} />
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
                     <Content blog={blog} mdx={mdx} />
                     <Recomendations recommendations={recommendations} />

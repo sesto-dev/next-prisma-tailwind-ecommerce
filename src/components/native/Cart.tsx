@@ -30,7 +30,7 @@ export const CartGrid = () => {
     useEffect(() => {
         async function getCart() {
             try {
-                if (Authenticated) {
+                if (validateBoolean(Authenticated, true)) {
                     const response = await fetch(`/api/cart`, {
                         headers: {
                             Authorization: `Bearer ${AccessToken}`,
@@ -43,7 +43,7 @@ export const CartGrid = () => {
                     setFetchingCart(false)
                 }
 
-                if (!Authenticated) {
+                if (validateBoolean(Authenticated, false)) {
                     setCartItems(getLocalCart())
                     setFetchingCart(false)
                 }
@@ -54,6 +54,26 @@ export const CartGrid = () => {
 
         getCart()
     }, [AccessToken, Authenticated])
+
+    if (isVariableValid(cartItems) && cartItems?.length === 0) {
+        return (
+            <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="md:col-span-2">
+                    <Card>
+                        <CardContent className="p-4">
+                            <p>Your Cart is empty...</p>
+                        </CardContent>
+                    </Card>
+                </div>
+                <Receipt
+                    cartItems={cartItems}
+                    setFetchingCart={setFetchingCart}
+                    fetchingCart={fetchingCart}
+                    setCartItems={setCartItems}
+                />
+            </div>
+        )
+    }
 
     return (
         <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -73,27 +93,51 @@ export const CartGrid = () => {
                           <CartVendorVariantSkeleton key={Math.random()} />
                       ))}
             </div>
-            <Receipt />
+            <Receipt
+                cartItems={cartItems}
+                setFetchingCart={setFetchingCart}
+                fetchingCart={fetchingCart}
+                setCartItems={setCartItems}
+            />
         </div>
     )
 }
 
-function Receipt() {
+function Receipt({ cartItems, setFetchingCart, fetchingCart, setCartItems }) {
+    function calculatePayableCost() {
+        let payableCost = 0
+
+        if (isVariableValid(cartItems)) {
+            for (const item of cartItems) {
+                payableCost += item.count * item.vendorVariant.price
+            }
+        }
+
+        return payableCost
+    }
+
     return (
-        <Card>
+        <Card className={fetchingCart && 'animate-pulse'}>
             <CardHeader className="p-4 pb-0">
                 <h2 className="font-bold tracking-tight">Receipt</h2>
             </CardHeader>
             <CardContent className="grid gap-4 p-4">
                 <div className="flex justify-between">
                     <h2>Payable Amount:</h2>
-                    <h3>$19.99 </h3>
+                    <h3>${calculatePayableCost()}</h3>
                 </div>
             </CardContent>
             <hr className="my-4 w-[80%] border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
 
             <CardFooter>
-                <Button className="w-full">Checkout</Button>
+                <Button
+                    disabled={
+                        !isVariableValid(cartItems) || cartItems.length === 0
+                    }
+                    className="w-full"
+                >
+                    Checkout
+                </Button>
             </CardFooter>
         </Card>
     )
@@ -195,7 +239,7 @@ export const CartVendorVariant = ({
         try {
             setFetchingCart(true)
 
-            if (Authenticated) {
+            if (validateBoolean(Authenticated, true)) {
                 const response = await fetch(`/api/cart/modify`, {
                     method:
                         getCountInCart({ cartItems, vendorVariantId }) > 1

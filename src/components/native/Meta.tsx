@@ -3,7 +3,9 @@ import { NextSeo } from 'next-seo'
 
 const { name, handle } = Config
 
-export default function Meta({ title, description, canonical, image }) {
+export default function Meta({ title, description, image }) {
+    const canonical = process.env.NEXT_PUBLIC_URL
+
     return (
         <NextSeo
             title={title}

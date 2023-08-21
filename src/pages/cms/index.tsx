@@ -6,8 +6,11 @@ import { BlogPostCard } from 'components/native/BlogPostCard'
 import prisma from 'lib/prisma'
 import { useRouter } from 'next/navigation'
 import { useValidAccessToken } from 'hooks/useAccessToken'
-import { isVariableValid } from 'lib/utils'
+import { isVariableValid, validateBoolean } from 'lib/utils'
 import { useCMS } from 'hooks/useCMS'
+import Meta from 'components/native/Meta'
+import Config from 'config/site'
+import { Card, CardContent } from 'components/ui/card'
 
 export default function Index() {
     const { Authenticated, AccessToken } = useValidAccessToken()
@@ -17,38 +20,63 @@ export default function Index() {
     const router = useRouter()
 
     useEffect(() => {
+        if (
+            validateBoolean(Authenticated, false) ||
+            validateBoolean(isVendor, false)
+        )
+            router.push('/')
+    }, [Authenticated, router, isVendor])
+
+    useEffect(() => {
         async function getUser() {
-            const answer = await fetch(`/api/user`, {
+            const response = await fetch(`/api/user`, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`,
                 },
             })
 
-            const { user: returnedUser } = await answer.json()
-            setUser(returnedUser)
+            const json = await response.json()
+            setUser(json?.user)
         }
 
-        if (
-            isVariableValid(Authenticated) ||
-            !Authenticated ||
-            !isVariableValid(vendor) ||
-            !isVendor
-        )
-            router.push('/')
-        if (
-            isVariableValid(AccessToken) &&
-            isVariableValid(Authenticated) &&
-            Authenticated
-        )
-            getUser()
-    }, [AccessToken, Authenticated, router])
+        if (validateBoolean(Authenticated, true)) getUser()
+    }, [AccessToken, Authenticated])
+
+    const links = [
+        {
+            title: 'Orders',
+            description: 'Here you can manage your orders.',
+            href: '/cms/orders',
+        },
+        {
+            title: 'Products',
+            description: 'Here you can manage your products.',
+            href: '/cms/products',
+        },
+        {
+            title: 'Blog',
+            description: 'Here you can manage your links.',
+            href: '/cms/blog',
+        },
+    ]
 
     return (
-        <div className="flex flex-col border-neutral-200 dark:border-neutral-700">
-            <h3 className="mb-6 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
-                Recent Blog Posts
-            </h3>
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-3"></div>
-        </div>
+        <>
+            <Meta
+                title="Pasargad"
+                description="Home Page"
+                image={Config.ogImage}
+            />
+            <div className="space-y-2">
+                {links.map(({ href, description, title }) => (
+                    <Card key={title} className="h-full">
+                        <CardContent className="p-4 ">
+                            <h5 className="font-bold">{title}</h5>
+                            <p className="text-sm">{description}</p>
+                        </CardContent>
+                    </Card>
+                ))}
+            </div>
+        </>
     )
 }

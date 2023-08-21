@@ -32,7 +32,6 @@ export default function Products() {
                 title="Pasargad"
                 description="Home Page"
                 image={Config.ogImage}
-                canonical={process.env.NEXT_PUBLIC_URL}
             />
             {isVariableValid(products) ? (
                 <ProductGrid products={products} />

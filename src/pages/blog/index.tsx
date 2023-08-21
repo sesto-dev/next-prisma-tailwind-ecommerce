@@ -14,7 +14,6 @@ export default function Index({ blogs }) {
                     title="Pasargad"
                     description="Home Page"
                     image={Config.ogImage}
-                    canonical={process.env.NEXT_PUBLIC_URL}
                 />
                 <h3 className="mb-6 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
                     Blog Posts

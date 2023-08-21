@@ -4,7 +4,7 @@ import Meta from 'components/native/Meta'
 import Config from 'config/site'
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import { useValidAccessToken } from 'hooks/useAccessToken'
-import { isVariableValid } from 'lib/utils'
+import { isVariableValid, validateBoolean } from 'lib/utils'
 import { useRouter } from 'next/navigation'
 import { CartGrid } from 'components/native/Cart'
 
@@ -13,9 +13,9 @@ export default function User({}) {
     const [items, setItems] = useState(null)
     const router = useRouter()
 
-    // useEffect(() => {
-    //     if (!Authenticated) router.push('/')
-    // }, [])
+    useEffect(() => {
+        if (validateBoolean(Authenticated, false)) router.push('/')
+    }, [Authenticated, router])
 
     useEffect(() => {
         async function getWishlist() {
@@ -26,11 +26,9 @@ export default function User({}) {
                     },
                 })
 
-                const {
-                    wishlist: { items },
-                } = await answer.json()
+                const json = await answer.json()
 
-                setItems(items)
+                setItems(json?.wishlist?.items)
             } catch (error) {
                 console.error({ error })
             }
@@ -45,9 +43,8 @@ export default function User({}) {
                 title="Pasargad"
                 description="Home Page"
                 image={Config.ogImage}
-                canonical={process.env.NEXT_PUBLIC_URL}
             />
-            <CartGrid items={items} />
+            <CartGrid />
         </>
     )
 }

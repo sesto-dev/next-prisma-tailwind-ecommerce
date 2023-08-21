@@ -21,7 +21,6 @@ export default function Index({ products, blogs }) {
                 title="Pasargad"
                 description="Home Page"
                 image={Config.ogImage}
-                canonical={process.env.NEXT_PUBLIC_URL}
             />
             <Carousel
                 images={[

@@ -22,7 +22,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from 'components/ui/select'
-import { isVariableValid } from 'lib/utils'
+import { isVariableValid, validateBoolean } from 'lib/utils'
 import { CloseIcon, Spinner } from 'components/native/icons'
 import type {
     ProductWithAllVariants,
@@ -45,7 +45,6 @@ export default function Product({ unserialized }) {
                     title={product.title}
                     description={product.description}
                     image={product.images[0]}
-                    canonical={process.env.NEXT_PUBLIC_URL}
                 />
                 <Breadcrumbs product={product} />
                 <div className="mt-6 grid grid-cols-1 gap-2 md:grid-cols-3">
@@ -70,7 +69,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
     useEffect(() => {
         async function getCart() {
             try {
-                if (Authenticated) {
+                if (validateBoolean(Authenticated, true)) {
                     const response = await fetch(`/api/cart`, {
                         headers: {
                             Authorization: `Bearer ${AccessToken}`,
@@ -83,7 +82,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                     setFetchingCart(false)
                 }
 
-                if (!Authenticated) {
+                if (validateBoolean(Authenticated, false)) {
                     setCartItems(getLocalCart())
                     setFetchingCart(false)
                 }
@@ -109,7 +108,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
         }
 
         getCart()
-        if (Authenticated) getWishlist()
+        if (validateBoolean(Authenticated, true)) getWishlist()
     }, [AccessToken, Authenticated])
 
     function isVariantInWishlist() {
@@ -149,7 +148,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
         try {
             setFetchingCart(true)
 
-            if (Authenticated) {
+            if (validateBoolean(Authenticated, true)) {
                 const response = await fetch(`/api/cart/modify`, {
                     method:
                         getCountInCart({ cartItems, vendorVariantId }) > 0
@@ -206,7 +205,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
         try {
             setFetchingCart(true)
 
-            if (Authenticated) {
+            if (validateBoolean(Authenticated, true)) {
                 const response = await fetch(`/api/cart/modify`, {
                     method:
                         getCountInCart({ cartItems, vendorVariantId }) > 1
@@ -350,7 +349,6 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
     }
 
     function WishlistButton() {
-        if (!Authenticated) return null
         if (fetchingWishlist)
             return (
                 <Button disabled>

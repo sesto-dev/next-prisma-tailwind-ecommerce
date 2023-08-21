@@ -21,7 +21,9 @@ export function useCMS() {
                         },
                     })
 
-                    const { user } = await response.json()
+                    const json = await response.json()
+
+                    const user = json?.user
 
                     if (isVariableValid(user)) {
                         if (isVariableValid(user.vendor)) {
