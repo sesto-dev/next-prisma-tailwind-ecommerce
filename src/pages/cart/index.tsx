@@ -7,6 +7,7 @@ import { useValidAccessToken } from 'hooks/useAccessToken'
 import { CartGrid } from 'components/native/Cart'
 import type { CartItemWithVendorVariant } from 'types/prisma'
 import { getLocalCart, writeLocalCart } from 'lib/cart'
+import { validateBoolean } from 'lib/utils'
 
 export default function Cart() {
     const { Authenticated, AccessToken } = useValidAccessToken()
@@ -29,8 +30,8 @@ export default function Cart() {
             }
         }
 
-        if (Authenticated) getCart()
-        if (!Authenticated) setItems(getLocalCart())
+        if (validateBoolean(Authenticated, true)) getCart()
+        if (validateBoolean(Authenticated, false)) setItems(getLocalCart())
     }, [AccessToken, Authenticated])
 
     return (
@@ -47,7 +48,7 @@ export default function Cart() {
             <p className="mb-4 text-xs text-neutral-500 text-justify">
                 Below is a list of products you have in your cart.
             </p>
-            <CartGrid items={items} />
+            <CartGrid />
         </>
     )
 }

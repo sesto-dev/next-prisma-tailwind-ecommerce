@@ -22,6 +22,14 @@ export function isVariableValid(variable) {
     return variable !== null && variable !== undefined
 }
 
+export function validateBoolean(variable, value) {
+    if (isVariableValid(variable) && variable === value) {
+        return true
+    }
+
+    return false
+}
+
 export function isMacOs() {
     return window.navigator.userAgent.includes('Mac')
 }

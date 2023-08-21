@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import Image from 'next/image'
-import { CloseIcon, ImageSkeleton } from 'components/native/icons'
+import { CloseIcon, ImageSkeleton, Spinner } from 'components/native/icons'
 import { Button } from 'components/ui/button'
 import {
     Card,
@@ -13,17 +13,59 @@ import {
 } from 'components/ui/card'
 import { Badge } from 'components/ui/badge'
 import type { CartItemWithVendorVariant } from 'types/prisma'
-import { isVariableValid } from 'lib/utils'
+import { isVariableValid, validateBoolean } from 'lib/utils'
+import { getCountInCart, getLocalCart, writeLocalCart } from 'lib/cart'
+import { useState, useEffect } from 'react'
+import { Cross2Icon, MinusIcon, PlusIcon } from '@radix-ui/react-icons'
+import { useValidAccessToken } from 'hooks/useAccessToken'
 
-export const CartGrid = ({ items }: { items: CartItemWithVendorVariant[] }) => {
+export const CartGrid = () => {
+    const { Authenticated, AccessToken } = useValidAccessToken()
+    const [cartItems, setCartItems] = useState<
+        CartItemWithVendorVariant[] | null
+    >(null)
+    const [vendorVariantId, setVendorVariantId] = useState('')
+    const [fetchingCart, setFetchingCart] = useState(true)
+
+    useEffect(() => {
+        async function getCart() {
+            try {
+                if (Authenticated) {
+                    const response = await fetch(`/api/cart`, {
+                        headers: {
+                            Authorization: `Bearer ${AccessToken}`,
+                        },
+                    })
+
+                    const json = await response.json()
+                    setCartItems(json?.cart?.items)
+                    writeLocalCart(json?.cart?.items)
+                    setFetchingCart(false)
+                }
+
+                if (!Authenticated) {
+                    setCartItems(getLocalCart())
+                    setFetchingCart(false)
+                }
+            } catch (error) {
+                console.error({ error })
+            }
+        }
+
+        getCart()
+    }, [AccessToken, Authenticated])
+
     return (
         <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="md:col-span-2">
-                {isVariableValid(items)
-                    ? items.map(({ count, vendorVariant, vendorVariantId }) => (
+                {isVariableValid(cartItems)
+                    ? cartItems.map((cartItem) => (
                           <CartVendorVariant
-                              count={count}
-                              vendorVariant={vendorVariant}
+                              cartItems={cartItems}
+                              cartItem={cartItem}
+                              setFetchingCart={setFetchingCart}
+                              fetchingCart={fetchingCart}
+                              setCartItems={setCartItems}
                               key={vendorVariantId}
                           />
                       ))
@@ -57,15 +99,205 @@ function Receipt() {
     )
 }
 
-export const CartVendorVariant = ({ count, vendorVariant }) => {
+export const CartVendorVariant = ({
+    cartItems,
+    cartItem,
+    setFetchingCart,
+    fetchingCart,
+    setCartItems,
+}) => {
+    const { Authenticated, AccessToken } = useValidAccessToken()
+
+    const { vendorVariant, vendorVariantId, count } = cartItem
+
+    function findLocalCartIndexById(array, vendorVariantId) {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].vendorVariantId === vendorVariantId) {
+                return i
+            }
+        }
+        return -1
+    }
+
+    async function getVendorVariant() {
+        try {
+            const response = await fetch(`/api/vendor/variant`, {
+                method: 'POST',
+                body: JSON.stringify({ vendorVariantId }),
+            })
+
+            const json = await response.json()
+
+            return json?.vendorVariant
+        } catch (error) {
+            console.error({ error })
+        }
+    }
+
+    async function onAddToCart() {
+        try {
+            setFetchingCart(true)
+
+            if (validateBoolean(Authenticated, true)) {
+                const response = await fetch(`/api/cart/modify`, {
+                    method:
+                        getCountInCart({ cartItems, vendorVariantId }) > 0
+                            ? 'PUT'
+                            : 'POST',
+                    body: JSON.stringify({ vendorVariantId }),
+                    headers: {
+                        Authorization: `Bearer ${AccessToken}`,
+                    },
+                })
+
+                const json = await response.json()
+
+                setCartItems(json?.cart?.items)
+                writeLocalCart(json?.cart?.items)
+            }
+
+            const localCart = getLocalCart() as any[]
+            if (
+                !Authenticated &&
+                getCountInCart({ cartItems, vendorVariantId }) > 0
+            ) {
+                for (let i = 0; i < localCart.length; i++) {
+                    if (localCart[i].vendorVariantId === vendorVariantId) {
+                        localCart[i].count = localCart[i].count + 1
+                    }
+                }
+
+                setCartItems(localCart)
+                writeLocalCart(localCart)
+            }
+
+            if (
+                !Authenticated &&
+                getCountInCart({ cartItems, vendorVariantId }) < 1
+            ) {
+                localCart.push({
+                    vendorVariantId,
+                    vendorVariant: await getVendorVariant(),
+                    count: 1,
+                })
+
+                writeLocalCart(localCart)
+                setCartItems(localCart)
+            }
+
+            setFetchingCart(false)
+        } catch (error) {
+            console.error({ error })
+        }
+    }
+
+    async function onRemoveFromCart() {
+        try {
+            setFetchingCart(true)
+
+            if (Authenticated) {
+                const response = await fetch(`/api/cart/modify`, {
+                    method:
+                        getCountInCart({ cartItems, vendorVariantId }) > 1
+                            ? 'PATCH'
+                            : 'DELETE',
+                    body: JSON.stringify({ vendorVariantId }),
+                    headers: {
+                        Authorization: `Bearer ${AccessToken}`,
+                    },
+                })
+
+                const json = await response.json()
+
+                setCartItems(json?.cart?.items)
+                writeLocalCart(json?.cart?.items)
+                setFetchingCart(false)
+            }
+
+            const localCart = getLocalCart() as any[]
+            const index = findLocalCartIndexById(localCart, vendorVariantId)
+            const count = localCart[index].count
+
+            if (
+                !Authenticated &&
+                getCountInCart({ cartItems, vendorVariantId }) > 1
+            ) {
+                localCart[index].count = count - 1
+
+                setCartItems(localCart)
+                writeLocalCart(localCart)
+            }
+
+            if (
+                !Authenticated &&
+                getCountInCart({ cartItems, vendorVariantId }) === 1
+            ) {
+                localCart.splice(index, 1)
+
+                writeLocalCart(localCart)
+                setCartItems(localCart)
+            }
+
+            setFetchingCart(false)
+        } catch (error) {
+            console.error({ error })
+        }
+    }
+
+    function CartButton() {
+        if (fetchingCart)
+            return (
+                <Button disabled>
+                    <Spinner />
+                </Button>
+            )
+
+        if (getCountInCart({ cartItems, vendorVariantId }) === 0) {
+            return (
+                <Button disabled={vendorVariantId == ''} onClick={onAddToCart}>
+                    🛒 Add to Cart
+                </Button>
+            )
+        }
+
+        if (getCountInCart({ cartItems, vendorVariantId }) > 0) {
+            return (
+                <>
+                    <Button
+                        disabled={vendorVariantId == ''}
+                        variant="outline"
+                        size="icon"
+                        onClick={onRemoveFromCart}
+                    >
+                        {getCountInCart({ cartItems, vendorVariantId }) == 1 ? (
+                            <Cross2Icon className="h-4" />
+                        ) : (
+                            <MinusIcon className="h-4" />
+                        )}
+                    </Button>
+                    <Button disabled variant="ghost" size="icon">
+                        {getCountInCart({ cartItems, vendorVariantId })}
+                    </Button>
+                    <Button
+                        disabled={vendorVariantId == ''}
+                        variant="outline"
+                        size="icon"
+                        onClick={onAddToCart}
+                    >
+                        <PlusIcon className="h-4" />
+                    </Button>
+                </>
+            )
+        }
+    }
+
     return (
-        <Link
-            className=""
-            href={`/product/${vendorVariant?.productVariant?.product?.id}`}
-        >
-            <Card className="">
-                <CardHeader className="p-0 md:hidden">
-                    <div className="relative h-32 w-full">
+        <Card>
+            <CardHeader className="p-0 md:hidden">
+                <div className="relative h-32 w-full">
+                    <Link
+                        href={`/product/${vendorVariant?.productVariant?.product?.id}`}
+                    >
                         <Image
                             className="rounded-t-lg"
                             src={vendorVariant.productVariant.images[0]}
@@ -73,10 +305,14 @@ export const CartVendorVariant = ({ count, vendorVariant }) => {
                             fill
                             style={{ objectFit: 'cover' }}
                         />
-                    </div>
-                </CardHeader>
-                <CardContent className="grid grid-cols-6 gap-4 p-3">
-                    <div className="relative w-full col-span-1 hidden md:inline-flex">
+                    </Link>
+                </div>
+            </CardHeader>
+            <CardContent className="grid grid-cols-6 gap-4 p-3">
+                <div className="relative w-full col-span-2 hidden md:inline-flex">
+                    <Link
+                        href={`/product/${vendorVariant?.productVariant?.product?.id}`}
+                    >
                         <Image
                             className="rounded-lg"
                             src={vendorVariant?.productVariant?.images[0]}
@@ -84,22 +320,22 @@ export const CartVendorVariant = ({ count, vendorVariant }) => {
                             fill
                             style={{ objectFit: 'cover' }}
                         />
-                    </div>
-                    <div className="col-span-5">
-                        <div className="flex flex-1 items-center justify-between">
-                            <h2>{vendorVariant?.productVariant?.title}</h2>
-                            <Button size="icon" variant="outline">
-                                <CloseIcon />
-                            </Button>
-                        </div>
-                        <p className="my-2 text-xs text-neutral-500 text-justify w-2/3">
-                            {vendorVariant?.productVariant?.description}
-                        </p>
-                        <h2 className="text-lg">${vendorVariant?.price}</h2>
-                    </div>
-                </CardContent>
-            </Card>
-        </Link>
+                    </Link>
+                </div>
+                <div className="col-span-4">
+                    <Link
+                        href={`/product/${vendorVariant?.productVariant?.product?.id}`}
+                    >
+                        <h2>{vendorVariant?.productVariant?.title}</h2>
+                    </Link>
+                    <p className="my-2 text-xs text-neutral-500 text-justify">
+                        {vendorVariant?.productVariant?.description}
+                    </p>
+                    <h2 className="text-lg mb-4">${vendorVariant?.price}</h2>
+                    <CartButton />
+                </div>
+            </CardContent>
+        </Card>
     )
 }
 
