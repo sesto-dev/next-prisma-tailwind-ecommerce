@@ -11,36 +11,19 @@ import { useCMS } from 'hooks/useCMS'
 import Meta from 'components/native/Meta'
 import Config from 'config/site'
 import { Card, CardContent } from 'components/ui/card'
+import { useUserContext } from 'state/User'
 
 export default function Index() {
-    const { Authenticated, AccessToken } = useValidAccessToken()
+    const { AccessToken } = useValidAccessToken()
     const { isAdmin, isVendor, vendor } = useCMS()
+    const { user, loading } = useUserContext()
 
-    const [user, setUser] = useState(null)
     const router = useRouter()
 
     useEffect(() => {
-        if (
-            validateBoolean(Authenticated, false) ||
-            validateBoolean(isVendor, false)
-        )
+        if (!isVariableValid(AccessToken) || !isVariableValid(vendor))
             router.push('/')
-    }, [Authenticated, router, isVendor])
-
-    useEffect(() => {
-        async function getUser() {
-            const response = await fetch(`/api/user`, {
-                headers: {
-                    Authorization: `Bearer ${AccessToken}`,
-                },
-            })
-
-            const json = await response.json()
-            setUser(json?.user)
-        }
-
-        if (validateBoolean(Authenticated, true)) getUser()
-    }, [AccessToken, Authenticated])
+    }, [router, vendor, AccessToken])
 
     const links = [
         {

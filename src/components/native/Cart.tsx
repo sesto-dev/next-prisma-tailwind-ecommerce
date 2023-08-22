@@ -18,44 +18,13 @@ import { getCountInCart, getLocalCart, writeLocalCart } from 'lib/cart'
 import { useState, useEffect } from 'react'
 import { Cross2Icon, MinusIcon, PlusIcon } from '@radix-ui/react-icons'
 import { useValidAccessToken } from 'hooks/useAccessToken'
+import { useUserContext } from 'state/User'
+import { useCartContext } from 'state/Cart'
 
 export const CartGrid = () => {
-    const { Authenticated, AccessToken } = useValidAccessToken()
-    const [cartItems, setCartItems] = useState<
-        CartItemWithVendorVariant[] | null
-    >(null)
-    const [vendorVariantId, setVendorVariantId] = useState('')
-    const [fetchingCart, setFetchingCart] = useState(true)
+    const { loading, cart, refreshCart, dispatchCart } = useCartContext()
 
-    useEffect(() => {
-        async function getCart() {
-            try {
-                if (validateBoolean(Authenticated, true)) {
-                    const response = await fetch(`/api/cart`, {
-                        headers: {
-                            Authorization: `Bearer ${AccessToken}`,
-                        },
-                    })
-
-                    const json = await response.json()
-                    setCartItems(json?.cart?.items)
-                    writeLocalCart(json?.cart?.items)
-                    setFetchingCart(false)
-                }
-
-                if (validateBoolean(Authenticated, false)) {
-                    setCartItems(getLocalCart())
-                    setFetchingCart(false)
-                }
-            } catch (error) {
-                console.error({ error })
-            }
-        }
-
-        getCart()
-    }, [AccessToken, Authenticated])
-
-    if (isVariableValid(cartItems) && cartItems?.length === 0) {
+    if (isVariableValid(cart?.items) && cart['items'].length === 0) {
         return (
             <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="md:col-span-2">
@@ -65,12 +34,7 @@ export const CartGrid = () => {
                         </CardContent>
                     </Card>
                 </div>
-                <Receipt
-                    cartItems={cartItems}
-                    setFetchingCart={setFetchingCart}
-                    fetchingCart={fetchingCart}
-                    setCartItems={setCartItems}
-                />
+                <Receipt />
             </div>
         )
     }
@@ -78,37 +42,27 @@ export const CartGrid = () => {
     return (
         <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="md:col-span-2">
-                {isVariableValid(cartItems)
-                    ? cartItems.map((cartItem) => (
-                          <CartVendorVariant
-                              cartItems={cartItems}
-                              cartItem={cartItem}
-                              setFetchingCart={setFetchingCart}
-                              fetchingCart={fetchingCart}
-                              setCartItems={setCartItems}
-                              key={vendorVariantId}
-                          />
+                {isVariableValid(cart?.items)
+                    ? cart['items'].map((cartItem, index) => (
+                          <CartVendorVariant cartItem={cartItem} key={index} />
                       ))
-                    : [...Array(5)].map(() => (
-                          <CartVendorVariantSkeleton key={Math.random()} />
+                    : [...Array(5)].map((cartItem, index) => (
+                          <CartVendorVariantSkeleton key={index} />
                       ))}
             </div>
-            <Receipt
-                cartItems={cartItems}
-                setFetchingCart={setFetchingCart}
-                fetchingCart={fetchingCart}
-                setCartItems={setCartItems}
-            />
+            <Receipt />
         </div>
     )
 }
 
-function Receipt({ cartItems, setFetchingCart, fetchingCart, setCartItems }) {
+function Receipt() {
+    const { loading, cart, refreshCart, dispatchCart } = useCartContext()
+
     function calculatePayableCost() {
         let payableCost = 0
 
-        if (isVariableValid(cartItems)) {
-            for (const item of cartItems) {
+        if (isVariableValid(cart?.items)) {
+            for (const item of cart?.items) {
                 payableCost += item.count * item.vendorVariant.price
             }
         }
@@ -117,7 +71,7 @@ function Receipt({ cartItems, setFetchingCart, fetchingCart, setCartItems }) {
     }
 
     return (
-        <Card className={fetchingCart && 'animate-pulse'}>
+        <Card className={loading && 'animate-pulse'}>
             <CardHeader className="p-4 pb-0">
                 <h2 className="font-bold tracking-tight">Receipt</h2>
             </CardHeader>
@@ -132,7 +86,8 @@ function Receipt({ cartItems, setFetchingCart, fetchingCart, setCartItems }) {
             <CardFooter>
                 <Button
                     disabled={
-                        !isVariableValid(cartItems) || cartItems.length === 0
+                        !isVariableValid(cart?.items) ||
+                        cart['items'].length === 0
                     }
                     className="w-full"
                 >
@@ -143,14 +98,9 @@ function Receipt({ cartItems, setFetchingCart, fetchingCart, setCartItems }) {
     )
 }
 
-export const CartVendorVariant = ({
-    cartItems,
-    cartItem,
-    setFetchingCart,
-    fetchingCart,
-    setCartItems,
-}) => {
-    const { Authenticated, AccessToken } = useValidAccessToken()
+export const CartVendorVariant = ({ cartItem }) => {
+    const { AccessToken } = useValidAccessToken()
+    const { loading, cart, refreshCart, dispatchCart } = useCartContext()
 
     const { vendorVariant, vendorVariantId, count } = cartItem
 
@@ -180,12 +130,13 @@ export const CartVendorVariant = ({
 
     async function onAddToCart() {
         try {
-            setFetchingCart(true)
-
-            if (validateBoolean(Authenticated, true)) {
+            if (isVariableValid(AccessToken)) {
                 const response = await fetch(`/api/cart/modify`, {
                     method:
-                        getCountInCart({ cartItems, vendorVariantId }) > 0
+                        getCountInCart({
+                            cartItems: cart?.items,
+                            vendorVariantId,
+                        }) > 0
                             ? 'PUT'
                             : 'POST',
                     body: JSON.stringify({ vendorVariantId }),
@@ -196,14 +147,15 @@ export const CartVendorVariant = ({
 
                 const json = await response.json()
 
-                setCartItems(json?.cart?.items)
-                writeLocalCart(json?.cart?.items)
+                dispatchCart(json?.cart)
+                writeLocalCart(json?.cart)
             }
 
             const localCart = getLocalCart() as any[]
+
             if (
-                !Authenticated &&
-                getCountInCart({ cartItems, vendorVariantId }) > 0
+                isVariableValid(AccessToken) &&
+                getCountInCart({ cartItems: cart?.items, vendorVariantId }) > 0
             ) {
                 for (let i = 0; i < localCart.length; i++) {
                     if (localCart[i].vendorVariantId === vendorVariantId) {
@@ -211,13 +163,13 @@ export const CartVendorVariant = ({
                     }
                 }
 
-                setCartItems(localCart)
+                dispatchCart(localCart)
                 writeLocalCart(localCart)
             }
 
             if (
-                !Authenticated &&
-                getCountInCart({ cartItems, vendorVariantId }) < 1
+                isVariableValid(AccessToken) &&
+                getCountInCart({ cartItems: cart?.items, vendorVariantId }) < 1
             ) {
                 localCart.push({
                     vendorVariantId,
@@ -226,10 +178,8 @@ export const CartVendorVariant = ({
                 })
 
                 writeLocalCart(localCart)
-                setCartItems(localCart)
+                dispatchCart(localCart)
             }
-
-            setFetchingCart(false)
         } catch (error) {
             console.error({ error })
         }
@@ -237,12 +187,13 @@ export const CartVendorVariant = ({
 
     async function onRemoveFromCart() {
         try {
-            setFetchingCart(true)
-
-            if (validateBoolean(Authenticated, true)) {
+            if (isVariableValid(AccessToken)) {
                 const response = await fetch(`/api/cart/modify`, {
                     method:
-                        getCountInCart({ cartItems, vendorVariantId }) > 1
+                        getCountInCart({
+                            cartItems: cart?.items,
+                            vendorVariantId,
+                        }) > 1
                             ? 'PATCH'
                             : 'DELETE',
                     body: JSON.stringify({ vendorVariantId }),
@@ -253,9 +204,8 @@ export const CartVendorVariant = ({
 
                 const json = await response.json()
 
-                setCartItems(json?.cart?.items)
-                writeLocalCart(json?.cart?.items)
-                setFetchingCart(false)
+                dispatchCart(json?.cart)
+                writeLocalCart(json?.cart)
             }
 
             const localCart = getLocalCart() as any[]
@@ -263,40 +213,44 @@ export const CartVendorVariant = ({
             const count = localCart[index].count
 
             if (
-                !Authenticated &&
-                getCountInCart({ cartItems, vendorVariantId }) > 1
+                isVariableValid(AccessToken) &&
+                getCountInCart({ cartItems: cart?.items, vendorVariantId }) > 1
             ) {
                 localCart[index].count = count - 1
 
-                setCartItems(localCart)
+                dispatchCart(localCart)
                 writeLocalCart(localCart)
             }
 
             if (
-                !Authenticated &&
-                getCountInCart({ cartItems, vendorVariantId }) === 1
+                isVariableValid(AccessToken) &&
+                getCountInCart({ cartItems: cart?.items, vendorVariantId }) ===
+                    1
             ) {
                 localCart.splice(index, 1)
 
                 writeLocalCart(localCart)
-                setCartItems(localCart)
+                dispatchCart(localCart)
             }
-
-            setFetchingCart(false)
         } catch (error) {
             console.error({ error })
         }
     }
 
     function CartButton() {
-        if (fetchingCart)
+        const count = getCountInCart({
+            cartItems: cart?.items,
+            vendorVariantId,
+        })
+
+        if (loading)
             return (
                 <Button disabled>
                     <Spinner />
                 </Button>
             )
 
-        if (getCountInCart({ cartItems, vendorVariantId }) === 0) {
+        if (count === 0) {
             return (
                 <Button disabled={vendorVariantId == ''} onClick={onAddToCart}>
                     🛒 Add to Cart
@@ -304,7 +258,7 @@ export const CartVendorVariant = ({
             )
         }
 
-        if (getCountInCart({ cartItems, vendorVariantId }) > 0) {
+        if (count > 0) {
             return (
                 <>
                     <Button
@@ -313,14 +267,14 @@ export const CartVendorVariant = ({
                         size="icon"
                         onClick={onRemoveFromCart}
                     >
-                        {getCountInCart({ cartItems, vendorVariantId }) == 1 ? (
+                        {count === 1 ? (
                             <Cross2Icon className="h-4" />
                         ) : (
                             <MinusIcon className="h-4" />
                         )}
                     </Button>
                     <Button disabled variant="ghost" size="icon">
-                        {getCountInCart({ cartItems, vendorVariantId })}
+                        {count}
                     </Button>
                     <Button
                         disabled={vendorVariantId == ''}

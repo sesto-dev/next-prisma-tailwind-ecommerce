@@ -7,26 +7,29 @@ import { useValidAccessToken } from 'hooks/useAccessToken'
 import { isVariableValid, validateBoolean } from 'lib/utils'
 import { useRouter } from 'next/navigation'
 import { CartGrid } from 'components/native/Cart'
+import { useUserContext } from 'state/User'
 
 export default function User({}) {
-    const { Authenticated, AccessToken } = useValidAccessToken()
+    const { AccessToken } = useValidAccessToken()
+    const { user, loading } = useUserContext()
+
     const [items, setItems] = useState(null)
     const router = useRouter()
 
     useEffect(() => {
-        if (validateBoolean(Authenticated, false)) router.push('/')
-    }, [Authenticated, router])
+        if (!loading && !isVariableValid(user)) router.push('/')
+    }, [user, loading, router])
 
     useEffect(() => {
         async function getWishlist() {
             try {
-                const answer = await fetch(`/api/wishlist`, {
+                const response = await fetch(`/api/wishlist`, {
                     headers: {
                         Authorization: `Bearer ${AccessToken}`,
                     },
                 })
 
-                const json = await answer.json()
+                const json = await response.json()
 
                 setItems(json?.wishlist?.items)
             } catch (error) {

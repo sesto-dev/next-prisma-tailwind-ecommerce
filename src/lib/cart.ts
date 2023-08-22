@@ -1,10 +1,17 @@
+import { isVariableValid } from './utils'
+
 export function writeLocalCart(items) {
     window.localStorage.setItem('Cart', JSON.stringify(items))
 }
 
 export function getLocalCart() {
     if (typeof window !== 'undefined' && window.localStorage) {
-        return JSON.parse(window.localStorage.getItem('Cart'))
+        try {
+            return JSON.parse(window.localStorage.getItem('Cart'))
+        } catch (error) {
+            writeLocalCart([])
+            return []
+        }
     }
 }
 

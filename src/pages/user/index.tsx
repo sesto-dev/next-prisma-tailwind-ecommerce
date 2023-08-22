@@ -22,32 +22,13 @@ import {
 } from 'components/ui/accordion'
 import { Spinner } from 'components/native/icons'
 import { useRouter } from 'next/navigation'
+import { useUserContext } from 'state/User'
 
 export default function User({}) {
-    const { Authenticated, AccessToken } = useValidAccessToken()
-    const [user, setUser] = useState(null)
+    const { AccessToken } = useValidAccessToken()
+    const { user, loading } = useUserContext()
+
     const router = useRouter()
-
-    useEffect(() => {
-        async function getUser() {
-            const response = await fetch(`/api/user`, {
-                headers: {
-                    Authorization: `Bearer ${AccessToken}`,
-                },
-            })
-
-            const json = await response.json()
-            setUser(json?.user)
-        }
-
-        if (isVariableValid(Authenticated) && !Authenticated) router.push('/')
-        if (
-            isVariableValid(AccessToken) &&
-            isVariableValid(Authenticated) &&
-            Authenticated
-        )
-            getUser()
-    }, [AccessToken, Authenticated, router])
 
     return (
         <>

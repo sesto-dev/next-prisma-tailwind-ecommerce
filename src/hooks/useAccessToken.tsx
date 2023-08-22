@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 
 export function useValidAccessToken() {
     const [returnAccessToken, setReturnAccessToken] = useState(null)
-    const [Authenticated, setAuthenticated] = useState(null)
     let AccessToken: string, RefreshToken: string
 
     useEffect(() => {
@@ -37,20 +36,14 @@ export function useValidAccessToken() {
                                     'AccessToken',
                                     RefreshedAccessToken
                                 )
-                                setAuthenticated(true)
                                 setReturnAccessToken(RefreshedAccessToken)
-                            } else {
-                                setAuthenticated(false)
                             }
                         } else {
-                            setAuthenticated(true)
                             setReturnAccessToken(AccessToken)
                         }
                     }
 
                     fetchData()
-                } else {
-                    setAuthenticated(false)
                 }
             }
         } catch (error) {
@@ -58,5 +51,5 @@ export function useValidAccessToken() {
         }
     }, [])
 
-    return { Authenticated, AccessToken: returnAccessToken }
+    return { AccessToken: returnAccessToken }
 }

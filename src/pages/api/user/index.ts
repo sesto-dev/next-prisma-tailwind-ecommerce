@@ -15,7 +15,21 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
         const user = await prisma.user.findUnique({
             where: { id, isEmailVerified: true },
             include: {
-                cart: true,
+                cart: {
+                    include: {
+                        items: {
+                            include: {
+                                vendorVariant: {
+                                    include: {
+                                        productVariant: {
+                                            include: { product: true },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
                 orders: true,
                 addresses: true,
                 payments: true,

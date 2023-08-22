@@ -13,8 +13,11 @@ import prisma from 'lib/prisma'
 import { ProductGrid, ProductSkeletonGrid } from 'components/native/Product'
 import { isVariableValid } from 'lib/utils'
 import Carousel from 'components/native/Carousel'
+import { useUserContext } from 'state/User'
 
 export default function Index({ products, blogs }) {
+    const { user, loading } = useUserContext()
+    console.log({ user })
     return (
         <div className="flex flex-col border-neutral-200 dark:border-neutral-700">
             <Meta

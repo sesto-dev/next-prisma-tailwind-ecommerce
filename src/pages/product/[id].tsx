@@ -30,6 +30,7 @@ import type {
 } from 'types/prisma'
 import { Badge } from 'components/ui/badge'
 import { getCountInCart, getLocalCart, writeLocalCart } from 'lib/cart'
+import { useCartContext } from 'state/Cart'
 
 export default function Product({ unserialized }) {
     const [product, setProduct] = useState<ProductWithAllVariants | null>(null)
@@ -57,49 +58,24 @@ export default function Product({ unserialized }) {
 }
 
 const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
-    const { Authenticated, AccessToken } = useValidAccessToken()
-    const [cartItems, setCartItems] = useState<
-        CartItemWithVendorVariant[] | null
-    >(null)
+    const { AccessToken } = useValidAccessToken()
+    const { loading, cart, refreshCart, dispatchCart } = useCartContext()
+
     const [wishlist, setWishlist] = useState(null)
     const [vendorVariantId, setVendorVariantId] = useState('')
     const [fetchingCart, setFetchingCart] = useState(true)
     const [fetchingWishlist, setFetchingWishlist] = useState(true)
 
     useEffect(() => {
-        async function getCart() {
-            try {
-                if (validateBoolean(Authenticated, true)) {
-                    const response = await fetch(`/api/cart`, {
-                        headers: {
-                            Authorization: `Bearer ${AccessToken}`,
-                        },
-                    })
-
-                    const json = await response.json()
-                    setCartItems(json?.cart?.items)
-                    writeLocalCart(json?.cart?.items)
-                    setFetchingCart(false)
-                }
-
-                if (validateBoolean(Authenticated, false)) {
-                    setCartItems(getLocalCart())
-                    setFetchingCart(false)
-                }
-            } catch (error) {
-                console.error({ error })
-            }
-        }
-
         async function getWishlist() {
             try {
-                const answer = await fetch(`/api/wishlist`, {
+                const response = await fetch(`/api/wishlist`, {
                     headers: {
                         Authorization: `Bearer ${AccessToken}`,
                     },
                 })
 
-                const json = await answer.json()
+                const json = await response.json()
                 setWishlist(json?.wishlist?.items)
                 setFetchingWishlist(false)
             } catch (error) {
@@ -107,9 +83,8 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
             }
         }
 
-        getCart()
-        if (validateBoolean(Authenticated, true)) getWishlist()
-    }, [AccessToken, Authenticated])
+        if (isVariableValid(AccessToken)) getWishlist()
+    }, [AccessToken])
 
     function isVariantInWishlist() {
         for (let i = 0; i < wishlist.length; i++) {
@@ -148,12 +123,14 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
         try {
             setFetchingCart(true)
 
-            if (validateBoolean(Authenticated, true)) {
+            const count = getCountInCart({
+                cartItems: cart?.items,
+                vendorVariantId,
+            })
+
+            if (isVariableValid(AccessToken)) {
                 const response = await fetch(`/api/cart/modify`, {
-                    method:
-                        getCountInCart({ cartItems, vendorVariantId }) > 0
-                            ? 'PUT'
-                            : 'POST',
+                    method: count > 0 ? 'PUT' : 'POST',
                     body: JSON.stringify({ vendorVariantId }),
                     headers: {
                         Authorization: `Bearer ${AccessToken}`,
@@ -162,37 +139,29 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
 
                 const json = await response.json()
 
-                setCartItems(json?.cart?.items)
-                writeLocalCart(json?.cart?.items)
+                dispatchCart(json?.cart)
             }
 
             const localCart = getLocalCart() as any[]
-            if (
-                !Authenticated &&
-                getCountInCart({ cartItems, vendorVariantId }) > 0
-            ) {
+
+            if (!isVariableValid(AccessToken) && count > 0) {
                 for (let i = 0; i < localCart.length; i++) {
                     if (localCart[i].vendorVariantId === vendorVariantId) {
                         localCart[i].count = localCart[i].count + 1
                     }
                 }
 
-                setCartItems(localCart)
-                writeLocalCart(localCart)
+                dispatchCart(localCart)
             }
 
-            if (
-                !Authenticated &&
-                getCountInCart({ cartItems, vendorVariantId }) < 1
-            ) {
+            if (!isVariableValid(AccessToken) && count < 1) {
                 localCart.push({
                     vendorVariantId,
                     vendorVariant: await getVendorVariant(),
                     count: 1,
                 })
 
-                writeLocalCart(localCart)
-                setCartItems(localCart)
+                dispatchCart(localCart)
             }
 
             setFetchingCart(false)
@@ -205,12 +174,14 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
         try {
             setFetchingCart(true)
 
-            if (validateBoolean(Authenticated, true)) {
+            const count = getCountInCart({
+                cartItems: cart?.items,
+                vendorVariantId,
+            })
+
+            if (isVariableValid(AccessToken)) {
                 const response = await fetch(`/api/cart/modify`, {
-                    method:
-                        getCountInCart({ cartItems, vendorVariantId }) > 1
-                            ? 'PATCH'
-                            : 'DELETE',
+                    method: count > 1 ? 'PATCH' : 'DELETE',
                     body: JSON.stringify({ vendorVariantId }),
                     headers: {
                         Authorization: `Bearer ${AccessToken}`,
@@ -219,33 +190,23 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
 
                 const json = await response.json()
 
-                setCartItems(json?.cart?.items)
-                writeLocalCart(json?.cart?.items)
-                setFetchingCart(false)
+                dispatchCart(json?.cart)
             }
 
             const localCart = getLocalCart() as any[]
             const index = findLocalCartIndexById(localCart, vendorVariantId)
-            const count = localCart[index].count
+            const itemCount = localCart[index].count
 
-            if (
-                !Authenticated &&
-                getCountInCart({ cartItems, vendorVariantId }) > 1
-            ) {
-                localCart[index].count = count - 1
+            if (!isVariableValid(AccessToken) && count > 1) {
+                localCart[index].count = itemCount - 1
 
-                setCartItems(localCart)
-                writeLocalCart(localCart)
+                dispatchCart(localCart)
             }
 
-            if (
-                !Authenticated &&
-                getCountInCart({ cartItems, vendorVariantId }) === 1
-            ) {
+            if (!isVariableValid(AccessToken) && count === 1) {
                 localCart.splice(index, 1)
 
-                writeLocalCart(localCart)
-                setCartItems(localCart)
+                dispatchCart(localCart)
             }
 
             setFetchingCart(false)
@@ -308,7 +269,12 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                 </Button>
             )
 
-        if (getCountInCart({ cartItems, vendorVariantId }) === 0) {
+        const count = getCountInCart({
+            cartItems: cart?.items,
+            vendorVariantId,
+        })
+
+        if (count === 0) {
             return (
                 <Button disabled={vendorVariantId == ''} onClick={onAddToCart}>
                     🛒 Add to Cart
@@ -316,7 +282,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
             )
         }
 
-        if (getCountInCart({ cartItems, vendorVariantId }) > 0) {
+        if (count > 0) {
             return (
                 <>
                     <Button
@@ -325,7 +291,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                         size="icon"
                         onClick={onRemoveFromCart}
                     >
-                        {getCountInCart({ cartItems, vendorVariantId }) == 1 ? (
+                        {count == 1 ? (
                             <Cross2Icon className="h-4 w-4" />
                         ) : (
                             <MinusIcon className="h-4 w-4" />
@@ -333,7 +299,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                     </Button>
 
                     <Button disabled variant="outline" size="icon">
-                        {getCountInCart({ cartItems, vendorVariantId })}
+                        {count}
                     </Button>
                     <Button
                         disabled={vendorVariantId == ''}

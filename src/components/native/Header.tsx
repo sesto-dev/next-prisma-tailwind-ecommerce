@@ -6,9 +6,10 @@ import { useValidAccessToken } from 'hooks/useAccessToken'
 import { UserNav } from 'nav/user'
 import { Button } from 'components/ui/button'
 import { CartNav } from 'nav/cart'
+import { isVariableValid } from 'lib/utils'
 
 export default function Header() {
-    const { Authenticated } = useValidAccessToken()
+    const { AccessToken } = useValidAccessToken()
 
     return (
         <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur mb-4">
@@ -20,7 +21,11 @@ export default function Header() {
                         <CommandMenu />
                     </div>
                     <CartNav />
-                    {Authenticated ? <UserNav /> : <LoginDialog />}
+                    {isVariableValid(AccessToken) ? (
+                        <UserNav />
+                    ) : (
+                        <LoginDialog />
+                    )}
                 </div>
             </div>
         </header>
