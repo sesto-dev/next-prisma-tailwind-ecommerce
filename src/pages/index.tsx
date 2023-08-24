@@ -16,8 +16,6 @@ import Carousel from 'components/native/Carousel'
 import { useUserContext } from 'state/User'
 
 export default function Index({ products, blogs }) {
-    const { user, loading } = useUserContext()
-    console.log({ user })
     return (
         <div className="flex flex-col border-neutral-200 dark:border-neutral-700">
             <Meta
@@ -68,7 +66,7 @@ export async function getServerSideProps(context) {
             take: 8,
             where: { id },
             include: {
-                variants: { include: { vendorVariants: true } },
+                subproducts: { include: { vendorProducts: true } },
                 categories: true,
             },
         })

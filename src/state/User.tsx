@@ -19,44 +19,54 @@ export const UserContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
 
     const refreshUser = async () => {
-        if (isVariableValid(AccessToken)) {
-            setLoading(true)
+        try {
+            if (isVariableValid(AccessToken)) {
+                setLoading(true)
 
-            const response = await fetch(`/api/user`, {
-                headers: {
-                    Authorization: `Bearer ${AccessToken}`,
-                },
-            })
+                const response = await fetch(`/api/user`, {
+                    headers: {
+                        Authorization: `Bearer ${AccessToken}`,
+                    },
+                })
 
-            const json = await response.json()
+                const json = await response.json()
 
-            if (isVariableValid(json?.user)) {
-                setUser(json?.user)
+                if (isVariableValid(json?.user)) {
+                    setUser(json?.user)
+                    setLoading(false)
+                }
+
                 setLoading(false)
             }
-
-            setLoading(false)
+        } catch (error) {
+            console.error({ error })
         }
     }
 
     useEffect(() => {
-        async function fetchData() {
-            const response = await fetch(`/api/user`, {
-                headers: {
-                    Authorization: `Bearer ${AccessToken}`,
-                },
-            })
+        try {
+            async function fetchData() {
+                console.error('Hitting USER API')
 
-            const json = await response.json()
+                const response = await fetch(`/api/user`, {
+                    headers: {
+                        Authorization: `Bearer ${AccessToken}`,
+                    },
+                })
 
-            if (isVariableValid(json?.user)) {
-                setUser(json?.user)
-                setLoading(false)
+                const json = await response.json()
+
+                if (isVariableValid(json?.user)) {
+                    setUser(json?.user)
+                    setLoading(false)
+                }
             }
-        }
 
-        if (isVariableValid(AccessToken)) fetchData()
-        if (!isVariableValid(AccessToken)) setLoading(false)
+            if (isVariableValid(AccessToken)) fetchData()
+            if (!isVariableValid(AccessToken)) setLoading(false)
+        } catch (error) {
+            console.error({ error })
+        }
     }, [AccessToken])
 
     return (

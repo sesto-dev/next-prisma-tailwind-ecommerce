@@ -376,10 +376,10 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                     <SelectValue placeholder="Theme" />
                 </SelectTrigger>
                 <SelectContent>
-                    {product.variants.map(
-                        ({ title, vendorVariants }, index) => (
+                    {product.subproducts.map(
+                        ({ title, vendorProducts }, index) => (
                             <div key={index}>
-                                {vendorVariants.map((item, innerIndex) => (
+                                {vendorProducts.map((item, innerIndex) => (
                                     <SelectItem
                                         key={innerIndex}
                                         value={item.id}
@@ -459,9 +459,9 @@ export async function getServerSideProps(context) {
             where: { id },
             include: {
                 brand: true,
-                variants: {
+                subproducts: {
                     include: {
-                        vendorVariants: true,
+                        vendorProducts: true,
                     },
                 },
                 categories: true,

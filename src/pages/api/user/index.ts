@@ -19,9 +19,9 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                     include: {
                         items: {
                             include: {
-                                vendorVariant: {
+                                vendorProduct: {
                                     include: {
-                                        productVariant: {
+                                        subproduct: {
                                             include: { product: true },
                                         },
                                     },
@@ -36,6 +36,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                 wishlist: true,
                 notifications: true,
                 errors: true,
+                vendors: true,
             },
         })
 

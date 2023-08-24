@@ -65,7 +65,7 @@ export const Product = ({ product }: { product: ProductWithAllVariants }) => {
                 </CardContent>
                 <CardFooter>
                     <h2 className="text-lg">
-                        ${product?.variants[0]?.vendorVariants[0]?.price}
+                        ${product?.subproducts[0]?.vendorProducts[0]?.price}
                     </h2>
                 </CardFooter>
             </Card>

@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { IdentifyAccess } from 'lib/jwt'
 import prisma from 'lib/prisma'
 import Auth from 'middlewares/Auth'
+import { getRequestBody } from 'lib/utils'
 
 export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -11,7 +12,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             secret: process.env.ACCESS_TOKEN_SECRET,
         })
 
-        const { isEmailSubscribed } = JSON.parse(req.body)
+        const { isEmailSubscribed } = getRequestBody(req)
 
         const user = await prisma.user.update({
             where: {

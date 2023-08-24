@@ -1,18 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import prisma from 'lib/prisma'
+import { getRequestBody } from 'lib/utils'
 
 export default async function API(req: NextApiRequest, res: NextApiResponse) {
     try {
-        const { vendorVariantId } = JSON.parse(req.body)
+        const { vendorVariantId } = getRequestBody(req)
 
-        const vendorVariant = await prisma.vendorVariant.findUniqueOrThrow({
+        const vendorVariant = await prisma.vendorProduct.findUniqueOrThrow({
             where: {
                 id: vendorVariantId,
             },
             include: {
                 vendor: true,
-                productVariant: {
+                subproduct: {
                     include: {
                         product: true,
                     },

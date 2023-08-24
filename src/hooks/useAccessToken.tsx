@@ -1,3 +1,5 @@
+'use client'
+
 /* eslint-disable react-hooks/exhaustive-deps */
 import jwt from 'jsonwebtoken'
 import { isVariableValid } from 'lib/utils'

@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'lib/prisma'
 import { IdentifyAccess } from 'lib/jwt'
 import Auth from 'middlewares/Auth'
+import { getRequestBody } from 'lib/utils'
 
 export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -11,46 +12,34 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             secret: process.env.ACCESS_TOKEN_SECRET,
         })
 
-        const { variantId } = JSON.parse(req.body)
+        const { productId } = getRequestBody(req)
 
         if (req.method == 'DELETE') {
-            const wishlist = await prisma.wishlist.update({
-                where: {
-                    userId: id,
-                },
+            const user = await prisma.user.update({
+                where: { id },
                 data: {
-                    items: {
-                        disconnect: {
-                            id: variantId,
-                        },
+                    wishlist: {
+                        disconnect: { id: productId },
                     },
                 },
-                include: {
-                    items: true,
-                },
+                include: { wishlist: true },
             })
 
-            return res.status(200).json({ wishlist })
+            return res.status(200).json({ wishlist: user?.wishlist })
         }
 
         if (req.method == 'POST') {
-            const wishlist = await prisma.wishlist.update({
-                where: {
-                    userId: id,
-                },
+            const user = await prisma.user.update({
+                where: { id },
                 data: {
-                    items: {
-                        connect: {
-                            id: variantId,
-                        },
+                    wishlist: {
+                        connect: { id: productId },
                     },
                 },
-                include: {
-                    items: true,
-                },
+                include: { wishlist: true },
             })
 
-            return res.status(200).json({ wishlist })
+            return res.status(200).json({ wishlist: user?.wishlist })
         }
     } catch (error) {
         const message = error.message

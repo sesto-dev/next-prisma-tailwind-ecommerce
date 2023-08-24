@@ -33,6 +33,12 @@ export default function Products() {
                 description="Home Page"
                 image={Config.ogImage}
             />
+            <h3 className="mb-1 text-xl font-bold tracking-tight md:text-4xl">
+                Products
+            </h3>
+            <p className="mb-4 text-xs text-neutral-500 text-justify">
+                Below is a list of products you have in your cart.
+            </p>
             {isVariableValid(products) ? (
                 <ProductGrid products={products} />
             ) : (

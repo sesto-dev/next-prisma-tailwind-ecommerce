@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import prisma from 'lib/prisma'
+import { getRequestBody } from 'lib/utils'
 
 export default async function API(req: NextApiRequest, res: NextApiResponse) {
     try {
         const { title, description, brand, isPhysical, images, categories } =
-            req.body
+            getRequestBody(req)
 
         const products = await prisma.product.findMany()
 

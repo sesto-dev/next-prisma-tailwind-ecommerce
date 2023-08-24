@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'lib/prisma'
 import { IdentifyAccess } from 'lib/jwt'
 import Auth from 'middlewares/Auth'
-import { isVariableValid } from 'lib/utils'
+import { getRequestBody, isVariableValid } from 'lib/utils'
 
 export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -12,11 +12,11 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             secret: process.env.ACCESS_TOKEN_SECRET,
         })
 
-        const { vendorVariantId } = JSON.parse(req.body)
+        const { vendorProductId } = getRequestBody(req)
 
         if (req.method == 'DELETE') {
             await prisma.cartItem.delete({
-                where: { UniqueCartItem: { cartId: id, vendorVariantId } },
+                where: { UniqueCartItem: { cartId: id, vendorProductId } },
             })
         }
 
@@ -25,7 +25,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                 where: {
                     UniqueCartItem: {
                         cartId: id,
-                        vendorVariantId,
+                        vendorProductId,
                     },
                 },
                 data: {
@@ -51,12 +51,12 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                         connectOrCreate: {
                             where: {
                                 UniqueCartItem: {
-                                    vendorVariantId,
+                                    vendorProductId,
                                     cartId: id,
                                 },
                             },
                             create: {
-                                vendorVariantId,
+                                vendorProductId,
                                 count: 1,
                             },
                         },
@@ -70,7 +70,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                 where: {
                     UniqueCartItem: {
                         cartId: id,
-                        vendorVariantId,
+                        vendorProductId,
                     },
                 },
                 data: {
@@ -86,9 +86,9 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             include: {
                 items: {
                     include: {
-                        vendorVariant: {
+                        vendorProduct: {
                             include: {
-                                productVariant: { include: { product: true } },
+                                subproduct: { include: { product: true } },
                             },
                         },
                     },

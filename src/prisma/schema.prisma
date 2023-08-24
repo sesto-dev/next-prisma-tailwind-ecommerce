@@ -26,9 +26,9 @@ model User {
   isEmailSubscribed Boolean @default(false)
   isPhoneSubscribed Boolean @default(false)
 
-  vendor   Vendor?
+  vendors  Vendor[]
   cart     Cart?
-  wishlist Wishlist?
+  wishlist Product[] @relation("Wishlist")
 
   orders         Order[]
   addresses      Address[]
@@ -43,14 +43,33 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Cart {
+  user   User       @relation(fields: [userId], references: [id])
+  userId String     @id
+  items  CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+  cart            Cart          @relation(fields: [cartId], references: [userId])
+  cartId          String
+  vendorProduct   VendorProduct @relation(fields: [vendorProductId], references: [id])
+  vendorProductId String
+  count           Int
+
+  @@unique([cartId, vendorProductId], name: "UniqueCartItem")
+}
+
 model Vendor {
   id String @id @default(cuid())
 
   user   User   @relation(fields: [userId], references: [id])
-  userId String @unique
+  userId String
 
   Order          Order[]
-  vendorVariants VendorVariant[]
+  vendorProducts VendorProduct[]
 
   title       String  @unique
   description String?
@@ -58,6 +77,8 @@ model Vendor {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model Brand {
@@ -72,32 +93,36 @@ model Brand {
 model Product {
   id          String   @id @default(cuid())
   title       String
-  description String
+  description String?
   images      String[]
   tags        String[]
   metadata    Json?
 
-  wishlists      Wishlist[]
+  isFeatured Boolean @default(false)
+
+  wishlists      User[]          @relation("Wishlist")
   productReviews ProductReview[]
 
   brand   Brand  @relation(fields: [brandId], references: [id])
   brandId String
 
-  categories Category[]
-  variants   ProductVariant[]
+  categories  Category[]
+  subproducts Subproduct[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([brandId])
 }
 
-model ProductVariant {
+model Subproduct {
   id          String   @id @default(cuid())
   title       String
-  description String
+  description String?
   images      String[]
   metadata    Json?
 
-  vendorVariants VendorVariant[]
+  vendorProducts VendorProduct[]
   discounts      Discount[]
 
   product   Product @relation(fields: [productId], references: [id])
@@ -105,27 +130,31 @@ model ProductVariant {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([productId])
 }
 
-model VendorVariant {
-  id    String @id @default(cuid())
-  price Float
-  stock Int
+model VendorProduct {
+  id          String  @id @default(cuid())
+  price       Float
+  stock       Int
   isAvailable Boolean @default(true)
 
   orders    Order[]
   cartItems CartItem[]
 
-  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
-  productVariantId String
+  subproduct   Subproduct @relation(fields: [subproductId], references: [id])
+  subproductId String
 
-  vendor   Vendor @relation(fields: [vendorId], references: [userId])
+  vendor   Vendor @relation(fields: [vendorId], references: [id])
   vendorId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([productVariantId, vendorId], name: "UniqueVendorVariant")
+  @@unique([subproductId, vendorId], name: "UniqueVendorProduct")
+  @@index([subproductId])
+  @@index([vendorId])
 }
 
 model Category {
@@ -133,7 +162,8 @@ model Category {
   title       String  @unique
   description String?
 
-  products Product[]
+  products   Product[]
+  billboards Billboard[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -153,55 +183,46 @@ model ProductReview {
   updatedAt DateTime @updatedAt
 
   @@unique([productId, userId], name: "UniqueProductProductReview")
+  @@index([userId])
+  @@index([productId])
 }
 
 model Order {
-  id               String  @id @default(cuid())
-  status           String
+  id               String          @id @default(cuid())
+  status           OrderStatusEnum
   payableAmount    Float
   discountedAmount Float
-  isCompleted      Boolean @default(false)
 
-  items     VendorVariant[]
-  refund    Refund?
-  address   Address?        @relation(fields: [addressId], references: [id])
+  isPaid      Boolean @default(false)
+  isCompleted Boolean @default(false)
+
+  payment Payment[]
+  items   VendorProduct[]
+  refund  Refund?
+
+  address   Address? @relation(fields: [addressId], references: [id])
   addressId String?
-
-  user     User   @relation(fields: [userId], references: [id])
-  userId   String
-  vendor   Vendor @relation(fields: [vendorId], references: [id])
-  vendorId String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  vendors   Vendor[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([addressId])
 }
 
-model Wishlist {
-  user   User      @relation(fields: [userId], references: [id])
-  userId String    @id
-  items  Product[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Cart {
-  user   User       @relation(fields: [userId], references: [id])
-  userId String     @id
-  items  CartItem[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model CartItem {
-  cart            Cart          @relation(fields: [cartId], references: [userId])
-  cartId          String
-  vendorVariant   VendorVariant @relation(fields: [vendorVariantId], references: [id])
-  vendorVariantId String
-  count           Int
-
-  @@unique([cartId, vendorVariantId], name: "UniqueCartItem")
+enum OrderStatusEnum {
+  Processing
+  Shipped
+  Delivered
+  ReturnProcessing
+  ReturnCompleted
+  Cancelled
+  RefundProcessing
+  RefundCompleted
+  Denied
 }
 
 model Address {
@@ -217,16 +238,20 @@ model Address {
   orders Order[]
 
   createdAt DateTime @default(now())
+
+  @@index([userId])
 }
 
 model Notification {
   id      String  @id @default(cuid())
   content String
-  read    Boolean @default(false)
+  isRead  Boolean @default(false)
   user    User    @relation(fields: [userId], references: [id])
   userId  String
 
   createdAt DateTime @default(now())
+
+  @@index([userId])
 }
 
 model Discount {
@@ -237,7 +262,7 @@ model Discount {
   startDate   DateTime
   endDate     DateTime
 
-  products ProductVariant[]
+  products Subproduct[]
 
   createdAt DateTime @default(now())
 }
@@ -251,18 +276,26 @@ model Refund {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([orderId])
 }
 
 model Payment {
   id String @id @default(cuid())
 
+  isSuccessful  Boolean @default(false)
   payableAmount Float
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([orderId])
 }
 
 model Error {
@@ -274,6 +307,8 @@ model Error {
   userId String?
 
   createdAt DateTime @default(now())
+
+  @@index([userId])
 }
 
 model File {
@@ -285,6 +320,8 @@ model File {
   userId String
 
   createdAt DateTime @default(now())
+
+  @@index([userId])
 }
 
 model BlogPost {
@@ -299,6 +336,20 @@ model BlogPost {
 
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([authorId])
+}
+
+model Billboard {
+  id String @id @default(cuid())
+
+  label String
+  image String
+
+  categories Category[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

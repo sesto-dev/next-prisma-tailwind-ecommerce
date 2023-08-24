@@ -2,11 +2,11 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { signJWT } from 'lib/jwt'
 import prisma from 'lib/prisma'
-import { isVariableValid } from 'lib/utils'
+import { getRequestBody, isVariableValid } from 'lib/utils'
 
 export default async function API(req: NextApiRequest, res: NextApiResponse) {
     try {
-        let { email, OTP } = JSON.parse(req.body)
+        let { email, OTP } = getRequestBody(req)
 
         email = email.toString().toLowerCase()
 
@@ -24,7 +24,7 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
                     OTP: null,
                 },
                 include: {
-                    vendor: true,
+                    vendors: true,
                 },
             })
 
@@ -40,9 +40,6 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
                     secret: process.env.REFRESH_TOKEN_SECRET,
                     expiresIn: '30d',
                 }),
-                isVendor: user.isVendor,
-                isAdmin: user.isAdmin,
-                vendor: JSON.stringify(user.vendor),
             })
         } else {
             return res

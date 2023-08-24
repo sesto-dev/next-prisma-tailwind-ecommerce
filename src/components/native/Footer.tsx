@@ -11,7 +11,7 @@ export default function Footer() {
     return (
         <footer>
             <hr className="border-1 my-10 w-full border-neutral-200 dark:border-neutral-800" />
-            <div className="md:flex md:justify-between">
+            <div className="md:flex md:justify-between px-[1.4rem] md:px-[4rem]">
                 <div className="mb-6 hidden md:mb-0 md:block">
                     <span className="flex flex-col">
                         <h2 className="whitespace-nowrap text-sm font-semibold uppercase text-black dark:text-white">

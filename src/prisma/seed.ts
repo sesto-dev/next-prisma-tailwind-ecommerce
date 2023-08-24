@@ -180,7 +180,7 @@ async function main() {
                         title: product.categories[0],
                     },
                 },
-                variants: {
+                subproducts: {
                     create: {
                         title: product.title,
                         description: faker.commerce.productDescription(),
@@ -190,7 +190,11 @@ async function main() {
             },
             include: {
                 categories: true,
-                variants: true,
+                subproducts: {
+                    include: {
+                        vendorProducts: true,
+                    },
+                },
             },
         })
 
@@ -207,16 +211,16 @@ async function main() {
             cart: {
                 create: {},
             },
-            vendor: {
+            vendors: {
                 create: {
                     title: 'Pasargad Vendor',
                     description: 'We are a vendor.',
                     logo: 'https://cdn.logojoy.com/wp-content/uploads/20221122125557/morridge-coffee-vintage-logo-600x392.png',
-                    vendorVariants: {
+                    vendorProducts: {
                         create: {
                             price: getRandomFloat(4, 100, 2),
                             stock: getRandomIntInRange(1, 20),
-                            productVariantId:
+                            subproductId:
                                 createdProducts[0]['variants'][0]['id'],
                         },
                     },
@@ -226,12 +230,8 @@ async function main() {
                 create: blogPosts,
             },
             wishlist: {
-                create: {
-                    items: {
-                        connect: {
-                            id: createdProducts[0]['id'],
-                        },
-                    },
+                connect: {
+                    id: createdProducts[0]['id'],
                 },
             },
         },

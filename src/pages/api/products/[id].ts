@@ -1,10 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import prisma from 'lib/prisma'
+import { getRequestBody } from 'lib/utils'
 
 export default async function API(req: NextApiRequest, res: NextApiResponse) {
     try {
-        const { id } = req.body
+        const { id } = getRequestBody(req)
 
         const product = await prisma.product.findUniqueOrThrow({
             where: { id },

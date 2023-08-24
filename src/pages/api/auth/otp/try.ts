@@ -4,12 +4,13 @@ import sendVerifyMail from 'lib/mail/sendVerifyMail'
 import prisma from 'lib/prisma'
 import { isEmailValid } from 'lib/regex'
 import { generateSerial } from 'lib/serial'
+import { getRequestBody } from 'lib/utils'
 
 export default async function API(req: NextApiRequest, res: NextApiResponse) {
     try {
         const OTP = generateSerial({})
 
-        const { email } = JSON.parse(req.body)
+        const { email } = getRequestBody(req)
 
         if (isEmailValid(email)) {
             await prisma.user.upsert({
@@ -20,7 +21,6 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
                 create: {
                     email,
                     OTP,
-                    cart: { create: {} },
                 },
             })
 
