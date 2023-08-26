@@ -12,11 +12,11 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             secret: process.env.ACCESS_TOKEN_SECRET,
         })
 
-        const { vendorProductId } = getRequestBody(req)
+        const { listingId } = getRequestBody(req)
 
         if (req.method == 'DELETE') {
             await prisma.cartItem.delete({
-                where: { UniqueCartItem: { cartId: id, vendorProductId } },
+                where: { UniqueCartItem: { cartId: id, listingId } },
             })
         }
 
@@ -25,7 +25,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                 where: {
                     UniqueCartItem: {
                         cartId: id,
-                        vendorProductId,
+                        listingId,
                     },
                 },
                 data: {
@@ -51,12 +51,12 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                         connectOrCreate: {
                             where: {
                                 UniqueCartItem: {
-                                    vendorProductId,
+                                    listingId,
                                     cartId: id,
                                 },
                             },
                             create: {
-                                vendorProductId,
+                                listingId,
                                 count: 1,
                             },
                         },
@@ -70,7 +70,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                 where: {
                     UniqueCartItem: {
                         cartId: id,
-                        vendorProductId,
+                        listingId,
                     },
                 },
                 data: {
@@ -86,7 +86,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             include: {
                 items: {
                     include: {
-                        vendorProduct: {
+                        listing: {
                             include: {
                                 subproduct: { include: { product: true } },
                             },

@@ -192,7 +192,7 @@ async function main() {
                 categories: true,
                 subproducts: {
                     include: {
-                        vendorProducts: true,
+                        listings: true,
                     },
                 },
             },
@@ -216,12 +216,12 @@ async function main() {
                     title: 'Pasargad Vendor',
                     description: 'We are a vendor.',
                     logo: 'https://cdn.logojoy.com/wp-content/uploads/20221122125557/morridge-coffee-vintage-logo-600x392.png',
-                    vendorProducts: {
+                    listings: {
                         create: {
                             price: getRandomFloat(4, 100, 2),
                             stock: getRandomIntInRange(1, 20),
                             subproductId:
-                                createdProducts[0]['variants'][0]['id'],
+                                createdProducts[0]?.subproducts[0]?.id,
                         },
                     },
                 },

@@ -12,7 +12,6 @@ import {
     CardTitle,
 } from 'components/ui/card'
 import { Badge } from 'components/ui/badge'
-import type { CartItemWithVendorVariant } from 'types/prisma'
 import { isVariableValid, validateBoolean } from 'lib/utils'
 import { getCountInCart, getLocalCart, writeLocalCart } from 'lib/cart'
 import { useState, useEffect } from 'react'
@@ -44,10 +43,10 @@ export const CartGrid = () => {
             <div className="md:col-span-2">
                 {isVariableValid(cart?.items)
                     ? cart['items'].map((cartItem, index) => (
-                          <CartVendorVariant cartItem={cartItem} key={index} />
+                          <CartListing cartItem={cartItem} key={index} />
                       ))
                     : [...Array(5)].map((cartItem, index) => (
-                          <CartVendorVariantSkeleton key={index} />
+                          <CartListingSkeleton key={index} />
                       ))}
             </div>
             <Receipt />
@@ -63,7 +62,7 @@ function Receipt() {
 
         if (isVariableValid(cart?.items)) {
             for (const item of cart?.items) {
-                payableCost += item.count * item.vendorVariant.price
+                payableCost += item.count * item.listing.price
             }
         }
 
@@ -98,31 +97,31 @@ function Receipt() {
     )
 }
 
-export const CartVendorVariant = ({ cartItem }) => {
+export const CartListing = ({ cartItem }) => {
     const { AccessToken } = useValidAccessToken()
     const { loading, cart, refreshCart, dispatchCart } = useCartContext()
 
-    const { vendorVariant, vendorVariantId, count } = cartItem
+    const { listing, listingId, count } = cartItem
 
-    function findLocalCartIndexById(array, vendorVariantId) {
+    function findLocalCartIndexById(array, listingId) {
         for (let i = 0; i < array.length; i++) {
-            if (array[i].vendorVariantId === vendorVariantId) {
+            if (array[i].listingId === listingId) {
                 return i
             }
         }
         return -1
     }
 
-    async function getVendorVariant() {
+    async function getListing() {
         try {
             const response = await fetch(`/api/vendor/variant`, {
                 method: 'POST',
-                body: JSON.stringify({ vendorVariantId }),
+                body: JSON.stringify({ listingId }),
             })
 
             const json = await response.json()
 
-            return json?.vendorVariant
+            return json?.listing
         } catch (error) {
             console.error({ error })
         }
@@ -135,11 +134,11 @@ export const CartVendorVariant = ({ cartItem }) => {
                     method:
                         getCountInCart({
                             cartItems: cart?.items,
-                            vendorVariantId,
+                            listingId,
                         }) > 0
                             ? 'PUT'
                             : 'POST',
-                    body: JSON.stringify({ vendorVariantId }),
+                    body: JSON.stringify({ listingId }),
                     headers: {
                         Authorization: `Bearer ${AccessToken}`,
                     },
@@ -155,10 +154,10 @@ export const CartVendorVariant = ({ cartItem }) => {
 
             if (
                 isVariableValid(AccessToken) &&
-                getCountInCart({ cartItems: cart?.items, vendorVariantId }) > 0
+                getCountInCart({ cartItems: cart?.items, listingId }) > 0
             ) {
                 for (let i = 0; i < localCart.length; i++) {
-                    if (localCart[i].vendorVariantId === vendorVariantId) {
+                    if (localCart[i].listingId === listingId) {
                         localCart[i].count = localCart[i].count + 1
                     }
                 }
@@ -169,11 +168,11 @@ export const CartVendorVariant = ({ cartItem }) => {
 
             if (
                 isVariableValid(AccessToken) &&
-                getCountInCart({ cartItems: cart?.items, vendorVariantId }) < 1
+                getCountInCart({ cartItems: cart?.items, listingId }) < 1
             ) {
                 localCart.push({
-                    vendorVariantId,
-                    vendorVariant: await getVendorVariant(),
+                    listingId,
+                    listing: await getListing(),
                     count: 1,
                 })
 
@@ -192,11 +191,11 @@ export const CartVendorVariant = ({ cartItem }) => {
                     method:
                         getCountInCart({
                             cartItems: cart?.items,
-                            vendorVariantId,
+                            listingId,
                         }) > 1
                             ? 'PATCH'
                             : 'DELETE',
-                    body: JSON.stringify({ vendorVariantId }),
+                    body: JSON.stringify({ listingId }),
                     headers: {
                         Authorization: `Bearer ${AccessToken}`,
                     },
@@ -209,12 +208,12 @@ export const CartVendorVariant = ({ cartItem }) => {
             }
 
             const localCart = getLocalCart() as any[]
-            const index = findLocalCartIndexById(localCart, vendorVariantId)
+            const index = findLocalCartIndexById(localCart, listingId)
             const count = localCart[index].count
 
             if (
                 isVariableValid(AccessToken) &&
-                getCountInCart({ cartItems: cart?.items, vendorVariantId }) > 1
+                getCountInCart({ cartItems: cart?.items, listingId }) > 1
             ) {
                 localCart[index].count = count - 1
 
@@ -224,8 +223,7 @@ export const CartVendorVariant = ({ cartItem }) => {
 
             if (
                 isVariableValid(AccessToken) &&
-                getCountInCart({ cartItems: cart?.items, vendorVariantId }) ===
-                    1
+                getCountInCart({ cartItems: cart?.items, listingId }) === 1
             ) {
                 localCart.splice(index, 1)
 
@@ -240,7 +238,7 @@ export const CartVendorVariant = ({ cartItem }) => {
     function CartButton() {
         const count = getCountInCart({
             cartItems: cart?.items,
-            vendorVariantId,
+            listingId,
         })
 
         if (loading)
@@ -252,7 +250,7 @@ export const CartVendorVariant = ({ cartItem }) => {
 
         if (count === 0) {
             return (
-                <Button disabled={vendorVariantId == ''} onClick={onAddToCart}>
+                <Button disabled={listingId == ''} onClick={onAddToCart}>
                     🛒 Add to Cart
                 </Button>
             )
@@ -262,7 +260,7 @@ export const CartVendorVariant = ({ cartItem }) => {
             return (
                 <>
                     <Button
-                        disabled={vendorVariantId == ''}
+                        disabled={listingId == ''}
                         variant="outline"
                         size="icon"
                         onClick={onRemoveFromCart}
@@ -277,7 +275,7 @@ export const CartVendorVariant = ({ cartItem }) => {
                         {count}
                     </Button>
                     <Button
-                        disabled={vendorVariantId == ''}
+                        disabled={listingId == ''}
                         variant="outline"
                         size="icon"
                         onClick={onAddToCart}
@@ -293,12 +291,10 @@ export const CartVendorVariant = ({ cartItem }) => {
         <Card>
             <CardHeader className="p-0 md:hidden">
                 <div className="relative h-32 w-full">
-                    <Link
-                        href={`/product/${vendorVariant?.productVariant?.product?.id}`}
-                    >
+                    <Link href={`/product/${listing?.subproduct?.product?.id}`}>
                         <Image
                             className="rounded-t-lg"
-                            src={vendorVariant.productVariant.images[0]}
+                            src={listing.subproduct.images[0]}
                             alt="product image"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -308,12 +304,10 @@ export const CartVendorVariant = ({ cartItem }) => {
             </CardHeader>
             <CardContent className="grid grid-cols-6 gap-4 p-3">
                 <div className="relative w-full col-span-2 hidden md:inline-flex">
-                    <Link
-                        href={`/product/${vendorVariant?.productVariant?.product?.id}`}
-                    >
+                    <Link href={`/product/${listing?.subproduct?.product?.id}`}>
                         <Image
                             className="rounded-lg"
-                            src={vendorVariant?.productVariant?.images[0]}
+                            src={listing?.subproduct?.images[0]}
                             alt="item image"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -321,15 +315,13 @@ export const CartVendorVariant = ({ cartItem }) => {
                     </Link>
                 </div>
                 <div className="col-span-4">
-                    <Link
-                        href={`/product/${vendorVariant?.productVariant?.product?.id}`}
-                    >
-                        <h2>{vendorVariant?.productVariant?.title}</h2>
+                    <Link href={`/product/${listing?.subproduct?.product?.id}`}>
+                        <h2>{listing?.subproduct?.title}</h2>
                     </Link>
                     <p className="my-2 text-xs text-neutral-500 text-justify">
-                        {vendorVariant?.productVariant?.description}
+                        {listing?.subproduct?.description}
                     </p>
-                    <h2 className="text-lg mb-4">${vendorVariant?.price}</h2>
+                    <h2 className="text-lg mb-4">${listing?.price}</h2>
                     <CartButton />
                 </div>
             </CardContent>
@@ -337,7 +329,7 @@ export const CartVendorVariant = ({ cartItem }) => {
     )
 }
 
-export function CartVendorVariantSkeleton() {
+export function CartListingSkeleton() {
     return (
         <Link href="#">
             <div className="animate-pulse rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800 mb-4">

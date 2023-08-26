@@ -5,11 +5,11 @@ import { getRequestBody } from 'lib/utils'
 
 export default async function API(req: NextApiRequest, res: NextApiResponse) {
     try {
-        const { vendorVariantId } = getRequestBody(req)
+        const { listingId } = getRequestBody(req)
 
-        const vendorVariant = await prisma.vendorProduct.findUniqueOrThrow({
+        const listing = await prisma.listing.findUniqueOrThrow({
             where: {
-                id: vendorVariantId,
+                id: listingId,
             },
             include: {
                 vendor: true,
@@ -21,7 +21,7 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
             },
         })
 
-        return res.status(200).json({ vendorVariant })
+        return res.status(200).json({ listing })
     } catch (error) {
         const message = error.message
         console.error({ error, message })

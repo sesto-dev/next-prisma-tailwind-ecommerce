@@ -24,10 +24,7 @@ import {
 } from 'components/ui/select'
 import { isVariableValid, validateBoolean } from 'lib/utils'
 import { CloseIcon, Spinner } from 'components/native/icons'
-import type {
-    ProductWithAllVariants,
-    CartItemWithVendorVariant,
-} from 'types/prisma'
+import type { ProductWithAllVariants } from 'types/prisma'
 import { Badge } from 'components/ui/badge'
 import { getCountInCart, getLocalCart, writeLocalCart } from 'lib/cart'
 import { useCartContext } from 'state/Cart'
@@ -62,7 +59,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
     const { loading, cart, refreshCart, dispatchCart } = useCartContext()
 
     const [wishlist, setWishlist] = useState(null)
-    const [vendorVariantId, setVendorVariantId] = useState('')
+    const [listingId, setListingId] = useState('')
     const [fetchingCart, setFetchingCart] = useState(true)
     const [fetchingWishlist, setFetchingWishlist] = useState(true)
 
@@ -86,7 +83,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
         if (isVariableValid(AccessToken)) getWishlist()
     }, [AccessToken])
 
-    function isVariantInWishlist() {
+    function isProductInWishlist() {
         for (let i = 0; i < wishlist.length; i++) {
             if (wishlist[i]['id'] === product?.id) {
                 return true
@@ -95,25 +92,25 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
         return false
     }
 
-    function findLocalCartIndexById(array, vendorVariantId) {
+    function findLocalCartIndexById(array, listingId) {
         for (let i = 0; i < array.length; i++) {
-            if (array[i].vendorVariantId === vendorVariantId) {
+            if (array[i].listingId === listingId) {
                 return i
             }
         }
         return -1
     }
 
-    async function getVendorVariant() {
+    async function getListing() {
         try {
-            const response = await fetch(`/api/vendor/variant`, {
+            const response = await fetch(`/api/vendor/listing`, {
                 method: 'POST',
-                body: JSON.stringify({ vendorVariantId }),
+                body: JSON.stringify({ listingId }),
             })
 
             const json = await response.json()
 
-            return json?.vendorVariant
+            return json?.listing
         } catch (error) {
             console.error({ error })
         }
@@ -125,13 +122,13 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
 
             const count = getCountInCart({
                 cartItems: cart?.items,
-                vendorVariantId,
+                listingId,
             })
 
             if (isVariableValid(AccessToken)) {
                 const response = await fetch(`/api/cart/modify`, {
                     method: count > 0 ? 'PUT' : 'POST',
-                    body: JSON.stringify({ vendorVariantId }),
+                    body: JSON.stringify({ listingId }),
                     headers: {
                         Authorization: `Bearer ${AccessToken}`,
                     },
@@ -146,7 +143,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
 
             if (!isVariableValid(AccessToken) && count > 0) {
                 for (let i = 0; i < localCart.length; i++) {
-                    if (localCart[i].vendorVariantId === vendorVariantId) {
+                    if (localCart[i].listingId === listingId) {
                         localCart[i].count = localCart[i].count + 1
                     }
                 }
@@ -156,8 +153,8 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
 
             if (!isVariableValid(AccessToken) && count < 1) {
                 localCart.push({
-                    vendorVariantId,
-                    vendorVariant: await getVendorVariant(),
+                    listingId,
+                    listing: await getListing(),
                     count: 1,
                 })
 
@@ -176,13 +173,13 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
 
             const count = getCountInCart({
                 cartItems: cart?.items,
-                vendorVariantId,
+                listingId,
             })
 
             if (isVariableValid(AccessToken)) {
                 const response = await fetch(`/api/cart/modify`, {
                     method: count > 1 ? 'PATCH' : 'DELETE',
-                    body: JSON.stringify({ vendorVariantId }),
+                    body: JSON.stringify({ listingId }),
                     headers: {
                         Authorization: `Bearer ${AccessToken}`,
                     },
@@ -194,7 +191,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
             }
 
             const localCart = getLocalCart() as any[]
-            const index = findLocalCartIndexById(localCart, vendorVariantId)
+            const index = findLocalCartIndexById(localCart, listingId)
             const itemCount = localCart[index].count
 
             if (!isVariableValid(AccessToken) && count > 1) {
@@ -271,12 +268,12 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
 
         const count = getCountInCart({
             cartItems: cart?.items,
-            vendorVariantId,
+            listingId,
         })
 
         if (count === 0) {
             return (
-                <Button disabled={vendorVariantId == ''} onClick={onAddToCart}>
+                <Button disabled={listingId == ''} onClick={onAddToCart}>
                     🛒 Add to Cart
                 </Button>
             )
@@ -286,7 +283,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
             return (
                 <>
                     <Button
-                        disabled={vendorVariantId == ''}
+                        disabled={listingId == ''}
                         variant="outline"
                         size="icon"
                         onClick={onRemoveFromCart}
@@ -302,7 +299,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                         {count}
                     </Button>
                     <Button
-                        disabled={vendorVariantId == ''}
+                        disabled={listingId == ''}
                         variant="outline"
                         size="icon"
                         onClick={onAddToCart}
@@ -322,21 +319,18 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                 </Button>
             )
 
-        if (!isVariantInWishlist()) {
+        if (!isProductInWishlist()) {
             return (
-                <Button
-                    disabled={vendorVariantId == ''}
-                    onClick={onAddToWishlist}
-                >
+                <Button disabled={listingId == ''} onClick={onAddToWishlist}>
                     🛒 Add to Wishlist
                 </Button>
             )
         }
 
-        if (isVariantInWishlist()) {
+        if (isProductInWishlist()) {
             return (
                 <Button
-                    disabled={vendorVariantId == ''}
+                    disabled={listingId == ''}
                     onClick={onRemoveFromWishlist}
                 >
                     🛒 Remove from Wishlist
@@ -371,25 +365,20 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
             <label className="mb-2 block text-sm font-medium text-neutral-900 dark:text-white">
                 Select an option
             </label>
-            <Select onValueChange={(e) => setVendorVariantId(e)}>
+            <Select onValueChange={(e) => setListingId(e)}>
                 <SelectTrigger className="w-full md:w-[50%] my-3">
                     <SelectValue placeholder="Theme" />
                 </SelectTrigger>
                 <SelectContent>
-                    {product.subproducts.map(
-                        ({ title, vendorProducts }, index) => (
-                            <div key={index}>
-                                {vendorProducts.map((item, innerIndex) => (
-                                    <SelectItem
-                                        key={innerIndex}
-                                        value={item.id}
-                                    >
-                                        {title} - ${item.price}
-                                    </SelectItem>
-                                ))}
-                            </div>
-                        )
-                    )}
+                    {product.subproducts.map(({ title, listings }, index) => (
+                        <div key={index}>
+                            {listings.map((item, innerIndex) => (
+                                <SelectItem key={innerIndex} value={item.id}>
+                                    {title} - ${item.price}
+                                </SelectItem>
+                            ))}
+                        </div>
+                    ))}
                 </SelectContent>
             </Select>
 
@@ -405,7 +394,7 @@ const ImageColumn = ({ product }) => {
     return (
         <div className="relative min-h-[50vh] w-full col-span-1">
             <Image
-                src={product['variants'][0]['images'][0]}
+                src={product?.subproducts[0]?.images[0]}
                 alt="Product Image"
                 fill
                 className="rounded-lg"
@@ -461,7 +450,7 @@ export async function getServerSideProps(context) {
                 brand: true,
                 subproducts: {
                     include: {
-                        vendorProducts: true,
+                        listings: true,
                     },
                 },
                 categories: true,

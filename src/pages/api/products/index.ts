@@ -7,7 +7,7 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
         const products = await prisma.product.findMany({
             include: {
                 brand: true,
-                subproducts: { include: { vendorProducts: true } },
+                subproducts: { include: { listings: true } },
                 categories: true,
             },
         })

@@ -1,14 +1,6 @@
-/**
- * @type {import('next').NextConfig}
- */
+/** @type {import('next').NextConfig} */
 
-const runtimeCaching = require('next-pwa/cache')
-const withPWA = require('next-pwa')({
-    dest: 'public',
-    runtimeCaching,
-})
-
-module.exports = withPWA({
+module.exports = {
     images: {
         remotePatterns: [
             {
@@ -24,11 +16,6 @@ module.exports = withPWA({
                 destination: '/products',
                 permanent: true,
             },
-            {
-                source: '/docs',
-                destination: '/docs/welcome',
-                permanent: true,
-            },
         ]
     },
-})
+}

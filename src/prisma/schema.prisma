@@ -55,11 +55,11 @@ model Cart {
 model CartItem {
   cart            Cart          @relation(fields: [cartId], references: [userId])
   cartId          String
-  vendorProduct   VendorProduct @relation(fields: [vendorProductId], references: [id])
-  vendorProductId String
+  listing   Listing @relation(fields: [listingId], references: [id])
+  listingId String
   count           Int
 
-  @@unique([cartId, vendorProductId], name: "UniqueCartItem")
+  @@unique([cartId, listingId], name: "UniqueCartItem")
 }
 
 model Vendor {
@@ -69,7 +69,7 @@ model Vendor {
   userId String
 
   Order          Order[]
-  vendorProducts VendorProduct[]
+  listings Listing[]
 
   title       String  @unique
   description String?
@@ -122,7 +122,7 @@ model Subproduct {
   images      String[]
   metadata    Json?
 
-  vendorProducts VendorProduct[]
+  listings Listing[]
   discounts      Discount[]
 
   product   Product @relation(fields: [productId], references: [id])
@@ -134,7 +134,7 @@ model Subproduct {
   @@index([productId])
 }
 
-model VendorProduct {
+model Listing {
   id          String  @id @default(cuid())
   price       Float
   stock       Int
@@ -152,7 +152,7 @@ model VendorProduct {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([subproductId, vendorId], name: "UniqueVendorProduct")
+  @@unique([subproductId, vendorId], name: "UniqueListing")
   @@index([subproductId])
   @@index([vendorId])
 }
@@ -197,7 +197,7 @@ model Order {
   isCompleted Boolean @default(false)
 
   payment Payment[]
-  items   VendorProduct[]
+  items   Listing[]
   refund  Refund?
 
   address   Address? @relation(fields: [addressId], references: [id])
