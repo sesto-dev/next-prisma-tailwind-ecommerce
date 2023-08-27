@@ -12,11 +12,11 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             secret: process.env.ACCESS_TOKEN_SECRET,
         })
 
-        const { listingId } = getRequestBody(req)
+        const { productId } = getRequestBody(req)
 
         if (req.method == 'DELETE') {
             await prisma.cartItem.delete({
-                where: { UniqueCartItem: { cartId: id, listingId } },
+                where: { UniqueCartItem: { cartId: id, productId } },
             })
         }
 
@@ -25,7 +25,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                 where: {
                     UniqueCartItem: {
                         cartId: id,
-                        listingId,
+                        productId,
                     },
                 },
                 data: {
@@ -51,12 +51,12 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                         connectOrCreate: {
                             where: {
                                 UniqueCartItem: {
-                                    listingId,
+                                    productId,
                                     cartId: id,
                                 },
                             },
                             create: {
-                                listingId,
+                                productId,
                                 count: 1,
                             },
                         },
@@ -70,7 +70,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                 where: {
                     UniqueCartItem: {
                         cartId: id,
-                        listingId,
+                        productId,
                     },
                 },
                 data: {
@@ -86,11 +86,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             include: {
                 items: {
                     include: {
-                        listing: {
-                            include: {
-                                subproduct: { include: { product: true } },
-                            },
-                        },
+                        product: true,
                     },
                 },
             },

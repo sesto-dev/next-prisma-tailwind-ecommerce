@@ -16,11 +16,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             include: {
                 items: {
                     include: {
-                        listing: {
-                            include: {
-                                subproduct: { include: { product: true } },
-                            },
-                        },
+                        product: true,
                     },
                 },
             },

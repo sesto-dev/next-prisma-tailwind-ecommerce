@@ -23,9 +23,6 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
                     isEmailVerified: true,
                     OTP: null,
                 },
-                include: {
-                    vendors: true,
-                },
             })
 
             return res.status(200).json({

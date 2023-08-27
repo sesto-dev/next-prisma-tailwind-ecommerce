@@ -15,9 +15,9 @@ export function getLocalCart() {
     }
 }
 
-export function getCountInCart({ cartItems, listingId }) {
+export function getCountInCart({ cartItems, productId }) {
     for (let i = 0; i < cartItems.length; i++) {
-        if (cartItems[i]?.listingId === listingId) {
+        if (cartItems[i]?.productId === productId) {
             return cartItems[i]['count']
         }
     }

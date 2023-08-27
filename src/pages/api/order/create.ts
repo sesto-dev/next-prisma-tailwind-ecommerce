@@ -21,11 +21,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             include: {
                 items: {
                     include: {
-                        listing: {
-                            include: {
-                                subproduct: { include: { product: true } },
-                            },
-                        },
+                        product: true,
                     },
                 },
             },
@@ -35,11 +31,13 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
             data: {
                 userId: id,
                 status: 'Processing',
-                payableAmount: 10,
-                discountedAmount: 0,
+                payable: 10,
+                discount: 0,
+                shippingCost: 5,
             },
         })
-        return res.status(200).json({ cart })
+
+        return res.status(200).json({ cart, order })
     } catch (error) {
         const message = error.message
         console.error({ error, message })

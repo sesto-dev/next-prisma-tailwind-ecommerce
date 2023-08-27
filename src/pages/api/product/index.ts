@@ -9,6 +9,10 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
 
         const product = await prisma.product.findUniqueOrThrow({
             where: { id },
+            include: {
+                categories: true,
+                brand: true,
+            },
         })
 
         return res.status(200).json({

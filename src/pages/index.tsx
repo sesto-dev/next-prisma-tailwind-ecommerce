@@ -66,7 +66,6 @@ export async function getServerSideProps(context) {
             take: 8,
             where: { id },
             include: {
-                subproducts: { include: { listings: true } },
                 categories: true,
             },
         })

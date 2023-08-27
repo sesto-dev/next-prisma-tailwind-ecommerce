@@ -17,16 +17,12 @@ model User {
   OTP          String?
   referralCode String? @unique
 
-  isAuthor          Boolean @default(false)
-  isVendor          Boolean @default(false)
-  isAdmin           Boolean @default(false)
   isBanned          Boolean @default(false)
   isEmailVerified   Boolean @default(false)
   isPhoneVerified   Boolean @default(false)
   isEmailSubscribed Boolean @default(false)
   isPhoneSubscribed Boolean @default(false)
 
-  vendors  Vendor[]
   cart     Cart?
   wishlist Product[] @relation("Wishlist")
 
@@ -53,23 +49,20 @@ model Cart {
 }
 
 model CartItem {
-  cart            Cart          @relation(fields: [cartId], references: [userId])
-  cartId          String
-  listing   Listing @relation(fields: [listingId], references: [id])
-  listingId String
-  count           Int
+  cart      Cart    @relation(fields: [cartId], references: [userId])
+  cartId    String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  count     Int
 
-  @@unique([cartId, listingId], name: "UniqueCartItem")
+  @@unique([cartId, productId], name: "UniqueCartItem")
 }
 
-model Vendor {
-  id String @id @default(cuid())
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-
-  Order          Order[]
-  listings Listing[]
+model Owner {
+  id    String  @id @default(cuid())
+  email String  @unique
+  phone String? @unique
+  OTP   String?
 
   title       String  @unique
   description String?
@@ -77,8 +70,6 @@ model Vendor {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@index([userId])
 }
 
 model Brand {
@@ -98,63 +89,27 @@ model Product {
   tags        String[]
   metadata    Json?
 
-  isFeatured Boolean @default(false)
+  price    Float @default(100)
+  discount Float @default(0)
+  stock    Int @default(0)
 
+  isAvailable Boolean @default(false)
+  isFeatured  Boolean @default(false)
+
+  orders         OrderItem[]
+  cartItems      CartItem[]
   wishlists      User[]          @relation("Wishlist")
   productReviews ProductReview[]
 
   brand   Brand  @relation(fields: [brandId], references: [id])
   brandId String
 
-  categories  Category[]
-  subproducts Subproduct[]
+  categories Category[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([brandId])
-}
-
-model Subproduct {
-  id          String   @id @default(cuid())
-  title       String
-  description String?
-  images      String[]
-  metadata    Json?
-
-  listings Listing[]
-  discounts      Discount[]
-
-  product   Product @relation(fields: [productId], references: [id])
-  productId String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([productId])
-}
-
-model Listing {
-  id          String  @id @default(cuid())
-  price       Float
-  stock       Int
-  isAvailable Boolean @default(true)
-
-  orders    Order[]
-  cartItems CartItem[]
-
-  subproduct   Subproduct @relation(fields: [subproductId], references: [id])
-  subproductId String
-
-  vendor   Vendor @relation(fields: [vendorId], references: [id])
-  vendorId String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([subproductId, vendorId], name: "UniqueListing")
-  @@index([subproductId])
-  @@index([vendorId])
 }
 
 model Category {
@@ -188,29 +143,45 @@ model ProductReview {
 }
 
 model Order {
-  id               String          @id @default(cuid())
-  status           OrderStatusEnum
-  payableAmount    Float
-  discountedAmount Float
+  id       String          @id @default(cuid())
+  status   OrderStatusEnum
+
+  shippingCost Float @default(100)
+  payable  Float    @default(100)
+  discount Float @default(0)
 
   isPaid      Boolean @default(false)
   isCompleted Boolean @default(false)
 
-  payment Payment[]
-  items   Listing[]
-  refund  Refund?
+  payment    Payment[]
+  orderItems OrderItem[]
+  refund     Refund?
 
-  address   Address? @relation(fields: [addressId], references: [id])
-  addressId String?
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  vendors   Vendor[]
+  discountCode   DiscountCode? @relation(fields: [discountCodeId], references: [id])
+  discountCodeId String?
+  address        Address?      @relation(fields: [addressId], references: [id])
+  addressId      String?
+  user           User          @relation(fields: [userId], references: [id])
+  userId         String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([userId])
   @@index([addressId])
+  @@index([discountCodeId])
+}
+
+model OrderItem {
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  count     Int
+  price     Float
+  discount  Float
+
+  @@unique([orderId, productId], name: "UniqueCartItem")
 }
 
 enum OrderStatusEnum {
@@ -246,23 +217,27 @@ model Notification {
   id      String  @id @default(cuid())
   content String
   isRead  Boolean @default(false)
+
   user    User    @relation(fields: [userId], references: [id])
   userId  String
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
 }
 
-model Discount {
+model DiscountCode {
   id          String   @id @default(cuid())
   code        String   @unique
+  stock       Int @default(1)
   description String?
   percent     Int
+  maxDiscountAmount Float @default(1)
   startDate   DateTime
   endDate     DateTime
 
-  products Subproduct[]
+  order Order[]
 
   createdAt DateTime @default(now())
 }
@@ -271,6 +246,7 @@ model Refund {
   id      String @id @default(cuid())
   amount  Float
   reason  String
+
   order   Order  @relation(fields: [orderId], references: [id])
   orderId String @unique
 
@@ -282,10 +258,13 @@ model Refund {
 
 model Payment {
   id String @id @default(cuid())
+  status PaymentStatusEnum
 
   isSuccessful  Boolean @default(false)
-  payableAmount Float
+  payable Float
 
+  provider    PaymentProvider   @relation(fields: [providerId], references: [id])
+  providerId  String
   user    User   @relation(fields: [userId], references: [id])
   userId  String
   order   Order  @relation(fields: [orderId], references: [id])
@@ -295,7 +274,25 @@ model Payment {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
+  @@index([providerId])
   @@index([orderId])
+}
+
+enum PaymentStatusEnum {
+  Processing
+  Paid
+  Failed
+  Denied
+}
+
+model PaymentProvider {
+  id String @id @default(cuid())
+  title            String     @unique
+  description     String?   
+  websiteUrl      String?   
+  isActive        Boolean    @default(false)     
+
+  orders          Payment[]
 }
 
 model Error {

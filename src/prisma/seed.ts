@@ -160,6 +160,9 @@ async function main() {
         const createdProduct = await prisma.product.create({
             data: {
                 title: product.title,
+                price: getRandomFloat(20, 100, 2),
+                stock: getRandomIntInRange(1, 20),
+                discount: getRandomIntInRange(1, 15),
                 brand: {
                     connectOrCreate: {
                         where: {
@@ -180,21 +183,9 @@ async function main() {
                         title: product.categories[0],
                     },
                 },
-                subproducts: {
-                    create: {
-                        title: product.title,
-                        description: faker.commerce.productDescription(),
-                        images: product.images,
-                    },
-                },
             },
             include: {
                 categories: true,
-                subproducts: {
-                    include: {
-                        listings: true,
-                    },
-                },
             },
         })
 
@@ -207,24 +198,8 @@ async function main() {
         data: {
             email: 'accretence@gmail.com',
             name: 'Amirhossein Mohammadi',
-            isVendor: true,
             cart: {
                 create: {},
-            },
-            vendors: {
-                create: {
-                    title: 'Pasargad Vendor',
-                    description: 'We are a vendor.',
-                    logo: 'https://cdn.logojoy.com/wp-content/uploads/20221122125557/morridge-coffee-vintage-logo-600x392.png',
-                    listings: {
-                        create: {
-                            price: getRandomFloat(4, 100, 2),
-                            stock: getRandomIntInRange(1, 20),
-                            subproductId:
-                                createdProducts[0]?.subproducts[0]?.id,
-                        },
-                    },
-                },
             },
             blogPost: {
                 create: blogPosts,
