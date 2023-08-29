@@ -46,7 +46,7 @@ export const Product = ({ product }: { product: ProductWithAllVariants }) => {
                     <div className="relative h-60 w-full">
                         <Image
                             className="rounded-t-lg"
-                            src={product.images[0]}
+                            src={product?.images[0]}
                             alt="product image"
                             fill
                             style={{ objectFit: 'cover' }}

@@ -31,6 +31,9 @@ export default function LoginDialog() {
             const response = await fetch('/api/auth/otp/try', {
                 method: 'POST',
                 body: JSON.stringify({ email }),
+                headers: {
+                    'Content-Type': 'application/json-string',
+                },
             })
 
             if (response.ok) setUsingOTP(true)
@@ -44,6 +47,9 @@ export default function LoginDialog() {
         const response = await fetch('/api/auth/otp/verify', {
             method: 'POST',
             body: JSON.stringify({ email, OTP }),
+            headers: {
+                'Content-Type': 'application/json-string',
+            },
         })
 
         const json = await response.json()

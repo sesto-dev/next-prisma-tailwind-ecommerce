@@ -18,7 +18,7 @@ export function getLocalCart() {
 export function getCountInCart({ cartItems, productId }) {
     for (let i = 0; i < cartItems.length; i++) {
         if (cartItems[i]?.productId === productId) {
-            return cartItems[i]['count']
+            return cartItems[i]?.count
         }
     }
     return 0

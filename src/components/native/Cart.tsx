@@ -62,7 +62,7 @@ function Receipt() {
 
         if (isVariableValid(cart?.items)) {
             for (const item of cart?.items) {
-                payableCost += item.count * item.product.price
+                payableCost += item.count * item?.product?.price
             }
         }
 
@@ -105,7 +105,7 @@ export const CartProduct = ({ cartItem }) => {
 
     function findLocalCartIndexById(array, productId) {
         for (let i = 0; i < array.length; i++) {
-            if (array[i].productId === productId) {
+            if (array[i]?.productId === productId) {
                 return i
             }
         }
@@ -117,6 +117,9 @@ export const CartProduct = ({ cartItem }) => {
             const response = await fetch(`/api/product`, {
                 method: 'POST',
                 body: JSON.stringify({ productId }),
+                headers: {
+                    'Content-Type': 'application/json-string',
+                },
             })
 
             const json = await response.json()
@@ -140,6 +143,7 @@ export const CartProduct = ({ cartItem }) => {
                             : 'POST',
                     body: JSON.stringify({ productId }),
                     headers: {
+                        'Content-Type': 'application/json-string',
                         Authorization: `Bearer ${AccessToken}`,
                     },
                 })
@@ -197,6 +201,7 @@ export const CartProduct = ({ cartItem }) => {
                             : 'DELETE',
                     body: JSON.stringify({ productId }),
                     headers: {
+                        'Content-Type': 'application/json-string',
                         Authorization: `Bearer ${AccessToken}`,
                     },
                 })
@@ -291,10 +296,10 @@ export const CartProduct = ({ cartItem }) => {
         <Card>
             <CardHeader className="p-0 md:hidden">
                 <div className="relative h-32 w-full">
-                    <Link href={`/product/${product?.subproduct?.product?.id}`}>
+                    <Link href={`/product/${product?.id}`}>
                         <Image
                             className="rounded-t-lg"
-                            src={product.subproduct.images[0]}
+                            src={product?.images[0]}
                             alt="product image"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -304,10 +309,10 @@ export const CartProduct = ({ cartItem }) => {
             </CardHeader>
             <CardContent className="grid grid-cols-6 gap-4 p-3">
                 <div className="relative w-full col-span-2 hidden md:inline-flex">
-                    <Link href={`/product/${product?.subproduct?.product?.id}`}>
+                    <Link href={`/product/${product?.id}`}>
                         <Image
                             className="rounded-lg"
-                            src={product?.subproduct?.images[0]}
+                            src={product?.images[0]}
                             alt="item image"
                             fill
                             style={{ objectFit: 'cover' }}
@@ -315,11 +320,11 @@ export const CartProduct = ({ cartItem }) => {
                     </Link>
                 </div>
                 <div className="col-span-4">
-                    <Link href={`/product/${product?.subproduct?.product?.id}`}>
-                        <h2>{product?.subproduct?.title}</h2>
+                    <Link href={`/product/${product?.id}`}>
+                        <h2>{product?.title}</h2>
                     </Link>
                     <p className="my-2 text-xs text-neutral-500 text-justify">
-                        {product?.subproduct?.description}
+                        {product?.description}
                     </p>
                     <h2 className="text-lg mb-4">${product?.price}</h2>
                     <CartButton />

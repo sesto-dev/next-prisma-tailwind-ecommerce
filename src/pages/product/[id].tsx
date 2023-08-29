@@ -15,13 +15,7 @@ import {
 } from '@radix-ui/react-icons'
 import { Button } from 'components/ui/button'
 import { useValidAccessToken } from 'hooks/useAccessToken'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from 'components/ui/select'
+
 import { isVariableValid, validateBoolean } from 'lib/utils'
 import { CloseIcon, Spinner } from 'components/native/icons'
 import type { ProductWithAllVariants } from 'types/prisma'
@@ -40,9 +34,9 @@ export default function Product({ unserialized }) {
         return (
             <>
                 <Meta
-                    title={product.title}
-                    description={product.description}
-                    image={product.images[0]}
+                    title={product?.title}
+                    description={product?.description}
+                    image={product?.images[0]}
                 />
                 <Breadcrumbs product={product} />
                 <div className="mt-6 grid grid-cols-1 gap-2 md:grid-cols-3">
@@ -59,7 +53,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
     const { loading, cart, refreshCart, dispatchCart } = useCartContext()
 
     const [wishlist, setWishlist] = useState(null)
-    const [fetchingCart, setFetchingCart] = useState(true)
+    const [fetchingCart, setFetchingCart] = useState(false)
     const [fetchingWishlist, setFetchingWishlist] = useState(true)
 
     useEffect(() => {
@@ -83,8 +77,8 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
     }, [AccessToken])
 
     function isProductInWishlist() {
-        for (let i = 0; i < wishlist.length; i++) {
-            if (wishlist[i]['id'] === product?.id) {
+        for (let i = 0; i < wishlist?.length; i++) {
+            if (wishlist[i]?.id === product?.id) {
                 return true
             }
         }
@@ -114,6 +108,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                     method: count > 0 ? 'PUT' : 'POST',
                     body: JSON.stringify({ productId: product?.id }),
                     headers: {
+                        'Content-Type': 'application/json-string',
                         Authorization: `Bearer ${AccessToken}`,
                     },
                 })
@@ -165,6 +160,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                     method: count > 1 ? 'PATCH' : 'DELETE',
                     body: JSON.stringify({ productId: product?.id }),
                     headers: {
+                        'Content-Type': 'application/json-string',
                         Authorization: `Bearer ${AccessToken}`,
                     },
                 })
@@ -204,6 +200,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                 method: 'POST',
                 body: JSON.stringify({ productId: product?.id }),
                 headers: {
+                    'Content-Type': 'application/json-string',
                     Authorization: `Bearer ${AccessToken}`,
                 },
             })
@@ -227,6 +224,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                 method: 'DELETE',
                 body: JSON.stringify({ productId: product.id }),
                 headers: {
+                    'Content-Type': 'application/json-string',
                     Authorization: `Bearer ${AccessToken}`,
                 },
             })
@@ -256,18 +254,13 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
         })
 
         if (count === 0) {
-            return (
-                <Button disabled={product?.id == ''} onClick={onAddToCart}>
-                    🛒 Add to Cart
-                </Button>
-            )
+            return <Button onClick={onAddToCart}>🛒 Add to Cart</Button>
         }
 
         if (count > 0) {
             return (
                 <>
                     <Button
-                        disabled={product?.id == ''}
                         variant="outline"
                         size="icon"
                         onClick={onRemoveFromCart}
@@ -282,12 +275,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                     <Button disabled variant="outline" size="icon">
                         {count}
                     </Button>
-                    <Button
-                        disabled={product?.id == ''}
-                        variant="outline"
-                        size="icon"
-                        onClick={onAddToCart}
-                    >
+                    <Button variant="outline" size="icon" onClick={onAddToCart}>
                         <PlusIcon className="h-4 w-4" />
                     </Button>
                 </>
@@ -304,19 +292,12 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
             )
 
         if (!isProductInWishlist()) {
-            return (
-                <Button disabled={product?.id == ''} onClick={onAddToWishlist}>
-                    🛒 Add to Wishlist
-                </Button>
-            )
+            return <Button onClick={onAddToWishlist}>🛒 Add to Wishlist</Button>
         }
 
         if (isProductInWishlist()) {
             return (
-                <Button
-                    disabled={product?.id == ''}
-                    onClick={onRemoveFromWishlist}
-                >
+                <Button onClick={onRemoveFromWishlist}>
                     🛒 Remove from Wishlist
                 </Button>
             )
@@ -346,10 +327,6 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                 {product.description}
             </small>
             <hr className="my-4 w-full border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
-            <label className="mb-2 block text-sm font-medium text-neutral-900 dark:text-white">
-                Select an option
-            </label>
-
             <div className="flex gap-2">
                 <CartButton />
                 <WishlistButton />

@@ -18,10 +18,21 @@ function getRandomIntInRange(min: number, max: number) {
     return Math.floor(Math.random() * (max - min) + min)
 }
 
+function getRandomDate(start, end) {
+    return new Date(
+        start.getTime() + Math.random() * (end.getTime() - start.getTime())
+    )
+}
+
 const prisma = new PrismaClient()
 
 async function main() {
-    let createdProducts = []
+    let createdProducts = [],
+        createdProviders = []
+
+    const providers = ['Parsian', 'Pasargad', 'Dey']
+
+    const owners = ['accretence@gmail.com', 'iqoror@gmail.com']
 
     const categories = [
         'Electronics',
@@ -146,15 +157,31 @@ async function main() {
         },
     ]
 
-    for (const category of categories) {
-        await prisma.category.create({
-            data: {
-                title: category,
-            },
-        })
+    try {
+        for (const owner of owners) {
+            await prisma.owner.create({
+                data: {
+                    email: owner,
+                },
+            })
+        }
+    } catch (error) {
+        console.error('Could not create owners...')
     }
 
-    console.log('Created Categories...')
+    try {
+        for (const category of categories) {
+            await prisma.category.create({
+                data: {
+                    title: category,
+                },
+            })
+        }
+
+        console.log('Created Categories...')
+    } catch (error) {
+        console.error('Could not create Categories...')
+    }
 
     for (const product of products) {
         const createdProduct = await prisma.product.create({
@@ -194,31 +221,85 @@ async function main() {
 
     console.log('Created Products...')
 
-    await prisma.user.create({
+    const author = await prisma.author.create({
+        data: {
+            email: 'accretence@gmail.com',
+            blogPost: {
+                create: blogPosts,
+            },
+        },
+    })
+
+    console.log('Created Authors...')
+
+    const user = await prisma.user.create({
         data: {
             email: 'accretence@gmail.com',
             name: 'Amirhossein Mohammadi',
             cart: {
                 create: {},
             },
-            blogPost: {
-                create: blogPosts,
-            },
             wishlist: {
                 connect: {
-                    id: createdProducts[0]['id'],
+                    id: createdProducts[
+                        getRandomIntInRange(0, createdProducts.length - 1)
+                    ]['id'],
                 },
             },
         },
     })
 
     console.log('Created Users...')
+
+    for (const provider of providers) {
+        const createdProvider = await prisma.paymentProvider.create({
+            data: {
+                title: provider,
+            },
+        })
+
+        createdProviders.push(createdProvider)
+    }
+
+    console.log('Created Providers...')
+
+    for (let i = 0; i < 100; i++) {
+        const order = await prisma.order.create({
+            data: {
+                createdAt: getRandomDate(new Date(2023, 2, 27), new Date()),
+                payable: getRandomFloat(20, 100, 2),
+                discount: getRandomFloat(20, 100, 2),
+                shippingCost: getRandomFloat(20, 100, 2),
+                status: 'Processing',
+                user: { connect: { id: user.id } },
+                isPaid: true,
+                orderItems: {
+                    create: {
+                        productId:
+                            createdProducts[
+                                getRandomIntInRange(
+                                    0,
+                                    createdProducts.length - 1
+                                )
+                            ]?.id,
+                        count: 1,
+                        price: createdProducts[
+                            getRandomIntInRange(0, createdProducts.length - 1)
+                        ].price,
+                        discount: 0,
+                    },
+                },
+            },
+        })
+    }
+
+    console.log('Created Orders...')
 }
 
 try {
     main()
     prisma.$disconnect()
 } catch (error) {
-    console.log(error)
+    console.error(error)
     process.exit(1)
 }

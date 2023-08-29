@@ -33,7 +33,6 @@ model User {
   productReviews ProductReview[]
   errors         Error[]
   files          File[]
-  blogPost       BlogPost[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -62,11 +61,23 @@ model Owner {
   id    String  @id @default(cuid())
   email String  @unique
   phone String? @unique
+  name String?
+  avatar String?
   OTP   String?
 
-  title       String  @unique
-  description String?
-  logo        String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Author {
+  id    String  @id @default(cuid())
+  email String  @unique
+  phone String? @unique
+  name String?
+  avatar String?
+  OTP   String?
+
+  blogPost       BlogPost[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -91,7 +102,7 @@ model Product {
 
   price    Float @default(100)
   discount Float @default(0)
-  stock    Int @default(0)
+  stock    Int   @default(0)
 
   isAvailable Boolean @default(false)
   isFeatured  Boolean @default(false)
@@ -143,12 +154,13 @@ model ProductReview {
 }
 
 model Order {
-  id       String          @id @default(cuid())
-  status   OrderStatusEnum
+  id     String          @id @default(cuid())
+  number Int @unique @default(autoincrement())
+  status OrderStatusEnum
 
   shippingCost Float @default(100)
-  payable  Float    @default(100)
-  discount Float @default(0)
+  payable      Float @default(100)
+  discount     Float @default(0)
 
   isPaid      Boolean @default(false)
   isCompleted Boolean @default(false)
@@ -181,7 +193,7 @@ model OrderItem {
   price     Float
   discount  Float
 
-  @@unique([orderId, productId], name: "UniqueCartItem")
+  @@unique([orderId, productId], name: "UniqueOrderItem")
 }
 
 enum OrderStatusEnum {
@@ -218,8 +230,8 @@ model Notification {
   content String
   isRead  Boolean @default(false)
 
-  user    User    @relation(fields: [userId], references: [id])
-  userId  String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -228,14 +240,14 @@ model Notification {
 }
 
 model DiscountCode {
-  id          String   @id @default(cuid())
-  code        String   @unique
-  stock       Int @default(1)
-  description String?
-  percent     Int
-  maxDiscountAmount Float @default(1)
-  startDate   DateTime
-  endDate     DateTime
+  id                String   @id @default(cuid())
+  code              String   @unique
+  stock             Int      @default(1)
+  description       String?
+  percent           Int
+  maxDiscountAmount Float    @default(1)
+  startDate         DateTime
+  endDate           DateTime
 
   order Order[]
 
@@ -243,9 +255,9 @@ model DiscountCode {
 }
 
 model Refund {
-  id      String @id @default(cuid())
-  amount  Float
-  reason  String
+  id     String @id @default(cuid())
+  amount Float
+  reason String
 
   order   Order  @relation(fields: [orderId], references: [id])
   orderId String @unique
@@ -257,18 +269,18 @@ model Refund {
 }
 
 model Payment {
-  id String @id @default(cuid())
+  id     String            @id @default(cuid())
   status PaymentStatusEnum
 
-  isSuccessful  Boolean @default(false)
-  payable Float
+  isSuccessful Boolean @default(false)
+  payable      Float
 
-  provider    PaymentProvider   @relation(fields: [providerId], references: [id])
-  providerId  String
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
-  order   Order  @relation(fields: [orderId], references: [id])
-  orderId String
+  provider   PaymentProvider @relation(fields: [providerId], references: [id])
+  providerId String
+  user       User            @relation(fields: [userId], references: [id])
+  userId     String
+  order      Order           @relation(fields: [orderId], references: [id])
+  orderId    String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -286,13 +298,13 @@ enum PaymentStatusEnum {
 }
 
 model PaymentProvider {
-  id String @id @default(cuid())
-  title            String     @unique
-  description     String?   
-  websiteUrl      String?   
-  isActive        Boolean    @default(false)     
+  id          String  @id @default(cuid())
+  title       String  @unique
+  description String?
+  websiteUrl  String?
+  isActive    Boolean @default(false)
 
-  orders          Payment[]
+  orders Payment[]
 }
 
 model Error {
@@ -331,7 +343,7 @@ model BlogPost {
   categories String[]
   tags       String[]
 
-  author   User   @relation(fields: [authorId], references: [id])
+  author   Author   @relation(fields: [authorId], references: [id])
   authorId String
 
   createdAt DateTime @default(now())
