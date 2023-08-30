@@ -22,12 +22,8 @@ export const CartContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
 
     const dispatchCart = async (cart) => {
-        setLoading(true)
-
         setCart(cart)
         writeLocalCart(cart)
-
-        setLoading(false)
     }
 
     const refreshCart = async () => {
@@ -35,11 +31,13 @@ export const CartContextProvider = ({ children }) => {
 
         if (isVariableValid(user)) setCart(user?.cart)
         if (!isVariableValid(user)) setCart(getLocalCart())
+
         setLoading(false)
     }
 
     useEffect(() => {
         if (isVariableValid(user)) setCart(user?.cart)
+        if (!isVariableValid(getLocalCart())) writeLocalCart({ items: [] })
         if (!isVariableValid(user)) setCart(getLocalCart())
 
         setLoading(false)

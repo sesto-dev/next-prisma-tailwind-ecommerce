@@ -23,7 +23,7 @@ import { useCartContext } from 'state/Cart'
 export const CartGrid = () => {
     const { loading, cart, refreshCart, dispatchCart } = useCartContext()
 
-    if (isVariableValid(cart?.items) && cart['items'].length === 0) {
+    if (isVariableValid(cart?.items) && cart?.items?.length === 0) {
         return (
             <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="md:col-span-2">
@@ -42,7 +42,7 @@ export const CartGrid = () => {
         <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="md:col-span-2">
                 {isVariableValid(cart?.items)
-                    ? cart['items'].map((cartItem, index) => (
+                    ? cart?.items?.map((cartItem, index) => (
                           <CartProduct cartItem={cartItem} key={index} />
                       ))
                     : [...Array(5)].map((cartItem, index) => (
@@ -100,12 +100,13 @@ function Receipt() {
 export const CartProduct = ({ cartItem }) => {
     const { AccessToken } = useValidAccessToken()
     const { loading, cart, refreshCart, dispatchCart } = useCartContext()
+    const [fetchingCart, setFetchingCart] = useState(false)
 
     const { product, productId, count } = cartItem
 
     function findLocalCartIndexById(array, productId) {
         for (let i = 0; i < array.length; i++) {
-            if (array[i]?.productId === productId) {
+            if (array?.items[i]?.productId === productId) {
                 return i
             }
         }
@@ -132,6 +133,8 @@ export const CartProduct = ({ cartItem }) => {
 
     async function onAddToCart() {
         try {
+            setFetchingCart(true)
+
             if (isVariableValid(AccessToken)) {
                 const response = await fetch(`/api/cart/modify`, {
                     method:
@@ -151,38 +154,37 @@ export const CartProduct = ({ cartItem }) => {
                 const json = await response.json()
 
                 dispatchCart(json?.cart)
-                writeLocalCart(json?.cart)
             }
 
-            const localCart = getLocalCart() as any[]
+            const localCart = getLocalCart() as any
 
             if (
-                isVariableValid(AccessToken) &&
+                !isVariableValid(AccessToken) &&
                 getCountInCart({ cartItems: cart?.items, productId }) > 0
             ) {
-                for (let i = 0; i < localCart.length; i++) {
-                    if (localCart[i].productId === productId) {
-                        localCart[i].count = localCart[i].count + 1
+                for (let i = 0; i < localCart.items.length; i++) {
+                    if (localCart.items[i].productId === productId) {
+                        localCart.items[i].count = localCart.items[i].count + 1
                     }
                 }
 
                 dispatchCart(localCart)
-                writeLocalCart(localCart)
             }
 
             if (
-                isVariableValid(AccessToken) &&
+                !isVariableValid(AccessToken) &&
                 getCountInCart({ cartItems: cart?.items, productId }) < 1
             ) {
-                localCart.push({
+                localCart.items.push({
                     productId,
                     product: await getProduct(),
                     count: 1,
                 })
 
-                writeLocalCart(localCart)
                 dispatchCart(localCart)
             }
+
+            setFetchingCart(false)
         } catch (error) {
             console.error({ error })
         }
@@ -190,15 +192,16 @@ export const CartProduct = ({ cartItem }) => {
 
     async function onRemoveFromCart() {
         try {
+            setFetchingCart(true)
+
+            const count = getCountInCart({
+                cartItems: cart?.items,
+                productId: product?.id,
+            })
+
             if (isVariableValid(AccessToken)) {
                 const response = await fetch(`/api/cart/modify`, {
-                    method:
-                        getCountInCart({
-                            cartItems: cart?.items,
-                            productId,
-                        }) > 1
-                            ? 'PATCH'
-                            : 'DELETE',
+                    method: count > 1 ? 'PATCH' : 'DELETE',
                     body: JSON.stringify({ productId }),
                     headers: {
                         'Content-Type': 'application/json-string',
@@ -209,32 +212,34 @@ export const CartProduct = ({ cartItem }) => {
                 const json = await response.json()
 
                 dispatchCart(json?.cart)
-                writeLocalCart(json?.cart)
             }
 
-            const localCart = getLocalCart() as any[]
+            const localCart = getLocalCart() as any
             const index = findLocalCartIndexById(localCart, productId)
-            const count = localCart[index].count
 
             if (
-                isVariableValid(AccessToken) &&
+                !isVariableValid(AccessToken) &&
                 getCountInCart({ cartItems: cart?.items, productId }) > 1
             ) {
-                localCart[index].count = count - 1
+                for (let i = 0; i < localCart.items.length; i++) {
+                    if (localCart.items[i].productId === product?.id) {
+                        localCart.items[i].count = localCart.items[i].count - 1
+                    }
+                }
 
                 dispatchCart(localCart)
-                writeLocalCart(localCart)
             }
 
             if (
-                isVariableValid(AccessToken) &&
+                !isVariableValid(AccessToken) &&
                 getCountInCart({ cartItems: cart?.items, productId }) === 1
             ) {
-                localCart.splice(index, 1)
+                localCart.items.splice(index, 1)
 
-                writeLocalCart(localCart)
                 dispatchCart(localCart)
             }
+
+            setFetchingCart(false)
         } catch (error) {
             console.error({ error })
         }
@@ -246,7 +251,7 @@ export const CartProduct = ({ cartItem }) => {
             productId,
         })
 
-        if (loading)
+        if (fetchingCart)
             return (
                 <Button disabled>
                     <Spinner />
@@ -254,18 +259,13 @@ export const CartProduct = ({ cartItem }) => {
             )
 
         if (count === 0) {
-            return (
-                <Button disabled={productId == ''} onClick={onAddToCart}>
-                    🛒 Add to Cart
-                </Button>
-            )
+            return <Button onClick={onAddToCart}>🛒 Add to Cart</Button>
         }
 
         if (count > 0) {
             return (
                 <>
                     <Button
-                        disabled={productId == ''}
                         variant="outline"
                         size="icon"
                         onClick={onRemoveFromCart}

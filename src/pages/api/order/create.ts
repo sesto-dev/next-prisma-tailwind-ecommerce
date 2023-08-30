@@ -33,7 +33,7 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
                 status: 'Processing',
                 payable: 10,
                 discount: 0,
-                shippingCost: 5,
+                shipping: 5,
             },
         })
 

@@ -158,7 +158,7 @@ model Order {
   number Int @unique @default(autoincrement())
   status OrderStatusEnum
 
-  shippingCost Float @default(100)
+  shipping Float @default(100)
   payable      Float @default(100)
   discount     Float @default(0)
 

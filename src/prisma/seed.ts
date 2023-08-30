@@ -269,7 +269,7 @@ async function main() {
                 createdAt: getRandomDate(new Date(2023, 2, 27), new Date()),
                 payable: getRandomFloat(20, 100, 2),
                 discount: getRandomFloat(20, 100, 2),
-                shippingCost: getRandomFloat(20, 100, 2),
+                shipping: getRandomFloat(20, 100, 2),
                 status: 'Processing',
                 user: { connect: { id: user.id } },
                 isPaid: true,

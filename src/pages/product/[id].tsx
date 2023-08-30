@@ -87,7 +87,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
 
     function findLocalCartIndexById(array, productId) {
         for (let i = 0; i < array.length; i++) {
-            if (array[i].productId === productId) {
+            if (array?.items[i]?.productId === productId) {
                 return i
             }
         }
@@ -118,12 +118,12 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                 dispatchCart(json?.cart)
             }
 
-            const localCart = getLocalCart() as any[]
+            const localCart = getLocalCart() as any
 
             if (!isVariableValid(AccessToken) && count > 0) {
-                for (let i = 0; i < localCart.length; i++) {
-                    if (localCart[i].productId === product?.id) {
-                        localCart[i].count = localCart[i].count + 1
+                for (let i = 0; i < localCart.items.length; i++) {
+                    if (localCart.items[i].productId === product?.id) {
+                        localCart.items[i].count = localCart.items[i].count + 1
                     }
                 }
 
@@ -131,7 +131,7 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
             }
 
             if (!isVariableValid(AccessToken) && count < 1) {
-                localCart.push({
+                localCart.items.push({
                     productId: product?.id,
                     product,
                     count: 1,
@@ -170,18 +170,21 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
                 dispatchCart(json?.cart)
             }
 
-            const localCart = getLocalCart() as any[]
+            const localCart = getLocalCart() as any
             const index = findLocalCartIndexById(localCart, product?.id)
-            const itemCount = localCart[index].count
 
             if (!isVariableValid(AccessToken) && count > 1) {
-                localCart[index].count = itemCount - 1
+                for (let i = 0; i < localCart.items.length; i++) {
+                    if (localCart.items[i].productId === product?.id) {
+                        localCart.items[i].count = localCart.items[i].count - 1
+                    }
+                }
 
                 dispatchCart(localCart)
             }
 
             if (!isVariableValid(AccessToken) && count === 1) {
-                localCart.splice(index, 1)
+                localCart.items.splice(index, 1)
 
                 dispatchCart(localCart)
             }
