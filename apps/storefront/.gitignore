@@ -1,0 +1,8 @@
+/.next
+/node_modules
+
+sitemap.xml
+sitemap-0.xml
+manifest.json
+sw.json
+robots.txt

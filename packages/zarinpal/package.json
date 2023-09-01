@@ -1,0 +1,21 @@
+{
+   "name": "@persepolis/zarinpal",
+   "version": "0.1.0",
+   "description": "",
+   "main": "dist/index.js",
+   "scripts": {
+      "publish": "npm publish --access public",
+      "build": "tsc",
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "author": "@accretence",
+   "license": "MIT",
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms.git"
+   },
+   "homepage": "https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms#readme",
+   "devDependencies": {
+      "typescript": "^5.2.2"
+   }
+}

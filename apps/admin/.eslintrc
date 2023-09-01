@@ -1,0 +1,8 @@
+{
+  "extends": "next",
+  "rules": {
+    "react/prop-types": 0,
+    "react/no-unescaped-entities": 0,
+    "@next/next/no-server-import-in-page": 0
+  }
+}

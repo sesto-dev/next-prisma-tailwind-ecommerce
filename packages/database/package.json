@@ -1,0 +1,30 @@
+{
+   "name": "@persepolis/database",
+   "version": "1.0.1",
+   "description": "Database schema for the Persepolis e-commerce platform.",
+   "scripts": {
+      "db:generate": "npx prisma generate",
+      "db:format": "npx prisma format",
+      "db:reset": "npx prisma db push --force-reset",
+      "db:push": "npx prisma db push",
+      "db:studio": "npx prisma studio",
+      "publish": "npm publish --access public",
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms.git"
+   },
+   "author": "@accretence",
+   "license": "MIT",
+   "bugs": {
+      "url": "https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms/issues"
+   },
+   "homepage": "https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms#readme",
+   "dependencies": {
+      "@prisma/client": "^5.2.0"
+   },
+   "devDependencies": {
+      "prisma": "^5.2.0"
+   }
+}
