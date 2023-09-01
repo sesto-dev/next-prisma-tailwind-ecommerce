@@ -1,10 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import sendVerifyMail from 'lib/mail/sendVerifyMail'
+import { sendVerifyMail } from '@persepolis/mail/dist'
 import prisma from 'lib/prisma'
 import { isEmailValid } from 'lib/regex'
 import { generateSerial } from 'lib/serial'
 import { getRequestBody } from 'lib/utils'
+import Config from 'config/site'
 
 export default async function API(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -25,6 +26,7 @@ export default async function API(req: NextApiRequest, res: NextApiResponse) {
             })
 
             await sendVerifyMail({
+                name: Config.name,
                 to: email,
                 email_verification_code: OTP,
                 unsubscribe_url: process.env.UNSUBSCRIBE_URL,

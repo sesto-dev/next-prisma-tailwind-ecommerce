@@ -63,11 +63,6 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.47.0.tgz#5478fdf443ff8158f9de171c704ae45308696c7d"
   integrity sha512-P6omY1zv5MItm93kLM8s2vr1HICJH8v0dvddDhysbIuZ+vcjOHg5Zbkf1mTkcmi2JA9oBG2anOkRnW8WJTS8Og==
 
-"@faker-js/faker@^8.0.2":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-8.0.2.tgz#bab698c5d3da9c52744e966e0e3eedb6c8b05c37"
-  integrity sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==
-
 "@floating-ui/core@^1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.4.1.tgz#0d633f4b76052668afb932492ac452f7ebe97f17"
@@ -276,6 +271,18 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
+
+"@persepolis/database@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@persepolis/database/-/database-1.0.0.tgz#7684a57efbbd79a22859c80e66bfe3e5c063cbab"
+  integrity sha512-GAAaHqc/WLQpgmglKsW62eywea6dvHd8ZnVt+i4DYrjHhodYez6qQ3Cg4UlnE7QGAeS585JwPF7+Cg1/H4C/LA==
+
+"@persepolis/mail@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@persepolis/mail/-/mail-1.0.0.tgz#bd90850c9e56557383b11141527a6a40dc0926bd"
+  integrity sha512-pwSa1BnhYo5h/EfIW0mP3snJBW31x73QWDt//9IVbC7lNjCeKGlBUQZKNQtpILZ/JXIFDMlN67uqCzfHIb0wfw==
+  dependencies:
+    nodemailer "^6.9.4"
 
 "@popperjs/core@^2.9.3":
   version "2.11.8"

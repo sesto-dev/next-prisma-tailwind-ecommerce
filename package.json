@@ -18,7 +18,8 @@
         "db:seed": "npx prisma db seed"
     },
     "dependencies": {
-        "@faker-js/faker": "^8.0.2",
+        "@persepolis/database": "^1.0.0",
+        "@persepolis/mail": "^1.0.0",
         "@prisma/client": "^5.2.0",
         "@radix-ui/react-accordion": "^1.1.2",
         "@radix-ui/react-alert-dialog": "^1.0.4",
@@ -67,7 +68,6 @@
         "typescript": "^5.1.6"
     },
     "prisma": {
-        "schema": "src/prisma/schema.prisma",
-        "seed": "npx ts-node --compiler-options {\"module\":\"CommonJS\"} src/prisma/seed.ts"
+        "schema": "node_modules/@persepolis/database/schema.prisma"
     }
 }
