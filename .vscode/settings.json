@@ -1,8 +1,10 @@
 {
-    "search.exclude": {
-        "**/package-lock.json": true,
-        "**/node_modules": true,
-        "**/.next": true,
-        "**/yarn.lock": true
-    }
+   "search.exclude": {
+      "**/package-lock.json": true,
+      "**/node_modules": true,
+      "**/.next": true,
+      "**/dist": true,
+      "**/yarn.lock": true
+   },
+   "eslint.workingDirectories": ["./apps/storefront", "./apps/admin"]
 }
