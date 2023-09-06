@@ -1,5 +1,6 @@
-import getTransporter from './getTransporter'
+import getTransporter from '../helpers/getTransporter'
 import getEpilogue from '../markdown/getEpilogue'
+import getNewStyle from '../markdown/getNewStyle'
 import getPrologue from '../markdown/getPrologue'
 
 const address = process.env.MAIL_SMTP_USER

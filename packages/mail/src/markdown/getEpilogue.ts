@@ -1,4 +1,4 @@
-export default function getEpilogue({ name, unsubscribe_url }) {
+export default function ({ name, unsubscribe_url }) {
    return `<p>Regards, ${name}.</p>
 											</td>
 										</tr>

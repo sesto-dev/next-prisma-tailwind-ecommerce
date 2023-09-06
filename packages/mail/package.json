@@ -1,6 +1,6 @@
 {
    "name": "@persepolis/mail",
-   "version": "1.0.0",
+   "version": "1.0.5",
    "description": "Mail service for the Persepolis e-commerce platform.",
    "main": "dist/index.js",
    "scripts": {
@@ -12,6 +12,9 @@
       "type": "git",
       "url": "git+https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms.git"
    },
+   "files": [
+      "dist"
+   ],
    "author": "@accretence",
    "license": "MIT",
    "bugs": {

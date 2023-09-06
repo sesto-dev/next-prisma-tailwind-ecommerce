@@ -246,10 +246,10 @@
   dependencies:
     "@prisma/client" "^5.2.0"
 
-"@persepolis/mail@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@persepolis/mail/-/mail-1.0.0.tgz#bd90850c9e56557383b11141527a6a40dc0926bd"
-  integrity sha512-pwSa1BnhYo5h/EfIW0mP3snJBW31x73QWDt//9IVbC7lNjCeKGlBUQZKNQtpILZ/JXIFDMlN67uqCzfHIb0wfw==
+"@persepolis/mail@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@persepolis/mail/-/mail-1.0.5.tgz#6516bcd4ba88b19806502589c2691d223b4e4f51"
+  integrity sha512-DniG/oyzA38Hjyh5L7/w+tmP8VIDf3SeQjNLiBjT4UgC95RfmUQRZzy+udQgRpAGJoRhu77sLPgxuoV0XQYcxw==
   dependencies:
     nodemailer "^6.9.4"
 

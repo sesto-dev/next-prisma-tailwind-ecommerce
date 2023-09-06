@@ -27,19 +27,17 @@ export async function middleware(req: NextRequest) {
 
    const token = getToken()
 
-   if (req.nextUrl.pathname.startsWith('/login') && !token)
-      return NextResponse.next()
-
-   if (req.nextUrl.pathname.match('/login') && token) {
-      return NextResponse.redirect(new URL('/', req.url))
+   if (req.nextUrl.pathname.match('/login')) {
+      if (!token) return NextResponse.next()
+      if (token) return NextResponse.redirect(new URL('/', req.url))
    }
 
-   if (!token && !isTargetingAPI()) {
-      return NextResponse.redirect(new URL('/login', req.url))
-   }
-
-   if (!token && isTargetingAPI()) {
-      return getErrorResponse(401, "Token is invalid or user doesn't exist")
+   if (!token) {
+      if (req.nextUrl.pathname.match('/api/auth/otp/try'))
+         return NextResponse.next()
+      if (isTargetingAPI()) return getErrorResponse(401, 'INVALID TOKEN')
+      if (!isTargetingAPI())
+         return NextResponse.redirect(new URL('/login', req.url))
    }
 
    const response = NextResponse.next()
@@ -53,8 +51,8 @@ export async function middleware(req: NextRequest) {
    } catch (error) {
       console.error({ error })
 
-      if (req.nextUrl.pathname.startsWith('/api')) {
-         return getErrorResponse(401, "Token is invalid or user doesn't exist")
+      if (isTargetingAPI()) {
+         return getErrorResponse(401, 'INVALID TOKEN')
       }
 
       return NextResponse.redirect(new URL(`/login`, req.url))
