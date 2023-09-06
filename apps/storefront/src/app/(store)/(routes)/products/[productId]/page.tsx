@@ -1,13 +1,12 @@
 import Link from 'next/link'
-
 import Image from 'next/image'
 
 import prisma from '@/lib/prisma'
-import { ChevronRightIcon } from '@radix-ui/react-icons'
 
 import { isVariableValid } from '@/lib/utils'
 
 import { DataSection } from './components/data'
+import { ChevronRightIcon } from 'lucide-react'
 
 export default async function Product({
    params,
@@ -53,33 +52,28 @@ const ImageColumn = ({ product }) => {
 
 const Breadcrumbs = ({ product }) => {
    return (
-      <nav className="flex" aria-label="Breadcrumb">
-         <ol className="inline-flex items-center space-x-1 md:space-x-3">
+      <nav className="flex text-muted-foreground" aria-label="Breadcrumb">
+         <ol className="inline-flex items-center gap-2">
             <li className="inline-flex items-center">
                <Link
                   href="/"
-                  className="inline-flex items-center text-sm font-medium text-neutral-700 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+                  className="inline-flex items-center text-sm font-medium"
                >
                   Home
                </Link>
             </li>
             <li>
-               <div className="flex items-center">
-                  <ChevronRightIcon />
-                  <Link
-                     className="ml-1 text-sm font-medium text-neutral-700 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white md:ml-2"
-                     href="/products"
-                  >
+               <div className="flex items-center gap-2">
+                  <ChevronRightIcon className="h-4" />
+                  <Link className="text-sm font-medium" href="/products">
                      Products
                   </Link>
                </div>
             </li>
             <li aria-current="page">
-               <div className="flex items-center">
-                  <ChevronRightIcon />
-                  <span className="ml-1 text-sm font-medium text-neutral-500 dark:text-neutral-400 md:ml-2">
-                     {product?.title}
-                  </span>
+               <div className="flex items-center gap-2">
+                  <ChevronRightIcon className="h-4" />
+                  <span className="text-sm font-medium">{product?.title}</span>
                </div>
             </li>
          </ol>

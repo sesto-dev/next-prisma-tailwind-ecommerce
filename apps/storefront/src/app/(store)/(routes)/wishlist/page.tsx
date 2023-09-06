@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react'
 
-import { useValidAccessToken } from '@/hooks/useAccessToken'
-import { isVariableValid } from '@/lib/utils'
+import { useAuthenticated } from '@/hooks/useAccessToken'
+import { isVariableValid, validateBoolean } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { CartGrid } from '@/app/(store)/(routes)/cart/components/grid'
 import { useUserContext } from '@/state/User'
 
 export default function User({}) {
-   const { AccessToken } = useValidAccessToken()
+   const { authenticated } = useAuthenticated()
    const { user, loading } = useUserContext()
 
    const [items, setItems] = useState(null)
@@ -23,9 +23,7 @@ export default function User({}) {
       async function getWishlist() {
          try {
             const response = await fetch(`/api/wishlist`, {
-               headers: {
-                  Authorization: `Bearer ${AccessToken}`,
-               },
+               cache: 'no-store',
             })
 
             const json = await response.json()
@@ -36,8 +34,8 @@ export default function User({}) {
          }
       }
 
-      if (isVariableValid(AccessToken)) getWishlist()
-   }, [AccessToken])
+      if (validateBoolean(authenticated, true)) getWishlist()
+   }, [authenticated])
 
    return (
       <>

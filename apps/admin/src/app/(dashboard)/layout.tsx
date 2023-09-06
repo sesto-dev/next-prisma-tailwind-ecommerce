@@ -1,14 +1,14 @@
-import Navbar from "@/components/navbar";
+import Navbar from '@/components/navbar'
 
 export default async function DashboardLayout({
-  children,
+   children,
 }: {
-  children: React.ReactNode;
+   children: React.ReactNode
 }) {
-  return (
-    <>
-      <Navbar />
-      {children}
-    </>
-  );
+   return (
+      <>
+         <Navbar />
+         {children}
+      </>
+   )
 }

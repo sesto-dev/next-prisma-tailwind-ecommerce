@@ -27,31 +27,22 @@ export default async function Index() {
       <div className="flex flex-col border-neutral-200 dark:border-neutral-700">
          <Carousel
             images={[
-               'https://i0.wp.com/allhomecinema.com/storage/2020/01/1580026175_review-bang-olufsen-beoplay-a9-wireless-speaker.jpg?fit=1320%2C759&ssl=1',
-               'https://globaltv.es/wp-content/uploads/2022/10/bang-olufsen-salon.webp',
-               'https://thevinylfactory.com/wp-content/uploads/2023/06/2.webp',
-            ]}
-         />
-         <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-
-         {isVariableValid(products) ? (
-            <ProductGrid products={products} />
-         ) : (
-            <ProductSkeletonGrid />
-         )}
-         <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-         <Heading
-            title="Products"
-            description="Below is a list of products we have available for you."
-         />
-
-         <Carousel
-            images={[
                'https://i0.wp.com/allhomecinema.com/storage/2020/01/1580026175_review-bang-olufsen-beoplay-a9-wireless-speaker.jpg',
                'https://globaltv.es/wp-content/uploads/2022/10/bang-olufsen-salon.webp',
                'https://thevinylfactory.com/wp-content/uploads/2023/06/2.webp',
             ]}
          />
+         <hr className="h-px my-8 bg-neutral-200 dark:bg-neutral-800 border-0" />
+         <Heading
+            title="Products"
+            description="Below is a list of products we have available for you."
+         />
+         {isVariableValid(products) ? (
+            <ProductGrid products={products} />
+         ) : (
+            <ProductSkeletonGrid />
+         )}
+         <hr className="h-px my-8 bg-neutral-200 dark:bg-neutral-800 border-0" />
          {isVariableValid(blogs) ? (
             <BlogPostGrid blogs={blogs} />
          ) : (

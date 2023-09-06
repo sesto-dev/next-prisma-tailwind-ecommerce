@@ -1,7 +1,7 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 
-import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
-import { useValidAccessToken } from '@/hooks/useAccessToken'
 import { isVariableValid } from '@/lib/utils'
 import {
    Table,
@@ -21,9 +21,9 @@ import {
 import { Spinner } from '@/components/native/icons'
 import { useRouter } from 'next/navigation'
 import { useUserContext } from '@/state/User'
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 
 export default function User({}) {
-   const { AccessToken } = useValidAccessToken()
    const { user, loading } = useUserContext()
 
    const router = useRouter()

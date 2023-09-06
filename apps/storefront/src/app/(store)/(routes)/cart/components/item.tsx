@@ -9,16 +9,16 @@ import {
 import { isVariableValid, validateBoolean } from '@/lib/utils'
 import { getCountInCart, getLocalCart, writeLocalCart } from '@/lib/cart'
 import { useState, useEffect } from 'react'
-import { Cross2Icon, MinusIcon, PlusIcon } from '@radix-ui/react-icons'
-import { useValidAccessToken } from '@/hooks/useAccessToken'
+import { useAuthenticated } from '@/hooks/useAccessToken'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { useCartContext } from '@/state/Cart'
 import Image from 'next/image'
 import { Spinner } from '@/components/native/icons'
+import { CrossIcon, MinusIcon, PlusIcon } from 'lucide-react'
 
 export const Item = ({ cartItem }) => {
-   const { AccessToken } = useValidAccessToken()
+   const { authenticated } = useAuthenticated()
    const { loading, cart, refreshCart, dispatchCart } = useCartContext()
    const [fetchingCart, setFetchingCart] = useState(false)
 
@@ -55,7 +55,7 @@ export const Item = ({ cartItem }) => {
       try {
          setFetchingCart(true)
 
-         if (isVariableValid(AccessToken)) {
+         if (validateBoolean(authenticated, true)) {
             const response = await fetch(`/api/cart/modify`, {
                method:
                   getCountInCart({
@@ -65,9 +65,9 @@ export const Item = ({ cartItem }) => {
                      ? 'PUT'
                      : 'POST',
                body: JSON.stringify({ productId }),
+               cache: 'no-store',
                headers: {
                   'Content-Type': 'application/json-string',
-                  Authorization: `Bearer ${AccessToken}`,
                },
             })
 
@@ -79,7 +79,7 @@ export const Item = ({ cartItem }) => {
          const localCart = getLocalCart() as any
 
          if (
-            !isVariableValid(AccessToken) &&
+            !validateBoolean(authenticated, true) &&
             getCountInCart({ cartItems: cart?.items, productId }) > 0
          ) {
             for (let i = 0; i < localCart.items.length; i++) {
@@ -92,7 +92,7 @@ export const Item = ({ cartItem }) => {
          }
 
          if (
-            !isVariableValid(AccessToken) &&
+            !validateBoolean(authenticated, true) &&
             getCountInCart({ cartItems: cart?.items, productId }) < 1
          ) {
             localCart.items.push({
@@ -119,13 +119,13 @@ export const Item = ({ cartItem }) => {
             productId: product?.id,
          })
 
-         if (isVariableValid(AccessToken)) {
+         if (validateBoolean(authenticated, true)) {
             const response = await fetch(`/api/cart/modify`, {
                method: count > 1 ? 'PATCH' : 'DELETE',
                body: JSON.stringify({ productId }),
+               cache: 'no-store',
                headers: {
                   'Content-Type': 'application/json-string',
-                  Authorization: `Bearer ${AccessToken}`,
                },
             })
 
@@ -138,7 +138,7 @@ export const Item = ({ cartItem }) => {
          const index = findLocalCartIndexById(localCart, productId)
 
          if (
-            !isVariableValid(AccessToken) &&
+            !validateBoolean(authenticated, true) &&
             getCountInCart({ cartItems: cart?.items, productId }) > 1
          ) {
             for (let i = 0; i < localCart.items.length; i++) {
@@ -151,7 +151,7 @@ export const Item = ({ cartItem }) => {
          }
 
          if (
-            !isVariableValid(AccessToken) &&
+            !validateBoolean(authenticated, true) &&
             getCountInCart({ cartItems: cart?.items, productId }) === 1
          ) {
             localCart.items.splice(index, 1)
@@ -187,7 +187,7 @@ export const Item = ({ cartItem }) => {
             <>
                <Button variant="outline" size="icon" onClick={onRemoveFromCart}>
                   {count === 1 ? (
-                     <Cross2Icon className="h-4" />
+                     <CrossIcon className="h-4" />
                   ) : (
                      <MinusIcon className="h-4" />
                   )}

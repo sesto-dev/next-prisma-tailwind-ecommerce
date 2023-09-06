@@ -1,3 +1,5 @@
+'use client'
+
 import {
    ArchiveIcon,
    ExitIcon,
@@ -20,10 +22,9 @@ import {
 } from '@/components/ui/dropdown-menu'
 import Link from 'next/link'
 
-export function UserNav() {
-   function onLogout() {
-      localStorage.removeItem('AccessToken')
-      localStorage.removeItem('RefreshToken')
+export async function UserNav() {
+   async function onLogout() {
+      const response = await fetch('/api/auth/logout')
 
       window.location.reload()
    }

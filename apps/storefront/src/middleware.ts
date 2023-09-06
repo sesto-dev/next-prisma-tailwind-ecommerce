@@ -33,8 +33,6 @@ export async function middleware(req: NextRequest) {
    }
 
    if (!token) {
-      if (req.nextUrl.pathname.startsWith('/api/auth'))
-         return NextResponse.next()
       if (isTargetingAPI()) return getErrorResponse(401, 'INVALID TOKEN')
       if (!isTargetingAPI())
          return NextResponse.redirect(new URL('/login', req.url))
@@ -69,15 +67,11 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
    matcher: [
-      '/',
       '/login',
-      '/products/:path*',
-      '/billboards/:path*',
+      '/profile',
       '/orders/:path*',
-      '/categories/:path*',
       '/payments/:path*',
-      '/codes/:path*',
-      '/users/:path*',
-      '/api/:path*',
+      '/api/user/:path*',
+      '/api/cart/:path*',
    ],
 }

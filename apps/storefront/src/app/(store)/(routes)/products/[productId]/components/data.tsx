@@ -3,12 +3,18 @@
 import { Spinner } from '@/components/native/icons'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { useValidAccessToken } from '@/hooks/useAccessToken'
+import { useAuthenticated } from '@/hooks/useAccessToken'
 import { getCountInCart, getLocalCart } from '@/lib/cart'
-import { isVariableValid } from '@/lib/utils'
+import { isVariableValid, validateBoolean } from '@/lib/utils'
 import { useCartContext } from '@/state/Cart'
 import type { ProductWithAllVariants } from '@/types/prisma'
-import { Cross2Icon, MinusIcon, PlusIcon } from '@radix-ui/react-icons'
+import {
+   CrossIcon,
+   HeartIcon,
+   MinusIcon,
+   PlusIcon,
+   ShoppingCartIcon,
+} from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 export const DataSection = async ({
@@ -16,7 +22,7 @@ export const DataSection = async ({
 }: {
    product: ProductWithAllVariants
 }) => {
-   const { AccessToken } = useValidAccessToken()
+   const { authenticated } = useAuthenticated()
    const { loading, cart, refreshCart, dispatchCart } = useCartContext()
 
    const [wishlist, setWishlist] = useState(null)
@@ -27,21 +33,20 @@ export const DataSection = async ({
       async function getWishlist() {
          try {
             const response = await fetch(`/api/wishlist`, {
-               headers: {
-                  Authorization: `Bearer ${AccessToken}`,
-               },
+               cache: 'no-store',
+               method: 'GET',
             })
 
             const json = await response.json()
-            setWishlist(json?.wishlist?.items)
+            setWishlist(json?.items)
             setFetchingWishlist(false)
          } catch (error) {
             console.error({ error })
          }
       }
 
-      if (isVariableValid(AccessToken)) getWishlist()
-   }, [AccessToken])
+      if (validateBoolean(authenticated, true)) getWishlist()
+   }, [authenticated])
 
    function isProductInWishlist() {
       for (let i = 0; i < wishlist?.length; i++) {
@@ -70,13 +75,13 @@ export const DataSection = async ({
             productId: product?.id,
          })
 
-         if (isVariableValid(AccessToken)) {
+         if (validateBoolean(authenticated, true)) {
             const response = await fetch(`/api/cart/modify`, {
                method: count > 0 ? 'PUT' : 'POST',
                body: JSON.stringify({ productId: product?.id }),
+               cache: 'no-store',
                headers: {
                   'Content-Type': 'application/json-string',
-                  Authorization: `Bearer ${AccessToken}`,
                },
             })
 
@@ -87,7 +92,7 @@ export const DataSection = async ({
 
          const localCart = getLocalCart() as any
 
-         if (!isVariableValid(AccessToken) && count > 0) {
+         if (!validateBoolean(authenticated, true) && count > 0) {
             for (let i = 0; i < localCart.items.length; i++) {
                if (localCart.items[i].productId === product?.id) {
                   localCart.items[i].count = localCart.items[i].count + 1
@@ -97,7 +102,7 @@ export const DataSection = async ({
             dispatchCart(localCart)
          }
 
-         if (!isVariableValid(AccessToken) && count < 1) {
+         if (!validateBoolean(authenticated, true) && count < 1) {
             localCart.items.push({
                productId: product?.id,
                product,
@@ -122,13 +127,13 @@ export const DataSection = async ({
             productId: product?.id,
          })
 
-         if (isVariableValid(AccessToken)) {
+         if (validateBoolean(authenticated, true)) {
             const response = await fetch(`/api/cart/modify`, {
                method: count > 1 ? 'PATCH' : 'DELETE',
                body: JSON.stringify({ productId: product?.id }),
+               cache: 'no-store',
                headers: {
                   'Content-Type': 'application/json-string',
-                  Authorization: `Bearer ${AccessToken}`,
                },
             })
 
@@ -140,7 +145,7 @@ export const DataSection = async ({
          const localCart = getLocalCart() as any
          const index = findLocalCartIndexById(localCart, product?.id)
 
-         if (!isVariableValid(AccessToken) && count > 1) {
+         if (!validateBoolean(authenticated, true) && count > 1) {
             for (let i = 0; i < localCart.items.length; i++) {
                if (localCart.items[i].productId === product?.id) {
                   localCart.items[i].count = localCart.items[i].count - 1
@@ -150,7 +155,7 @@ export const DataSection = async ({
             dispatchCart(localCart)
          }
 
-         if (!isVariableValid(AccessToken) && count === 1) {
+         if (!validateBoolean(authenticated, true) && count === 1) {
             localCart.items.splice(index, 1)
 
             dispatchCart(localCart)
@@ -169,9 +174,9 @@ export const DataSection = async ({
          const response = await fetch(`/api/wishlist/modify`, {
             method: 'POST',
             body: JSON.stringify({ productId: product?.id }),
+            cache: 'no-store',
             headers: {
                'Content-Type': 'application/json-string',
-               Authorization: `Bearer ${AccessToken}`,
             },
          })
 
@@ -193,9 +198,9 @@ export const DataSection = async ({
          const response = await fetch(`/api/wishlist/modify`, {
             method: 'DELETE',
             body: JSON.stringify({ productId: product.id }),
+            cache: 'no-store',
             headers: {
                'Content-Type': 'application/json-string',
-               Authorization: `Bearer ${AccessToken}`,
             },
          })
 
@@ -224,7 +229,11 @@ export const DataSection = async ({
       })
 
       if (count === 0) {
-         return <Button onClick={onAddToCart}>🛒 Add to Cart</Button>
+         return (
+            <Button className="flex gap-2" onClick={onAddToCart}>
+               <ShoppingCartIcon className="h-4" /> Add to Cart
+            </Button>
+         )
       }
 
       if (count > 0) {
@@ -232,7 +241,7 @@ export const DataSection = async ({
             <>
                <Button variant="outline" size="icon" onClick={onRemoveFromCart}>
                   {count == 1 ? (
-                     <Cross2Icon className="h-4 w-4" />
+                     <CrossIcon className="h-4 w-4" />
                   ) : (
                      <MinusIcon className="h-4 w-4" />
                   )}
@@ -258,13 +267,17 @@ export const DataSection = async ({
          )
 
       if (!isProductInWishlist()) {
-         return <Button onClick={onAddToWishlist}>🛒 Add to Wishlist</Button>
+         return (
+            <Button className="flex gap-2" onClick={onAddToWishlist}>
+               <HeartIcon className="h-4" /> Add to Wishlist
+            </Button>
+         )
       }
 
       if (isProductInWishlist()) {
          return (
-            <Button onClick={onRemoveFromWishlist}>
-               🛒 Remove from Wishlist
+            <Button className="flex gap-2" onClick={onRemoveFromWishlist}>
+               <HeartIcon className="h-4" /> Remove from Wishlist
             </Button>
          )
       }

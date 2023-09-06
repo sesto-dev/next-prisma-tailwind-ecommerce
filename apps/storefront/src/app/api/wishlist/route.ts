@@ -16,7 +16,7 @@ export async function GET(req: Request) {
 
       return NextResponse.json(user.wishlist)
    } catch (error) {
-      console.error('[PRODUCT_GET]', error)
+      console.error('[WISHLIST_GET]', error)
       return new NextResponse('Internal error', { status: 500 })
    }
 }

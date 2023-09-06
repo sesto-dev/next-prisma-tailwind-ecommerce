@@ -1,6 +1,6 @@
-import { isVariableValid } from '@/lib/utils'
+import { isVariableValid, validateBoolean } from '@/lib/utils'
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import { useValidAccessToken } from '@/hooks/useAccessToken'
+import { useAuthenticated } from '@/hooks/useAccessToken'
 
 const UserContext = createContext({
    user: null,
@@ -13,20 +13,18 @@ export const useUserContext = () => {
 }
 
 export const UserContextProvider = ({ children }) => {
-   const { AccessToken } = useValidAccessToken()
+   const { authenticated } = useAuthenticated()
 
    const [user, setUser] = useState(null)
    const [loading, setLoading] = useState(true)
 
    const refreshUser = async () => {
       try {
-         if (isVariableValid(AccessToken)) {
+         if (validateBoolean(authenticated, true)) {
             setLoading(true)
 
             const response = await fetch(`/api/user`, {
-               headers: {
-                  Authorization: `Bearer ${AccessToken}`,
-               },
+               cache: 'no-store',
             })
 
             const json = await response.json()
@@ -49,9 +47,7 @@ export const UserContextProvider = ({ children }) => {
             console.error('Hitting USER API')
 
             const response = await fetch(`/api/user`, {
-               headers: {
-                  Authorization: `Bearer ${AccessToken}`,
-               },
+               cache: 'no-store',
             })
 
             const json = await response.json()
@@ -62,12 +58,12 @@ export const UserContextProvider = ({ children }) => {
             }
          }
 
-         if (isVariableValid(AccessToken)) fetchData()
-         if (!isVariableValid(AccessToken)) setLoading(false)
+         if (validateBoolean(authenticated, true)) fetchData()
+         if (!validateBoolean(authenticated, true)) setLoading(false)
       } catch (error) {
          console.error({ error })
       }
-   }, [AccessToken])
+   }, [authenticated])
 
    return (
       <UserContext.Provider value={{ user, loading, refreshUser }}>
