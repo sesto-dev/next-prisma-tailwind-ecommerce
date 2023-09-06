@@ -34,7 +34,7 @@ export default function User({}) {
          }
       }
 
-      if (validateBoolean(authenticated, true)) getWishlist()
+      if (authenticated) getWishlist()
    }, [authenticated])
 
    return (

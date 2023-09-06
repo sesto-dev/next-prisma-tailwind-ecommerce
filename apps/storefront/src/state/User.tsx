@@ -20,7 +20,7 @@ export const UserContextProvider = ({ children }) => {
 
    const refreshUser = async () => {
       try {
-         if (validateBoolean(authenticated, true)) {
+         if (authenticated) {
             setLoading(true)
 
             const response = await fetch(`/api/user`, {
@@ -29,8 +29,8 @@ export const UserContextProvider = ({ children }) => {
 
             const json = await response.json()
 
-            if (isVariableValid(json?.user)) {
-               setUser(json?.user)
+            if (isVariableValid(json)) {
+               setUser(json)
                setLoading(false)
             }
 
@@ -52,14 +52,16 @@ export const UserContextProvider = ({ children }) => {
 
             const json = await response.json()
 
-            if (isVariableValid(json?.user)) {
-               setUser(json?.user)
+            console.log({ json })
+
+            if (isVariableValid(json)) {
+               setUser(json)
                setLoading(false)
             }
          }
 
-         if (validateBoolean(authenticated, true)) fetchData()
-         if (!validateBoolean(authenticated, true)) setLoading(false)
+         if (authenticated) fetchData()
+         if (!authenticated) setLoading(false)
       } catch (error) {
          console.error({ error })
       }

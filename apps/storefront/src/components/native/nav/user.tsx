@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import Link from 'next/link'
 
-export async function UserNav() {
+export function UserNav() {
    async function onLogout() {
       const response = await fetch('/api/auth/logout')
 
@@ -47,7 +47,7 @@ export async function UserNav() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-               <Link href="/user">
+               <Link href="/profile">
                   <DropdownMenuItem>
                      <PersonIcon className="h-4 mr-2" />
                      Profile

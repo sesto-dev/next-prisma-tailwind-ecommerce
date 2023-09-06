@@ -10,10 +10,8 @@ import {
    AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+
 import type { OrderColumn } from '../../orders/components/columns'
-import { formatter } from '@/lib/utils'
 import { format } from 'date-fns'
 import { OrderClient } from '../../orders/components/client'
 

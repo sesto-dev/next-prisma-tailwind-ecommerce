@@ -1,5 +1,6 @@
 'use client'
 
+import { validateBoolean } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 
 export function useAuthenticated() {
@@ -21,5 +22,5 @@ export function useAuthenticated() {
       }
    }, [])
 
-   return { authenticated }
+   return { authenticated: validateBoolean(authenticated, true) }
 }

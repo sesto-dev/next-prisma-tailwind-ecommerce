@@ -20,62 +20,40 @@ import {
 } from '@/components/ui/accordion'
 import { Spinner } from '@/components/native/icons'
 import { useRouter } from 'next/navigation'
-import { useUserContext } from '@/state/User'
+import { UserContextProvider, useUserContext } from '@/state/User'
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 
-export default function User({}) {
+export default function Profile() {
+   return (
+      <UserContextProvider>
+         <Wishlist />
+      </UserContextProvider>
+   )
+}
+
+function Wishlist() {
    const { user, loading } = useUserContext()
 
-   const router = useRouter()
-
    return (
-      <>
-         {isVariableValid(user) ? (
-            <Accordion type="single" collapsible className="w-full">
-               <AccordionItem value="item-1">
-                  <AccordionTrigger>
-                     <h2 className="text-lg">Wishlist</h2>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                     Yes. It adheres to the WAI-ARIA design pattern.
-                  </AccordionContent>
-               </AccordionItem>
-               <AccordionItem value="item-2">
-                  <AccordionTrigger>
-                     <h2 className="text-lg">Orders</h2>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                     Yes. It comes with default styles that matches the other
-                     components&apos; aesthetic.
-                  </AccordionContent>
-               </AccordionItem>
-            </Accordion>
-         ) : (
-            <Accordion type="single" collapsible className="w-full">
-               <AccordionItem value="item-1">
-                  <AccordionTrigger>
-                     <h2 className="text-lg">
-                        <Spinner />
-                     </h2>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                     Yes. It adheres to the WAI-ARIA design pattern.
-                  </AccordionContent>
-               </AccordionItem>
-               <AccordionItem value="item-2">
-                  <AccordionTrigger>
-                     <h2 className="text-lg">
-                        <Spinner />
-                     </h2>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                     Yes. It comes with default styles that matches the other
-                     components&apos; aesthetic.
-                  </AccordionContent>
-               </AccordionItem>
-            </Accordion>
-         )}
-      </>
+      <Accordion type="single" collapsible className="w-full">
+         <AccordionItem value="item-1">
+            <AccordionTrigger>
+               <h2 className="text-lg">Wishlist</h2>
+            </AccordionTrigger>
+            <AccordionContent>
+               Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+         </AccordionItem>
+         <AccordionItem value="item-2">
+            <AccordionTrigger>
+               <h2 className="text-lg">Orders</h2>
+            </AccordionTrigger>
+            <AccordionContent>
+               Yes. It comes with default styles that matches the other
+               components&apos; aesthetic.
+            </AccordionContent>
+         </AccordionItem>
+      </Accordion>
    )
 }
 

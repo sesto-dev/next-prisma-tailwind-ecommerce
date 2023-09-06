@@ -43,9 +43,7 @@ export const Item = ({ cartItem }) => {
             },
          })
 
-         const json = await response.json()
-
-         return json?.product
+         return await response.json()
       } catch (error) {
          console.error({ error })
       }
@@ -55,7 +53,7 @@ export const Item = ({ cartItem }) => {
       try {
          setFetchingCart(true)
 
-         if (validateBoolean(authenticated, true)) {
+         if (authenticated) {
             const response = await fetch(`/api/cart/modify`, {
                method:
                   getCountInCart({
@@ -73,13 +71,13 @@ export const Item = ({ cartItem }) => {
 
             const json = await response.json()
 
-            dispatchCart(json?.cart)
+            dispatchCart(json)
          }
 
          const localCart = getLocalCart() as any
 
          if (
-            !validateBoolean(authenticated, true) &&
+            !authenticated &&
             getCountInCart({ cartItems: cart?.items, productId }) > 0
          ) {
             for (let i = 0; i < localCart.items.length; i++) {
@@ -92,7 +90,7 @@ export const Item = ({ cartItem }) => {
          }
 
          if (
-            !validateBoolean(authenticated, true) &&
+            !authenticated &&
             getCountInCart({ cartItems: cart?.items, productId }) < 1
          ) {
             localCart.items.push({
@@ -119,7 +117,7 @@ export const Item = ({ cartItem }) => {
             productId: product?.id,
          })
 
-         if (validateBoolean(authenticated, true)) {
+         if (authenticated) {
             const response = await fetch(`/api/cart/modify`, {
                method: count > 1 ? 'PATCH' : 'DELETE',
                body: JSON.stringify({ productId }),
@@ -131,14 +129,14 @@ export const Item = ({ cartItem }) => {
 
             const json = await response.json()
 
-            dispatchCart(json?.cart)
+            dispatchCart(json)
          }
 
          const localCart = getLocalCart() as any
          const index = findLocalCartIndexById(localCart, productId)
 
          if (
-            !validateBoolean(authenticated, true) &&
+            !authenticated &&
             getCountInCart({ cartItems: cart?.items, productId }) > 1
          ) {
             for (let i = 0; i < localCart.items.length; i++) {
@@ -151,7 +149,7 @@ export const Item = ({ cartItem }) => {
          }
 
          if (
-            !validateBoolean(authenticated, true) &&
+            !authenticated &&
             getCountInCart({ cartItems: cart?.items, productId }) === 1
          ) {
             localCart.items.splice(index, 1)

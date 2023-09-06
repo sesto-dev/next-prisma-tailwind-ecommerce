@@ -22,11 +22,7 @@ export default function Header() {
                   <CommandMenu />
                </div>
                <CartNav />
-               {validateBoolean(authenticated, true) ? (
-                  <UserNav />
-               ) : (
-                  <LoginDialog />
-               )}
+               {authenticated ? <UserNav /> : <LoginDialog />}
             </div>
          </div>
       </header>

@@ -38,14 +38,14 @@ export const DataSection = async ({
             })
 
             const json = await response.json()
-            setWishlist(json?.items)
+            setWishlist(json)
             setFetchingWishlist(false)
          } catch (error) {
             console.error({ error })
          }
       }
 
-      if (validateBoolean(authenticated, true)) getWishlist()
+      if (authenticated) getWishlist()
    }, [authenticated])
 
    function isProductInWishlist() {
@@ -75,7 +75,7 @@ export const DataSection = async ({
             productId: product?.id,
          })
 
-         if (validateBoolean(authenticated, true)) {
+         if (authenticated) {
             const response = await fetch(`/api/cart/modify`, {
                method: count > 0 ? 'PUT' : 'POST',
                body: JSON.stringify({ productId: product?.id }),
@@ -87,12 +87,12 @@ export const DataSection = async ({
 
             const json = await response.json()
 
-            dispatchCart(json?.cart)
+            dispatchCart(json)
          }
 
          const localCart = getLocalCart() as any
 
-         if (!validateBoolean(authenticated, true) && count > 0) {
+         if (!authenticated && count > 0) {
             for (let i = 0; i < localCart.items.length; i++) {
                if (localCart.items[i].productId === product?.id) {
                   localCart.items[i].count = localCart.items[i].count + 1
@@ -102,7 +102,7 @@ export const DataSection = async ({
             dispatchCart(localCart)
          }
 
-         if (!validateBoolean(authenticated, true) && count < 1) {
+         if (!authenticated && count < 1) {
             localCart.items.push({
                productId: product?.id,
                product,
@@ -127,7 +127,7 @@ export const DataSection = async ({
             productId: product?.id,
          })
 
-         if (validateBoolean(authenticated, true)) {
+         if (authenticated) {
             const response = await fetch(`/api/cart/modify`, {
                method: count > 1 ? 'PATCH' : 'DELETE',
                body: JSON.stringify({ productId: product?.id }),
@@ -139,13 +139,13 @@ export const DataSection = async ({
 
             const json = await response.json()
 
-            dispatchCart(json?.cart)
+            dispatchCart(json)
          }
 
          const localCart = getLocalCart() as any
          const index = findLocalCartIndexById(localCart, product?.id)
 
-         if (!validateBoolean(authenticated, true) && count > 1) {
+         if (!authenticated && count > 1) {
             for (let i = 0; i < localCart.items.length; i++) {
                if (localCart.items[i].productId === product?.id) {
                   localCart.items[i].count = localCart.items[i].count - 1
@@ -155,7 +155,7 @@ export const DataSection = async ({
             dispatchCart(localCart)
          }
 
-         if (!validateBoolean(authenticated, true) && count === 1) {
+         if (!authenticated && count === 1) {
             localCart.items.splice(index, 1)
 
             dispatchCart(localCart)

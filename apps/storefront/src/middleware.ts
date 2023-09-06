@@ -71,7 +71,7 @@ export const config = {
       '/profile',
       '/orders/:path*',
       '/payments/:path*',
-      '/api/user/:path*',
+      '/api/profile/:path*',
       '/api/cart/:path*',
    ],
 }
