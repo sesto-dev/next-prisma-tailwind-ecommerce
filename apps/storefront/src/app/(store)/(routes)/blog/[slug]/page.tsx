@@ -7,22 +7,34 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Meta from '@/components/native/Meta'
 
-export default function BlogPost({ blog, mdx, recommendations }) {
-   if (blog && mdx && recommendations) {
-      recommendations = JSON.parse(recommendations)
-      blog = JSON.parse(blog)
-      const { title, description, image, slug } = blog
+export default async function BlogPost({
+   params,
+}: {
+   params: { slug: string }
+}) {
+   const blog = await prisma.blogPost.findUnique({
+      where: {
+         slug: params.slug,
+      },
+   })
 
-      return (
-         <>
-            <Meta title={title} description={description} image={image} />
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
-               <Content blog={blog} mdx={mdx} />
-               <Recomendations recommendations={recommendations} />
-            </div>
-         </>
-      )
-   }
+   const recommendations = await prisma.blogPost.findMany({
+      take: 3,
+   })
+
+   const mdx = await serialize(blog.content)
+
+   const { title, description, image, slug } = blog
+
+   return (
+      <>
+         <Meta title={title} description={description} image={image} />
+         <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
+            <Content blog={blog} mdx={mdx} />
+            <Recomendations recommendations={recommendations} />
+         </div>
+      </>
+   )
 }
 
 function Content({ blog, mdx }) {
@@ -79,22 +91,4 @@ function Recomendations({ recommendations }) {
          })}
       </div>
    )
-}
-
-export async function getStaticProps({ params }) {
-   const { slug } = params
-   const blog = await prisma.blogPost.findUnique({ where: { slug } })
-   const mdx = await serialize(blog.content)
-   const recommendations = JSON.stringify(
-      await prisma.blogPost.findMany({ take: 3 })
-   )
-   return { props: { blog: JSON.stringify(blog), mdx, recommendations } }
-}
-
-export async function getStaticPaths() {
-   const blogs = await prisma.blogPost.findMany()
-   const slugs = blogs.map((doc) => doc.slug)
-   const paths = slugs.map((slug) => ({ params: { slug } }))
-
-   return { paths, fallback: false }
 }
