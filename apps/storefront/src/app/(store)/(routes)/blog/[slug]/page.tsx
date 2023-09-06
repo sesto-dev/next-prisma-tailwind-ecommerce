@@ -5,7 +5,6 @@ import prisma from '@/lib/prisma'
 import { parseISO, format } from 'date-fns'
 import Link from 'next/link'
 import Image from 'next/image'
-import Config from '@/config/site'
 import Meta from '@/components/native/Meta'
 
 export default function BlogPost({ blog, mdx, recommendations }) {

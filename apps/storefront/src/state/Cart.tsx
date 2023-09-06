@@ -1,6 +1,5 @@
 import { isVariableValid } from '@/lib/utils'
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import { useValidAccessToken } from '@/hooks/useAccessToken'
 import { useUserContext } from '@/state/User'
 import { getLocalCart, writeLocalCart } from '@/lib/cart'
 
@@ -16,6 +15,7 @@ export const useCartContext = () => {
 }
 
 export const CartContextProvider = ({ children }) => {
+   console.log('Creating cart context')
    const { refreshUser, user } = useUserContext()
 
    const [cart, setCart] = useState(null)

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import prisma from '@/lib/prisma'
 import { IdentifyAccess } from '@/lib/jwt'
-import Auth from 'middlewares/Auth'
+import Auth from '@/middlewares/Auth'
 import { getRequestBody } from '@/lib/utils'
 
 export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {

@@ -40,7 +40,7 @@ export const ProductSkeletonGrid = () => {
 
 export const Product = ({ product }: { product: ProductWithAllVariants }) => {
    return (
-      <Link className="" href={`/product/${product.id}`}>
+      <Link className="" href={`/products/${product.id}`}>
          <Card className="h-full">
             <CardHeader className="p-0">
                <div className="relative h-60 w-full">

@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { IdentifyAccess } from '@/lib/jwt'
 import prisma from '@/lib/prisma'
-import Auth from 'middlewares/Auth'
+import { IdentifyAccess } from '@/lib/jwt'
+import Auth from '@/middlewares/Auth'
 import { getRequestBody } from '@/lib/utils'
 
 export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
@@ -12,20 +12,19 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
          secret: process.env.ACCESS_TOKEN_SECRET,
       })
 
-      const { isEmailSubscribed } = getRequestBody(req)
+      const { productId } = getRequestBody(req)
 
       const user = await prisma.user.update({
-         where: {
-            id,
-         },
+         where: { id },
          data: {
-            isEmailSubscribed,
+            wishlist: {
+               connect: { id: productId },
+            },
          },
+         include: { wishlist: true },
       })
 
-      return res.status(200).json({
-         user,
-      })
+      return res.status(200).json({ wishlist: user?.wishlist })
    } catch (error) {
       const message = error.message
       return res.status(400).json({ error, message })

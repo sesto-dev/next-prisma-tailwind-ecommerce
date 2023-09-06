@@ -1,54 +1,21 @@
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
+'use client'
 
-import Image from 'next/image'
-
-import Meta from '@/components/native/Meta'
-import prisma from '@/lib/prisma'
-import {
-   ChevronLeftIcon,
-   ChevronRightIcon,
-   Cross2Icon,
-   HomeIcon,
-   MinusIcon,
-   PlusIcon,
-} from '@radix-ui/react-icons'
+import { Spinner } from '@/components/native/icons'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useValidAccessToken } from '@/hooks/useAccessToken'
-
-import { isVariableValid, validateBoolean } from '@/lib/utils'
-import { CloseIcon, Spinner } from '@/components/native/icons'
-import type { ProductWithAllVariants } from '@/types/prisma'
-import { Badge } from '@/components/ui/badge'
-import { getCountInCart, getLocalCart, writeLocalCart } from '@/lib/cart'
+import { getCountInCart, getLocalCart } from '@/lib/cart'
+import { isVariableValid } from '@/lib/utils'
 import { useCartContext } from '@/state/Cart'
+import type { ProductWithAllVariants } from '@/types/prisma'
+import { Cross2Icon, MinusIcon, PlusIcon } from '@radix-ui/react-icons'
+import { useEffect, useState } from 'react'
 
-export default function Product({ unserialized }) {
-   const [product, setProduct] = useState<ProductWithAllVariants | null>(null)
-
-   useEffect(() => {
-      if (unserialized) setProduct(JSON.parse(unserialized))
-   }, [unserialized])
-
-   if (isVariableValid(product)) {
-      return (
-         <>
-            <Meta
-               title={product?.title}
-               description={product?.description}
-               image={product?.images[0]}
-            />
-            <Breadcrumbs product={product} />
-            <div className="mt-6 grid grid-cols-1 gap-2 md:grid-cols-3">
-               <ImageColumn product={product} />
-               <DataColumn product={product} />
-            </div>
-         </>
-      )
-   }
-}
-
-const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
+export const DataSection = async ({
+   product,
+}: {
+   product: ProductWithAllVariants
+}) => {
    const { AccessToken } = useValidAccessToken()
    const { loading, cart, refreshCart, dispatchCart } = useCartContext()
 
@@ -332,74 +299,4 @@ const DataColumn = ({ product }: { product: ProductWithAllVariants }) => {
          </div>
       </div>
    )
-}
-
-const ImageColumn = ({ product }) => {
-   return (
-      <div className="relative min-h-[50vh] w-full col-span-1">
-         <Image
-            src={product?.images[0]}
-            alt="Product Image"
-            fill
-            className="rounded-lg"
-            style={{ objectFit: 'cover' }}
-         />
-      </div>
-   )
-}
-
-const Breadcrumbs = ({ product }) => {
-   return (
-      <nav className="flex" aria-label="Breadcrumb">
-         <ol className="inline-flex items-center space-x-1 md:space-x-3">
-            <li className="inline-flex items-center">
-               <Link
-                  href="/"
-                  className="inline-flex items-center text-sm font-medium text-neutral-700 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
-               >
-                  Home
-               </Link>
-            </li>
-            <li>
-               <div className="flex items-center">
-                  <ChevronRightIcon />
-                  <Link
-                     className="ml-1 text-sm font-medium text-neutral-700 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white md:ml-2"
-                     href="/products"
-                  >
-                     Products
-                  </Link>
-               </div>
-            </li>
-            <li aria-current="page">
-               <div className="flex items-center">
-                  <ChevronRightIcon />
-                  <span className="ml-1 text-sm font-medium text-neutral-500 dark:text-neutral-400 md:ml-2">
-                     {product.title || '---'}
-                  </span>
-               </div>
-            </li>
-         </ol>
-      </nav>
-   )
-}
-
-export async function getServerSideProps(context) {
-   const { id } = context.query
-
-   try {
-      const product = await prisma.product.findUnique({
-         where: { id },
-         include: {
-            brand: true,
-            categories: true,
-         },
-      })
-      return {
-         props: { unserialized: JSON.stringify(product) },
-      }
-   } catch (error) {
-      console.error({ error })
-      return { props: {} }
-   }
 }

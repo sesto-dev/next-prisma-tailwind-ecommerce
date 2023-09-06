@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { IdentifyAccess, signJWT, verifyAndGetJWTPayload } from '@/lib/jwt'
 import { isVariableValid } from '@/lib/utils'
-import Refresh from 'middlewares/Refresh'
+import Refresh from '@/middlewares/Refresh'
 
 export default Refresh(async (req: NextApiRequest, res: NextApiResponse) => {
    try {

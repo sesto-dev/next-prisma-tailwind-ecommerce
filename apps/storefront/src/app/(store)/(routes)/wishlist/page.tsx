@@ -6,7 +6,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import { useValidAccessToken } from '@/hooks/useAccessToken'
 import { isVariableValid, validateBoolean } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
-import { CartGrid } from '@/components/native/Cart'
+import { CartGrid } from '@/app/(store)/(routes)/cart/components/grid'
 import { useUserContext } from '@/state/User'
 
 export default function User({}) {
