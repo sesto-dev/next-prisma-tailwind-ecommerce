@@ -5,7 +5,6 @@ import prisma from '@/lib/prisma'
 import { parseISO, format } from 'date-fns'
 import Link from 'next/link'
 import Image from 'next/image'
-import Meta from '@/components/native/Meta'
 
 export default async function BlogPost({
    params,
@@ -28,7 +27,6 @@ export default async function BlogPost({
 
    return (
       <>
-         <Meta title={title} description={description} image={image} />
          <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
             <Content blog={blog} mdx={mdx} />
             <Recomendations recommendations={recommendations} />

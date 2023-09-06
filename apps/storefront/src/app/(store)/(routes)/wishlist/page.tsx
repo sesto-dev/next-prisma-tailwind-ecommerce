@@ -1,10 +1,9 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 
-import Meta from '@/components/native/Meta'
-import Config from '@/config/site'
-import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import { useValidAccessToken } from '@/hooks/useAccessToken'
-import { isVariableValid, validateBoolean } from '@/lib/utils'
+import { isVariableValid } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { CartGrid } from '@/app/(store)/(routes)/cart/components/grid'
 import { useUserContext } from '@/state/User'
@@ -42,11 +41,6 @@ export default function User({}) {
 
    return (
       <>
-         <Meta
-            title="Pasargad"
-            description="Home Page"
-            image={Config.ogImage}
-         />
          <CartGrid />
       </>
    )

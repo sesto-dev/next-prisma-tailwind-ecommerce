@@ -1,8 +1,6 @@
 import { BlogPostCard } from '@/components/native/BlogPostCard'
-import Meta from '@/components/native/Meta'
 
 import prisma from '@/lib/prisma'
-import Config from '@/config/site'
 
 export default async function Index() {
    const blogs = await prisma.blogPost.findMany()

@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import Meta from '@/components/native/Meta'
-import Config from '@/config/site'
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import { useValidAccessToken } from '@/hooks/useAccessToken'
 import { isVariableValid } from '@/lib/utils'
@@ -32,11 +30,6 @@ export default function User({}) {
 
    return (
       <>
-         <Meta
-            title="Pasargad"
-            description="Home Page"
-            image={Config.ogImage}
-         />
          {isVariableValid(user) ? (
             <Accordion type="single" collapsible className="w-full">
                <AccordionItem value="item-1">
