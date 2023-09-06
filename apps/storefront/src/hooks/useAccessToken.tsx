@@ -1,7 +1,7 @@
 'use client'
 
 /* eslint-disable react-hooks/exhaustive-deps */
-import jwt from 'jsonwebtoken'
+import { decodeJwt } from 'jose'
 import { isVariableValid } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 
@@ -16,7 +16,7 @@ export function useValidAccessToken() {
             RefreshToken = window.localStorage.getItem('RefreshToken')
 
             if (isVariableValid(AccessToken) && isVariableValid(RefreshToken)) {
-               const { exp, iat } = jwt.decode(AccessToken)
+               const { exp, iat } = decodeJwt(AccessToken)
 
                async function fetchData() {
                   if (exp < Math.floor(new Date().getTime() / 1000)) {

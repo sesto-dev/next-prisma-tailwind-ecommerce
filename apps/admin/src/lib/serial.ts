@@ -1,42 +1,42 @@
 export function generateSerial({
-    batchCount = 1,
-    batchSize = 5,
-    alphanumeric = false,
+   batchCount = 1,
+   batchSize = 5,
+   alphanumeric = false,
 }) {
-    function generateAlphanumerics() {
-        let generation = ''
+   function generateAlphanumerics() {
+      let generation = ''
 
-        while (generation.length != batchSize) {
-            generation = Math.random().toString(36).slice(8).toUpperCase()
-        }
+      while (generation.length != batchSize) {
+         generation = Math.random().toString(36).slice(8).toUpperCase()
+      }
 
-        return generation
-    }
+      return generation
+   }
 
-    function generateNumerics() {
-        let generation = ''
+   function generateNumerics() {
+      let generation = ''
 
-        while (generation.length != batchSize) {
-            generation = Math.floor(Math.random() * Math.pow(10, batchSize))
-                .toString()
-                .padStart(batchSize, '0')
-        }
+      while (generation.length != batchSize) {
+         generation = Math.floor(Math.random() * Math.pow(10, batchSize))
+            .toString()
+            .padStart(batchSize, '0')
+      }
 
-        return generation
-    }
+      return generation
+   }
 
-    let voucher = ''
+   let voucher = ''
 
-    voucher = voucher.concat(
-        alphanumeric ? generateAlphanumerics() : generateNumerics()
-    )
+   voucher = voucher.concat(
+      alphanumeric ? generateAlphanumerics() : generateNumerics()
+   )
 
-    for (let i = 1; i < batchCount; i++) {
-        voucher = voucher.concat('-')
-        voucher = voucher.concat(
-            alphanumeric ? generateAlphanumerics() : generateNumerics()
-        )
-    }
+   for (let i = 1; i < batchCount; i++) {
+      voucher = voucher.concat('-')
+      voucher = voucher.concat(
+         alphanumeric ? generateAlphanumerics() : generateNumerics()
+      )
+   }
 
-    return voucher
+   return voucher
 }

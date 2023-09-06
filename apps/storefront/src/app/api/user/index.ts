@@ -1,19 +1,17 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { NextResponse } from 'next/server'
 
-import { IdentifyAccess } from '@/lib/jwt'
 import prisma from '@/lib/prisma'
-import Auth from '@/middlewares/Auth'
-import { isVariableValid } from '@/lib/utils'
 
-export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
+export async function GET(req: Request) {
    try {
-      const { id } = await IdentifyAccess({
-         req,
-         secret: process.env.ACCESS_TOKEN_SECRET,
-      })
+      const userId = req.headers.get('X-USER-ID')
+
+      if (!userId) {
+         return new NextResponse('Unauthorized', { status: 401 })
+      }
 
       const user = await prisma.user.findUnique({
-         where: { id, isEmailVerified: true },
+         where: { id: userId, isEmailVerified: true },
          include: {
             cart: {
                include: {
@@ -33,9 +31,9 @@ export default Auth(async (req: NextApiRequest, res: NextApiResponse) => {
          },
       })
 
-      return res.status(200).json({ user })
+      return NextResponse.json(user)
    } catch (error) {
-      const message = error.message
-      return res.status(400).json({ error, message })
+      console.error('[PRODUCT_GET]', error)
+      return new NextResponse('Internal error', { status: 500 })
    }
-})
+}
