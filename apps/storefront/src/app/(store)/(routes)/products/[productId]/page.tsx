@@ -23,6 +23,8 @@ export default async function Product({
       },
    })
 
+   console.log({ product })
+
    if (isVariableValid(product)) {
       return (
          <>
