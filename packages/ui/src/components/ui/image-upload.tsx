@@ -49,7 +49,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                         variant="destructive"
                         size="sm"
                      >
-                        <Trash className="h-4 w-4" />
+                        <Trash className="h-4" />
                      </Button>
                   </div>
                   <Image fill className="object-cover" alt="Image" src={url} />
@@ -69,7 +69,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                      variant="secondary"
                      onClick={onClick}
                   >
-                     <ImagePlus className="h-4 w-4 mr-2" />
+                     <ImagePlus className="h-4 mr-2" />
                      Upload an Image
                   </Button>
                )

@@ -38,6 +38,7 @@ export const Item = ({ cartItem }) => {
          const response = await fetch(`/api/product`, {
             method: 'POST',
             body: JSON.stringify({ productId }),
+            cache: 'no-store',
             headers: {
                'Content-Type': 'application/json-string',
             },

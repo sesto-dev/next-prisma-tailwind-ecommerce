@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { GithubIcon, Loader } from 'lucide-react'
+import { Loader, SmartphoneIcon } from 'lucide-react'
 import { isEmailValid } from '@/lib/regex'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -93,11 +93,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
          </div>
          <Button variant="outline" type="button" disabled={isLoading}>
             {isLoading ? (
-               <Loader className="mr-2 h-4 w-4 animate-spin" />
+               <Loader className="mr-2 h-4 animate-spin" />
             ) : (
-               <GithubIcon className="mr-2 h-4 w-4" />
+               <SmartphoneIcon className="mr-2 h-4" />
             )}
-            Github
+            Phone Number
          </Button>
       </div>
    )
@@ -129,7 +129,7 @@ function TryComponents({ handleEmailChange, isLoading, onSubmit, email }) {
             onClick={onSubmit}
             disabled={isLoading || !isEmailValid(email)}
          >
-            {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading && <Loader className="mr-2 h-4 animate-spin" />}
             Login with Email
          </Button>
       </>
@@ -154,7 +154,7 @@ function VerifyComponents({ isLoading, onVerifyOTP, handleOTPChange }) {
             />
          </div>
          <Button onClick={onVerifyOTP} disabled={isLoading}>
-            {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading && <Loader className="mr-2 h-4 animate-spin" />}
             Submit
          </Button>
       </>

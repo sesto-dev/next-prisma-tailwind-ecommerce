@@ -50,7 +50,7 @@ export function CategoriesCombobox({ categories, initialCategory }) {
                className="w-full justify-between"
             >
                {value ? getCategoryTitle() : 'Select category...'}
-               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+               <ChevronsUpDown className="ml-2 h-4 shrink-0 opacity-50" />
             </Button>
          </PopoverTrigger>
          <PopoverContent className="w-full p-0">
@@ -88,7 +88,7 @@ export function CategoriesCombobox({ categories, initialCategory }) {
                      >
                         <Check
                            className={cn(
-                              'mr-2 h-4 w-4',
+                              'mr-2 h-4',
                               value === category.title
                                  ? 'opacity-100'
                                  : 'opacity-0'
@@ -132,7 +132,7 @@ export function BrandCombobox({ brands, initialBrand }) {
                className="w-full justify-between"
             >
                {value ? getBrandTitle() : 'Select brand...'}
-               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+               <ChevronsUpDown className="ml-2 h-4 shrink-0 opacity-50" />
             </Button>
          </PopoverTrigger>
          <PopoverContent className="w-full p-0">
@@ -170,7 +170,7 @@ export function BrandCombobox({ brands, initialBrand }) {
                      >
                         <Check
                            className={cn(
-                              'mr-2 h-4 w-4',
+                              'mr-2 h-4',
                               value === brand.title
                                  ? 'opacity-100'
                                  : 'opacity-0'

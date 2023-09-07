@@ -130,7 +130,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                   size="sm"
                   onClick={() => setOpen(true)}
                >
-                  <Trash className="h-4 w-4" />
+                  <Trash className="h-4" />
                </Button>
             )}
          </div>

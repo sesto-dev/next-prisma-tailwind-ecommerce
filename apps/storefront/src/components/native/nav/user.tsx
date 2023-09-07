@@ -24,9 +24,15 @@ import Link from 'next/link'
 
 export function UserNav() {
    async function onLogout() {
-      const response = await fetch('/api/auth/logout')
+      try {
+         const response = await fetch('/api/auth/logout', {
+            cache: 'no-store',
+         })
 
-      window.location.reload()
+         if (response.status === 200) window.location.reload()
+      } catch (error) {
+         console.error({ error })
+      }
    }
 
    return (
