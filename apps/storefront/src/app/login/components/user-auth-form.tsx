@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Loader, SmartphoneIcon } from 'lucide-react'
 import { isEmailValid } from '@/lib/regex'
+import { getLocalCart } from '@/lib/cart'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -51,7 +52,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
          const response = await fetch('/api/auth/otp/verify', {
             method: 'POST',
-            body: JSON.stringify({ email, OTP }),
+            body: JSON.stringify({ email, OTP, cart: getLocalCart() }),
             cache: 'no-store',
          })
 

@@ -55,15 +55,12 @@ export const Item = ({ cartItem }) => {
          setFetchingCart(true)
 
          if (authenticated) {
-            const response = await fetch(`/api/cart/modify`, {
-               method:
-                  getCountInCart({
-                     cartItems: cart?.items,
-                     productId,
-                  }) > 0
-                     ? 'PUT'
-                     : 'POST',
-               body: JSON.stringify({ productId }),
+            const response = await fetch(`/api/cart`, {
+               method: 'POST',
+               body: JSON.stringify({
+                  productId,
+                  count: getCountInCart({ cartItems: cart?.items, productId }),
+               }),
                cache: 'no-store',
                headers: {
                   'Content-Type': 'application/json-string',
@@ -113,15 +110,13 @@ export const Item = ({ cartItem }) => {
       try {
          setFetchingCart(true)
 
-         const count = getCountInCart({
-            cartItems: cart?.items,
-            productId: product?.id,
-         })
-
          if (authenticated) {
-            const response = await fetch(`/api/cart/modify`, {
-               method: count > 1 ? 'PATCH' : 'DELETE',
-               body: JSON.stringify({ productId }),
+            const response = await fetch(`/api/cart`, {
+               method: 'POST',
+               body: JSON.stringify({
+                  productId,
+                  count: getCountInCart({ cartItems: cart?.items, productId }),
+               }),
                cache: 'no-store',
                headers: {
                   'Content-Type': 'application/json-string',

@@ -1,4 +1,4 @@
-import { getErrorResponse } from '@/lib/utils'
+import { getErrorResponse, isVariableValid } from '@/lib/utils'
 import prisma from '@/lib/prisma'
 import { signJWT } from '@/lib/jwt'
 import { NextRequest, NextResponse } from 'next/server'
@@ -8,13 +8,49 @@ export async function POST(req: NextRequest) {
    try {
       const expiryMinutes = 30 * 24 * 60
 
-      let { email, OTP } = await req.json()
+      const { email, OTP, cart } = await req.json()
 
-      email = email.toString().toLowerCase()
-
-      const user = await prisma.owner.findFirstOrThrow({
-         where: { email, OTP },
+      const user = await prisma.user.findFirstOrThrow({
+         where: { email: email.toString().toLowerCase(), OTP },
       })
+
+      if (cart?.items?.length > 0) {
+         for (const item of cart.items) {
+            const { count, productId } = item
+
+            await prisma.cart.upsert({
+               where: {
+                  userId: user.id,
+               },
+               create: {
+                  user: {
+                     connect: {
+                        id: user.id,
+                     },
+                  },
+               },
+               update: {
+                  items: {
+                     upsert: {
+                        where: {
+                           UniqueCartItem: {
+                              cartId: user.id,
+                              productId,
+                           },
+                        },
+                        update: {
+                           count,
+                        },
+                        create: {
+                           productId,
+                           count,
+                        },
+                     },
+                  },
+               },
+            })
+         }
+      }
 
       const token = await signJWT(
          { sub: user.id },

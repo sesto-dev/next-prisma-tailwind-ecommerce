@@ -1,12 +1,9 @@
 import Link from 'next/link'
-import Image from 'next/image'
+import { ChevronRightIcon } from 'lucide-react'
 
 import prisma from '@/lib/prisma'
-
 import { isVariableValid } from '@/lib/utils'
-
 import { DataSection } from './components/data'
-import { ChevronRightIcon } from 'lucide-react'
 import Carousel from '@/components/native/Carousel'
 
 export default async function Product({
