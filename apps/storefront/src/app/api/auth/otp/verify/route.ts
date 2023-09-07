@@ -7,6 +7,7 @@ import { ZodError } from 'zod'
 export async function POST(req: NextRequest) {
    try {
       const expiryMinutes = 30 * 24 * 60
+      const tokenMaxAge = expiryMinutes * 60
 
       const { email, OTP, cart } = await req.json()
 
@@ -57,7 +58,6 @@ export async function POST(req: NextRequest) {
          { exp: `${expiryMinutes}m` }
       )
 
-      const tokenMaxAge = expiryMinutes * 60
       const cookieOptions = {
          name: 'token',
          value: token,

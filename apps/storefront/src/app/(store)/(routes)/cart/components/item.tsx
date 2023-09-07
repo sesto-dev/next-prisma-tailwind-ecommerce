@@ -1,3 +1,5 @@
+'use client'
+
 import {
    Card,
    CardContent,
@@ -6,7 +8,6 @@ import {
    CardHeader,
    CardTitle,
 } from '@/components/ui/card'
-import { isVariableValid, validateBoolean } from '@/lib/utils'
 import { getCountInCart, getLocalCart, writeLocalCart } from '@/lib/cart'
 import { useState, useEffect } from 'react'
 import { useAuthenticated } from '@/hooks/useAuthentication'
@@ -15,7 +16,7 @@ import Link from 'next/link'
 import { useCartContext } from '@/state/Cart'
 import Image from 'next/image'
 import { Spinner } from '@/components/native/icons'
-import { CrossIcon, MinusIcon, PlusIcon } from 'lucide-react'
+import { X, MinusIcon, PlusIcon } from 'lucide-react'
 
 export const Item = ({ cartItem }) => {
    const { authenticated } = useAuthenticated()
@@ -59,7 +60,8 @@ export const Item = ({ cartItem }) => {
                method: 'POST',
                body: JSON.stringify({
                   productId,
-                  count: getCountInCart({ cartItems: cart?.items, productId }),
+                  count:
+                     getCountInCart({ cartItems: cart?.items, productId }) + 1,
                }),
                cache: 'no-store',
                headers: {
@@ -115,7 +117,8 @@ export const Item = ({ cartItem }) => {
                method: 'POST',
                body: JSON.stringify({
                   productId,
-                  count: getCountInCart({ cartItems: cart?.items, productId }),
+                  count:
+                     getCountInCart({ cartItems: cart?.items, productId }) - 1,
                }),
                cache: 'no-store',
                headers: {
@@ -124,7 +127,6 @@ export const Item = ({ cartItem }) => {
             })
 
             const json = await response.json()
-
             dispatchCart(json)
          }
 
@@ -181,7 +183,7 @@ export const Item = ({ cartItem }) => {
             <>
                <Button variant="outline" size="icon" onClick={onRemoveFromCart}>
                   {count === 1 ? (
-                     <CrossIcon className="h-4" />
+                     <X className="h-4" />
                   ) : (
                      <MinusIcon className="h-4" />
                   )}

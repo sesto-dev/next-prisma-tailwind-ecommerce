@@ -1,3 +1,5 @@
+'use client'
+
 import { ImageSkeleton } from '@/components/native/icons'
 
 export function Skeleton() {

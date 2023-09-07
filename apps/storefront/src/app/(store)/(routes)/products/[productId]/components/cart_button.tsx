@@ -5,12 +5,7 @@ import { Button } from '@/components/ui/button'
 import { useAuthenticated } from '@/hooks/useAuthentication'
 import { getCountInCart, getLocalCart } from '@/lib/cart'
 import { CartContextProvider, useCartContext } from '@/state/Cart'
-import {
-   CrossIcon,
-   MinusIcon,
-   PlusIcon,
-   ShoppingBasketIcon,
-} from 'lucide-react'
+import { X, MinusIcon, PlusIcon, ShoppingBasketIcon } from 'lucide-react'
 import { useState } from 'react'
 
 export default function CartButton({ product }) {
@@ -24,8 +19,6 @@ export default function CartButton({ product }) {
 export function ButtonComponent({ product }) {
    const { authenticated } = useAuthenticated()
    const { loading, cart, refreshCart, dispatchCart } = useCartContext()
-
-   console.log({ cart })
 
    const [fetchingCart, setFetchingCart] = useState(false)
 
@@ -52,10 +45,11 @@ export function ButtonComponent({ product }) {
                method: 'POST',
                body: JSON.stringify({
                   productId: product?.id,
-                  count: getCountInCart({
-                     cartItems: cart?.items,
-                     productId: product?.id,
-                  }),
+                  count:
+                     getCountInCart({
+                        cartItems: cart?.items,
+                        productId: product?.id,
+                     }) + 1,
                }),
                cache: 'no-store',
                headers: {
@@ -110,10 +104,11 @@ export function ButtonComponent({ product }) {
                method: 'POST',
                body: JSON.stringify({
                   productId: product?.id,
-                  count: getCountInCart({
-                     cartItems: cart?.items,
-                     productId: product?.id,
-                  }),
+                  count:
+                     getCountInCart({
+                        cartItems: cart?.items,
+                        productId: product?.id,
+                     }) - 1,
                }),
                cache: 'no-store',
                headers: {
@@ -176,7 +171,7 @@ export function ButtonComponent({ product }) {
          <>
             <Button variant="outline" size="icon" onClick={onRemoveFromCart}>
                {count == 1 ? (
-                  <CrossIcon className="h-4 w-4" />
+                  <X className="h-4 w-4" />
                ) : (
                   <MinusIcon className="h-4 w-4" />
                )}

@@ -1,11 +1,9 @@
-import { Icons } from '@/components/native/icons'
-
 export interface NavItem {
    title: string
    href?: string
    disabled?: boolean
    external?: boolean
-   icon?: keyof typeof Icons
+   icon?: any
    label?: string
 }
 

@@ -1,4 +1,4 @@
-import { Checkbox } from '@/components/native/icons'
+import { CheckSquareIcon } from 'lucide-react'
 
 export default function ConsCard({ title, cons }) {
    return (
@@ -6,10 +6,11 @@ export default function ConsCard({ title, cons }) {
          <span>{`You might not use ${title} if...`}</span>
          <div className="mt-4">
             {cons.map((con) => (
-               <div key={con} className="mb-2 flex items-baseline font-normal">
-                  <div className="mr-2 h-4 w-4">
-                     <Checkbox colorCode="text-red-500" />
-                  </div>
+               <div
+                  key={con}
+                  className="mb-2 flex gap-2 items-baseline font-normal"
+               >
+                  <CheckSquareIcon className="h-4" />
                   <span>{con}</span>
                </div>
             ))}

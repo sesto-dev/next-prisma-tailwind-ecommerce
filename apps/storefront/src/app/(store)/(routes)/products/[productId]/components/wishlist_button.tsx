@@ -22,6 +22,7 @@ export default function WishlistButton({ product }) {
             })
 
             const json = await response.json()
+
             setWishlist(json)
             setFetchingWishlist(false)
          } catch (error) {
@@ -45,9 +46,9 @@ export default function WishlistButton({ product }) {
       try {
          setFetchingWishlist(true)
 
-         const response = await fetch(`/api/wishlist/modify`, {
+         const response = await fetch(`/api/wishlist`, {
             method: 'POST',
-            body: JSON.stringify({ productId: product?.id }),
+            body: JSON.stringify({ productId: product?.id, connect: true }),
             cache: 'no-store',
             headers: {
                'Content-Type': 'application/json-string',
@@ -56,9 +57,7 @@ export default function WishlistButton({ product }) {
 
          const json = await response.json()
 
-         const items = json?.wishlist?.items
-
-         setWishlist(items)
+         setWishlist(json)
          setFetchingWishlist(false)
       } catch (error) {
          console.error({ error })
@@ -69,9 +68,9 @@ export default function WishlistButton({ product }) {
       try {
          setFetchingWishlist(true)
 
-         const response = await fetch(`/api/wishlist/modify`, {
+         const response = await fetch(`/api/wishlist`, {
             method: 'DELETE',
-            body: JSON.stringify({ productId: product.id }),
+            body: JSON.stringify({ productId: product.id, connect: false }),
             cache: 'no-store',
             headers: {
                'Content-Type': 'application/json-string',
@@ -80,9 +79,7 @@ export default function WishlistButton({ product }) {
 
          const json = await response.json()
 
-         const items = json?.wishlist?.items
-
-         setWishlist(items)
+         setWishlist(json)
          setFetchingWishlist(false)
       } catch (error) {
          console.error({ error })
@@ -110,7 +107,11 @@ export default function WishlistButton({ product }) {
 
    if (isProductInWishlist()) {
       return (
-         <Button className="flex gap-2" onClick={onRemoveFromWishlist}>
+         <Button
+            variant="outline"
+            className="flex gap-2"
+            onClick={onRemoveFromWishlist}
+         >
             <HeartIcon className="h-4" /> Remove from Wishlist
          </Button>
       )

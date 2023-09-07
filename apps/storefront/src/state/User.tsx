@@ -44,15 +44,11 @@ export const UserContextProvider = ({ children }) => {
    useEffect(() => {
       try {
          async function fetchData() {
-            console.error('Hitting USER API')
-
             const response = await fetch(`/api/user`, {
                cache: 'no-store',
             })
 
             const json = await response.json()
-
-            console.log({ json })
 
             if (isVariableValid(json)) {
                setUser(json)

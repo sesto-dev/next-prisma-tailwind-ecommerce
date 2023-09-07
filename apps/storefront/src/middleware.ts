@@ -73,5 +73,8 @@ export const config = {
       '/payments/:path*',
       '/api/profile/:path*',
       '/api/cart/:path*',
+      '/api/wishlist/:path*',
+      '/api/orders/:path*',
+      '/api/payments/:path*',
    ],
 }

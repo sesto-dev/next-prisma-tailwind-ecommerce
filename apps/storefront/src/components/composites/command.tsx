@@ -9,7 +9,7 @@ import {
    LaptopIcon,
    MoonIcon,
    SunIcon,
-} from '@radix-ui/react-icons'
+} from 'lucide-react'
 import { useTheme } from 'next-themes'
 
 import { docsConfig } from '@/config/docs'
@@ -97,7 +97,7 @@ export function CommandMenu({ ...props }: DialogProps) {
                            }}
                         >
                            <div className="mr-2 flex h-4 items-center justify-center">
-                              <CircleIcon className="h-3 w-3" />
+                              <CircleIcon className="h-3" />
                            </div>
                            {navItem.title}
                         </CommandItem>

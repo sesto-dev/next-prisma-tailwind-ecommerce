@@ -36,10 +36,14 @@ export async function POST(req: Request) {
          data: {
             wishlist: connect
                ? {
-                    connect: { id: productId },
+                    connect: {
+                       id: productId,
+                    },
                  }
                : {
-                    disconnect: { id: productId },
+                    disconnect: {
+                       id: productId,
+                    },
                  },
          },
          include: { wishlist: true },
@@ -47,7 +51,7 @@ export async function POST(req: Request) {
 
       return NextResponse.json(user.wishlist)
    } catch (error) {
-      console.error('[PRODUCT_PATCH]', error)
+      console.error('WISHLIST_POST]', error)
       return new NextResponse('Internal error', { status: 500 })
    }
 }

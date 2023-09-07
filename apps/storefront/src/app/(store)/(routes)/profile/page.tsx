@@ -18,8 +18,6 @@ import {
    AccordionItem,
    AccordionTrigger,
 } from '@/components/ui/accordion'
-import { Spinner } from '@/components/native/icons'
-import { useRouter } from 'next/navigation'
 import { UserContextProvider, useUserContext } from '@/state/User'
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 
@@ -74,9 +72,9 @@ function UserInfo({ user }) {
                </small>
             </span>
             {visibility ? (
-               <ChevronUpIcon className="h-5 w-5" />
+               <ChevronUpIcon className="h-5" />
             ) : (
-               <ChevronDownIcon className="h-5 w-5" />
+               <ChevronDownIcon className="h-5" />
             )}
          </button>
          <div className={!visibility && 'hidden'}>
@@ -101,9 +99,9 @@ function Payments({ user }) {
                <small className="text-neutral-300">Your order history.</small>
             </span>
             {visibility ? (
-               <ChevronUpIcon className="h-5 w-5" />
+               <ChevronUpIcon className="h-5" />
             ) : (
-               <ChevronDownIcon className="h-5 w-5" />
+               <ChevronDownIcon className="h-5" />
             )}
          </button>
          <div className={!visibility && 'hidden'}>
@@ -154,9 +152,9 @@ function Referrals({ userObject }) {
                </small>
             </span>
             {visibility ? (
-               <ChevronUpIcon className="h-5 w-5" />
+               <ChevronUpIcon className="h-5" />
             ) : (
-               <ChevronDownIcon className="h-5 w-5" />
+               <ChevronDownIcon className="h-5" />
             )}
          </button>
          <div className={!visibility && 'hidden'}>

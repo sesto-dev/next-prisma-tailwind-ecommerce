@@ -16,8 +16,6 @@ export function getLocalCart() {
 }
 
 export function getCountInCart({ cartItems, productId }) {
-   console.log({ cartItems })
-
    try {
       for (let i = 0; i < cartItems.length; i++) {
          if (cartItems[i]?.productId === productId) {
