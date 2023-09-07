@@ -1,9 +1,9 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Check, ChevronsUpDown } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
+import { cn, slugify } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
    Command,
@@ -22,13 +22,23 @@ import { Label } from '@/components/ui/label'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-export function CategoriesCombobox({ categories }) {
+export function CategoriesCombobox({ categories, initialCategory }) {
    const router = useRouter()
    const pathname = usePathname()
    const searchParams = useSearchParams()
 
    const [open, setOpen] = React.useState(false)
    const [value, setValue] = React.useState('')
+
+   function getCategoryTitle() {
+      for (const category of categories) {
+         if (slugify(category.title) === slugify(value)) return category.title
+      }
+   }
+
+   useEffect(() => {
+      setValue(initialCategory)
+   }, [initialCategory])
 
    return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -39,11 +49,7 @@ export function CategoriesCombobox({ categories }) {
                aria-expanded={open}
                className="w-full justify-between"
             >
-               {value
-                  ? value.replace(/\w+/g, function (w) {
-                       return w[0].toUpperCase() + w.slice(1).toLowerCase()
-                    })
-                  : 'Select category...'}
+               {value ? getCategoryTitle() : 'Select category...'}
                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
          </PopoverTrigger>
@@ -98,13 +104,23 @@ export function CategoriesCombobox({ categories }) {
    )
 }
 
-export function BrandCombobox({ brands }) {
+export function BrandCombobox({ brands, initialBrand }) {
    const router = useRouter()
    const pathname = usePathname()
    const searchParams = useSearchParams()
 
    const [open, setOpen] = React.useState(false)
    const [value, setValue] = React.useState('')
+
+   function getBrandTitle() {
+      for (const brand of brands) {
+         if (slugify(brand.title) === slugify(value)) return brand.title
+      }
+   }
+
+   useEffect(() => {
+      setValue(initialBrand)
+   }, [initialBrand])
 
    return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -115,11 +131,7 @@ export function BrandCombobox({ brands }) {
                aria-expanded={open}
                className="w-full justify-between"
             >
-               {value
-                  ? value.replace(/\w+/g, function (w) {
-                       return w[0].toUpperCase() + w.slice(1).toLowerCase()
-                    })
-                  : 'Select brand...'}
+               {value ? getBrandTitle() : 'Select brand...'}
                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
          </PopoverTrigger>
@@ -153,7 +165,6 @@ export function BrandCombobox({ brands }) {
                               scroll: false,
                            })
 
-                           console.log({ value, currentValue })
                            setOpen(false)
                         }}
                      >
@@ -175,11 +186,15 @@ export function BrandCombobox({ brands }) {
    )
 }
 
-export function AvailableToggle() {
+export function AvailableToggle({ initialAvailability }) {
    const router = useRouter()
    const pathname = usePathname()
    const searchParams = useSearchParams()
    const [value, setValue] = React.useState(false)
+
+   useEffect(() => {
+      setValue(initialAvailability === 'true' ? true : false)
+   }, [initialAvailability])
 
    return (
       <div className="flex w-full border rounded-md items-center space-x-2">

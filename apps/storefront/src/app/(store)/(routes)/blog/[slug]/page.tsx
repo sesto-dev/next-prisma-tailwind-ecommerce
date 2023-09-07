@@ -5,6 +5,7 @@ import prisma from '@/lib/prisma'
 import { parseISO, format } from 'date-fns'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Separator } from '@/components/native/separator'
 
 export default async function BlogPost({
    params,
@@ -44,7 +45,7 @@ function Content({ blog, mdx }) {
          <p className="mt-2 text-sm font-medium text-neutral-400">
             Last Updated @ {format(parseISO(updatedAt), 'MMMM dd, yyyy')}
          </p>
-         <hr className="border-1 mt-4 mb-10 w-full border-neutral-200 dark:border-neutral-600" />
+         <Separator />
          <MDXRemote lazy {...mdx} components={MDXComponents} />
       </div>
    )

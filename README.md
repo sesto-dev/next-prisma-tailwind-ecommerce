@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-![Screenshot](https://github.com/Accretence/next-prisma-tailwind-ecommerce/assets/45223699/8324b68c-79f0-4b1b-aed0-e1c4be16f89d)
+![Untitled](https://github.com/Accretence/next-prisma-tailwind-ecommerce/assets/45223699/00444538-a496-4f90-814f-7e57a580ad17)
 
 ## Getting Started
 

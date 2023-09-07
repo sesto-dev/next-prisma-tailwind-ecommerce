@@ -66,9 +66,6 @@ export function UserNav() {
                <DropdownMenuItem>
                   <GearIcon className="h-4 mr-2" /> Settings
                </DropdownMenuItem>
-               <DropdownMenuItem>
-                  <ModeToggle />
-               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={onLogout}>

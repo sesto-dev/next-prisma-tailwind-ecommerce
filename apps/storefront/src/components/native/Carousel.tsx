@@ -6,7 +6,7 @@ import { Carousel as CarouselImport } from 'flowbite-react'
 export default function Carousel({ images }) {
    return (
       <Card>
-         <CardContent className="p-2">
+         <CardContent className="p-0">
             <CarouselImport className="h-[70vh]">
                {images.map((image: any) => (
                   <img

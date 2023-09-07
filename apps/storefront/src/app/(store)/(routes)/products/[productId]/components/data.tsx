@@ -1,6 +1,7 @@
 'use client'
 
 import { Spinner } from '@/components/native/icons'
+import { Separator } from '@/components/native/separator'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useAuthenticated } from '@/hooks/useAccessToken'
@@ -13,7 +14,7 @@ import {
    HeartIcon,
    MinusIcon,
    PlusIcon,
-   ShoppingCartIcon,
+   ShoppingBasketIcon,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
@@ -231,7 +232,7 @@ export const DataSection = async ({
       if (count === 0) {
          return (
             <Button className="flex gap-2" onClick={onAddToCart}>
-               <ShoppingCartIcon className="h-4" /> Add to Cart
+               <ShoppingBasketIcon className="h-4" /> Add to Cart
             </Button>
          )
       }
@@ -288,7 +289,7 @@ export const DataSection = async ({
          <h3 className="mb-4 text-xl font-medium text-black dark:text-white">
             {product.title}
          </h3>
-         <hr className="my-4 w-full border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
+         <Separator />
          <div className="flex gap-2 mb-2">
             <p className="text-sm">Brand:</p>
             <Badge variant="outline">{product.brand.title}</Badge>
@@ -301,11 +302,11 @@ export const DataSection = async ({
                </Badge>
             ))}
          </div>
-         <hr className="my-4 w-full border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
+         <Separator />
          <small className="text-black dark:text-white">
             {product.description}
          </small>
-         <hr className="my-4 w-full border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
+         <Separator />
          <div className="flex gap-2">
             <CartButton />
             <WishlistButton />

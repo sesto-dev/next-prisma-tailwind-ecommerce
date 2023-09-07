@@ -8,6 +8,7 @@ import { useAuthenticated } from '@/hooks/useAccessToken'
 import { UserNav } from '@/components/native//nav/user'
 import { CartNav } from '@/components/native//nav/cart'
 import { isVariableValid, validateBoolean } from '@/lib/utils'
+import { ModeToggle } from '@/components/composites/mode-toggle'
 
 export default function Header() {
    const { authenticated } = useAuthenticated()
@@ -22,6 +23,7 @@ export default function Header() {
                   <CommandMenu />
                </div>
                <CartNav />
+               <ModeToggle />
                {authenticated ? <UserNav /> : <LoginDialog />}
             </div>
          </div>

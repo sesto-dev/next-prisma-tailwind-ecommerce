@@ -1,12 +1,13 @@
 {
    "name": "@persepolis/database",
-   "version": "1.0.1",
+   "version": "1.0.2",
    "description": "Database schema for the Persepolis e-commerce platform.",
    "scripts": {
       "db:generate": "npx prisma generate",
       "db:format": "npx prisma format",
       "db:reset": "npx prisma db push --force-reset",
       "db:push": "npx prisma db push",
+      "db:seed": "npx prisma db seed",
       "db:studio": "npx prisma studio",
       "publish": "npm publish --access public",
       "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +16,9 @@
       "type": "git",
       "url": "git+https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms.git"
    },
+   "files": [
+      "prisma"
+   ],
    "author": "@accretence",
    "license": "MIT",
    "bugs": {
@@ -28,5 +32,8 @@
       "@types/node": "^20.5.9",
       "prisma": "^5.2.0",
       "typescript": "^5.2.2"
+   },
+   "prisma": {
+      "seed": "npx ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
    }
 }

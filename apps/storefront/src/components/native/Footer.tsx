@@ -1,16 +1,14 @@
 import Link from 'next/link'
 import { getLinkStyles } from '@/lib/styles'
-import {
-   GitHubLogoIcon,
-   InstagramLogoIcon,
-   TwitterLogoIcon,
-} from '@radix-ui/react-icons'
+
 import Config from '@/config/site'
+import { Separator } from '@/components/native/separator'
+import { GithubIcon, InstagramIcon, TwitterIcon } from 'lucide-react'
 
 export default function Footer() {
    return (
       <footer>
-         <hr className="border-1 my-10 w-full border-neutral-200 dark:border-neutral-800" />
+         <Separator className="my-12" />
          <div className="md:flex md:justify-between px-[1.4rem] md:px-[4rem] lg:px-[6rem] xl:px-[8rem] 2xl:px-[12rem]">
             <div className="mb-6 hidden md:mb-0 md:block">
                <span className="flex flex-col">
@@ -87,7 +85,7 @@ export default function Footer() {
                </div>
             </div>
          </div>
-         <hr className="my-8 border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
+         <Separator className="mt-8 mb-6" />
          <div className="mb-12 flex justify-center space-x-6">
             <a
                href="https://instagram.com/accretence"
@@ -95,7 +93,7 @@ export default function Footer() {
                rel="noreferrer"
                className={`${getLinkStyles()} + text-neutral-500`}
             >
-               <InstagramLogoIcon />
+               <InstagramIcon className="h-4" />
                <span className="sr-only">Instagram page</span>
             </a>
             <a
@@ -104,7 +102,7 @@ export default function Footer() {
                rel="noreferrer"
                className={`${getLinkStyles()} + text-neutral-500`}
             >
-               <TwitterLogoIcon />
+               <TwitterIcon className="h-4" />
                <span className="sr-only">Twitter page</span>
             </a>
             <a
@@ -113,7 +111,7 @@ export default function Footer() {
                rel="noreferrer"
                className={`${getLinkStyles()} + text-neutral-500`}
             >
-               <GitHubLogoIcon className="h-4 w-4" />
+               <GithubIcon className="h-4" />
                <span className="sr-only">GitHub account</span>
             </a>
          </div>

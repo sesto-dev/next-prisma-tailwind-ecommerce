@@ -23,6 +23,10 @@ function getRandomDate(start, end) {
    )
 }
 
+function getRandomBoolean() {
+   return getRandomIntInRange(0, 2) == 0 ? false : true
+}
+
 const prisma = new PrismaClient()
 
 async function main() {
@@ -75,7 +79,7 @@ async function main() {
       },
       {
          title: 'Monocle Sneakers',
-         brand: '',
+         brand: 'Monocle',
 
          categories: ['Electronics'],
          tags: ['shoes', 'brushed', 'mechanical'],
@@ -86,7 +90,7 @@ async function main() {
       },
       {
          title: 'Zone2 Mens Watch',
-         brand: '',
+         brand: 'Zone2',
 
          categories: ['Electronics'],
          tags: ['shoes', 'brushed', 'mechanical'],
@@ -156,6 +160,38 @@ async function main() {
       },
    ]
 
+   const billboards = [
+      {
+         image: 'https://i0.wp.com/allhomecinema.com/storage/2020/01/1580026175_review-bang-olufsen-beoplay-a9-wireless-speaker.jpg',
+         label: 'Something',
+      },
+      {
+         image: 'https://globaltv.es/wp-content/uploads/2022/10/bang-olufsen-salon.webp',
+         label: 'Something',
+      },
+      {
+         image: 'https://thevinylfactory.com/wp-content/uploads/2023/06/2.webp',
+         label: 'Something',
+      },
+   ]
+
+   try {
+      for (const billboard of billboards) {
+         const { image, label } = billboard
+
+         await prisma.billboard.create({
+            data: {
+               image,
+               label,
+            },
+         })
+      }
+
+      console.log('Created Billboards...')
+   } catch (error) {
+      console.error('Could not create billboards...')
+   }
+
    try {
       for (const owner of owners) {
          await prisma.owner.create({
@@ -187,6 +223,7 @@ async function main() {
    for (const product of products) {
       const createdProduct = await prisma.product.create({
          data: {
+            isAvailable: getRandomBoolean(),
             title: product.title,
             price: getRandomFloat(20, 100, 2),
             stock: getRandomIntInRange(1, 20),
@@ -264,7 +301,7 @@ async function main() {
 
    console.log('Created Providers...')
 
-   for (let i = 0; i < 100; i++) {
+   for (let i = 0; i < 10; i++) {
       const order = await prisma.order.create({
          data: {
             createdAt: getRandomDate(new Date(2023, 2, 27), new Date()),

@@ -8,6 +8,7 @@ import {
    BrandCombobox,
    CategoriesCombobox,
 } from './components/filter'
+import { Separator } from '@/components/native/separator'
 
 export default async function Products({ searchParams }) {
    const { isAvailable, brand, category, page = 1 } = searchParams ?? null
@@ -48,10 +49,14 @@ export default async function Products({ searchParams }) {
             description="Below is a list of products you have in your cart."
          />
          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
-            <CategoriesCombobox categories={categories} />
-            <BrandCombobox brands={brands} />
-            <AvailableToggle />
+            <CategoriesCombobox
+               initialCategory={category}
+               categories={categories}
+            />
+            <BrandCombobox initialBrand={brand} brands={brands} />
+            <AvailableToggle initialAvailability={isAvailable} />
          </div>
+         <Separator />
          {isVariableValid(products) ? (
             <ProductGrid products={products} />
          ) : (

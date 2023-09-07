@@ -7,6 +7,7 @@ import { isVariableValid } from '@/lib/utils'
 
 import { DataSection } from './components/data'
 import { ChevronRightIcon } from 'lucide-react'
+import Carousel from '@/components/native/Carousel'
 
 export default async function Product({
    params,
@@ -41,13 +42,7 @@ export default async function Product({
 const ImageColumn = ({ product }) => {
    return (
       <div className="relative min-h-[50vh] w-full col-span-1">
-         <Image
-            src={product?.images[0]}
-            alt="Product Image"
-            fill
-            className="rounded-lg"
-            style={{ objectFit: 'cover' }}
-         />
+         <Carousel images={product?.images} />
       </div>
    )
 }

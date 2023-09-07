@@ -64,7 +64,15 @@ export const Product = ({ product }: { product: ProductWithAllVariants }) => {
                </p>
             </CardContent>
             <CardFooter>
-               <h2 className="text-lg">${product?.price}</h2>
+               {product?.isAvailable ? (
+                  <div>
+                     <h2>${product?.price}</h2>
+                  </div>
+               ) : (
+                  <div className="flex gap-2 text-muted-foreground">
+                     <h4>Out of stock</h4>
+                  </div>
+               )}
             </CardFooter>
          </Card>
       </Link>

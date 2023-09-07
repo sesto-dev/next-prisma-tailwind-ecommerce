@@ -10,6 +10,7 @@ import { ProductGrid, ProductSkeletonGrid } from '@/components/native/Product'
 import { isVariableValid } from '@/lib/utils'
 import Carousel from '@/components/native/Carousel'
 import { Heading } from '@/components/native/heading'
+import { Separator } from '@/components/native/separator'
 
 export default async function Index() {
    const products = await prisma.product.findMany({
@@ -23,16 +24,12 @@ export default async function Index() {
       take: 3,
    })
 
+   const billboards = await prisma.billboard.findMany()
+
    return (
       <div className="flex flex-col border-neutral-200 dark:border-neutral-700">
-         <Carousel
-            images={[
-               'https://i0.wp.com/allhomecinema.com/storage/2020/01/1580026175_review-bang-olufsen-beoplay-a9-wireless-speaker.jpg',
-               'https://globaltv.es/wp-content/uploads/2022/10/bang-olufsen-salon.webp',
-               'https://thevinylfactory.com/wp-content/uploads/2023/06/2.webp',
-            ]}
-         />
-         <hr className="h-px my-8 bg-neutral-200 dark:bg-neutral-800 border-0" />
+         <Carousel images={billboards.map((obj) => obj.image)} />
+         <Separator className="my-8" />
          <Heading
             title="Products"
             description="Below is a list of products we have available for you."
@@ -42,7 +39,7 @@ export default async function Index() {
          ) : (
             <ProductSkeletonGrid />
          )}
-         <hr className="h-px my-8 bg-neutral-200 dark:bg-neutral-800 border-0" />
+         <Separator className="my-8" />
          {isVariableValid(blogs) ? (
             <BlogPostGrid blogs={blogs} />
          ) : (

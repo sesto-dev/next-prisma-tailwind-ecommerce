@@ -1,3 +1,4 @@
+import { Separator } from '@/components/native/separator'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { isVariableValid } from '@/lib/utils'
@@ -29,8 +30,7 @@ export function Receipt() {
                <h3>${calculatePayableCost()}</h3>
             </div>
          </CardContent>
-         <hr className="my-4 w-[80%] border-neutral-200 dark:border-neutral-800 sm:mx-auto" />
-
+         <Separator />
          <CardFooter>
             <Button
                disabled={

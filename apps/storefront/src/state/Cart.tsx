@@ -15,7 +15,6 @@ export const useCartContext = () => {
 }
 
 export const CartContextProvider = ({ children }) => {
-   console.log('Creating cart context')
    const { refreshUser, user } = useUserContext()
 
    const [cart, setCart] = useState(null)
