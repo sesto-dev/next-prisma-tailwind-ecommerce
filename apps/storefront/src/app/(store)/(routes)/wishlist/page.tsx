@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-import { useAuthenticated } from '@/hooks/useAccessToken'
+import { useAuthenticated } from '@/hooks/useAuthentication'
 import { isVariableValid, validateBoolean } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { CartGrid } from '@/app/(store)/(routes)/cart/components/grid'

@@ -1,6 +1,6 @@
 import { isVariableValid, validateBoolean } from '@/lib/utils'
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import { useAuthenticated } from '@/hooks/useAccessToken'
+import { useAuthenticated } from '@/hooks/useAuthentication'
 
 const UserContext = createContext({
    user: null,

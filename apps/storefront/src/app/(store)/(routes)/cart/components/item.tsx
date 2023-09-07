@@ -9,7 +9,7 @@ import {
 import { isVariableValid, validateBoolean } from '@/lib/utils'
 import { getCountInCart, getLocalCart, writeLocalCart } from '@/lib/cart'
 import { useState, useEffect } from 'react'
-import { useAuthenticated } from '@/hooks/useAccessToken'
+import { useAuthenticated } from '@/hooks/useAuthentication'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { useCartContext } from '@/state/Cart'

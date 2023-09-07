@@ -8,7 +8,6 @@ import {
    LockClosedIcon,
    PersonIcon,
 } from '@radix-ui/react-icons'
-import { ModeToggle } from '@/components/composites/mode-toggle'
 import { Button } from '@/components/ui/button'
 import {
    DropdownMenu,
@@ -28,6 +27,11 @@ export function UserNav() {
          const response = await fetch('/api/auth/logout', {
             cache: 'no-store',
          })
+
+         if (typeof window !== 'undefined' && window.localStorage) {
+            document.cookie =
+               'logged-in=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+         }
 
          if (response.status === 200) window.location.reload()
       } catch (error) {
