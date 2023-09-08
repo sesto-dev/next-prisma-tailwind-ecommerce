@@ -10,7 +10,7 @@ export async function GET(req: Request) {
          return new NextResponse('Unauthorized', { status: 401 })
       }
 
-      const user = await prisma.user.findUnique({
+      const user = await prisma.user.findUniqueOrThrow({
          where: { id: userId, isEmailVerified: true },
          include: {
             cart: {
@@ -22,9 +22,7 @@ export async function GET(req: Request) {
                   },
                },
             },
-            orders: true,
             addresses: true,
-            payments: true,
             wishlist: true,
             notifications: true,
             errors: true,
@@ -33,7 +31,7 @@ export async function GET(req: Request) {
 
       return NextResponse.json(user)
    } catch (error) {
-      console.error('[PRODUCT_GET]', error)
+      console.error('[PROFILE_GET]', error)
       return new NextResponse('Internal error', { status: 500 })
    }
 }

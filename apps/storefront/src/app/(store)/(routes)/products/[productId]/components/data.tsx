@@ -1,14 +1,14 @@
 import { Separator } from '@/components/native/separator'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
-import type { ProductWithAllVariants } from '@/types/prisma'
+import type { ProductWithIncludes } from '@/types/prisma'
 import CartButton from './cart_button'
 import WishlistButton from './wishlist_button'
 
 export const DataSection = async ({
    product,
 }: {
-   product: ProductWithAllVariants
+   product: ProductWithIncludes
 }) => {
    return (
       <div className="col-span-2 w-full rounded-lg bg-neutral-100 p-6 dark:bg-neutral-900">

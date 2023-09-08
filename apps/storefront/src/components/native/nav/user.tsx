@@ -1,6 +1,13 @@
 'use client'
 
-import { LogOutIcon, SettingsIcon, HeartIcon, UserIcon } from 'lucide-react'
+import {
+   LogOutIcon,
+   SettingsIcon,
+   HeartIcon,
+   UserIcon,
+   ListOrderedIcon,
+   CreditCardIcon,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
    DropdownMenu,
@@ -42,12 +49,25 @@ export function UserNav() {
          </DropdownMenuTrigger>
          <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuGroup>
-               <Link href="/profile">
+               <Link href="/profile/edit">
                   <DropdownMenuItem>
                      <UserIcon className="h-4 mr-2" />
-                     Profile
+                     Edit Profile
                   </DropdownMenuItem>
                </Link>
+               <Link href="/profile/orders">
+                  <DropdownMenuItem>
+                     <ListOrderedIcon className="h-4 mr-2" />
+                     Orders
+                  </DropdownMenuItem>
+               </Link>
+               <Link href="/profile/payments">
+                  <DropdownMenuItem>
+                     <CreditCardIcon className="h-4 mr-2" />
+                     Payments
+                  </DropdownMenuItem>
+               </Link>
+               <DropdownMenuSeparator />
                <Link href="/cart">
                   <DropdownMenuItem>
                      <ShoppingBasketIcon className="h-4 mr-2" /> Cart

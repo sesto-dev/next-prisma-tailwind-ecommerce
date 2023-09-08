@@ -91,13 +91,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                </span>
             </div>
          </div>
-         <Button variant="outline" type="button" disabled={isLoading}>
+         <Button disabled variant="outline" type="button">
             {isLoading ? (
                <Loader className="mr-2 h-4 animate-spin" />
             ) : (
                <SmartphoneIcon className="mr-2 h-4" />
             )}
-            Phone Number
+            Phone Number [Coming Soon]
          </Button>
       </div>
    )

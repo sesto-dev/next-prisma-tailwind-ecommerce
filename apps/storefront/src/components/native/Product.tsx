@@ -12,12 +12,12 @@ import {
    CardTitle,
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ProductWithAllVariants } from '@/types/prisma'
+import { ProductWithIncludes } from '@/types/prisma'
 
 export const ProductGrid = ({
    products,
 }: {
-   products: ProductWithAllVariants[]
+   products: ProductWithIncludes[]
 }) => {
    return (
       <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
@@ -38,7 +38,7 @@ export const ProductSkeletonGrid = () => {
    )
 }
 
-export const Product = ({ product }: { product: ProductWithAllVariants }) => {
+export const Product = ({ product }: { product: ProductWithIncludes }) => {
    return (
       <Link className="" href={`/products/${product.id}`}>
          <Card className="h-full">

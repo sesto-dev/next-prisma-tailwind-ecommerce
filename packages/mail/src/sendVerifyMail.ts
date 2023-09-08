@@ -27,10 +27,6 @@ function getBody({ name, email_verification_code, verify_url }) {
 			should use for your new account.
 		</p>
 		<br />
-		<p>
-			Please enter this verification code on our
-			<a href=${verify_url}>verification page.</a>
-		</p>
 		<h2>${email_verification_code}</h2>
 	`
 }

@@ -11,8 +11,9 @@ export async function POST(req: NextRequest) {
 
       const { email, OTP, cart } = await req.json()
 
-      const user = await prisma.user.findFirstOrThrow({
+      const user = await prisma.user.update({
          where: { email: email.toString().toLowerCase(), OTP },
+         data: { isEmailVerified: true },
       })
 
       if (cart?.items?.length > 0) {

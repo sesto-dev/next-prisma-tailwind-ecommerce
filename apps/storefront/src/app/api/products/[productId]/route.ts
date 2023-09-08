@@ -7,6 +7,10 @@ export async function GET(
    { params }: { params: { productId: string } }
 ) {
    try {
+      if (!params.productId) {
+         return new NextResponse('Product id is required', { status: 400 })
+      }
+
       const product = await prisma.product.findUniqueOrThrow({
          where: { id: params.productId },
          include: {

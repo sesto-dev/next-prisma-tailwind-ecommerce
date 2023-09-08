@@ -23,7 +23,7 @@ export const UserContextProvider = ({ children }) => {
          if (authenticated) {
             setLoading(true)
 
-            const response = await fetch(`/api/user`, {
+            const response = await fetch(`/api/profile`, {
                cache: 'no-store',
             })
 
@@ -44,7 +44,7 @@ export const UserContextProvider = ({ children }) => {
    useEffect(() => {
       try {
          async function fetchData() {
-            const response = await fetch(`/api/user`, {
+            const response = await fetch(`/api/profile`, {
                cache: 'no-store',
             })
 

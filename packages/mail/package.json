@@ -1,6 +1,6 @@
 {
    "name": "@persepolis/mail",
-   "version": "1.0.5",
+   "version": "1.0.6",
    "description": "Mail service for the Persepolis e-commerce platform.",
    "main": "dist/index.js",
    "scripts": {
