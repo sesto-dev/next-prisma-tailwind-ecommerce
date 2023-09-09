@@ -253,6 +253,11 @@
   dependencies:
     nodemailer "^6.9.4"
 
+"@persepolis/ui@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@persepolis/ui/-/ui-0.1.9.tgz#210809f1cf76d6d0b27a24483675920c243c6b22"
+  integrity sha512-gLpayH85xMcFJjCfh3TjwSSyKL2a0588KYdruexEiauAe5G+eACuMacvwBkomnMNjwe8lQOj1RdVJEr3e0SRmQ==
+
 "@persepolis/zarinpal@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@persepolis/zarinpal/-/zarinpal-0.1.0.tgz#f835d4e87322290a49d7579b7164fcd485811d83"

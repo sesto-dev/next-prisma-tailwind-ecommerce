@@ -1,6 +1,6 @@
 {
    "name": "@persepolis/mail",
-   "version": "1.0.6",
+   "version": "1.0.7",
    "description": "Mail service for the Persepolis e-commerce platform.",
    "main": "dist/index.js",
    "scripts": {
@@ -23,9 +23,13 @@
    "homepage": "https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms#readme",
    "devDependencies": {
       "@types/nodemailer": "^6.4.9",
+      "@types/react": "^18.2.21",
       "typescript": "^5.2.2"
    },
    "dependencies": {
-      "nodemailer": "^6.9.4"
+      "@react-email/components": "^0.0.7",
+      "@react-email/html": "^0.0.4",
+      "nodemailer": "^6.9.4",
+      "react": "^18.2.0"
    }
 }

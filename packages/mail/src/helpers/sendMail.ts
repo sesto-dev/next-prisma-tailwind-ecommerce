@@ -1,7 +1,4 @@
 import getTransporter from '../helpers/getTransporter'
-import getEpilogue from '../markdown/getEpilogue'
-import getNewStyle from '../markdown/getNewStyle'
-import getPrologue from '../markdown/getPrologue'
 
 const address = process.env.MAIL_SMTP_USER
 const verbose = process.env.MAIL_SMTP_VERBOSE
@@ -10,17 +7,10 @@ interface Props {
    name: string
    to: string
    subject: string
-   body: string
-   unsubscribe_url: string
+   html: string
 }
 
-export default async function sendMail({
-   name,
-   to,
-   subject,
-   body,
-   unsubscribe_url,
-}: Props) {
+export default async function sendMail({ name, to, subject, html }: Props) {
    let transporter = await getTransporter()
 
    const mail = await transporter.sendMail({
@@ -31,10 +21,7 @@ export default async function sendMail({
       to,
       subject,
       text: subject,
-      html:
-         getPrologue({ name, subject }) +
-         body +
-         getEpilogue({ name, unsubscribe_url }),
+      html,
    })
 
    if (verbose && verbose == 'true') {
