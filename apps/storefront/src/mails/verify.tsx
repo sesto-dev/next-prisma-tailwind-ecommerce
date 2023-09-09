@@ -22,10 +22,10 @@ interface VercelInviteUserEmailProps {
    code?: string
 }
 
-export const VercelInviteUserEmail = ({
+export default function Verification({
    name = 'My Project',
    code = ``,
-}: VercelInviteUserEmailProps) => {
+}: VercelInviteUserEmailProps) {
    const previewText = `Verify your email.`
 
    return (
@@ -33,29 +33,18 @@ export const VercelInviteUserEmail = ({
          <Head />
          <Preview>{previewText}</Preview>
          <Tailwind>
-            <Body className="bg-white my-auto mx-auto font-sans">
-               <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
-                  <Section className="mt-[32px]">{name}</Section>
-                  <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0"></Heading>
-                  <Text className="text-black text-[14px] leading-[24px]">
-                     Hello! Welcome to {name}!
+            <Body className="my-auto mx-auto font-sans">
+               <Container className="border border-solid border-neutral-500/25 rounded mx-auto p-6">
+                  <Heading className="mt-0">{name}</Heading>
+                  <Text className="">
+                     Let’s make sure this is the right address we should use for
+                     your new account.
                   </Text>
-                  <Text className="text-black text-[14px] leading-[24px]">
-                     There’s one quick step you need to complete before gaining
-                     full access to your account. Let’s make sure this is the
-                     right address we should use for your new account.
-                  </Text>
-
-                  <Text className="text-black text-[14px] leading-[24px]">
-                     {code}
-                  </Text>
-                  <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
-                  <Text className="text-[#666666] text-[12px] leading-[24px]">
-                     Don't like these emails?{' '}
-                     <Link href={process.env.NEXT_PUBLIC_URL + '/unsubscribe'}>
-                        Unsubscribe
-                     </Link>
-                     .
+                  <div className="w-3/4 bg-neutral-500/5 border border-solid border-neutral-400/25 rounded-lg px-6">
+                     <Text className="text-lg">{code}</Text>
+                  </div>
+                  <Text className="">
+                     Input the code above to gain access to your account.
                   </Text>
                </Container>
             </Body>
@@ -63,5 +52,3 @@ export const VercelInviteUserEmail = ({
       </Html>
    )
 }
-
-export default VercelInviteUserEmail

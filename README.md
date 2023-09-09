@@ -1,22 +1,30 @@
 ![Screenshot](https://github.com/Accretence/next-prisma-tailwind-ecommerce/assets/45223699/00444538-a496-4f90-814f-7e57a580ad17)
 
-<div align="center">Full-Stack E-Commerce Platform<br />Built using Typescript with Next.js, Prisma ORM and TailwindCSS.</div>
+<div align="center"><h3>Full-Stack E-Commerce Platform</h3><p>Built using Typescript with Next.js, Prisma ORM and TailwindCSS.</p></div>
 <br />
 <div align="center">
 <a href="https://pasargad.vercel.app">Storefront</a> 
 <span> · </span>
-<a href="https://pardis.vercel.app">Admin Panel</a>
+<a href="https://pardis.vercel.app">Admin Panel</a></div>
 
 ## Introduction
 
-A collection of high-quality, unstyled components for creating beautiful emails using React and TypeScript.
-It reduces the pain of coding responsive emails with dark mode support. It also takes care of inconsistencies between Gmail, Outlook, and other email clients for you.
+Welcome to the open-source Next.js E-Commerce Storefront with Admin Panel project! This project is built with TypeScript, Tailwind CSS, and Prisma, providing a powerful and flexible solution for building and managing your e-commerce website.
 
-## Why
+## Features
 
-We believe that email is an extremely important medium for people to communicate. However, we need to stop developing emails like 2010, and rethink how email can be done in 2022 and beyond. Email development needs a revamp. A renovation. Modernized for the way we build web apps today.
+-  **Next.js Framework**: A popular React framework for building server-rendered React applications.
+-  **TypeScript**: Strongly typed codebase for improved maintainability.
+-  **Tailwind CSS**: A utility-first CSS framework for rapidly building custom designs.
+-  **Prisma**: An open-source database toolkit for Node.js that simplifies database access with type-safe queries.
+-  **E-Commerce Functionality**: Implement and manage product listings, shopping cart, and orders.
+-  **Admin Panel**: A user-friendly admin panel for managing products, orders, and customers.
+-  **Authentication**: Secure user authentication for both customers and administrators.
+-  **Responsive Design**: Mobile-friendly storefront for an optimal shopping experience.
 
 ## Development
+
+Navigate to each of 2 apps inside the `apps` folder and go steps below:
 
 #### Install dependencies
 
@@ -29,8 +37,6 @@ yarn install
 ```sh
 yarn dev
 ```
-
-This will initialize all packages in parallel and watch for changes, including the website which will be available at [localhost:7777](http://localhost:7777).
 
 ## Authors
 
