@@ -18,7 +18,7 @@ export const DataSection = async ({
             <div className="flex gap-2 items-center">
                <Badge className="flex gap-4" variant="destructive">
                   <div className="line-through">${product?.price}</div>
-                  <div>{percentage.toFixed(2)}</div>
+                  <div>%{percentage.toFixed(2)}</div>
                </Badge>
                <h2 className="">${price.toFixed(2)}</h2>
             </div>

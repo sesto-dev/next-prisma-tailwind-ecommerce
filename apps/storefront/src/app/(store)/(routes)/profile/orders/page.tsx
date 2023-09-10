@@ -46,7 +46,7 @@ export default function UserPage() {
             {orders ? (
                <OrderSection orders={orders} />
             ) : (
-               <Card>
+               <Card className="my-4 bg-muted-foreground/5">
                   <CardContent>
                      <div className="h-[20vh]">
                         <div className="h-full my-4 flex items-center justify-center">

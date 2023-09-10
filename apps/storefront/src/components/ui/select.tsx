@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { SortAscIcon, CheckIcon } from 'lucide-react'
+import { ChevronsUpDownIcon, CheckIcon } from 'lucide-react'
 import * as SelectPrimitive from '@radix-ui/react-select'
 
 import { cn } from '@/lib/utils'
@@ -26,7 +26,7 @@ const SelectTrigger = React.forwardRef<
    >
       {children}
       <SelectPrimitive.Icon asChild>
-         <SortAscIcon className="h-4 opacity-50" />
+         <ChevronsUpDownIcon className="h-4 opacity-50" />
       </SelectPrimitive.Icon>
    </SelectPrimitive.Trigger>
 ))

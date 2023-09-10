@@ -77,7 +77,7 @@ model Author {
   avatar String?
   OTP    String?
 
-  blogPost BlogPost[]
+  blogs Blog[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -341,7 +341,7 @@ model File {
   @@index([userId])
 }
 
-model BlogPost {
+model Blog {
   slug        String  @id
   title       String
   image       String

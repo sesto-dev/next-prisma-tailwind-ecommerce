@@ -1,22 +1,19 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import { Check, ChevronsUpDown } from 'lucide-react'
+import { ChevronsUpDownIcon } from 'lucide-react'
 
 import { cn, slugify } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+
 import {
-   Command,
-   CommandEmpty,
-   CommandGroup,
-   CommandInput,
-   CommandItem,
-} from '@/components/ui/command'
-import {
-   Popover,
-   PopoverContent,
-   PopoverTrigger,
-} from '@/components/ui/popover'
+   DropdownMenu,
+   DropdownMenuContent,
+   DropdownMenuItem,
+   DropdownMenuLabel,
+   DropdownMenuSeparator,
+   DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import Link from 'next/link'
 
 export function UserCombobox({ initialValue }) {
@@ -52,39 +49,20 @@ export function UserCombobox({ initialValue }) {
    }, [initialValue])
 
    return (
-      <Popover open={open} onOpenChange={setOpen}>
-         <PopoverTrigger asChild>
-            <Button
-               variant="outline"
-               role="combobox"
-               aria-expanded={open}
-               className="w-full md:w-auto my-4 flex gap-2 justify-between"
-            >
-               {value ? getCategoryTitle() : 'Select category...'}
-               <ChevronsUpDown className="h-4 shrink-0 opacity-50" />
+      <DropdownMenu>
+         <DropdownMenuTrigger>
+            <Button variant="outline" className="flex gap-2">
+               <p>{getCategoryTitle()}</p>
+               <ChevronsUpDownIcon className="h-4" />
             </Button>
-         </PopoverTrigger>
-         <PopoverContent className="w-full p-0">
-            <Command>
-               <CommandInput placeholder="Search category..." />
-               <CommandEmpty>No category found.</CommandEmpty>
-               <CommandGroup>
-                  {categories.map(({ title, value }) => (
-                     <Link href={value} key={title}>
-                        <CommandItem>
-                           <Check
-                              className={cn(
-                                 'mr-2 h-4',
-                                 value === title ? 'opacity-100' : 'opacity-0'
-                              )}
-                           />
-                           <h3>{title}</h3>
-                        </CommandItem>
-                     </Link>
-                  ))}
-               </CommandGroup>
-            </Command>
-         </PopoverContent>
-      </Popover>
+         </DropdownMenuTrigger>
+         <DropdownMenuContent>
+            {categories.map(({ title, value }) => (
+               <Link href={value} key={title}>
+                  <DropdownMenuItem>{title}</DropdownMenuItem>
+               </Link>
+            ))}
+         </DropdownMenuContent>
+      </DropdownMenu>
    )
 }

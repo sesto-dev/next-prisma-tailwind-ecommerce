@@ -1,9 +1,11 @@
-import { BlogPostCard } from '@/components/native/BlogPostCard'
+import { BlogPostCard } from '@/components/native/BlogCard'
 
 import prisma from '@/lib/prisma'
 
 export default async function Index() {
-   const blogs = await prisma.blogPost.findMany()
+   const blogs = await prisma.blog.findMany({
+      include: { author: true },
+   })
 
    return (
       <div className="flex flex-col border-neutral-200 dark:border-neutral-700">

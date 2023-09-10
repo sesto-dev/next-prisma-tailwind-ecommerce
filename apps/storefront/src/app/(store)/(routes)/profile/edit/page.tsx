@@ -35,7 +35,7 @@ export default function UserPage() {
 
    function UserCard() {
       return (
-         <Card className="bg-muted-foreground/5">
+         <Card className="my-4 bg-muted-foreground/5">
             <CardContent className="py-6">
                <UserForm initialData={user} />
             </CardContent>
@@ -52,7 +52,7 @@ export default function UserPage() {
             {user ? (
                <UserCard />
             ) : (
-               <Card>
+               <Card className="my-4 bg-muted-foreground/5">
                   <CardContent>
                      <div className="h-[20vh]">
                         <div className="h-full my-4 flex items-center justify-center">

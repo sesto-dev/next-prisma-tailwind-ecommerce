@@ -7,18 +7,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Separator } from '@/components/native/separator'
 
-export default async function BlogPost({
-   params,
-}: {
-   params: { slug: string }
-}) {
-   const blog = await prisma.blogPost.findUnique({
+export default async function Blog({ params }: { params: { slug: string } }) {
+   const blog = await prisma.blog.findUnique({
       where: {
          slug: params.slug,
       },
+      include: { author: true },
    })
 
-   const recommendations = await prisma.blogPost.findMany({
+   const recommendations = await prisma.blog.findMany({
+      include: { author: true },
       take: 3,
    })
 

@@ -55,7 +55,7 @@ export default function AddressesPage() {
             {addresses ? (
                <AddressSection addresses={addresses} />
             ) : (
-               <Card>
+               <Card className="my-2">
                   <CardContent>
                      <div className="h-[20vh]">
                         <div className="h-full my-4 flex items-center justify-center">

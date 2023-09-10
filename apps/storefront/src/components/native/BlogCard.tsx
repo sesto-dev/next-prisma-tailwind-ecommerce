@@ -1,7 +1,6 @@
 import { ImageSkeleton } from '@/components/native/icons'
 import Image from 'next/image'
 import Link from 'next/link'
-import { parseISO, format } from 'date-fns'
 import {
    Card,
    CardContent,
@@ -53,7 +52,7 @@ export function BlogPostCard({ post }) {
             </CardContent>
             <CardFooter>
                <p className="block text-sm text-neutral-700 dark:text-neutral-400">
-                  {author && author.name && <span>{author.name}, </span>}
+                  <span>{author?.name}</span>
                </p>
             </CardFooter>
          </Card>

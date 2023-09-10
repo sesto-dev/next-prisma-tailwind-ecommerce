@@ -2,7 +2,7 @@ import {
    BlogPostCard,
    BlogPostGrid,
    BlogPostSkeletonGrid,
-} from '@/components/native/BlogPostCard'
+} from '@/components/native/BlogCard'
 
 import prisma from '@/lib/prisma'
 
@@ -20,7 +20,8 @@ export default async function Index() {
       },
    })
 
-   const blogs = await prisma.blogPost.findMany({
+   const blogs = await prisma.blog.findMany({
+      include: { author: true },
       take: 3,
    })
 

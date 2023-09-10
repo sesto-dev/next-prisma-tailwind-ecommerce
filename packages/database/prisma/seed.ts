@@ -129,7 +129,7 @@ async function main() {
       },
    ]
 
-   const blogPosts = [
+   const blogs = [
       {
          slug: 'how-can-ai',
          title: 'How can AI be used to generate revenue in the cryptocurrency space',
@@ -261,9 +261,10 @@ async function main() {
 
    const author = await prisma.author.create({
       data: {
+         name: 'Amirhossein Mohammadi',
          email: 'accretence@gmail.com',
-         blogPost: {
-            create: blogPosts,
+         blogs: {
+            create: blogs,
          },
       },
    })

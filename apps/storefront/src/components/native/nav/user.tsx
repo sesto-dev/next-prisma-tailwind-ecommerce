@@ -2,11 +2,11 @@
 
 import {
    LogOutIcon,
-   SettingsIcon,
    HeartIcon,
    UserIcon,
    ListOrderedIcon,
    CreditCardIcon,
+   MapPinIcon,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -49,42 +49,45 @@ export function UserNav() {
          </DropdownMenuTrigger>
          <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuGroup>
+               <Link href="/profile/addresses">
+                  <DropdownMenuItem className="flex gap-2">
+                     <MapPinIcon className="h-4" />
+                     Edit Addresses
+                  </DropdownMenuItem>
+               </Link>
                <Link href="/profile/edit">
-                  <DropdownMenuItem>
-                     <UserIcon className="h-4 mr-2" />
+                  <DropdownMenuItem className="flex gap-2">
+                     <UserIcon className="h-4" />
                      Edit Profile
                   </DropdownMenuItem>
                </Link>
                <Link href="/profile/orders">
-                  <DropdownMenuItem>
-                     <ListOrderedIcon className="h-4 mr-2" />
+                  <DropdownMenuItem className="flex gap-2">
+                     <ListOrderedIcon className="h-4" />
                      Orders
                   </DropdownMenuItem>
                </Link>
                <Link href="/profile/payments">
-                  <DropdownMenuItem>
-                     <CreditCardIcon className="h-4 mr-2" />
+                  <DropdownMenuItem className="flex gap-2">
+                     <CreditCardIcon className="h-4" />
                      Payments
                   </DropdownMenuItem>
                </Link>
                <DropdownMenuSeparator />
                <Link href="/cart">
-                  <DropdownMenuItem>
-                     <ShoppingBasketIcon className="h-4 mr-2" /> Cart
+                  <DropdownMenuItem className="flex gap-2">
+                     <ShoppingBasketIcon className="h-4" /> Cart
                   </DropdownMenuItem>
                </Link>
                <Link href="/wishlist">
-                  <DropdownMenuItem>
-                     <HeartIcon className="h-4 mr-2" /> Wishlist
+                  <DropdownMenuItem className="flex gap-2">
+                     <HeartIcon className="h-4" /> Wishlist
                   </DropdownMenuItem>
                </Link>
-               <DropdownMenuItem>
-                  <SettingsIcon className="h-4 mr-2" /> Settings
-               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={onLogout}>
-               <LogOutIcon className="h-4 mr-2" /> Logout
+            <DropdownMenuItem className="flex gap-2" onClick={onLogout}>
+               <LogOutIcon className="h-4" /> Logout
             </DropdownMenuItem>
          </DropdownMenuContent>
       </DropdownMenu>
