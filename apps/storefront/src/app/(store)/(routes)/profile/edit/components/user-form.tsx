@@ -26,7 +26,6 @@ const formSchema = z.object({
    name: z.string().min(1),
    email: z.string().min(1),
    phone: z.string().min(1),
-   isBanned: z.boolean().default(false).optional(),
 })
 
 type UserFormValues = z.infer<typeof formSchema>
@@ -52,7 +51,6 @@ export const UserForm: React.FC<UserFormProps> = ({ initialData }) => {
            name: '---',
            phone: '---',
            email: '---',
-           isBanned: false,
         }
 
    const form = useForm<UserFormValues>({
@@ -145,28 +143,6 @@ export const UserForm: React.FC<UserFormProps> = ({ initialData }) => {
                   </FormItem>
                )}
             />
-            <FormField
-               control={form.control}
-               name="isBanned"
-               render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                     <FormControl>
-                        <Checkbox
-                           checked={field.value}
-                           onCheckedChange={field.onChange}
-                        />
-                     </FormControl>
-                     <div className="space-y-1 leading-none">
-                        <FormLabel>Banned</FormLabel>
-                        <FormDescription>
-                           This user will not be able to submit reviews or
-                           orders.
-                        </FormDescription>
-                     </div>
-                  </FormItem>
-               )}
-            />
-
             <Button disabled={loading} className="ml-auto" type="submit">
                {action}
             </Button>

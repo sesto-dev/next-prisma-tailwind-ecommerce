@@ -25,6 +25,11 @@ export function UserCombobox({ initialValue }) {
 
    const categories = [
       {
+         title: 'Addresses',
+         description: 'Visit your addresses.',
+         value: '/profile/addresses',
+      },
+      {
          title: 'Edit Profile',
          description: 'Visit your orders.',
          value: '/profile/edit',

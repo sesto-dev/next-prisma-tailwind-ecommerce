@@ -316,6 +316,7 @@ async function main() {
                   status: 'Processing',
                   isSuccessful: true,
                   payable: getRandomFloat(20, 100, 2),
+                  refId: getRandomFloat(1, 200, 2).toString(),
                   user: {
                      connect: { id: user.id },
                   },

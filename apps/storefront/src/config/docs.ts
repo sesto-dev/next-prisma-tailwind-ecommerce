@@ -1,8 +1,8 @@
-import { MainNavItem, SidebarNavItem } from '@/types/nav'
+import { NavItem } from '@/types/nav'
 
 interface DocsConfig {
-   mainNav: MainNavItem[]
-   sidebarNav: SidebarNavItem[]
+   mainNav: NavItem[]
+   sidebarNav: NavItem[]
 }
 
 export const docsConfig: DocsConfig = {
@@ -20,49 +20,28 @@ export const docsConfig: DocsConfig = {
    ],
    sidebarNav: [
       {
-         title: 'Getting Started',
-         items: [
-            {
-               title: 'Introduction',
-               href: '/docs',
-               items: [],
-            },
-         ],
+         title: 'Products',
+         href: '/products',
       },
       {
-         title: 'Installation',
-         items: [
-            {
-               title: 'Next.js',
-               href: '/docs/installation/next',
-               items: [],
-            },
-         ],
+         title: 'Blog',
+         href: '/blog',
       },
       {
-         title: 'Dark Mode',
-         items: [
-            {
-               title: 'Next.js',
-               href: '/docs/dark-mode/next',
-               items: [],
-            },
-            {
-               title: 'Vite',
-               href: '/docs/dark-mode/vite',
-               items: [],
-            },
-         ],
+         title: 'Orders',
+         href: '/profile/orders',
       },
       {
-         title: 'Components',
-         items: [
-            {
-               title: 'Accordion',
-               href: '/docs/components/accordion',
-               items: [],
-            },
-         ],
+         title: 'Payments',
+         href: '/profile/payments',
+      },
+      {
+         title: 'Contact',
+         href: '/contact',
+      },
+      {
+         title: 'About',
+         href: '/about',
       },
    ],
 }

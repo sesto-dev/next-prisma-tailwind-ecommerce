@@ -1,13 +1,11 @@
-import { sendMail } from '@persepolis/mail'
+import { sendVerifyMail } from '@persepolis/mail'
 import prisma from '@/lib/prisma'
 import { isEmailValid } from '@/lib/regex'
 import { generateSerial } from '@/lib/serial'
 import { getErrorResponse } from '@/lib/utils'
 import { NextRequest, NextResponse } from 'next/server'
 import { ZodError } from 'zod'
-import Config from '@/config/site'
-import Mail from '@/mails/verify'
-import { render } from '@react-email/render'
+import {} from '@/config/site'
 
 export async function POST(req: NextRequest) {
    try {
@@ -16,22 +14,19 @@ export async function POST(req: NextRequest) {
       const { email } = await req.json()
 
       if (isEmailValid(email)) {
-         await prisma.user.upsert({
-            where: { email: email.toString().toLowerCase() },
-            update: {
-               OTP,
-            },
-            create: {
-               email: email.toString().toLowerCase(),
+         await prisma.owner.update({
+            where: { email },
+            data: {
                OTP,
             },
          })
 
-         await sendMail({
-            name: Config.name,
+         await sendVerifyMail({
+            name,
             to: email,
-            subject: 'Verify your email.',
-            html: render(Mail({ code: OTP })),
+            email_verification_code: OTP,
+            unsubscribe_url: process.env.UNSUBSCRIBE_URL,
+            verify_url: process.env.VERIFY_URL,
          })
 
          return new NextResponse(

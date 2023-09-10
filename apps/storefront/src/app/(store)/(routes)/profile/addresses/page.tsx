@@ -5,36 +5,40 @@ import { UserForm } from '../edit/components/user-form'
 import { Heading } from '@/components/native/heading'
 
 import { useAuthenticated } from '@/hooks/useAuthentication'
-import type { OrderColumn } from './components/columns'
-import { OrderClient } from './components/client'
+import type { AddressColumn } from './components/columns'
+import { AddressClient } from './components/client'
 
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { UserCombobox } from '../components/switcher'
 import { Loader } from '@/components/ui/loader'
 import { Card, CardContent } from '@/components/ui/card'
+import { useUserContext } from '@/state/User'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { PlusIcon } from 'lucide-react'
 
-export default function UserPage() {
+export default function AddressesPage() {
    const { authenticated } = useAuthenticated()
-   const [orders, setOrders] = useState(null)
+   const [addresses, setAddresses] = useState(null)
    const pathname = usePathname()
 
    useEffect(() => {
-      async function getOrders() {
+      async function getOrder() {
          try {
-            const response = await fetch(`/api/orders`, {
-               method: 'GET',
+            const response = await fetch(`/api/addresses`, {
                cache: 'no-store',
             })
 
             const json = await response.json()
-            setOrders(json)
+            console.log({ json })
+            setAddresses(json)
          } catch (error) {
             console.error({ error })
          }
       }
 
-      if (authenticated) getOrders()
+      if (authenticated) getOrder()
    }, [authenticated])
 
    return (
@@ -42,9 +46,14 @@ export default function UserPage() {
          <div className="flex-1 ">
             <div className="flex items-center justify-between">
                <UserCombobox initialValue={pathname} />
+               <Link href="/profile/addresses/new">
+                  <Button>
+                     <PlusIcon className="mr-2 h-4" /> Add New
+                  </Button>
+               </Link>
             </div>
-            {orders ? (
-               <OrderSection orders={orders} />
+            {addresses ? (
+               <AddressSection addresses={addresses} />
             ) : (
                <Card>
                   <CardContent>
@@ -61,14 +70,14 @@ export default function UserPage() {
    )
 }
 
-function OrderSection({ orders }) {
-   const formattedOrders: OrderColumn[] = orders.map((order) => ({
-      id: order.id,
-      number: `Order #${order.number}`,
-      date: order.createdAt.toString(),
-      payable: '$' + order.payable.toString(),
-      isPaid: order.isPaid ? 'Yes.' : 'No.',
+function AddressSection({ addresses }) {
+   const formattedAddresses: AddressColumn[] = addresses.map((address) => ({
+      id: address.id,
+      city: address.city,
+      address: address.address,
+      phone: address.phone,
+      postal: address.postalCode,
    }))
 
-   return <OrderClient data={formattedOrders} />
+   return <AddressClient data={formattedAddresses} />
 }

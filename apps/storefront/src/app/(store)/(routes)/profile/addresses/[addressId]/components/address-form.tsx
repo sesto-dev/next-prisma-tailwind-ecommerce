@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { Trash } from 'lucide-react'
-import { Billboard, Category } from '@prisma/client'
+import { Address } from '@prisma/client'
 import { useParams, useRouter } from 'next/navigation'
 
 import { Input } from '@/components/ui/input'
@@ -20,69 +20,57 @@ import {
    FormMessage,
 } from '@/components/ui/form'
 import { Separator } from '@/components/ui/separator'
-import { Heading } from '@/components/ui/heading'
+import { Heading } from '@/components/native/heading'
 import { AlertModal } from '@/components/modals/alert-modal'
-import {
-   Select,
-   SelectContent,
-   SelectItem,
-   SelectTrigger,
-   SelectValue,
-} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 
 const formSchema = z.object({
-   title: z.string().min(2),
-   description: z.string().min(1),
+   city: z.string().min(1),
+   address: z.string().min(1),
+   phone: z.string().min(1),
+   postalCode: z.string().min(1),
 })
 
-type CategoryFormValues = z.infer<typeof formSchema>
+type AddressFormValues = z.infer<typeof formSchema>
 
-interface CategoryFormProps {
-   initialData: Category | null
-   billboards: Billboard[]
+interface AddressFormProps {
+   initialData: Address | null
 }
 
-export const CategoryForm: React.FC<CategoryFormProps> = ({
-   initialData,
-   billboards,
-}) => {
+export const AddressForm: React.FC<AddressFormProps> = ({ initialData }) => {
    const params = useParams()
    const router = useRouter()
 
    const [open, setOpen] = useState(false)
    const [loading, setLoading] = useState(false)
 
-   const title = initialData ? 'Edit category' : 'Create category'
-   const description = initialData ? 'Edit a category.' : 'Add a new category'
-   const toastMessage = initialData ? 'Category updated.' : 'Category created.'
+   const title = initialData ? 'Edit address' : 'Create address'
+   const description = initialData ? 'Edit a address.' : 'Add a new address'
+   const toastMessage = initialData ? 'Address updated.' : 'Address created.'
    const action = initialData ? 'Save changes' : 'Create'
 
-   const form = useForm<CategoryFormValues>({
+   const form = useForm<AddressFormValues>({
       resolver: zodResolver(formSchema),
       defaultValues: initialData || {
-         title: '',
-         description: '',
+         phone: '',
+         city: '',
+         address: '',
+         postalCode: '',
       },
    })
 
-   const onSubmit = async (data: CategoryFormValues) => {
+   const onSubmit = async (data: AddressFormValues) => {
       try {
          setLoading(true)
-         if (initialData) {
-            await fetch(`/api/categories/${params.categoryId}`, {
-               method: 'PATCH',
-               body: JSON.stringify(data),
-               cache: 'no-store',
-            })
-         } else {
-            await fetch(`/api/categories`, {
-               method: 'POST',
-               body: JSON.stringify(data),
-               cache: 'no-store',
-            })
-         }
+
+         await fetch(`/api/addresses`, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            cache: 'no-store',
+         })
+
          router.refresh()
-         router.push(`/categories`)
+         router.push(`/profile/addresses`)
          toast.success(toastMessage)
       } catch (error: any) {
          toast.error('Something went wrong.')
@@ -95,17 +83,17 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       try {
          setLoading(true)
 
-         await fetch(`/api/categories/${params.categoryId}`, {
+         await fetch(`/api/address/${params.addressId}`, {
             method: 'DELETE',
             cache: 'no-store',
          })
 
          router.refresh()
-         router.push(`/categories`)
-         toast.success('Category deleted.')
+         router.push(`/addresses`)
+         toast.success('Address deleted.')
       } catch (error: any) {
          toast.error(
-            'Make sure you removed all products using this category first.'
+            'Make sure you removed all categories using this address first.'
          )
       } finally {
          setLoading(false)
@@ -143,14 +131,32 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                <div className="md:grid md:grid-cols-3 gap-8">
                   <FormField
                      control={form.control}
-                     name="title"
+                     name="city"
                      render={({ field }) => (
                         <FormItem>
-                           <FormLabel>Name</FormLabel>
+                           <FormLabel>Label</FormLabel>
                            <FormControl>
                               <Input
                                  disabled={loading}
-                                 placeholder="Category name"
+                                 placeholder="Tehran"
+                                 {...field}
+                              />
+                           </FormControl>
+                           <FormMessage />
+                        </FormItem>
+                     )}
+                  />
+
+                  <FormField
+                     control={form.control}
+                     name="phone"
+                     render={({ field }) => (
+                        <FormItem>
+                           <FormLabel>Phone</FormLabel>
+                           <FormControl>
+                              <Input
+                                 disabled={loading}
+                                 placeholder="09123456789"
                                  {...field}
                               />
                            </FormControl>
@@ -160,39 +166,40 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                   />
                   <FormField
                      control={form.control}
-                     name="description"
+                     name="postalCode"
                      render={({ field }) => (
                         <FormItem>
-                           <FormLabel>Billboard</FormLabel>
-                           <Select
-                              disabled={loading}
-                              onValueChange={field.onChange}
-                              value={field.value}
-                              defaultValue={field.value}
-                           >
-                              <FormControl>
-                                 <SelectTrigger>
-                                    <SelectValue
-                                       defaultValue={field.value}
-                                       placeholder="Select a billboard"
-                                    />
-                                 </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                 {billboards.map((billboard) => (
-                                    <SelectItem
-                                       key={billboard.id}
-                                       value={billboard.id}
-                                    >
-                                       {billboard.label}
-                                    </SelectItem>
-                                 ))}
-                              </SelectContent>
-                           </Select>
+                           <FormLabel>Postal Code</FormLabel>
+                           <FormControl>
+                              <Input
+                                 disabled={loading}
+                                 placeholder="1234567890"
+                                 {...field}
+                              />
+                           </FormControl>
                            <FormMessage />
                         </FormItem>
                      )}
                   />
+                  <div className="col-span-2">
+                     <FormField
+                        control={form.control}
+                        name="address"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Address</FormLabel>
+                              <FormControl>
+                                 <Textarea
+                                    disabled={loading}
+                                    placeholder="Street - Building Number"
+                                    {...field}
+                                 />
+                              </FormControl>
+                              <FormMessage />
+                           </FormItem>
+                        )}
+                     />
+                  </div>
                </div>
                <Button disabled={loading} className="ml-auto" type="submit">
                   {action}

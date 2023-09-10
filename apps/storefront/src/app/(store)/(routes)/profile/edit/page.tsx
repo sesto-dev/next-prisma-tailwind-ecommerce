@@ -8,6 +8,7 @@ import { useAuthenticated } from '@/hooks/useAuthentication'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { UserCombobox } from '../components/switcher'
+import { Loader } from '@/components/ui/loader'
 
 export default function UserPage() {
    const { authenticated } = useAuthenticated()
@@ -48,7 +49,19 @@ export default function UserPage() {
             <div className="flex items-center justify-between">
                <UserCombobox initialValue={pathname} />
             </div>
-            {user && <UserCard />}
+            {user ? (
+               <UserCard />
+            ) : (
+               <Card>
+                  <CardContent>
+                     <div className="h-[20vh]">
+                        <div className="h-full my-4 flex items-center justify-center">
+                           <Loader />
+                        </div>
+                     </div>
+                  </CardContent>
+               </Card>
+            )}
          </div>
       </div>
    )

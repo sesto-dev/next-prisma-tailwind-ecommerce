@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { getLinkStyles } from '@/lib/styles'
 
-import Config from '@/config/site'
+import config from '@/config/site'
 import { Separator } from '@/components/native/separator'
 import { GithubIcon, InstagramIcon, TwitterIcon } from 'lucide-react'
 
@@ -13,10 +13,10 @@ export default function Footer() {
             <div className="mb-6 hidden md:mb-0 md:block">
                <span className="flex flex-col">
                   <h2 className="whitespace-nowrap text-sm font-semibold uppercase text-black dark:text-white">
-                     {Config.name}
+                     {config.name}
                   </h2>
                   <span className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-                     © {new Date().getFullYear()} {Config.name}™ . All Rights
+                     © {new Date().getFullYear()} {config.name}™ . All Rights
                      Reserved.
                   </span>
                </span>

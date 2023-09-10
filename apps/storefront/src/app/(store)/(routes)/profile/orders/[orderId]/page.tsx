@@ -1,7 +1,6 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import prisma from '@/lib/prisma'
 
 import { OrderForm } from './components/order-form'
 

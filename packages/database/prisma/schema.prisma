@@ -58,26 +58,26 @@ model CartItem {
 }
 
 model Owner {
-  id    String  @id @default(cuid())
-  email String  @unique
-  phone String? @unique
-  name String?
+  id     String  @id @default(cuid())
+  email  String  @unique
+  phone  String? @unique
+  name   String?
   avatar String?
-  OTP   String?
+  OTP    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Author {
-  id    String  @id @default(cuid())
-  email String  @unique
-  phone String? @unique
-  name String?
+  id     String  @id @default(cuid())
+  email  String  @unique
+  phone  String? @unique
+  name   String?
   avatar String?
-  OTP   String?
+  OTP    String?
 
-  blogPost       BlogPost[]
+  blogPost BlogPost[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -155,17 +155,17 @@ model ProductReview {
 
 model Order {
   id     String          @id @default(cuid())
-  number Int @unique @default(autoincrement())
+  number Int             @unique @default(autoincrement())
   status OrderStatusEnum
 
   shipping Float @default(100)
-  payable      Float @default(100)
-  discount     Float @default(0)
+  payable  Float @default(100)
+  discount Float @default(0)
 
   isPaid      Boolean @default(false)
   isCompleted Boolean @default(false)
 
-  payments    Payment[]
+  payments   Payment[]
   orderItems OrderItem[]
   refund     Refund?
 
@@ -210,11 +210,11 @@ enum OrderStatusEnum {
 
 model Address {
   id         String @id @default(cuid())
-  street     String
+  country    String @default("IRI")
+  address    String
   city       String
-  state      String
+  phone      String
   postalCode String
-  country    String
 
   user   User    @relation(fields: [userId], references: [id])
   userId String
@@ -270,8 +270,13 @@ model Refund {
 
 model Payment {
   id     String            @id @default(cuid())
-  number Int @unique @default(autoincrement())
+  number Int               @unique @default(autoincrement())
   status PaymentStatusEnum
+
+  refId    String  @unique
+  cardPan  String?
+  cardHash String?
+  fee      Float?
 
   isSuccessful Boolean @default(false)
   payable      Float
@@ -344,7 +349,7 @@ model BlogPost {
   categories String[]
   tags       String[]
 
-  author   Author   @relation(fields: [authorId], references: [id])
+  author   Author @relation(fields: [authorId], references: [id])
   authorId String
 
   createdAt DateTime @default(now())

@@ -65,13 +65,13 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
          if (initialData) {
             await fetch(`/api/billboards/${params.billboardId}`, {
                method: 'PATCH',
-               body: JSON.stringify({ data }),
+               body: JSON.stringify(data),
                cache: 'no-store',
             })
          } else {
             await fetch(`/billboards`, {
                method: 'POST',
-               body: JSON.stringify({ data }),
+               body: JSON.stringify(data),
                cache: 'no-store',
             })
          }

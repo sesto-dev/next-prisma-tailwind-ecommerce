@@ -239,10 +239,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@persepolis/database@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@persepolis/database/-/database-1.0.1.tgz#61f819769f3c771f35f065493e1e169b89091243"
-  integrity sha512-CaN/NhNbBZ/nuMulHiqAwPHJSC52N0XWigqBi2N8A8kI/Mk2dwEceevYn1u1GZ6+70wgSApPhPmQSl4F+aoFXw==
+"@persepolis/database@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@persepolis/database/-/database-1.0.3.tgz#22edd5506782244d78363a98ae74cdc5b4ea420b"
+  integrity sha512-HEacLMx8CIpyX8vDFwz74zQua0LQ6YOqQniinJeQSwQe20sJOO0edgnUox03i6rXsvWpECNk96Pd1GJd8g/TTA==
   dependencies:
     "@prisma/client" "^5.2.0"
 

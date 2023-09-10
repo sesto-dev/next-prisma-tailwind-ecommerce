@@ -30,7 +30,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       try {
          setIsLoading(true)
 
-         const response = await fetch('/api/auth/otp/try', {
+         const response = await fetch('/api/auth/otp/email/try', {
             method: 'POST',
             body: JSON.stringify({ email }),
             cache: 'no-store',
@@ -50,7 +50,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       try {
          setIsLoading(true)
 
-         const response = await fetch('/api/auth/otp/verify', {
+         const response = await fetch('/api/auth/otp/email/verify', {
             method: 'POST',
             body: JSON.stringify({ email, OTP, cart: getLocalCart() }),
             cache: 'no-store',

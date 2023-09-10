@@ -63,44 +63,23 @@ export function CommandMenu({ ...props }: DialogProps) {
             <CommandInput placeholder="Type a command or search..." />
             <CommandList>
                <CommandEmpty>No results found.</CommandEmpty>
+
                <CommandGroup heading="Links">
-                  {docsConfig.mainNav
-                     .filter((navitem) => !navitem.external)
-                     .map((navItem) => (
-                        <CommandItem
-                           key={navItem.href}
-                           value={navItem.title}
-                           onSelect={() => {
-                              runCommand(() =>
-                                 router.push(navItem.href as string)
-                              )
-                           }}
-                        >
-                           <FileIcon className="mr-2 h-4" />
-                           {navItem.title}
-                        </CommandItem>
-                     ))}
+                  {docsConfig.sidebarNav.map((navItem) => (
+                     <CommandItem
+                        key={navItem.href}
+                        value={navItem.title}
+                        onSelect={() => {
+                           runCommand(() => router.push(navItem.href as string))
+                        }}
+                     >
+                        <div className="mr-2 flex h-4 items-center justify-center">
+                           <CircleIcon className="h-3" />
+                        </div>
+                        {navItem.title}
+                     </CommandItem>
+                  ))}
                </CommandGroup>
-               {docsConfig.sidebarNav.map((group) => (
-                  <CommandGroup key={group.title} heading={group.title}>
-                     {group.items.map((navItem) => (
-                        <CommandItem
-                           key={navItem.href}
-                           value={navItem.title}
-                           onSelect={() => {
-                              runCommand(() =>
-                                 router.push(navItem.href as string)
-                              )
-                           }}
-                        >
-                           <div className="mr-2 flex h-4 items-center justify-center">
-                              <CircleIcon className="h-3" />
-                           </div>
-                           {navItem.title}
-                        </CommandItem>
-                     ))}
-                  </CommandGroup>
-               ))}
                <CommandSeparator />
                <CommandGroup heading="Theme">
                   <CommandItem

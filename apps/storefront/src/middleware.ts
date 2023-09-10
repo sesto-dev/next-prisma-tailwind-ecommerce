@@ -70,6 +70,7 @@ export const config = {
       '/login',
       '/profile/:path*',
       '/api/profile/:path*',
+      '/api/addresses/:path*',
       '/api/cart/:path*',
       '/api/wishlist/:path*',
       '/api/orders/:path*',

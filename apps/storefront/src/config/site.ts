@@ -1,4 +1,4 @@
-const Config = {
+const config = {
    name: 'Pasargad',
    handle: '@Pasargad',
    url: 'https://pasargad.vercel.app',
@@ -12,6 +12,4 @@ const Config = {
    },
 }
 
-export default Config
-
-export type SiteConfig = typeof Config
+export default config

@@ -6,11 +6,3 @@ export interface NavItem {
    icon?: any
    label?: string
 }
-
-export interface NavItemWithChildren extends NavItem {
-   items: NavItemWithChildren[]
-}
-
-export interface MainNavItem extends NavItem {}
-
-export interface SidebarNavItem extends NavItemWithChildren {}
