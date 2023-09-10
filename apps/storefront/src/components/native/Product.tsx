@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ProductWithIncludes } from '@/types/prisma'
+import { TagIcon } from 'lucide-react'
 
 export const ProductGrid = ({
    products,
@@ -39,6 +40,24 @@ export const ProductSkeletonGrid = () => {
 }
 
 export const Product = ({ product }: { product: ProductWithIncludes }) => {
+   function Price() {
+      if (product?.discount > 0) {
+         const price = product?.price - product?.discount
+         const percentage = (product?.discount / product?.price) * 100
+         return (
+            <div className="flex gap-2 items-center">
+               <Badge className="flex gap-4" variant="destructive">
+                  <div className="line-through">${product?.price}</div>
+                  <div>%{percentage.toFixed(2)}</div>
+               </Badge>
+               <h2 className="">${price.toFixed(2)}</h2>
+            </div>
+         )
+      }
+
+      return <h2>${product?.price}</h2>
+   }
+
    return (
       <Link className="" href={`/products/${product.id}`}>
          <Card className="h-full">
@@ -65,13 +84,9 @@ export const Product = ({ product }: { product: ProductWithIncludes }) => {
             </CardContent>
             <CardFooter>
                {product?.isAvailable ? (
-                  <div>
-                     <h2>${product?.price}</h2>
-                  </div>
+                  <Price />
                ) : (
-                  <div className="flex gap-2 text-muted-foreground">
-                     <h4>Out of stock</h4>
-                  </div>
+                  <Badge variant="secondary">Out of stock</Badge>
                )}
             </CardFooter>
          </Card>

@@ -88,7 +88,7 @@ export function CategoriesCombobox({ categories, initialCategory }) {
                      >
                         <Check
                            className={cn(
-                              'mr-2 h-4',
+                              'mr-2 h-4 w-4',
                               value === category.title
                                  ? 'opacity-100'
                                  : 'opacity-0'
@@ -221,9 +221,9 @@ export function AvailableToggle({ initialAvailability }) {
                      scroll: false,
                   })
                }}
-               id="airplane-mode"
+               id="available"
             />
-            <Label htmlFor="airplane-mode">Only Available</Label>
+            <Label htmlFor="available">Only Available</Label>
          </div>
       </div>
    )

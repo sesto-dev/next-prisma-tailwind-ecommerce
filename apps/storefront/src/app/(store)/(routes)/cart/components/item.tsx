@@ -17,6 +17,7 @@ import { useCartContext } from '@/state/Cart'
 import Image from 'next/image'
 import { Spinner } from '@/components/native/icons'
 import { X, MinusIcon, PlusIcon } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
 
 export const Item = ({ cartItem }) => {
    const { authenticated } = useAuthenticated()
@@ -204,6 +205,23 @@ export const Item = ({ cartItem }) => {
       }
    }
 
+   function Price() {
+      if (product?.discount > 0) {
+         const price = product?.price - product?.discount
+         const percentage = (product?.discount / product?.price) * 100
+         return (
+            <div className="flex gap-2 items-center">
+               <Badge className="flex gap-4" variant="destructive">
+                  <div className="line-through">${product?.price}</div>
+                  <div>%{percentage.toFixed(2)}</div>
+               </Badge>
+               <h2 className="">${price.toFixed(2)}</h2>
+            </div>
+         )
+      }
+
+      return <h2>${product?.price}</h2>
+   }
    return (
       <Card>
          <CardHeader className="p-0 md:hidden">
@@ -231,14 +249,14 @@ export const Item = ({ cartItem }) => {
                   />
                </Link>
             </div>
-            <div className="col-span-4">
+            <div className="col-span-4 block space-y-2">
                <Link href={`/products/${product?.id}`}>
                   <h2>{product?.title}</h2>
                </Link>
-               <p className="my-2 text-xs text-neutral-500 text-justify">
+               <p className="text-xs text-muted-foreground text-justify">
                   {product?.description}
                </p>
-               <h2 className="text-lg mb-4">${product?.price}</h2>
+               <Price />
                <CartButton />
             </div>
          </CardContent>

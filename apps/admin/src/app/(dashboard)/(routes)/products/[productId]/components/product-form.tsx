@@ -70,7 +70,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
    const defaultValues = initialData
       ? {
            ...initialData,
-           price: parseFloat(String(initialData?.price)),
+           price: parseFloat(String(initialData?.price.toFixed(2))),
+           discount: parseFloat(String(initialData?.discount.toFixed(2))),
         }
       : {
            title: '---',

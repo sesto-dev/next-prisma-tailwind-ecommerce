@@ -12,7 +12,7 @@ export default function Footer() {
          <div className="md:flex md:justify-between px-[1.4rem] md:px-[4rem] lg:px-[6rem] xl:px-[8rem] 2xl:px-[12rem]">
             <div className="mb-6 hidden md:mb-0 md:block">
                <span className="flex flex-col">
-                  <h2 className="whitespace-nowrap text-sm font-semibold uppercase text-black dark:text-white">
+                  <h2 className="whitespace-nowrap text-sm font-semibold uppercase">
                      {config.name}
                   </h2>
                   <span className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
@@ -26,15 +26,20 @@ export default function Footer() {
                   <h2 className="mb-3 text-sm font-semibold uppercase text-neutral-900 dark:text-white">
                      Resources
                   </h2>
-                  <ul className="text-neutral-600 dark:text-neutral-400">
-                     <li className="mb-2 text-sm">
+                  <ul className="text-muted-foreground text-sm block space-y-2">
+                     <li>
                         <Link href="/blog" className={getLinkStyles()}>
                            Blog
                         </Link>
                      </li>
-                     <li className="text-sm">
-                        <Link href="/tutorials" className={getLinkStyles()}>
-                           Tutorials
+                     <li>
+                        <Link href="/about" className={getLinkStyles()}>
+                           About
+                        </Link>
+                     </li>
+                     <li>
+                        <Link href="/contact" className={getLinkStyles()}>
+                           Contact
                         </Link>
                      </li>
                   </ul>
@@ -43,25 +48,25 @@ export default function Footer() {
                   <h2 className="mb-3 text-sm font-semibold uppercase text-neutral-900 dark:text-white">
                      Follow us
                   </h2>
-                  <ul className="text-neutral-600 dark:text-neutral-400">
-                     <li className="mb-2 text-sm">
+                  <ul className="text-muted-foreground text-sm block space-y-2">
+                     <li>
                         <a
-                           href="https://github.com/accretence"
+                           href="https://instagram.com/accretence"
                            target="_blank"
                            rel="noreferrer"
                            className={getLinkStyles()}
                         >
-                           Github
+                           Instagram
                         </a>
                      </li>
-                     <li className="text-sm">
+                     <li>
                         <a
-                           href="https://discord.gg/4eeurUVvTy"
+                           href="https://tiktok.com"
                            target="_blank"
                            rel="noreferrer"
                            className={getLinkStyles()}
                         >
-                           Discord
+                           Tiktok
                         </a>
                      </li>
                   </ul>
@@ -70,14 +75,14 @@ export default function Footer() {
                   <h2 className="mb-3 text-sm font-semibold uppercase text-neutral-900 dark:text-white">
                      Legal
                   </h2>
-                  <ul className="text-neutral-600 dark:text-neutral-400">
-                     <li className="mb-2 text-sm">
-                        <a href="#" className={getLinkStyles()}>
+                  <ul className="text-muted-foreground text-sm block space-y-2">
+                     <li>
+                        <Link href="/privacy" className={getLinkStyles()}>
                            Privacy Policy
-                        </a>
+                        </Link>
                      </li>
-                     <li className="text-sm">
-                        <Link href="#" className={getLinkStyles()}>
+                     <li>
+                        <Link href="/terms" className={getLinkStyles()}>
                            Terms &amp; Conditions
                         </Link>
                      </li>

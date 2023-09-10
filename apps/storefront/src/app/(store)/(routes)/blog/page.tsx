@@ -7,7 +7,7 @@ export default async function Index() {
 
    return (
       <div className="flex flex-col border-neutral-200 dark:border-neutral-700">
-         <h3 className="mb-6 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
+         <h3 className="mb-6 text-2xl font-bold tracking-tight md:text-4xl">
             Blog Posts
          </h3>
          <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
