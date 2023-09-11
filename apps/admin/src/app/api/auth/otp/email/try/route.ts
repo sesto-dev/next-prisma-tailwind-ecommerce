@@ -1,11 +1,13 @@
-import { sendVerifyMail } from '@persepolis/mail'
 import prisma from '@/lib/prisma'
 import { isEmailValid } from '@/lib/regex'
 import { generateSerial } from '@/lib/serial'
 import { getErrorResponse } from '@/lib/utils'
 import { NextRequest, NextResponse } from 'next/server'
 import { ZodError } from 'zod'
-import {} from '@/config/site'
+import config from '@/config/site'
+import Mail from '@/mails/verify'
+import { render } from '@react-email/render'
+import { sendMail } from '@persepolis/mail'
 
 export async function POST(req: NextRequest) {
    try {
@@ -21,12 +23,11 @@ export async function POST(req: NextRequest) {
             },
          })
 
-         await sendVerifyMail({
-            name,
+         await sendMail({
+            name: config.name,
             to: email,
-            email_verification_code: OTP,
-            unsubscribe_url: process.env.UNSUBSCRIBE_URL,
-            verify_url: process.env.VERIFY_URL,
+            subject: 'Verify your email.',
+            html: render(Mail({ code: OTP, name: config.name })),
          })
 
          return new NextResponse(

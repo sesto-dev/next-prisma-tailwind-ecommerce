@@ -2,8 +2,6 @@
 
 import { usePathname } from 'next/navigation'
 
-import { OrderForm } from './components/order-form'
-
 import {
    Card,
    CardContent,
@@ -17,7 +15,6 @@ import { UserCombobox } from '../../components/switcher'
 import { useEffect, useState } from 'react'
 import { useAuthenticated } from '@/hooks/useAuthentication'
 import { Loader } from '@/components/ui/loader'
-import { ProductGrid } from '@/components/native/Product'
 
 const ProductPage = ({ params }: { params: { orderId: string } }) => {
    const { authenticated } = useAuthenticated()
@@ -33,7 +30,6 @@ const ProductPage = ({ params }: { params: { orderId: string } }) => {
             })
 
             const json = await response.json()
-            console.log({ json })
             setOrder(json)
          } catch (error) {
             console.error({ error })

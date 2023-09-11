@@ -35,7 +35,12 @@ async function main() {
 
    const providers = ['Parsian', 'Pasargad', 'Dey']
 
-   const owners = ['accretence@gmail.com', 'iqoror@gmail.com']
+   const owners = [
+      'accretence@gmail.com',
+      'iqoror@gmail.com',
+      'elnaz.adibg@gmail.com',
+      'hsmoghaddasi@gmail.com',
+   ]
 
    const categories = [
       'Electronics',
@@ -224,55 +229,64 @@ async function main() {
       console.error('Could not create Categories...')
    }
 
-   for (const product of products) {
-      const createdProduct = await prisma.product.create({
+   try {
+      for (const product of products) {
+         const createdProduct = await prisma.product.create({
+            data: {
+               isAvailable: getRandomBoolean(),
+               title: product.title,
+               price: getRandomFloat(20, 100, 2),
+               stock: getRandomIntInRange(1, 20),
+               discount: getRandomIntInRange(1, 15),
+               brand: {
+                  connectOrCreate: {
+                     where: {
+                        title: product.brand,
+                     },
+                     create: {
+                        title: product.brand,
+                        description: 'Description of this brand.',
+                        logo: 'https://cdn.logojoy.com/wp-content/uploads/20221122125557/morridge-coffee-vintage-logo-600x392.png',
+                     },
+                  },
+               },
+               description: 'Description of this product.',
+               images: product.images,
+               tags: product.tags,
+               categories: {
+                  connect: {
+                     title: product.categories[0],
+                  },
+               },
+            },
+            include: {
+               categories: true,
+            },
+         })
+
+         createdProducts.push(createdProduct)
+      }
+
+      console.log('Created Products...')
+   } catch (error) {
+      console.error('Could not create products...')
+   }
+
+   try {
+      await prisma.author.create({
          data: {
-            isAvailable: getRandomBoolean(),
-            title: product.title,
-            price: getRandomFloat(20, 100, 2),
-            stock: getRandomIntInRange(1, 20),
-            discount: getRandomIntInRange(1, 15),
-            brand: {
-               connectOrCreate: {
-                  where: {
-                     title: product.brand,
-                  },
-                  create: {
-                     title: product.brand,
-                     description: 'Description of this brand.',
-                     logo: 'https://cdn.logojoy.com/wp-content/uploads/20221122125557/morridge-coffee-vintage-logo-600x392.png',
-                  },
-               },
+            name: 'Amirhossein Mohammadi',
+            email: 'accretence@gmail.com',
+            blogs: {
+               create: blogPosts,
             },
-            description: 'Description of this product.',
-            images: product.images,
-            tags: product.tags,
-            categories: {
-               connect: {
-                  title: product.categories[0],
-               },
-            },
-         },
-         include: {
-            categories: true,
          },
       })
 
-      createdProducts.push(createdProduct)
+      console.log('Created Authors...')
+   } catch (error) {
+      console.error('Could not create authors...')
    }
-
-   console.log('Created Products...')
-
-   const author = await prisma.author.create({
-      data: {
-         email: 'accretence@gmail.com',
-         blogs: {
-            create: blogPosts,
-         },
-      },
-   })
-
-   console.log('Created Authors...')
 
    const user = await prisma.user.create({
       data: {

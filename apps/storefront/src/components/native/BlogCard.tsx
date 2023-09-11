@@ -32,7 +32,7 @@ export function BlogPostSkeletonGrid() {
 
 export function BlogPostCard({ post }) {
    const { title, description, image, slug, createdAt, author } = post
-   console.log({ author })
+
    return (
       <Link href={`/blog/${slug}`}>
          <Card className="h-full">

@@ -31,7 +31,6 @@ export default function AddressesPage() {
             })
 
             const json = await response.json()
-            console.log({ json })
             setAddresses(json)
          } catch (error) {
             console.error({ error })

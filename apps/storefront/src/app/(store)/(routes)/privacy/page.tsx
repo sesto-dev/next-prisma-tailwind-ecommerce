@@ -1,13 +1,12 @@
 const PrivacyPolicy = () => {
    return (
-      <div className="bg-gray-100 min-h-screen py-12">
+      <div className="p-6 bg-muted-foreground/5 rounded-md">
          <div className="container mx-auto p-4">
             <h1 className="text-3xl font-semibold mb-4">Privacy Policy</h1>
 
             <p className="mb-4">
-               This Privacy Policy describes how Your E-commerce Store collects,
-               uses, and protects your personal information when you use our
-               website.
+               These terms describe how this store collects, uses, and protects
+               your personal information when you use our website.
             </p>
 
             <h2 className="text-xl font-semibold mb-2">
@@ -27,8 +26,6 @@ const PrivacyPolicy = () => {
                orders, provide customer support, and send you updates about your
                orders.
             </p>
-
-            {/* Include more sections as needed for your specific privacy policy. */}
 
             <h2 className="text-xl font-semibold mb-2">Contact Us</h2>
             <p className="mb-4">

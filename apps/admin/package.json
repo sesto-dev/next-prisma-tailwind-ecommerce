@@ -16,7 +16,7 @@
    "dependencies": {
       "@hookform/resolvers": "^3.3.0",
       "@persepolis/database": "^1.0.5",
-      "@persepolis/mail": "^1.0.6",
+      "@persepolis/mail": "^1.0.7",
       "@persepolis/ui": "^0.1.9",
       "@persepolis/zarinpal": "^0.1.0",
       "@prisma/client": "^5.2.0",
