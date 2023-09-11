@@ -7,18 +7,49 @@ import {
    AvailableToggle,
    BrandCombobox,
    CategoriesCombobox,
+   SortBy,
 } from './components/filter'
 import { Separator } from '@/components/native/separator'
 
 export default async function Products({ searchParams }) {
-   const { isAvailable, brand, category, page = 1 } = searchParams ?? null
+   const { sort, isAvailable, brand, category, page = 1 } = searchParams ?? null
+
+   let orderBy
+
+   switch (sort) {
+      case 'featured':
+         orderBy = {
+            orders: {
+               _count: 'desc',
+            },
+         }
+         break
+      case 'most_expensive':
+         orderBy = {
+            price: 'desc',
+         }
+         break
+      case 'least_expensive':
+         orderBy = {
+            price: 'asc',
+         }
+         break
+
+      default:
+         orderBy = {
+            orders: {
+               _count: 'desc',
+            },
+         }
+         break
+   }
 
    const brands = await prisma.brand.findMany()
    const categories = await prisma.category.findMany()
 
    const products = await prisma.product.findMany({
       where: {
-         isAvailable: isAvailable == 'true' ? true : undefined,
+         isAvailable: isAvailable == 'true' || sort ? true : undefined,
          brand: {
             title: {
                contains: brand,
@@ -34,6 +65,7 @@ export default async function Products({ searchParams }) {
             },
          },
       },
+      orderBy,
       skip: (page - 1) * 12,
       take: 12,
       include: {
@@ -49,12 +81,13 @@ export default async function Products({ searchParams }) {
             description="Below is a list of products you have in your cart."
          />
          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
+            <SortBy initialData={sort} />
             <CategoriesCombobox
                initialCategory={category}
                categories={categories}
             />
             <BrandCombobox initialBrand={brand} brands={brands} />
-            <AvailableToggle initialAvailability={isAvailable} />
+            <AvailableToggle initialData={isAvailable} />
          </div>
          <Separator />
          {isVariableValid(products) ? (

@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { Check, ChevronsUpDown } from 'lucide-react'
 
-import { cn, slugify } from '@/lib/utils'
+import { cn, isVariableValid, slugify } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
    Command,
@@ -17,10 +17,65 @@ import {
    PopoverContent,
    PopoverTrigger,
 } from '@/components/ui/popover'
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+
+export function SortBy({ initialData }) {
+   const router = useRouter()
+   const pathname = usePathname()
+   const searchParams = useSearchParams()
+
+   const [value, setValue] = React.useState('featured')
+
+   useEffect(() => {
+      if (isVariableValid(initialData)) setValue(initialData)
+   }, [initialData])
+
+   return (
+      <Select
+         onValueChange={(currentValue) => {
+            const current = new URLSearchParams(
+               Array.from(searchParams.entries())
+            )
+
+            if (currentValue === value) {
+               current.delete('sort')
+               setValue('')
+            } else {
+               current.set('sort', currentValue)
+               setValue(currentValue)
+            }
+
+            // cast to string
+            const search = current.toString()
+            // or const query = `${'?'.repeat(search.length && 1)}${search}`;
+            const query = search ? `?${search}` : ''
+
+            router.replace(`${pathname}${query}`, {
+               scroll: false,
+            })
+         }}
+      >
+         <SelectTrigger className="w-full">
+            <SelectValue placeholder="Sort By" />
+         </SelectTrigger>
+         <SelectContent>
+            <SelectItem value="featured">Featured</SelectItem>
+            <SelectItem value="most_expensive">Most Expensive</SelectItem>
+            <SelectItem value="least_expensive">Least Expensive</SelectItem>
+         </SelectContent>
+      </Select>
+   )
+}
 
 export function CategoriesCombobox({ categories, initialCategory }) {
    const router = useRouter()
@@ -186,15 +241,15 @@ export function BrandCombobox({ brands, initialBrand }) {
    )
 }
 
-export function AvailableToggle({ initialAvailability }) {
+export function AvailableToggle({ initialData }) {
    const router = useRouter()
    const pathname = usePathname()
    const searchParams = useSearchParams()
    const [value, setValue] = React.useState(false)
 
    useEffect(() => {
-      setValue(initialAvailability === 'true' ? true : false)
-   }, [initialAvailability])
+      setValue(initialData === 'true' ? true : false)
+   }, [initialData])
 
    return (
       <div className="flex w-full border rounded-md items-center space-x-2">
