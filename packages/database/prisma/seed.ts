@@ -129,7 +129,7 @@ async function main() {
       },
    ]
 
-   const blogs = [
+   const blogPosts = [
       {
          slug: 'how-can-ai',
          title: 'How can AI be used to generate revenue in the cryptocurrency space',
@@ -160,9 +160,9 @@ async function main() {
       },
    ]
 
-   const billboards = [
+   const banners = [
       {
-         image: 'https://i0.wp.com/allhomecinema.com/storage/2020/01/1580026175_review-bang-olufsen-beoplay-a9-wireless-speaker.jpg',
+         image: 'https://marketplace.canva.com/EAFgoIbXL34/1/0/1600w/canva-beige-minimalist-mother%27s-day-sale-promotional-banner-YpclZeIn87Q.jpg',
          label: 'Something',
       },
       {
@@ -170,16 +170,20 @@ async function main() {
          label: 'Something',
       },
       {
-         image: 'https://thevinylfactory.com/wp-content/uploads/2023/06/2.webp',
+         image: 'https://marketplace.canva.com/EAFhXw50O8Q/1/0/1600w/canva-beige-minimalist-fashion-collection-photo-collage-banner-VTuOcmKhSd4.jpg',
+         label: 'Something',
+      },
+      {
+         image: 'https://marketplace.canva.com/EAFOMzwkPtk/1/0/1600w/canva-chic-website-homepage-fashion-collage-banner-QtOtaBX5FCE.jpg',
          label: 'Something',
       },
    ]
 
    try {
-      for (const billboard of billboards) {
-         const { image, label } = billboard
+      for (const banner of banners) {
+         const { image, label } = banner
 
-         await prisma.billboard.create({
+         await prisma.banner.create({
             data: {
                image,
                label,
@@ -187,9 +191,9 @@ async function main() {
          })
       }
 
-      console.log('Created Billboards...')
+      console.log('Created Banners...')
    } catch (error) {
-      console.error('Could not create billboards...')
+      console.error('Could not create banners...')
    }
 
    try {
@@ -261,10 +265,9 @@ async function main() {
 
    const author = await prisma.author.create({
       data: {
-         name: 'Amirhossein Mohammadi',
          email: 'accretence@gmail.com',
          blogs: {
-            create: blogs,
+            create: blogPosts,
          },
       },
    })

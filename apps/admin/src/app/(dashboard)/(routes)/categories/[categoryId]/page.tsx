@@ -13,7 +13,7 @@ const CategoryPage = async ({
       },
    })
 
-   const billboards = await prisma.billboard.findMany({
+   const banners = await prisma.banner.findMany({
       where: {
          id: params.id,
       },
@@ -22,7 +22,7 @@ const CategoryPage = async ({
    return (
       <div className="flex-col">
          <div className="flex-1 space-y-4 p-8 pt-6">
-            <CategoryForm billboards={billboards} initialData={category} />
+            <CategoryForm banners={banners} initialData={category} />
          </div>
       </div>
    )

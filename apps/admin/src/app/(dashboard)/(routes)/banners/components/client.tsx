@@ -8,13 +8,13 @@ import { DataTable } from '@/components/ui/data-table'
 import { Heading } from '@/components/ui/heading'
 import { Separator } from '@/components/ui/separator'
 
-import { columns, BillboardColumn } from './columns'
+import { columns, Column } from './columns'
 
-interface BillboardClientProps {
-   data: BillboardColumn[]
+interface ClientProps {
+   data: Column[]
 }
 
-export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
+export const Client: React.FC<ClientProps> = ({ data }) => {
    const params = useParams()
    const router = useRouter()
 
@@ -22,10 +22,10 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
       <>
          <div className="flex items-center justify-between">
             <Heading
-               title={`Billboards (${data.length})`}
-               description="Manage billboards for your store"
+               title={`Banners (${data.length})`}
+               description="Manage banners for your store"
             />
-            <Button onClick={() => router.push(`/billboards/new`)}>
+            <Button onClick={() => router.push(`/banners/new`)}>
                <Plus className="mr-2 h-4" /> Add New
             </Button>
          </div>

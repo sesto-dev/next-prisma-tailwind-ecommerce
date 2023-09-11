@@ -129,7 +129,7 @@ model Category {
   description String?
 
   products   Product[]
-  billboards Billboard[]
+  banners Banner[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -360,7 +360,7 @@ model Blog {
   @@index([authorId])
 }
 
-model Billboard {
+model Banner {
   id String @id @default(cuid())
 
   label String

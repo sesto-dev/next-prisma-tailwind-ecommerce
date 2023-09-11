@@ -309,10 +309,10 @@
   resolved "https://registry.yarnpkg.com/@one-ini/wasm/-/wasm-0.1.1.tgz#6013659736c9dbfccc96e8a9c2b3de317df39323"
   integrity sha512-XuySG1E38YScSJoMlqovLru4KTUNSjgVTIjyh7qMX6aNN5HY5Ct5LhRJdxO79JtTzKfzV/bnWpz+zquYrISsvw==
 
-"@persepolis/database@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@persepolis/database/-/database-1.0.4.tgz#cfb27851d54a2c7219539cada427790d7843d927"
-  integrity sha512-jnNgXmCJ+3uApSstGtcdZHVJkWX5nfeMZZzO5MZmWzUqlGvShk2E3INOBs691f0q21VLIBhNtKczSG2gteQxQA==
+"@persepolis/database@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@persepolis/database/-/database-1.0.5.tgz#0e23be1bc818c351f87d67159bc07285fe3732d2"
+  integrity sha512-4hI5c5DLU+FonCTOJ6E4lYQbZH6fu+PB79HPXc6LYLR+C0XsmorFp+rqHyOM+slmEzv7O8Lhj8D+J0h/vDbBuw==
   dependencies:
     "@prisma/client" "^5.2.0"
 

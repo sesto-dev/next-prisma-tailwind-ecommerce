@@ -52,7 +52,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
          const response = await fetch('/api/auth/otp/email/verify', {
             method: 'POST',
-            body: JSON.stringify({ email, OTP, cart: getLocalCart() }),
+            body: JSON.stringify({
+               email,
+               OTP,
+               cart: getLocalCart().length ? getLocalCart() : undefined,
+            }),
             cache: 'no-store',
          })
 

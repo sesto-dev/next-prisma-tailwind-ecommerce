@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { Trash } from 'lucide-react'
-import { Billboard, Category } from '@prisma/client'
+import { Banner, Category } from '@prisma/client'
 import { useParams, useRouter } from 'next/navigation'
 
 import { Input } from '@/components/ui/input'
@@ -39,12 +39,12 @@ type CategoryFormValues = z.infer<typeof formSchema>
 
 interface CategoryFormProps {
    initialData: Category | null
-   billboards: Billboard[]
+   banners: Banner[]
 }
 
 export const CategoryForm: React.FC<CategoryFormProps> = ({
    initialData,
-   billboards,
+   banners,
 }) => {
    const params = useParams()
    const router = useRouter()
@@ -163,7 +163,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                      name="description"
                      render={({ field }) => (
                         <FormItem>
-                           <FormLabel>Billboard</FormLabel>
+                           <FormLabel>Banner</FormLabel>
                            <Select
                               disabled={loading}
                               onValueChange={field.onChange}
@@ -174,17 +174,17 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                                  <SelectTrigger>
                                     <SelectValue
                                        defaultValue={field.value}
-                                       placeholder="Select a billboard"
+                                       placeholder="Select a banner"
                                     />
                                  </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                 {billboards.map((billboard) => (
+                                 {banners.map((banner) => (
                                     <SelectItem
-                                       key={billboard.id}
-                                       value={billboard.id}
+                                       key={banner.id}
+                                       value={banner.id}
                                     >
-                                       {billboard.label}
+                                       {banner.label}
                                     </SelectItem>
                                  ))}
                               </SelectContent>

@@ -13,9 +13,9 @@ export function MainNav({
 
    const routes = [
       {
-         href: `/billboards`,
-         label: 'Billboards',
-         active: pathname.includes(`/billboards`),
+         href: `/banners`,
+         label: 'Banners',
+         active: pathname.includes(`/banners`),
       },
       {
          href: `/categories`,

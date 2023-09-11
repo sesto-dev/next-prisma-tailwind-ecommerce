@@ -71,10 +71,10 @@ export async function PATCH(
 
       const body = await req.json()
 
-      const { name, billboardId } = body
+      const { name, bannerId } = body
 
-      if (!billboardId) {
-         return new NextResponse('Billboard ID is required', { status: 400 })
+      if (!bannerId) {
+         return new NextResponse('Banner ID is required', { status: 400 })
       }
 
       if (!name) {

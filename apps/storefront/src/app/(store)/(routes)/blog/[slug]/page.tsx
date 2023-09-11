@@ -74,9 +74,7 @@ function Recomendations({ recommendations }) {
                                  {title}
                               </h5>
                               <p className="block text-sm text-neutral-700 dark:text-neutral-400">
-                                 {author && author.name && (
-                                    <span>{author.name}, </span>
-                                 )}
+                                 <span>{author?.name}, </span>
                                  {format(parseISO(createdAt), 'MMMM dd, yyyy')}
                               </p>
                            </div>

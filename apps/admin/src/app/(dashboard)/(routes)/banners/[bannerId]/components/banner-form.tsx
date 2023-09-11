@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { Trash } from 'lucide-react'
-import { Billboard } from '@prisma/client'
+import { Banner } from '@prisma/client'
 import { useParams, useRouter } from 'next/navigation'
 
 import { Input } from '@/components/ui/input'
@@ -29,29 +29,25 @@ const formSchema = z.object({
    image: z.string().min(1),
 })
 
-type BillboardFormValues = z.infer<typeof formSchema>
+type BannerFormValues = z.infer<typeof formSchema>
 
-interface BillboardFormProps {
-   initialData: Billboard | null
+interface BannerFormProps {
+   initialData: Banner | null
 }
 
-export const BillboardForm: React.FC<BillboardFormProps> = ({
-   initialData,
-}) => {
+export const BannerForm: React.FC<BannerFormProps> = ({ initialData }) => {
    const params = useParams()
    const router = useRouter()
 
    const [open, setOpen] = useState(false)
    const [loading, setLoading] = useState(false)
 
-   const title = initialData ? 'Edit billboard' : 'Create billboard'
-   const description = initialData ? 'Edit a billboard.' : 'Add a new billboard'
-   const toastMessage = initialData
-      ? 'Billboard updated.'
-      : 'Billboard created.'
+   const title = initialData ? 'Edit banner' : 'Create banner'
+   const description = initialData ? 'Edit a banner.' : 'Add a new banner'
+   const toastMessage = initialData ? 'Banner updated.' : 'Banner created.'
    const action = initialData ? 'Save changes' : 'Create'
 
-   const form = useForm<BillboardFormValues>({
+   const form = useForm<BannerFormValues>({
       resolver: zodResolver(formSchema),
       defaultValues: initialData || {
          label: '',
@@ -59,24 +55,24 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
       },
    })
 
-   const onSubmit = async (data: BillboardFormValues) => {
+   const onSubmit = async (data: BannerFormValues) => {
       try {
          setLoading(true)
          if (initialData) {
-            await fetch(`/api/billboards/${params.billboardId}`, {
+            await fetch(`/api/banners/${params.bannerId}`, {
                method: 'PATCH',
                body: JSON.stringify(data),
                cache: 'no-store',
             })
          } else {
-            await fetch(`/billboards`, {
+            await fetch(`/banners`, {
                method: 'POST',
                body: JSON.stringify(data),
                cache: 'no-store',
             })
          }
          router.refresh()
-         router.push(`/billboards`)
+         router.push(`/banners`)
          toast.success(toastMessage)
       } catch (error: any) {
          toast.error('Something went wrong.')
@@ -89,17 +85,17 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
       try {
          setLoading(true)
 
-         await fetch(`/api/billboards/${params.billboardId}`, {
+         await fetch(`/api/banners/${params.bannerId}`, {
             method: 'DELETE',
             cache: 'no-store',
          })
 
          router.refresh()
-         router.push(`/billboards`)
-         toast.success('Billboard deleted.')
+         router.push(`/banners`)
+         toast.success('Banner deleted.')
       } catch (error: any) {
          toast.error(
-            'Make sure you removed all categories using this billboard first.'
+            'Make sure you removed all categories using this banner first.'
          )
       } finally {
          setLoading(false)
@@ -162,7 +158,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                            <FormControl>
                               <Input
                                  disabled={loading}
-                                 placeholder="Billboard label"
+                                 placeholder="Banner label"
                                  {...field}
                               />
                            </FormControl>

@@ -12,14 +12,14 @@ export async function POST(req: Request) {
 
       const body = await req.json()
 
-      const { name, billboardId } = body
+      const { name, bannerId } = body
 
       if (!name) {
          return new NextResponse('Name is required', { status: 400 })
       }
 
-      if (!billboardId) {
-         return new NextResponse('Billboard ID is required', { status: 400 })
+      if (!bannerId) {
+         return new NextResponse('Banner ID is required', { status: 400 })
       }
 
       const category = await prisma.category.findFirst({})

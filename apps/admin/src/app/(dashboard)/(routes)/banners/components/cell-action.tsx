@@ -2,17 +2,17 @@
 
 import { Button } from '@/components/ui/button'
 
-import { BillboardColumn } from './columns'
+import { Column } from './columns'
 import Link from 'next/link'
 import { EditIcon as Icon } from 'lucide-react'
 
 interface CellActionProps {
-   data: BillboardColumn
+   data: Column
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
    return (
-      <Link href={`/billboards/${data.id}`}>
+      <Link href={`/banners/${data.id}`}>
          <Button size="icon" variant="outline">
             <Icon className="h-4" />
          </Button>

@@ -72,7 +72,7 @@ export const config = {
       '/',
       '/login',
       '/products/:path*',
-      '/billboards/:path*',
+      '/banners/:path*',
       '/orders/:path*',
       '/categories/:path*',
       '/payments/:path*',
