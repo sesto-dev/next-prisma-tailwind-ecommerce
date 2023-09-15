@@ -41,22 +41,24 @@ export function Receipt() {
          <CardHeader className="p-4 pb-0">
             <h2 className="font-bold tracking-tight">Receipt</h2>
          </CardHeader>
-         <CardContent className="block gap-4 p-4">
-            <div className="flex justify-between">
-               <h2>Total Amount:</h2>
-               <h3>${calculatePayableCost().totalAmount}</h3>
+         <CardContent className="p-4 text-sm">
+            <div className="block space-y-[1vh]">
+               <div className="flex justify-between">
+                  <p>Total Amount</p>
+                  <h3>${calculatePayableCost().totalAmount}</h3>
+               </div>
+               <div className="flex justify-between">
+                  <p>Discount Amount</p>
+                  <h3>${calculatePayableCost().discountAmount}</h3>
+               </div>
+               <div className="flex justify-between">
+                  <p>Tax Amount</p>
+                  <h3>${calculatePayableCost().taxAmount}</h3>
+               </div>
             </div>
+            <Separator className="my-4" />
             <div className="flex justify-between">
-               <h2>Discount Amount:</h2>
-               <h3>${calculatePayableCost().discountAmount}</h3>
-            </div>
-            <div className="flex justify-between">
-               <h2>Tax Amount:</h2>
-               <h3>${calculatePayableCost().taxAmount}</h3>
-            </div>
-            <Separator />
-            <div className="flex justify-between">
-               <h2>Payable Amount:</h2>
+               <p>Payable Amount</p>
                <h3>${calculatePayableCost().payableAmount}</h3>
             </div>
          </CardContent>

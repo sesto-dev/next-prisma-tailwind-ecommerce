@@ -2,13 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { verifyJWT } from '@/lib/jwt'
 import { getErrorResponse } from '@/lib/utils'
 
-interface AuthenticatedRequest extends NextRequest {
-   user: {
-      id: string
-   }
-}
-
 export async function middleware(req: NextRequest) {
+   if (req.nextUrl.pathname.startsWith('/api/auth')) return NextResponse.next()
+
    function isTargetingAPI() {
       return req.nextUrl.pathname.startsWith('/api')
    }
@@ -27,41 +23,26 @@ export async function middleware(req: NextRequest) {
 
    const token = getToken()
 
-   if (req.nextUrl.pathname.match('/login')) {
-      if (!token) return NextResponse.next()
-      if (token) return NextResponse.redirect(new URL('/', req.url))
-   }
-
    if (!token) {
-      if (req.nextUrl.pathname.startsWith('/api/auth'))
-         return NextResponse.next()
       if (isTargetingAPI()) return getErrorResponse(401, 'INVALID TOKEN')
-      if (!isTargetingAPI())
-         return NextResponse.redirect(new URL('/login', req.url))
+
+      return NextResponse.redirect(new URL('/login', req.url))
    }
 
    const response = NextResponse.next()
 
    try {
-      if (token) {
-         const { sub } = await verifyJWT<{ sub: string }>(token)
-         response.headers.set('X-USER-ID', sub)
-         ;(req as AuthenticatedRequest).user = { id: sub }
-      }
+      const { sub } = await verifyJWT<{ sub: string }>(token)
+      response.headers.set('X-USER-ID', sub)
    } catch (error) {
-      console.error({ error })
-
       if (isTargetingAPI()) {
-         return getErrorResponse(401, 'INVALID TOKEN')
+         return getErrorResponse(401, 'UNAUTHORIZED')
       }
 
-      return NextResponse.redirect(new URL(`/login`, req.url))
-   }
-
-   const authUser = (req as AuthenticatedRequest).user
-
-   if (!authUser) {
-      return NextResponse.redirect(new URL(`/login`, req.url))
+      const redirect = NextResponse.redirect(new URL(`/login`, req.url))
+      redirect.cookies.delete('token')
+      redirect.cookies.delete('logged-in')
+      return redirect
    }
 
    return response
@@ -70,7 +51,6 @@ export async function middleware(req: NextRequest) {
 export const config = {
    matcher: [
       '/',
-      '/login',
       '/products/:path*',
       '/banners/:path*',
       '/orders/:path*',

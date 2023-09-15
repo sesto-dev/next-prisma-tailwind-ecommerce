@@ -2,9 +2,9 @@
 
 <div align="center"><h3>Full-Stack E-Commerce Platform</h3><p>Built using Typescript with Next.js, Prisma ORM and TailwindCSS.</p></div>
 <div align="center">
-<a href="https://pasargad.vercel.app">Storefront</a> 
+<a href="https://store.accretence.com">Storefront</a> 
 <span> · </span>
-<a href="https://pardis.vercel.app">Admin Panel</a>
+<a href="https://admin.accretence.com">Admin Panel</a>
 </div>
 
 ## Introduction
@@ -37,6 +37,10 @@ yarn install
 ```sh
 yarn dev
 ```
+
+## Authentication
+
+The authentication is handled using JWT tokens stored in cookies and verified inside the `middleware.ts` file. The middleware function takes in the HTTP request, reads the `token` cookie and if the JWT is successfully verified, it sets the `X-USER-ID` header with the userId as the value, otherwise the request is sent back with 401 status.
 
 ## Authors
 

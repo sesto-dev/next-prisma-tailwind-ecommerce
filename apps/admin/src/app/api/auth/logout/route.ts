@@ -1,23 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
-   const response = new NextResponse(JSON.stringify({ status: 'success' }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-   })
-
-   await Promise.all([
-      response.cookies.set({
-         name: 'token',
-         value: '',
-         maxAge: -1,
-      }),
-      response.cookies.set({
-         name: 'logged-in',
-         value: '',
-         maxAge: -1,
-      }),
-   ])
-
+   const response = NextResponse.redirect(new URL(`/login`, req.url))
+   response.cookies.delete('token')
+   response.cookies.delete('logged-in')
    return response
 }
