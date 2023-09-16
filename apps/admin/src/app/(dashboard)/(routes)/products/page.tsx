@@ -9,6 +9,7 @@ import { ProductColumn } from './components/columns'
 const ProductsPage = async () => {
    const products = await prisma.product.findMany({
       include: {
+         orders: true,
          categories: true,
          brand: true,
       },
@@ -23,16 +24,11 @@ const ProductsPage = async () => {
       price: formatter.format(product.price),
       discount: formatter.format(product.discount),
       category: product.categories[0].title,
-      createdAt: format(product.createdAt, 'MMMM do, yyyy'),
+      sales: product.orders.length,
+      isAvailable: product.isAvailable ? 'Yes.' : 'No.',
    }))
 
-   return (
-      <div className="flex-col">
-         <div className="flex-1 space-y-4 pt-6">
-            <ProductsClient data={formattedProducts} />
-         </div>
-      </div>
-   )
+   return <ProductsClient data={formattedProducts} />
 }
 
 export default ProductsPage

@@ -2,12 +2,12 @@
 
 import { Button } from '@/components/ui/button'
 
-import { Column } from './columns'
+import { BannersColumn } from './columns'
 import Link from 'next/link'
 import { EditIcon as Icon } from 'lucide-react'
 
 interface CellActionProps {
-   data: Column
+   data: BannersColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {

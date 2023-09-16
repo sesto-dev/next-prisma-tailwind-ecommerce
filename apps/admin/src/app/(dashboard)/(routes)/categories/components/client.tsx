@@ -19,7 +19,7 @@ export const CategoriesClient: React.FC<CategoriesClientProps> = ({ data }) => {
    const router = useRouter()
 
    return (
-      <>
+      <div className="block space-y-4 my-6">
          <div className="flex items-center justify-between">
             <Heading
                title={`Categories (${data.length})`}
@@ -31,6 +31,6 @@ export const CategoriesClient: React.FC<CategoriesClientProps> = ({ data }) => {
          </div>
          <Separator />
          <DataTable searchKey="title" columns={columns} data={data} />
-      </>
+      </div>
    )
 }

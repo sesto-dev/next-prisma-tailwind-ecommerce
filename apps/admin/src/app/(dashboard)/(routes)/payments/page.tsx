@@ -3,11 +3,9 @@ import { format } from 'date-fns'
 import prisma from '@/lib/prisma'
 
 import type { PaymentColumn } from './components/columns'
-import { OrderClient } from './components/client'
-import { Heading } from '@/components/ui/heading'
-import { Separator } from '@/components/ui/separator'
+import { PaymentClient } from './components/client'
 
-const PaymentsPage = async () => {
+export default async function PaymentsPage() {
    const payments = await prisma.payment.findMany({
       where: {},
       include: {
@@ -30,18 +28,5 @@ const PaymentsPage = async () => {
       createdAt: format(payment.createdAt, 'MMMM do, yyyy'),
    }))
 
-   return (
-      <div className="flex-col">
-         <div className="flex-1 space-y-4 pt-6">
-            <Heading
-               title={`Payments (${formattedPayments.length})`}
-               description="Manage orders for your store"
-            />
-            <Separator />
-            <OrderClient data={formattedPayments} />
-         </div>
-      </div>
-   )
+   return <PaymentClient data={formattedPayments} />
 }
-
-export default PaymentsPage

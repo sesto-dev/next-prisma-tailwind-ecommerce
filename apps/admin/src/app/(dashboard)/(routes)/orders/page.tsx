@@ -4,10 +4,8 @@ import prisma from '@/lib/prisma'
 
 import type { OrderColumn } from './components/columns'
 import { OrderClient } from './components/client'
-import { Heading } from '@/components/ui/heading'
-import { Separator } from '@/components/ui/separator'
 
-const OrdersPage = async () => {
+export default async function OrdersPage() {
    const orders = await prisma.order.findMany({
       where: {},
       include: {
@@ -31,18 +29,5 @@ const OrdersPage = async () => {
       createdAt: format(order.createdAt, 'MMMM do, yyyy'),
    }))
 
-   return (
-      <div className="flex-col">
-         <div className="flex-1 space-y-4 pt-6">
-            <Heading
-               title={`Orders (${formattedOrders.length})`}
-               description="Manage orders for your store"
-            />
-            <Separator />
-            <OrderClient data={formattedOrders} />
-         </div>
-      </div>
-   )
+   return <OrderClient data={formattedOrders} />
 }
-
-export default OrdersPage

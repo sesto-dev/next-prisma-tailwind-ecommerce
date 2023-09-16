@@ -6,8 +6,12 @@ import { formatter } from '@/lib/utils'
 import { UsersClient } from './components/client'
 import { UserColumn } from './components/columns'
 
-const UsersPage = async () => {
+export default async function UsersPage() {
    const users = await prisma.user.findMany({
+      include: {
+         orders: true,
+      },
+      take: 10,
       orderBy: {
          updatedAt: 'desc',
       },
@@ -18,15 +22,8 @@ const UsersPage = async () => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      orders: user.orders.length,
    }))
 
-   return (
-      <div className="flex-col">
-         <div className="flex-1 space-y-4 pt-6">
-            <UsersClient data={formattedUsers} />
-         </div>
-      </div>
-   )
+   return <UsersClient data={formattedUsers} />
 }
-
-export default UsersPage

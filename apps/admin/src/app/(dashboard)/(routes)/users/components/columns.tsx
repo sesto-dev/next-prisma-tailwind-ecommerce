@@ -9,6 +9,7 @@ export type UserColumn = {
    name: string
    email: string
    phone: string
+   orders: number
 }
 
 export const columns: ColumnDef<UserColumn>[] = [
@@ -23,6 +24,10 @@ export const columns: ColumnDef<UserColumn>[] = [
    {
       accessorKey: 'phone',
       header: 'Phone',
+   },
+   {
+      accessorKey: 'orders',
+      header: 'Order #',
    },
    {
       id: 'actions',

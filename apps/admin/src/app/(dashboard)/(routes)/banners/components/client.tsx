@@ -8,18 +8,18 @@ import { DataTable } from '@/components/ui/data-table'
 import { Heading } from '@/components/ui/heading'
 import { Separator } from '@/components/ui/separator'
 
-import { columns, Column } from './columns'
+import { columns, BannersColumn } from './columns'
 
-interface ClientProps {
-   data: Column[]
+interface BannerClientProps {
+   data: BannersColumn[]
 }
 
-export const Client: React.FC<ClientProps> = ({ data }) => {
+export const BannersClient: React.FC<BannerClientProps> = ({ data }) => {
    const params = useParams()
    const router = useRouter()
 
    return (
-      <>
+      <div className="block space-y-4 my-6">
          <div className="flex items-center justify-between">
             <Heading
                title={`Banners (${data.length})`}
@@ -31,6 +31,6 @@ export const Client: React.FC<ClientProps> = ({ data }) => {
          </div>
          <Separator />
          <DataTable searchKey="label" columns={columns} data={data} />
-      </>
+      </div>
    )
 }
