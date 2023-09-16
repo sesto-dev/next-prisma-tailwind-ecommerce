@@ -17,7 +17,7 @@ import { formatter } from '@/lib/utils'
 import { format } from 'date-fns'
 import { PaymentClient } from '../components/client'
 
-export async function PaymentPage({
+export default async function PaymentPage({
    params,
 }: {
    params: { paymentId: string }

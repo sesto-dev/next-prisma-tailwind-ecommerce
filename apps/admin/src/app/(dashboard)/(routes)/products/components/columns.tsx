@@ -2,8 +2,10 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 
-import { CellAction } from './cell-action'
-import { CheckIcon, XIcon } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+
+import { CheckIcon, XIcon, EditIcon } from 'lucide-react'
+import Link from 'next/link'
 
 export type ProductColumn = {
    id: string
@@ -39,12 +41,16 @@ export const columns: ColumnDef<ProductColumn>[] = [
    {
       accessorKey: 'isAvailable',
       header: 'Availability',
-      cell: (props) => {
-         return props.cell.getValue() ? <CheckIcon /> : <XIcon />
-      },
+      cell: (props) => (props.cell.getValue() ? <CheckIcon /> : <XIcon />),
    },
    {
       id: 'actions',
-      cell: ({ row }) => <CellAction data={row.original} />,
+      cell: ({ row }) => (
+         <Link href={`/products/${row.original.id}`}>
+            <Button size="icon" variant="outline">
+               <EditIcon className="h-4" />
+            </Button>
+         </Link>
+      ),
    },
 ]

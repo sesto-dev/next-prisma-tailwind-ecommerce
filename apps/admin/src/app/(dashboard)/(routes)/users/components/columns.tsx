@@ -1,8 +1,9 @@
 'use client'
 
 import { ColumnDef } from '@tanstack/react-table'
-
-import { CellAction } from './cell-action'
+import { Badge } from '@/components/ui/badge'
+import { EditIcon, LinkIcon } from 'lucide-react'
+import Link from 'next/link'
 
 export type UserColumn = {
    id: string
@@ -16,6 +17,11 @@ export const columns: ColumnDef<UserColumn>[] = [
    {
       accessorKey: 'name',
       header: 'Name',
+      cell: ({ row, cell }) => (
+         <Link href={`/users/${row.original.id}`}>
+            <p>{cell?.getValue()?.toString()}</p>
+         </Link>
+      ),
    },
    {
       accessorKey: 'email',
@@ -28,9 +34,24 @@ export const columns: ColumnDef<UserColumn>[] = [
    {
       accessorKey: 'orders',
       header: 'Order #',
+      cell: ({ row, cell }) => (
+         <Link href={`/orders?user=${row.original.id}`}>
+            <Badge className="items-center flex gap-1">
+               <LinkIcon className="h-3" />
+               <p>{cell.getValue().toString()} Orders</p>
+            </Badge>
+         </Link>
+      ),
    },
    {
       id: 'actions',
-      cell: ({ row }) => <CellAction data={row.original} />,
+      cell: ({ row }) => (
+         <Link href={`/users/${row.original.id}`}>
+            <Badge className="items-center flex gap-1">
+               <EditIcon className="h-3" />
+               <p>Edit</p>
+            </Badge>
+         </Link>
+      ),
    },
 ]

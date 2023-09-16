@@ -14,35 +14,7 @@ import { Separator } from '@/components/native/separator'
 export default async function Products({ searchParams }) {
    const { sort, isAvailable, brand, category, page = 1 } = searchParams ?? null
 
-   let orderBy
-
-   switch (sort) {
-      case 'featured':
-         orderBy = {
-            orders: {
-               _count: 'desc',
-            },
-         }
-         break
-      case 'most_expensive':
-         orderBy = {
-            price: 'desc',
-         }
-         break
-      case 'least_expensive':
-         orderBy = {
-            price: 'asc',
-         }
-         break
-
-      default:
-         orderBy = {
-            orders: {
-               _count: 'desc',
-            },
-         }
-         break
-   }
+   const orderBy = getOrderBy(sort)
 
    const brands = await prisma.brand.findMany()
    const categories = await prisma.category.findMany()
@@ -97,4 +69,38 @@ export default async function Products({ searchParams }) {
          )}
       </>
    )
+}
+
+function getOrderBy(sort) {
+   let orderBy
+
+   switch (sort) {
+      case 'featured':
+         orderBy = {
+            orders: {
+               _count: 'desc',
+            },
+         }
+         break
+      case 'most_expensive':
+         orderBy = {
+            price: 'desc',
+         }
+         break
+      case 'least_expensive':
+         orderBy = {
+            price: 'asc',
+         }
+         break
+
+      default:
+         orderBy = {
+            orders: {
+               _count: 'desc',
+            },
+         }
+         break
+   }
+
+   return orderBy
 }

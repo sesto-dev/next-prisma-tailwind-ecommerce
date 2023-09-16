@@ -1,8 +1,10 @@
 'use client'
 
-import { ColumnDef } from '@tanstack/react-table'
+import { Button } from '@/components/ui/button'
 
-import { CellAction } from './cell-action'
+import { ColumnDef } from '@tanstack/react-table'
+import Link from 'next/link'
+import { EditIcon } from 'lucide-react'
 
 export type BannersColumn = {
    id: string
@@ -21,6 +23,12 @@ export const columns: ColumnDef<BannersColumn>[] = [
    },
    {
       id: 'actions',
-      cell: ({ row }) => <CellAction data={row.original} />,
+      cell: ({ row }) => (
+         <Link href={`/banners/${row.original.id}`}>
+            <Button size="icon" variant="outline">
+               <EditIcon className="h-4" />
+            </Button>
+         </Link>
+      ),
    },
 ]

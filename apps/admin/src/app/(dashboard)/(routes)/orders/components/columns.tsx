@@ -1,8 +1,9 @@
 'use client'
 
 import { ColumnDef } from '@tanstack/react-table'
-import { CellAction } from './cell-action'
-import { CheckIcon, XIcon } from 'lucide-react'
+import { CheckIcon, XIcon, EditIcon } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export type OrderColumn = {
    id: string
@@ -28,12 +29,16 @@ export const columns: ColumnDef<OrderColumn>[] = [
    {
       accessorKey: 'isPaid',
       header: 'Paid',
-      cell: (props) => {
-         return props.cell.getValue() ? <CheckIcon /> : <XIcon />
-      },
+      cell: (props) => (props.cell.getValue() ? <CheckIcon /> : <XIcon />),
    },
    {
       id: 'actions',
-      cell: ({ row }) => <CellAction data={row.original} />,
+      cell: ({ row }) => (
+         <Link href={`/orders/${row.original.id}`}>
+            <Button size="icon" variant="outline">
+               <EditIcon className="h-4" />
+            </Button>
+         </Link>
+      ),
    },
 ]
