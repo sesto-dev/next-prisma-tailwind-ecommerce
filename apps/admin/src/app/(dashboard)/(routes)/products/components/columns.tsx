@@ -3,6 +3,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 
 import { CellAction } from './cell-action'
+import { CheckIcon, XIcon } from 'lucide-react'
 
 export type ProductColumn = {
    id: string
@@ -11,7 +12,7 @@ export type ProductColumn = {
    discount: string
    category: string
    sales: number
-   isAvailable: string
+   isAvailable: boolean
 }
 
 export const columns: ColumnDef<ProductColumn>[] = [
@@ -38,6 +39,9 @@ export const columns: ColumnDef<ProductColumn>[] = [
    {
       accessorKey: 'isAvailable',
       header: 'Availability',
+      cell: (props) => {
+         return props.cell.getValue() ? <CheckIcon /> : <XIcon />
+      },
    },
    {
       id: 'actions',

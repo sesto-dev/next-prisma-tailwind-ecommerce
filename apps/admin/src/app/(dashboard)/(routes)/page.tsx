@@ -10,9 +10,7 @@ import { getGraphRevenue } from '@/actions/get-graph-revenue'
 import { getStockCount } from '@/actions/get-stock-count'
 import { formatter } from '@/lib/utils'
 
-interface DashboardPageProps {}
-
-const DashboardPage: React.FC<DashboardPageProps> = async () => {
+export default async function DashboardPage() {
    const totalRevenue = await getTotalRevenue()
    const graphRevenue = await getGraphRevenue()
    const salesCount = await getSalesCount()
@@ -72,5 +70,3 @@ const DashboardPage: React.FC<DashboardPageProps> = async () => {
       </div>
    )
 }
-
-export default DashboardPage

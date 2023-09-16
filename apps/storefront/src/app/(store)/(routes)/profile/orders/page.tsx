@@ -67,7 +67,7 @@ function OrderSection({ orders }) {
       number: `Order #${order.number}`,
       date: order.createdAt.toString(),
       payable: '$' + order.payable.toString(),
-      isPaid: order.isPaid ? 'Yes.' : 'No.',
+      isPaid: order.isPaid,
    }))
 
    return <OrderClient data={formattedOrders} />

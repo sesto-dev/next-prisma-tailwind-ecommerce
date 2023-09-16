@@ -15,9 +15,13 @@ import { Label } from '@/components/ui/label'
 import type { PaymentColumn } from '../components/columns'
 import { formatter } from '@/lib/utils'
 import { format } from 'date-fns'
-import { OrderClient } from '../components/client'
+import { PaymentClient } from '../components/client'
 
-const PaymentPage = async ({ params }: { params: { paymentId: string } }) => {
+export async function PaymentPage({
+   params,
+}: {
+   params: { paymentId: string }
+}) {
    const payment = await prisma.payment.findUnique({
       where: {
          id: params.paymentId,
@@ -29,17 +33,12 @@ const PaymentPage = async ({ params }: { params: { paymentId: string } }) => {
    })
 
    return (
-      <div className="flex-col">
-         <div className="flex-1 pt-6 pb-12">
-            <div className="flex items-center justify-between">
-               <Heading
-                  title="Payment Data"
-                  description="Items in this order and data about the user."
-               />
-            </div>
-         </div>
+      <div className="block space-y-4 my-6">
+         <Heading
+            title="Payment Data"
+            description="Items in this order and data about the user."
+         />
+         <Separator />
       </div>
    )
 }
-
-export default PaymentPage

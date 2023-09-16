@@ -24,7 +24,7 @@ export default async function PaymentsPage() {
       status: payment.status,
       date: payment.createdAt.toUTCString(),
       payable: '$' + payment.payable.toString(),
-      isSuccessful: payment.isSuccessful ? 'Yes.' : 'No.',
+      isSuccessful: payment.isSuccessful,
       createdAt: format(payment.createdAt, 'MMMM do, yyyy'),
    }))
 

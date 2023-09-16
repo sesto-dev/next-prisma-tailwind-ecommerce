@@ -25,7 +25,7 @@ const ProductsPage = async () => {
       discount: formatter.format(product.discount),
       category: product.categories[0].title,
       sales: product.orders.length,
-      isAvailable: product.isAvailable ? 'Yes.' : 'No.',
+      isAvailable: product.isAvailable,
    }))
 
    return <ProductsClient data={formattedProducts} />

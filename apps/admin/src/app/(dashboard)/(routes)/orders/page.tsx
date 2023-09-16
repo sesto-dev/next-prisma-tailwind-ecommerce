@@ -25,7 +25,7 @@ export default async function OrdersPage() {
       number: `Order #${order.number}`,
       date: order.createdAt.toUTCString(),
       payable: '$' + order.payable.toString(),
-      isPaid: order.isPaid ? 'Yes.' : 'No.',
+      isPaid: order.isPaid,
       createdAt: format(order.createdAt, 'MMMM do, yyyy'),
    }))
 

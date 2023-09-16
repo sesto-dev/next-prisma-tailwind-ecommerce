@@ -43,7 +43,7 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
          number: `Order #${order.number}`,
          date: order.createdAt.toUTCString(),
          payable: '$' + order.payable.toString(),
-         isPaid: order.isPaid ? 'Yes.' : 'No.',
+         isPaid: order.isPaid,
          createdAt: format(order.createdAt, 'MMMM do, yyyy'),
       }))
 
