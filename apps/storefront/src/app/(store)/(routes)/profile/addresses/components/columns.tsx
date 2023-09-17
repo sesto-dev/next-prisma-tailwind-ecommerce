@@ -1,7 +1,10 @@
 'use client'
 
 import { ColumnDef } from '@tanstack/react-table'
-import { CellAction } from './cell-action'
+import { Button } from '@/components/ui/button'
+
+import Link from 'next/link'
+import { EditIcon } from 'lucide-react'
 
 export type AddressColumn = {
    id: string
@@ -30,6 +33,12 @@ export const columns: ColumnDef<AddressColumn>[] = [
    },
    {
       id: 'actions',
-      cell: ({ row }) => <CellAction data={row.original} />,
+      cell: ({ row }) => (
+         <Link href={`/profile/addresses/${row.original.id}`}>
+            <Button size="icon" variant="outline">
+               <EditIcon className="h-4" />
+            </Button>
+         </Link>
+      ),
    },
 ]

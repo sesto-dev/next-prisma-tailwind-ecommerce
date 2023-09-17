@@ -1,8 +1,11 @@
 'use client'
 
 import { ColumnDef } from '@tanstack/react-table'
-import { CellAction } from './cell-action'
 import { CheckIcon, XIcon } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+
+import Link from 'next/link'
+import { EditIcon as Icon } from 'lucide-react'
 
 export type OrderColumn = {
    id: string
@@ -34,6 +37,12 @@ export const columns: ColumnDef<OrderColumn>[] = [
    },
    {
       id: 'actions',
-      cell: ({ row }) => <CellAction data={row.original} />,
+      cell: ({ row }) => (
+         <Link href={`/profile/orders/${row.original.id}`}>
+            <Button size="icon" variant="outline">
+               <Icon className="h-4" />
+            </Button>
+         </Link>
+      ),
    },
 ]

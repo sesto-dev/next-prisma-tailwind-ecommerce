@@ -8,7 +8,7 @@ import {
    BrandCombobox,
    CategoriesCombobox,
    SortBy,
-} from './components/filter'
+} from './components/options'
 import { Separator } from '@/components/native/separator'
 
 export default async function Products({ searchParams }) {

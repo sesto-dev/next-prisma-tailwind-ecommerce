@@ -2,7 +2,10 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 
-import { CellAction } from './cell-action'
+import { Button } from '@/components/ui/button'
+
+import Link from 'next/link'
+import { EditIcon } from 'lucide-react'
 
 export type CategoryColumn = {
    id: string
@@ -21,6 +24,12 @@ export const columns: ColumnDef<CategoryColumn>[] = [
    },
    {
       id: 'actions',
-      cell: ({ row }) => <CellAction data={row.original} />,
+      cell: ({ row }) => (
+         <Link href={`/categories/${row.original.id}`}>
+            <Button size="icon" variant="outline">
+               <EditIcon className="h-4" />
+            </Button>
+         </Link>
+      ),
    },
 ]

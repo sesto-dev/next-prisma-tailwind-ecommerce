@@ -35,10 +35,10 @@ export const columns: ColumnDef<UserColumn>[] = [
       accessorKey: 'orders',
       header: 'Order #',
       cell: ({ row, cell }) => (
-         <Link href={`/orders?user=${row.original.id}`}>
-            <Badge className="items-center flex gap-1">
+         <Link href={`/orders?userId=${row.original.id}`}>
+            <Badge className="items-center flex gap-1 w-min">
                <LinkIcon className="h-3" />
-               <p>{cell.getValue().toString()} Orders</p>
+               <p className="shrink-0">{cell.getValue().toString()} Orders</p>
             </Badge>
          </Link>
       ),
@@ -47,8 +47,8 @@ export const columns: ColumnDef<UserColumn>[] = [
       id: 'actions',
       cell: ({ row }) => (
          <Link href={`/users/${row.original.id}`}>
-            <Badge className="items-center flex gap-1">
-               <EditIcon className="h-3" />
+            <Badge className="items-center flex gap-1 w-min">
+               <EditIcon className="h-3 p-0" />
                <p>Edit</p>
             </Badge>
          </Link>
