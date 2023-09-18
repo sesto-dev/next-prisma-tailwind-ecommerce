@@ -1,9 +1,13 @@
 'use client'
 
+import { DataTable } from '@/components/ui/data-table'
+
 import { ColumnDef } from '@tanstack/react-table'
-import { CheckIcon, XIcon, EditIcon } from 'lucide-react'
+import { CheckIcon, XIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+
 import Link from 'next/link'
+import { EditIcon as Icon } from 'lucide-react'
 
 export type OrderColumn = {
    id: string
@@ -29,16 +33,26 @@ export const columns: ColumnDef<OrderColumn>[] = [
    {
       accessorKey: 'isPaid',
       header: 'Paid',
-      cell: (props) => (props.cell.getValue() ? <CheckIcon /> : <XIcon />),
+      cell: (props) => {
+         return props.cell.getValue() ? <CheckIcon /> : <XIcon />
+      },
    },
    {
       id: 'actions',
       cell: ({ row }) => (
-         <Link href={`/orders/${row.original.id}`}>
+         <Link href={`/profile/orders/${row.original.id}`}>
             <Button size="icon" variant="outline">
-               <EditIcon className="h-4" />
+               <Icon className="h-4" />
             </Button>
          </Link>
       ),
    },
 ]
+
+interface OrdersTableProps {
+   data: OrderColumn[]
+}
+
+export const OrdersTable: React.FC<OrdersTableProps> = ({ data }) => {
+   return <DataTable searchKey="products" columns={columns} data={data} />
+}

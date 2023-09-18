@@ -1,11 +1,18 @@
 'use client'
 
+import { DataTable } from '@/components/ui/data-table'
 import { ColumnDef } from '@tanstack/react-table'
-import { CheckIcon, XIcon } from 'lucide-react'
+import { CheckIcon, XIcon, EditIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-
 import Link from 'next/link'
-import { EditIcon as Icon } from 'lucide-react'
+
+interface OrderTableProps {
+   data: OrderColumn[]
+}
+
+export const OrderTable: React.FC<OrderTableProps> = ({ data }) => {
+   return <DataTable searchKey="products" columns={OrderColumns} data={data} />
+}
 
 export type OrderColumn = {
    id: string
@@ -15,7 +22,7 @@ export type OrderColumn = {
    createdAt: string
 }
 
-export const columns: ColumnDef<OrderColumn>[] = [
+export const OrderColumns: ColumnDef<OrderColumn>[] = [
    {
       accessorKey: 'number',
       header: 'Order Number',
@@ -31,16 +38,14 @@ export const columns: ColumnDef<OrderColumn>[] = [
    {
       accessorKey: 'isPaid',
       header: 'Paid',
-      cell: (props) => {
-         return props.cell.getValue() ? <CheckIcon /> : <XIcon />
-      },
+      cell: (props) => (props.cell.getValue() ? <CheckIcon /> : <XIcon />),
    },
    {
       id: 'actions',
       cell: ({ row }) => (
-         <Link href={`/profile/orders/${row.original.id}`}>
+         <Link href={`/orders/${row.original.id}`}>
             <Button size="icon" variant="outline">
-               <Icon className="h-4" />
+               <EditIcon className="h-4" />
             </Button>
          </Link>
       ),

@@ -2,8 +2,11 @@ import { format } from 'date-fns'
 
 import prisma from '@/lib/prisma'
 
-import type { OrderColumn } from './components/columns'
-import { OrderClient } from './components/client'
+import type { OrderColumn } from './components/table'
+import { OrderTable } from './components/table'
+import { Heading } from '@/components/ui/heading'
+import { Separator } from '@/components/ui/separator'
+import { SortBy } from './components/options'
 
 export default async function OrdersPage({ searchParams }) {
    const {
@@ -67,7 +70,19 @@ export default async function OrdersPage({ searchParams }) {
       createdAt: format(order.createdAt, 'MMMM do, yyyy'),
    }))
 
-   return <OrderClient data={formattedOrders} />
+   return (
+      <div className="block space-y-4 my-6">
+         <Heading
+            title={`Orders (${orders.length})`}
+            description="Manage orders for your store"
+         />
+         <Separator />
+         <div className="grid grid-cols-4 gap-2">
+            <SortBy initialData={'highest_payable'} />
+         </div>
+         <OrderTable data={formattedOrders} />{' '}
+      </div>
+   )
 }
 
 function getOrderBy(sort) {

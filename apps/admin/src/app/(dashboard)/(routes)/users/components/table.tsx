@@ -1,5 +1,9 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+
+import { DataTable } from '@/components/ui/data-table'
+
 import { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
 import { EditIcon, LinkIcon } from 'lucide-react'
@@ -55,3 +59,13 @@ export const columns: ColumnDef<UserColumn>[] = [
       ),
    },
 ]
+
+interface UsersTableProps {
+   data: UserColumn[]
+}
+
+export const UsersTable: React.FC<UsersTableProps> = ({ data }) => {
+   const router = useRouter()
+
+   return <DataTable searchKey="name" columns={columns} data={data} />
+}

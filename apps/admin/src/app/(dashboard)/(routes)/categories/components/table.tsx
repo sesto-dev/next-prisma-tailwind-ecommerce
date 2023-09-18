@@ -1,5 +1,8 @@
 'use client'
 
+import { useParams, useRouter } from 'next/navigation'
+import { DataTable } from '@/components/ui/data-table'
+
 import { ColumnDef } from '@tanstack/react-table'
 
 import { Button } from '@/components/ui/button'
@@ -33,3 +36,14 @@ export const columns: ColumnDef<CategoryColumn>[] = [
       ),
    },
 ]
+
+interface CategoriesClientProps {
+   data: CategoryColumn[]
+}
+
+export const CategoriesClient: React.FC<CategoriesClientProps> = ({ data }) => {
+   const params = useParams()
+   const router = useRouter()
+
+   return <DataTable searchKey="title" columns={columns} data={data} />
+}

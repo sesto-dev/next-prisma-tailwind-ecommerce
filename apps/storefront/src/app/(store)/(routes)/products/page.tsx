@@ -18,7 +18,6 @@ export default async function Products({ searchParams }) {
 
    const brands = await prisma.brand.findMany()
    const categories = await prisma.category.findMany()
-
    const products = await prisma.product.findMany({
       where: {
          isAvailable: isAvailable == 'true' || sort ? true : undefined,

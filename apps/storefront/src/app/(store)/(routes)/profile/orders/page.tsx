@@ -1,14 +1,11 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { UserForm } from '../edit/components/user-form'
-import { Heading } from '@/components/native/heading'
 
 import { useAuthenticated } from '@/hooks/useAuthentication'
-import type { OrderColumn } from './components/columns'
-import { OrderClient } from './components/client'
+import type { OrderColumn } from './components/table'
+import { OrdersTable } from './components/table'
 
-import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { UserCombobox } from '../components/switcher'
 import { Loader } from '@/components/ui/loader'
@@ -70,5 +67,5 @@ function OrderSection({ orders }) {
       isPaid: order.isPaid,
    }))
 
-   return <OrderClient data={formattedOrders} />
+   return <OrdersTable data={formattedOrders} />
 }

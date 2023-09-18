@@ -2,11 +2,15 @@ import { format } from 'date-fns'
 
 import prisma from '@/lib/prisma'
 import { formatter } from '@/lib/utils'
+import { Plus } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Heading } from '@/components/ui/heading'
+import { Separator } from '@/components/ui/separator'
+import { ProductsTable } from './components/table'
+import { ProductColumn } from './components/table'
+import Link from 'next/link'
 
-import { ProductsClient } from './components/client'
-import { ProductColumn } from './components/columns'
-
-const ProductsPage = async () => {
+export default async function ProductsPage() {
    const products = await prisma.product.findMany({
       include: {
          orders: true,
@@ -28,7 +32,21 @@ const ProductsPage = async () => {
       isAvailable: product.isAvailable,
    }))
 
-   return <ProductsClient data={formattedProducts} />
+   return (
+      <div className="block space-y-4 my-6">
+         <div className="flex items-center justify-between">
+            <Heading
+               title={`Products (${products.length})`}
+               description="Manage products for your store"
+            />
+            <Link href="/products/new">
+               <Button>
+                  <Plus className="mr-2 h-4" /> Add New
+               </Button>
+            </Link>
+         </div>
+         <Separator />
+         <ProductsTable data={formattedProducts} />
+      </div>
+   )
 }
-
-export default ProductsPage

@@ -11,9 +11,9 @@ import {
 } from '@/components/ui/accordion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
-import type { OrderColumn } from '../../orders/components/columns'
+import type { OrderColumn } from '../../orders/components/table'
 import { format } from 'date-fns'
-import { OrderClient } from '../../orders/components/client'
+import { OrderTable } from '../../orders/components/table'
 
 const UserPage = async ({ params }: { params: { userId: string } }) => {
    const user = await prisma.user.findUnique({
@@ -63,7 +63,7 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
                         </div>
                      </AccordionTrigger>
                      <AccordionContent>
-                        <OrderClient data={formattedOrders} />
+                        <OrderTable data={formattedOrders} />
                      </AccordionContent>
                   </AccordionItem>
                </Accordion>

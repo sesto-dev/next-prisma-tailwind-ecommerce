@@ -1,11 +1,22 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+
+import { DataTable } from '@/components/ui/data-table'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { CheckIcon, EditIcon, XIcon } from 'lucide-react'
 import { ColumnDef } from '@tanstack/react-table'
 
-import { Button } from '@/components/ui/button'
+interface ProductsTableProps {
+   data: ProductColumn[]
+}
 
-import { CheckIcon, XIcon, EditIcon } from 'lucide-react'
-import Link from 'next/link'
+export const ProductsTable: React.FC<ProductsTableProps> = ({ data }) => {
+   const router = useRouter()
+
+   return <DataTable searchKey="title" columns={columns} data={data} />
+}
 
 export type ProductColumn = {
    id: string

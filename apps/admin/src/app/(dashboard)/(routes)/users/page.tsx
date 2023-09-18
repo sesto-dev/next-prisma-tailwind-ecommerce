@@ -2,9 +2,10 @@ import { format } from 'date-fns'
 
 import prisma from '@/lib/prisma'
 import { formatter } from '@/lib/utils'
-
-import { UsersClient } from './components/client'
-import { UserColumn } from './components/columns'
+import { Heading } from '@/components/ui/heading'
+import { Separator } from '@/components/ui/separator'
+import { UsersTable } from './components/table'
+import { UserColumn } from './components/table'
 
 export default async function UsersPage() {
    const users = await prisma.user.findMany({
@@ -25,5 +26,11 @@ export default async function UsersPage() {
       orders: user.orders.length,
    }))
 
-   return <UsersClient data={formattedUsers} />
+   return (
+      <div className="block space-y-4 my-6">
+         <Heading title="Users" description="Manage products for your store" />
+         <Separator />
+         <UsersTable data={formattedUsers} />
+      </div>
+   )
 }
