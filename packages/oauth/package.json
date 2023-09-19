@@ -1,0 +1,31 @@
+{
+   "name": "@persepolis/oauth",
+   "version": "0.0.1",
+   "description": "OAuth service for the Persepolis e-commerce platform.",
+   "main": "dist/index.js",
+   "scripts": {
+      "publish": "npm publish --access public",
+      "build": "tsc",
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms.git"
+   },
+   "files": [
+      "dist"
+   ],
+   "author": "@accretence",
+   "license": "MIT",
+   "bugs": {
+      "url": "https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms/issues"
+   },
+   "homepage": "https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms#readme",
+   "devDependencies": {
+      "typescript": "^5.2.2"
+   },
+   "dependencies": {
+      "@types/node": "^20.6.2",
+      "querystring": "^0.2.1"
+   }
+}
