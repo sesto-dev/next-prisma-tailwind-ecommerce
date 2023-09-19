@@ -364,12 +364,10 @@
   resolved "https://registry.yarnpkg.com/@one-ini/wasm/-/wasm-0.1.1.tgz#6013659736c9dbfccc96e8a9c2b3de317df39323"
   integrity sha512-XuySG1E38YScSJoMlqovLru4KTUNSjgVTIjyh7qMX6aNN5HY5Ct5LhRJdxO79JtTzKfzV/bnWpz+zquYrISsvw==
 
-"@persepolis/database@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@persepolis/database/-/database-1.0.6.tgz#48ecc31f898790d5bdb2837cc65ebd92010aaa29"
-  integrity sha512-ZQYtRI9de3v+YE3k318IWVAMizxIEUY47E8gLmKoxG6/RfFsrE2QEmo3l8CvEyc/xfSTRuQPyW6EOdfM68rXpA==
-  dependencies:
-    "@prisma/client" "^5.2.0"
+"@persepolis/database@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@persepolis/database/-/database-1.0.7.tgz#ee7c050bba7d4eb421b9617ffd06ba12d522c4bc"
+  integrity sha512-26VaK2rpldtYUByrMiGgmO4r+b9jGMXylWycr9G0FahFChY5uGQoOxaglqEZF1LDflbW1Y7D52J20l08DR6pYw==
 
 "@persepolis/mail@^1.0.7":
   version "1.0.7"
@@ -391,24 +389,12 @@
   resolved "https://registry.yarnpkg.com/@persepolis/zarinpal/-/zarinpal-0.1.0.tgz#f835d4e87322290a49d7579b7164fcd485811d83"
   integrity sha512-+wMIewlaJO2cIPydENfWO+wLzq7Iao4ZAp6gAROEiaTNvRLCeMR7TV0FML+45rNIDTFzC4/6EeA8UOoe4xpRDw==
 
-"@prisma/client@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-5.2.0.tgz#cbfdd440614b38736563a7999f39922fcde0ed50"
-  integrity sha512-AiTjJwR4J5Rh6Z/9ZKrBBLel3/5DzUNntMohOy7yObVnVoTNVFi2kvpLZlFuKO50d7yDspOtW6XBpiAd0BVXbQ==
-  dependencies:
-    "@prisma/engines-version" "5.2.0-25.2804dc98259d2ea960602aca6b8e7fdc03c1758f"
-
 "@prisma/client@^5.3.1":
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/@prisma/client/-/client-5.3.1.tgz#fc7fc2d91e814cc4fe18a4bc5e78bf851c26985e"
   integrity sha512-ArOKjHwdFZIe1cGU56oIfy7wRuTn0FfZjGuU/AjgEBOQh+4rDkB6nF+AGHP8KaVpkBIiHGPQh3IpwQ3xDMdO0Q==
   dependencies:
     "@prisma/engines-version" "5.3.1-2.61e140623197a131c2a6189271ffee05a7aa9a59"
-
-"@prisma/engines-version@5.2.0-25.2804dc98259d2ea960602aca6b8e7fdc03c1758f":
-  version "5.2.0-25.2804dc98259d2ea960602aca6b8e7fdc03c1758f"
-  resolved "https://registry.yarnpkg.com/@prisma/engines-version/-/engines-version-5.2.0-25.2804dc98259d2ea960602aca6b8e7fdc03c1758f.tgz#11366e7ff031c908debf4983248d40046016de37"
-  integrity sha512-jsnKT5JIDIE01lAeCj2ghY9IwxkedhKNvxQeoyLs6dr4ZXynetD0vTy7u6wMJt8vVPv8I5DPy/I4CFaoXAgbtg==
 
 "@prisma/engines-version@5.3.1-2.61e140623197a131c2a6189271ffee05a7aa9a59":
   version "5.3.1-2.61e140623197a131c2a6189271ffee05a7aa9a59"
