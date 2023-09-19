@@ -57,7 +57,7 @@ async function main() {
          title: 'BKID Pipe',
          brand: 'BKID',
          categories: ['Accessories'],
-         tags: ['pipe', 'brushed', 'wood'],
+         keywords: ['pipe', 'brushed', 'wood'],
          price: 69.99,
          images: ['https://lemanoosh.com/app/uploads/bkid-pipe-01.jpg'],
       },
@@ -65,7 +65,7 @@ async function main() {
          title: 'Bang and Olufsen Speaker',
          brand: 'Bang and Olufsen',
          categories: ['Electronics'],
-         tags: ['speaker', 'brushed', 'mechanical'],
+         keywords: ['speaker', 'brushed', 'mechanical'],
          price: 9.99,
          images: [
             'https://lemanoosh.com/app/uploads/BO_2019_A1_Natural_Brushed_05-768x1156.jpg',
@@ -76,7 +76,7 @@ async function main() {
          brand: 'Audio Technica',
 
          categories: ['Electronics'],
-         tags: ['music', 'brushed', 'mechanical'],
+         keywords: ['music', 'brushed', 'mechanical'],
          price: 12.99,
          images: [
             'https://lemanoosh.com/app/uploads/gerhardt-kellermann-zeitmagazin-10.jpg',
@@ -87,7 +87,7 @@ async function main() {
          brand: 'Monocle',
 
          categories: ['Electronics'],
-         tags: ['shoes', 'brushed', 'mechanical'],
+         keywords: ['shoes', 'brushed', 'mechanical'],
          price: 1.99,
          images: [
             'https://lemanoosh.com/app/uploads/plp-women-footwear-sneakers-04-07-768x1246.jpg',
@@ -98,7 +98,7 @@ async function main() {
          brand: 'Zone2',
 
          categories: ['Electronics'],
-         tags: ['shoes', 'brushed', 'mechanical'],
+         keywords: ['shoes', 'brushed', 'mechanical'],
          price: 129.99,
          images: ['https://lemanoosh.com/app/uploads/0055-768x1023.jpg'],
       },
@@ -106,7 +106,7 @@ async function main() {
          title: 'Carl Hauser L1 Phone',
          brand: 'Carl Hauser',
          categories: ['Electronics'],
-         tags: ['shoes', 'brushed', 'mechanical'],
+         keywords: ['shoes', 'brushed', 'mechanical'],
          price: 5.99,
          images: [
             'https://lemanoosh.com/app/uploads/carl-hauser-0121-768x993.jpg',
@@ -116,7 +116,7 @@ async function main() {
          title: 'Carl Hauser Scanner',
          brand: 'Carl Hauser',
          categories: ['Electronics'],
-         tags: ['shoes', 'brushed', 'mechanical'],
+         keywords: ['shoes', 'brushed', 'mechanical'],
          price: 22.99,
          images: [
             'https://lemanoosh.com/app/uploads/carl-hauser-020-768x973.jpg',
@@ -126,7 +126,7 @@ async function main() {
          title: 'Bright Neon Helmet',
          brand: 'Bright',
          categories: ['Electronics'],
-         tags: ['shoes', 'brushed', 'mechanical'],
+         keywords: ['shoes', 'brushed', 'mechanical'],
          price: 17.99,
          images: [
             'https://lemanoosh.com/app/uploads/Orange_white-_Helmet_01.jpg',
@@ -252,7 +252,7 @@ async function main() {
                },
                description: 'Description of this product.',
                images: product.images,
-               tags: product.tags,
+               keywords: product.keywords,
                categories: {
                   connect: {
                      title: product.categories[0],

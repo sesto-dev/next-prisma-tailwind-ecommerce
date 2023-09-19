@@ -97,7 +97,7 @@ model Product {
   title       String
   description String?
   images      String[]
-  tags        String[]
+  keywords        String[]
   metadata    Json?
 
   price    Float @default(100)
@@ -350,7 +350,7 @@ model Blog {
   content     String? @db.Text
 
   categories String[]
-  tags       String[]
+  keywords       String[]
 
   author   Author @relation(fields: [authorId], references: [id])
   authorId String

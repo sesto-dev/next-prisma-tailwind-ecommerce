@@ -1,6 +1,6 @@
 {
    "name": "@persepolis/database",
-   "version": "1.0.5",
+   "version": "1.0.6",
    "description": "Database schema for the Persepolis e-commerce platform.",
    "scripts": {
       "db:generate": "npx prisma generate",

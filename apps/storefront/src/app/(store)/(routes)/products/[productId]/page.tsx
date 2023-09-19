@@ -5,6 +5,32 @@ import prisma from '@/lib/prisma'
 import { isVariableValid } from '@/lib/utils'
 import { DataSection } from './components/data'
 import Carousel from '@/components/native/Carousel'
+import type { Metadata, ResolvingMetadata } from 'next'
+
+type Props = {
+   params: { productId: string }
+   searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata(
+   { params, searchParams }: Props,
+   parent: ResolvingMetadata
+): Promise<Metadata> {
+   const product = await prisma.product.findUnique({
+      where: {
+         id: params.productId,
+      },
+   })
+
+   return {
+      title: product.title,
+      description: product.description,
+      keywords: product.keywords,
+      openGraph: {
+         images: product.images,
+      },
+   }
+}
 
 export default async function Product({
    params,
