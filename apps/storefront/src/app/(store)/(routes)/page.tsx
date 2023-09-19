@@ -3,14 +3,12 @@ import {
    BlogPostGrid,
    BlogPostSkeletonGrid,
 } from '@/components/native/BlogCard'
-
-import prisma from '@/lib/prisma'
-
-import { ProductGrid, ProductSkeletonGrid } from '@/components/native/Product'
-import { isVariableValid } from '@/lib/utils'
 import Carousel from '@/components/native/Carousel'
+import { ProductGrid, ProductSkeletonGrid } from '@/components/native/Product'
 import { Heading } from '@/components/native/heading'
 import { Separator } from '@/components/native/separator'
+import prisma from '@/lib/prisma'
+import { isVariableValid } from '@/lib/utils'
 
 export default async function Index() {
    const products = await prisma.product.findMany({

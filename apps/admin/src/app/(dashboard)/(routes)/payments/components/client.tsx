@@ -1,10 +1,10 @@
 'use client'
 
 import { DataTable } from '@/components/ui/data-table'
-
-import { columns, PaymentColumn } from './columns'
 import { Heading } from '@/components/ui/heading'
 import { Separator } from '@/components/ui/separator'
+
+import { PaymentColumn, columns } from './columns'
 
 interface PaymentClientProps {
    data: PaymentColumn[]

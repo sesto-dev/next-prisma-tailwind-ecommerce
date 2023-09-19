@@ -60,6 +60,7 @@
       "zod": "^3.22.2"
    },
    "devDependencies": {
+      "@trivago/prettier-plugin-sort-imports": "^4.2.0",
       "@types/node": "^20.6.2",
       "@types/react": "^18.2.22",
       "autoprefixer": "^10.4.15",

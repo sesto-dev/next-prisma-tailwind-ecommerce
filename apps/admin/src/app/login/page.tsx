@@ -1,8 +1,7 @@
-import { Metadata } from 'next'
-import Link from 'next/link'
-
 import { UserAuthForm } from '@/app/login/components/user-auth-form'
 import config from '@/config/site'
+import { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
    title: 'Authentication',

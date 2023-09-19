@@ -1,14 +1,12 @@
-import { format } from 'date-fns'
-
+import { Button } from '@/components/ui/button'
+import { Heading } from '@/components/ui/heading'
+import { Separator } from '@/components/ui/separator'
 import prisma from '@/lib/prisma'
+import { Plus } from 'lucide-react'
+import Link from 'next/link'
 
 import { CategoryColumn } from './components/table'
 import { CategoriesClient } from './components/table'
-import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
-import { Heading } from '@/components/ui/heading'
-import { Separator } from '@/components/ui/separator'
-import Link from 'next/link'
 
 export default async function CategoriesPage() {
    const categories = await prisma.category.findMany({
@@ -24,7 +22,7 @@ export default async function CategoriesPage() {
    }))
 
    return (
-      <div className="block space-y-4 my-6">
+      <div className="my-6 block space-y-4">
          <div className="flex items-center justify-between">
             <Heading
                title={`Categories (${categories.length})`}

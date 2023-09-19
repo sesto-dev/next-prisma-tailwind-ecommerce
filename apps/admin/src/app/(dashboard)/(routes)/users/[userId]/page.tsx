@@ -1,8 +1,3 @@
-import prisma from '@/lib/prisma'
-
-import { UserForm } from './components/user-form'
-import { Heading } from '@/components/ui/heading'
-import { Separator } from '@/components/ui/separator'
 import {
    Accordion,
    AccordionContent,
@@ -10,10 +5,13 @@ import {
    AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Heading } from '@/components/ui/heading'
+import prisma from '@/lib/prisma'
+import { format } from 'date-fns'
 
 import type { OrderColumn } from '../../orders/components/table'
-import { format } from 'date-fns'
 import { OrderTable } from '../../orders/components/table'
+import { UserForm } from './components/user-form'
 
 const UserPage = async ({ params }: { params: { userId: string } }) => {
    const user = await prisma.user.findUnique({

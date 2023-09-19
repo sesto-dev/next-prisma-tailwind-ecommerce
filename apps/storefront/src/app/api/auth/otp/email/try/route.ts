@@ -1,13 +1,13 @@
-import { sendMail } from '@persepolis/mail'
+import config from '@/config/site'
 import prisma from '@/lib/prisma'
 import { isEmailValid } from '@/lib/regex'
 import { generateSerial } from '@/lib/serial'
 import { getErrorResponse } from '@/lib/utils'
+import Mail from '@/mails/verify'
+import { sendMail } from '@persepolis/mail'
+import { render } from '@react-email/render'
 import { NextRequest, NextResponse } from 'next/server'
 import { ZodError } from 'zod'
-import config from '@/config/site'
-import Mail from '@/mails/verify'
-import { render } from '@react-email/render'
 
 export async function POST(req: NextRequest) {
    try {

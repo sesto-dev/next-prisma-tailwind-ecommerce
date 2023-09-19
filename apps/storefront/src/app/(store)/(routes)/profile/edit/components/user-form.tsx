@@ -1,14 +1,5 @@
 'use client'
 
-import * as z from 'zod'
-import { useState } from 'react'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { toast } from 'react-hot-toast'
-
-import { useParams, useRouter } from 'next/navigation'
-
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import {
    Form,
@@ -19,8 +10,14 @@ import {
    FormLabel,
    FormMessage,
 } from '@/components/ui/form'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
 import type { UserWithIncludes } from '@/types/prisma'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
+import * as z from 'zod'
 
 const formSchema = z.object({
    name: z.string().min(1),

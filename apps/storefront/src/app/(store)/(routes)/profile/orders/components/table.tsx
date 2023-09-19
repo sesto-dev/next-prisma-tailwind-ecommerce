@@ -1,13 +1,11 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { DataTable } from '@/components/ui/data-table'
-
 import { ColumnDef } from '@tanstack/react-table'
 import { CheckIcon, XIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-
-import Link from 'next/link'
 import { EditIcon as Icon } from 'lucide-react'
+import Link from 'next/link'
 
 export type OrderColumn = {
    id: string

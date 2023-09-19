@@ -1,5 +1,3 @@
-import { isVariableValid } from './utils'
-
 export function writeLocalCart(items) {
    window.localStorage.setItem('Cart', JSON.stringify(items))
 }

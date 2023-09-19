@@ -1,13 +1,11 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-
-import { DataTable } from '@/components/ui/data-table'
-
-import { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
+import { DataTable } from '@/components/ui/data-table'
+import { ColumnDef } from '@tanstack/react-table'
 import { EditIcon, LinkIcon } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export type UserColumn = {
    id: string

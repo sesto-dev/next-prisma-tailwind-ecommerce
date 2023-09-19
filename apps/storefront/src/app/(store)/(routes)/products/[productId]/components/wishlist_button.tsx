@@ -3,7 +3,6 @@
 import { Spinner } from '@/components/native/icons'
 import { Button } from '@/components/ui/button'
 import { useAuthenticated } from '@/hooks/useAuthentication'
-
 import { HeartIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 

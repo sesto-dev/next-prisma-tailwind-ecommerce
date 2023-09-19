@@ -1,6 +1,6 @@
-import { getErrorResponse } from '@/lib/utils'
-import prisma from '@/lib/prisma'
 import { signJWT } from '@/lib/jwt'
+import prisma from '@/lib/prisma'
+import { getErrorResponse } from '@/lib/utils'
 import { NextRequest, NextResponse } from 'next/server'
 import { ZodError } from 'zod'
 

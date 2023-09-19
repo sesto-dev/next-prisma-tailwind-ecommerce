@@ -1,12 +1,11 @@
-import { format } from 'date-fns'
-
-import prisma from '@/lib/prisma'
-
-import type { OrderColumn } from './components/table'
-import { OrderTable } from './components/table'
 import { Heading } from '@/components/ui/heading'
 import { Separator } from '@/components/ui/separator'
+import prisma from '@/lib/prisma'
+import { format } from 'date-fns'
+
 import { SortBy } from './components/options'
+import type { OrderColumn } from './components/table'
+import { OrderTable } from './components/table'
 
 export default async function OrdersPage({ searchParams }) {
    const {

@@ -1,10 +1,9 @@
-import { NextResponse } from 'next/server'
+import config from '@/config/site'
+import prisma from '@/lib/prisma'
+import Mail from '@/mails/order_notification_owner'
 import { sendMail } from '@persepolis/mail'
 import { render } from '@react-email/render'
-import Mail from '@/mails/order_notification_owner'
-
-import prisma from '@/lib/prisma'
-import config from '@/config/site'
+import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
    try {

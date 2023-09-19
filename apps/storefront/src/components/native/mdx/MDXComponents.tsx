@@ -1,9 +1,8 @@
-import Link from 'next/link'
-import Image from 'next/image'
-
-import ProsCard from '@/components/native/mdx/ProsCard'
 import ConsCard from '@/components/native/mdx/ConsCard'
+import ProsCard from '@/components/native/mdx/ProsCard'
 import Step from '@/components/native/mdx/Step'
+import Image from 'next/image'
+import Link from 'next/link'
 
 function MDXImage({ alt, src }) {
    return (

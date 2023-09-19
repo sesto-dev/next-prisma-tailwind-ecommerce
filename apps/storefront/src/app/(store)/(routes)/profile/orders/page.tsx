@@ -1,15 +1,14 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
-
+import { Card, CardContent } from '@/components/ui/card'
+import { Loader } from '@/components/ui/loader'
 import { useAuthenticated } from '@/hooks/useAuthentication'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+import { UserCombobox } from '../components/switcher'
 import type { OrderColumn } from './components/table'
 import { OrdersTable } from './components/table'
-
-import { useEffect, useState } from 'react'
-import { UserCombobox } from '../components/switcher'
-import { Loader } from '@/components/ui/loader'
-import { Card, CardContent } from '@/components/ui/card'
 
 export default function UserPage() {
    const { authenticated } = useAuthenticated()

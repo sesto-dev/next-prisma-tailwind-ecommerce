@@ -1,5 +1,3 @@
-import { CreditCard, LogOut, PlusCircle, User } from 'lucide-react'
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -12,6 +10,7 @@ import {
    DropdownMenuShortcut,
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { CreditCard, LogOut, PlusCircle, User } from 'lucide-react'
 
 export function UserNav() {
    return (

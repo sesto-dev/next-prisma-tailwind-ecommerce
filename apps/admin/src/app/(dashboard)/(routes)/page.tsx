@@ -1,14 +1,13 @@
-import { CreditCard, DollarSign, Package } from 'lucide-react'
-
-import { Separator } from '@/components/ui/separator'
+import { getGraphRevenue } from '@/actions/get-graph-revenue'
+import { getSalesCount } from '@/actions/get-sales-count'
+import { getStockCount } from '@/actions/get-stock-count'
+import { getTotalRevenue } from '@/actions/get-total-revenue'
 import { Overview } from '@/components/overview'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Heading } from '@/components/ui/heading'
-import { getTotalRevenue } from '@/actions/get-total-revenue'
-import { getSalesCount } from '@/actions/get-sales-count'
-import { getGraphRevenue } from '@/actions/get-graph-revenue'
-import { getStockCount } from '@/actions/get-stock-count'
+import { Separator } from '@/components/ui/separator'
 import { formatter } from '@/lib/utils'
+import { CreditCard, DollarSign, Package } from 'lucide-react'
 
 export default async function DashboardPage() {
    const totalRevenue = await getTotalRevenue()

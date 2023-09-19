@@ -1,9 +1,8 @@
+import prisma from '@/lib/prisma'
 import { format } from 'date-fns'
 
-import prisma from '@/lib/prisma'
-
-import type { PaymentColumn } from './components/columns'
 import { PaymentClient } from './components/client'
+import type { PaymentColumn } from './components/columns'
 
 export default async function PaymentsPage() {
    const payments = await prisma.payment.findMany({

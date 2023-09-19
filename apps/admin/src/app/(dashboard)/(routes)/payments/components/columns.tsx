@@ -1,11 +1,10 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { ColumnDef } from '@tanstack/react-table'
 import { CheckIcon, XIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-
-import Link from 'next/link'
 import { EditIcon } from 'lucide-react'
+import Link from 'next/link'
 
 export type PaymentColumn = {
    id: string

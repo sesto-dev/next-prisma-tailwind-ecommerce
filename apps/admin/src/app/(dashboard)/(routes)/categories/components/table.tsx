@@ -1,14 +1,11 @@
 'use client'
 
-import { useParams, useRouter } from 'next/navigation'
-import { DataTable } from '@/components/ui/data-table'
-
-import { ColumnDef } from '@tanstack/react-table'
-
 import { Button } from '@/components/ui/button'
-
-import Link from 'next/link'
+import { DataTable } from '@/components/ui/data-table'
+import { ColumnDef } from '@tanstack/react-table'
 import { EditIcon } from 'lucide-react'
+import Link from 'next/link'
+import { useParams, useRouter } from 'next/navigation'
 
 export type CategoryColumn = {
    id: string

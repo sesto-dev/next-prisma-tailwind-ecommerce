@@ -1,7 +1,9 @@
+import { Fragment } from 'react'
+
 export default async function DashboardLayout({
    children,
 }: {
    children: React.ReactNode
 }) {
-   return <>{children}</>
+   return <Fragment>{children}</Fragment>
 }

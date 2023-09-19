@@ -1,5 +1,8 @@
 'use client'
 
+import { Spinner } from '@/components/native/icons'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import {
    Card,
    CardContent,
@@ -8,16 +11,13 @@ import {
    CardHeader,
    CardTitle,
 } from '@/components/ui/card'
-import { getCountInCart, getLocalCart, writeLocalCart } from '@/lib/cart'
-import { useState, useEffect } from 'react'
 import { useAuthenticated } from '@/hooks/useAuthentication'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import { getCountInCart, getLocalCart, writeLocalCart } from '@/lib/cart'
 import { useCartContext } from '@/state/Cart'
+import { MinusIcon, PlusIcon, X } from 'lucide-react'
 import Image from 'next/image'
-import { Spinner } from '@/components/native/icons'
-import { X, MinusIcon, PlusIcon } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export const Item = ({ cartItem }) => {
    const { authenticated } = useAuthenticated()

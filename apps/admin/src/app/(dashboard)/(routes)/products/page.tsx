@@ -1,14 +1,13 @@
-import { format } from 'date-fns'
-
-import prisma from '@/lib/prisma'
-import { formatter } from '@/lib/utils'
-import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Heading } from '@/components/ui/heading'
 import { Separator } from '@/components/ui/separator'
+import prisma from '@/lib/prisma'
+import { formatter } from '@/lib/utils'
+import { Plus } from 'lucide-react'
+import Link from 'next/link'
+
 import { ProductsTable } from './components/table'
 import { ProductColumn } from './components/table'
-import Link from 'next/link'
 
 export default async function ProductsPage() {
    const products = await prisma.product.findMany({

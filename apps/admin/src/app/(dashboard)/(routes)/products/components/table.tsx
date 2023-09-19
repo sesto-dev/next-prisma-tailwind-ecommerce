@@ -1,12 +1,11 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-
-import { DataTable } from '@/components/ui/data-table'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { CheckIcon, EditIcon, XIcon } from 'lucide-react'
+import { DataTable } from '@/components/ui/data-table'
 import { ColumnDef } from '@tanstack/react-table'
+import { CheckIcon, EditIcon, XIcon } from 'lucide-react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface ProductsTableProps {
    data: ProductColumn[]

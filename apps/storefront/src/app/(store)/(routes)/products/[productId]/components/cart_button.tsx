@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { useAuthenticated } from '@/hooks/useAuthentication'
 import { getCountInCart, getLocalCart } from '@/lib/cart'
 import { CartContextProvider, useCartContext } from '@/state/Cart'
-import { X, MinusIcon, PlusIcon, ShoppingBasketIcon } from 'lucide-react'
+import { MinusIcon, PlusIcon, ShoppingBasketIcon, X } from 'lucide-react'
 import { useState } from 'react'
 
 export default function CartButton({ product }) {

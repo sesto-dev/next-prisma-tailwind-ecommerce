@@ -1,11 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
-import { ChevronsUpDownIcon } from 'lucide-react'
-
-import { cn, slugify } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-
 import {
    DropdownMenu,
    DropdownMenuContent,
@@ -14,7 +9,9 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ChevronsUpDownIcon } from 'lucide-react'
 import Link from 'next/link'
+import React, { useEffect } from 'react'
 
 export function UserCombobox({ initialValue }) {
    const [open, setOpen] = React.useState(false)

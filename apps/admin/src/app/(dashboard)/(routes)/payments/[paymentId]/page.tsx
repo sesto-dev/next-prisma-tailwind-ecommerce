@@ -1,8 +1,3 @@
-import prisma from '@/lib/prisma'
-
-import { PaymentForm } from './components/payment-form'
-import { Heading } from '@/components/ui/heading'
-import { Separator } from '@/components/ui/separator'
 import {
    Accordion,
    AccordionContent,
@@ -10,12 +5,17 @@ import {
    AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Heading } from '@/components/ui/heading'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import type { PaymentColumn } from '../components/columns'
+import { Separator } from '@/components/ui/separator'
+import prisma from '@/lib/prisma'
 import { formatter } from '@/lib/utils'
 import { format } from 'date-fns'
+
 import { PaymentClient } from '../components/client'
+import type { PaymentColumn } from '../components/columns'
+import { PaymentForm } from './components/payment-form'
 
 export default async function PaymentPage({
    params,

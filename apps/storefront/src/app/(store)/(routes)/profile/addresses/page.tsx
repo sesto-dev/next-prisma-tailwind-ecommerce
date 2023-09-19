@@ -1,22 +1,17 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
-import { UserForm } from '../edit/components/user-form'
-import { Heading } from '@/components/native/heading'
-
-import { useAuthenticated } from '@/hooks/useAuthentication'
-import type { AddressColumn } from './components/columns'
-import { AddressClient } from './components/client'
-
-import { format } from 'date-fns'
-import { useEffect, useState } from 'react'
-import { UserCombobox } from '../components/switcher'
-import { Loader } from '@/components/ui/loader'
-import { Card, CardContent } from '@/components/ui/card'
-import { useUserContext } from '@/state/User'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import { Card, CardContent } from '@/components/ui/card'
+import { Loader } from '@/components/ui/loader'
+import { useAuthenticated } from '@/hooks/useAuthentication'
 import { PlusIcon } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+import { UserCombobox } from '../components/switcher'
+import type { AddressColumn } from './components/table'
+import { AddressTable } from './components/table'
 
 export default function AddressesPage() {
    const { authenticated } = useAuthenticated()
@@ -78,5 +73,5 @@ function AddressSection({ addresses }) {
       postal: address.postalCode,
    }))
 
-   return <AddressClient data={formattedAddresses} />
+   return <AddressTable data={formattedAddresses} />
 }

@@ -1,13 +1,12 @@
 'use client'
 
-import * as React from 'react'
-
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Loader, SmartphoneIcon } from 'lucide-react'
 import { isEmailValid } from '@/lib/regex'
+import { cn } from '@/lib/utils'
+import { Loader, SmartphoneIcon } from 'lucide-react'
+import * as React from 'react'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 

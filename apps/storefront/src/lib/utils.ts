@@ -1,7 +1,7 @@
-import { clsx, type ClassValue } from 'clsx'
+import { type ClassValue, clsx } from 'clsx'
+import { NextResponse } from 'next/server'
 import { twMerge } from 'tailwind-merge'
 import { ZodError } from 'zod'
-import { NextResponse } from 'next/server'
 
 export function cn(...inputs: ClassValue[]) {
    return twMerge(clsx(inputs))

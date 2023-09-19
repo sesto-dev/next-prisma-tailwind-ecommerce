@@ -1,6 +1,7 @@
 import { MainNav } from '@/components/main-nav'
 import { ThemeToggle } from '@/components/theme-toggle'
 import Link from 'next/link'
+
 import { LogoutButton } from './logout-button'
 
 export default async function Navbar() {

@@ -1,14 +1,14 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
-import { UserForm } from './components/user-form'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useAuthenticated } from '@/hooks/useAuthentication'
-
-import { format } from 'date-fns'
-import { useEffect, useState } from 'react'
-import { UserCombobox } from '../components/switcher'
 import { Loader } from '@/components/ui/loader'
+import { useAuthenticated } from '@/hooks/useAuthentication'
+import { format } from 'date-fns'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+import { UserCombobox } from '../components/switcher'
+import { UserForm } from './components/user-form'
 
 export default function UserPage() {
    const { authenticated } = useAuthenticated()

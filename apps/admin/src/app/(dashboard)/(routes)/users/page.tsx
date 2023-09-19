@@ -1,9 +1,7 @@
-import { format } from 'date-fns'
-
-import prisma from '@/lib/prisma'
-import { formatter } from '@/lib/utils'
 import { Heading } from '@/components/ui/heading'
 import { Separator } from '@/components/ui/separator'
+import prisma from '@/lib/prisma'
+
 import { UsersTable } from './components/table'
 import { UserColumn } from './components/table'
 

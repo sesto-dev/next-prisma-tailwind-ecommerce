@@ -1,8 +1,3 @@
-import prisma from '@/lib/prisma'
-
-import { OrderForm } from './components/order-form'
-import { Heading } from '@/components/ui/heading'
-import { Separator } from '@/components/ui/separator'
 import {
    Accordion,
    AccordionContent,
@@ -16,11 +11,11 @@ import {
    CardHeader,
    CardTitle,
 } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { formatter } from '@/lib/utils'
-import { format } from 'date-fns'
+import { Heading } from '@/components/ui/heading'
+import prisma from '@/lib/prisma'
 import Link from 'next/link'
+
+import { OrderForm } from './components/order-form'
 
 const ProductPage = async ({ params }: { params: { orderId: string } }) => {
    const order = await prisma.order.findUnique({

@@ -1,16 +1,8 @@
 'use client'
 
-import * as z from 'zod'
-import { useState } from 'react'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { toast } from 'react-hot-toast'
-import { Trash } from 'lucide-react'
-import { Category } from '@prisma/client'
-import { useParams, useRouter } from 'next/navigation'
-
-import { Input } from '@/components/ui/input'
+import { AlertModal } from '@/components/modals/alert-modal'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
    Form,
    FormControl,
@@ -20,9 +12,9 @@ import {
    FormLabel,
    FormMessage,
 } from '@/components/ui/form'
-import { Separator } from '@/components/ui/separator'
 import { Heading } from '@/components/ui/heading'
-import { AlertModal } from '@/components/modals/alert-modal'
+import ImageUpload from '@/components/ui/image-upload'
+import { Input } from '@/components/ui/input'
 import {
    Select,
    SelectContent,
@@ -30,9 +22,16 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select'
-import ImageUpload from '@/components/ui/image-upload'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Separator } from '@/components/ui/separator'
 import type { ProductWithIncludes } from '@/types/prisma'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Category } from '@prisma/client'
+import { Trash } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
+import * as z from 'zod'
 
 const formSchema = z.object({
    title: z.string().min(1),

@@ -1,9 +1,5 @@
 'use client'
 
-import React, { useEffect } from 'react'
-import { Check, ChevronsUpDown } from 'lucide-react'
-
-import { cn, isVariableValid, slugify } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
    Command,
@@ -12,6 +8,7 @@ import {
    CommandInput,
    CommandItem,
 } from '@/components/ui/command'
+import { Label } from '@/components/ui/label'
 import {
    Popover,
    PopoverContent,
@@ -25,9 +22,10 @@ import {
    SelectValue,
 } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
-
+import { cn, isVariableValid, slugify } from '@/lib/utils'
+import { Check, ChevronsUpDown } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import React, { useEffect } from 'react'
 
 export function SortBy({ initialData }) {
    const router = useRouter()

@@ -1,15 +1,15 @@
 import { ProductGrid, ProductSkeletonGrid } from '@/components/native/Product'
-import { isVariableValid } from '@/lib/utils'
-import prisma from '@/lib/prisma'
-
 import { Heading } from '@/components/native/heading'
+import { Separator } from '@/components/native/separator'
+import prisma from '@/lib/prisma'
+import { isVariableValid } from '@/lib/utils'
+
 import {
    AvailableToggle,
    BrandCombobox,
    CategoriesCombobox,
    SortBy,
 } from './components/options'
-import { Separator } from '@/components/native/separator'
 
 export default async function Products({ searchParams }) {
    const { sort, isAvailable, brand, category, page = 1 } = searchParams ?? null

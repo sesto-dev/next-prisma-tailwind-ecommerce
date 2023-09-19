@@ -1,9 +1,9 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { DataTable } from '@/components/ui/data-table'
 import { ColumnDef } from '@tanstack/react-table'
-import { CheckIcon, XIcon, EditIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { CheckIcon, EditIcon, XIcon } from 'lucide-react'
 import Link from 'next/link'
 
 interface OrderTableProps {

@@ -1,10 +1,10 @@
 'use client'
 
-import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
-
-import Link from 'next/link'
+import { DataTable } from '@/components/ui/data-table'
+import { ColumnDef } from '@tanstack/react-table'
 import { EditIcon } from 'lucide-react'
+import Link from 'next/link'
 
 export type AddressColumn = {
    id: string
@@ -42,3 +42,11 @@ export const columns: ColumnDef<AddressColumn>[] = [
       ),
    },
 ]
+
+interface AddressTableProps {
+   data: AddressColumn[]
+}
+
+export const AddressTable: React.FC<AddressTableProps> = ({ data }) => {
+   return <DataTable searchKey="products" columns={columns} data={data} />
+}

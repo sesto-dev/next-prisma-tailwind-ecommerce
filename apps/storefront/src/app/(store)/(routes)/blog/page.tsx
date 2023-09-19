@@ -1,5 +1,4 @@
 import { BlogPostCard } from '@/components/native/BlogCard'
-
 import prisma from '@/lib/prisma'
 
 export default async function Index() {

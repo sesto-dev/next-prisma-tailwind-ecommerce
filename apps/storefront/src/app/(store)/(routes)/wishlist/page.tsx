@@ -1,12 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-
+import { CartGrid } from '@/app/(store)/(routes)/cart/components/grid'
 import { useAuthenticated } from '@/hooks/useAuthentication'
 import { isVariableValid, validateBoolean } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
-import { CartGrid } from '@/app/(store)/(routes)/cart/components/grid'
 import { useUserContext } from '@/state/User'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function User({}) {
    const { authenticated } = useAuthenticated()

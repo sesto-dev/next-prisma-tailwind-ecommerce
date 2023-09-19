@@ -1,7 +1,5 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
-
 import {
    Card,
    CardContent,
@@ -9,12 +7,12 @@ import {
    CardHeader,
    CardTitle,
 } from '@/components/ui/card'
-
-import Link from 'next/link'
-import { UserCombobox } from '../../components/switcher'
-import { useEffect, useState } from 'react'
-import { useAuthenticated } from '@/hooks/useAuthentication'
 import { Loader } from '@/components/ui/loader'
+import { useAuthenticated } from '@/hooks/useAuthentication'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+import { UserCombobox } from '../../components/switcher'
 
 const ProductPage = ({ params }: { params: { orderId: string } }) => {
    const { authenticated } = useAuthenticated()

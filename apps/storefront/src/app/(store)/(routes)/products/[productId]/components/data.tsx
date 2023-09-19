@@ -1,7 +1,8 @@
 import { Separator } from '@/components/native/separator'
 import { Badge } from '@/components/ui/badge'
-import Link from 'next/link'
 import type { ProductWithIncludes } from '@/types/prisma'
+import Link from 'next/link'
+
 import CartButton from './cart_button'
 import WishlistButton from './wishlist_button'
 

@@ -2,7 +2,11 @@ import prisma from '@/lib/prisma'
 
 import { AddressForm } from './components/address-form'
 
-const Page = async ({ params }: { params: { addressId: string } }) => {
+export default async function AddressPage({
+   params,
+}: {
+   params: { addressId: string }
+}) {
    const address = await prisma.address.findUnique({
       where: {
          id: params.addressId,
@@ -17,5 +21,3 @@ const Page = async ({ params }: { params: { addressId: string } }) => {
       </div>
    )
 }
-
-export default Page

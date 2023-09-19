@@ -1,8 +1,7 @@
-import { Inter } from 'next/font/google'
-
 import { ModalProvider } from '@/providers/modal-provider'
-import { ToastProvider } from '@/providers/toast-provider'
 import { ThemeProvider } from '@/providers/theme-provider'
+import { ToastProvider } from '@/providers/toast-provider'
+import { Inter } from 'next/font/google'
 
 import './globals.css'
 

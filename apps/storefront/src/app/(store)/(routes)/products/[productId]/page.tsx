@@ -1,11 +1,11 @@
-import Link from 'next/link'
-import { ChevronRightIcon } from 'lucide-react'
-
+import Carousel from '@/components/native/Carousel'
 import prisma from '@/lib/prisma'
 import { isVariableValid } from '@/lib/utils'
-import { DataSection } from './components/data'
-import Carousel from '@/components/native/Carousel'
+import { ChevronRightIcon } from 'lucide-react'
 import type { Metadata, ResolvingMetadata } from 'next'
+import Link from 'next/link'
+
+import { DataSection } from './components/data'
 
 type Props = {
    params: { productId: string }

@@ -1,7 +1,7 @@
-import { isVariableValid } from '@/lib/utils'
-import React, { createContext, useState, useEffect, useContext } from 'react'
-import { useUserContext } from '@/state/User'
 import { getLocalCart, writeLocalCart } from '@/lib/cart'
+import { isVariableValid } from '@/lib/utils'
+import { useUserContext } from '@/state/User'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 const CartContext = createContext({
    cart: null,
