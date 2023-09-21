@@ -1,11 +1,11 @@
-import { serialize } from 'next-mdx-remote/serialize'
-import { MDXRemote } from 'next-mdx-remote'
 import MDXComponents from '@/components/native/mdx/MDXComponents'
-import prisma from '@/lib/prisma'
-import { parseISO, format } from 'date-fns'
-import Link from 'next/link'
-import Image from 'next/image'
 import { Separator } from '@/components/native/separator'
+import prisma from '@/lib/prisma'
+import { format, parseISO } from 'date-fns'
+import { MDXRemote } from 'next-mdx-remote'
+import { serialize } from 'next-mdx-remote/serialize'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default async function Blog({ params }: { params: { slug: string } }) {
    const blog = await prisma.blog.findUnique({
@@ -22,15 +22,11 @@ export default async function Blog({ params }: { params: { slug: string } }) {
 
    const mdx = await serialize(blog.content)
 
-   const { title, description, image, slug } = blog
-
    return (
-      <>
-         <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
-            <Content blog={blog} mdx={mdx} />
-            <Recomendations recommendations={recommendations} />
-         </div>
-      </>
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
+         <Content blog={blog} mdx={mdx} />
+         <Recomendations recommendations={recommendations} />
+      </div>
    )
 }
 
@@ -41,7 +37,7 @@ function Content({ blog, mdx }) {
       <div className="rounded-lg bg-white p-6 text-justify text-neutral-900 dark:bg-neutral-800 dark:text-neutral-200 md:col-span-3">
          <h1 className="mb-1 text-3xl font-medium">{title}</h1>
          <p className="mt-2 text-sm font-medium text-neutral-400">
-            Last Updated @ {format(parseISO(updatedAt), 'MMMM dd, yyyy')}
+            Last Updated @Date
          </p>
          <Separator />
          <MDXRemote lazy {...mdx} components={MDXComponents} />
@@ -74,8 +70,7 @@ function Recomendations({ recommendations }) {
                                  {title}
                               </h5>
                               <p className="block text-sm text-neutral-700 dark:text-neutral-400">
-                                 <span>{author?.name}, </span>
-                                 {format(parseISO(createdAt), 'MMMM dd, yyyy')}
+                                 <span>{author?.name}, Date</span>
                               </p>
                            </div>
                         </div>

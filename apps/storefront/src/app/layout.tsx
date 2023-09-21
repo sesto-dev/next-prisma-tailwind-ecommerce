@@ -8,8 +8,15 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-   title: 'Dashboard',
-   description: 'E-Commerce Dashboard',
+   title: 'Store',
+   description: 'E-Commerce Store',
+   keywords: ['E-Commerce', 'Store', 'Shop'],
+   authors: [
+      { name: 'Amirhossein Mohammadi', url: 'https://github.com/accretence' },
+   ],
+   colorScheme: 'dark',
+   creator: 'Amirhossein Mohammadi',
+   publisher: 'Amirhossein Mohammadi',
 }
 
 export default async function RootLayout({
