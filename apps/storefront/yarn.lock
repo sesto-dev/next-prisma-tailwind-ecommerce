@@ -410,10 +410,10 @@
   resolved "https://registry.yarnpkg.com/@one-ini/wasm/-/wasm-0.1.1.tgz#6013659736c9dbfccc96e8a9c2b3de317df39323"
   integrity sha512-XuySG1E38YScSJoMlqovLru4KTUNSjgVTIjyh7qMX6aNN5HY5Ct5LhRJdxO79JtTzKfzV/bnWpz+zquYrISsvw==
 
-"@persepolis/database@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@persepolis/database/-/database-1.0.7.tgz#ee7c050bba7d4eb421b9617ffd06ba12d522c4bc"
-  integrity sha512-26VaK2rpldtYUByrMiGgmO4r+b9jGMXylWycr9G0FahFChY5uGQoOxaglqEZF1LDflbW1Y7D52J20l08DR6pYw==
+"@persepolis/database@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@persepolis/database/-/database-1.0.8.tgz#89dfafd4248a4e4913cbf8b64ab3d594a980fd75"
+  integrity sha512-c9W8cVxeeipHTfwhoVv/Y7B33geRQXiZXvdX+SyCQD7+e+aACovKmS4YmIn1htDewrMMmjCSkoynmtpZpOBA3A==
 
 "@persepolis/mail@^1.0.7":
   version "1.0.7"

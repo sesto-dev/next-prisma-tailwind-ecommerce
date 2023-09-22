@@ -9,19 +9,36 @@ export async function POST(req: Request) {
          return new NextResponse('Unauthorized', { status: 401 })
       }
 
-      const { isEmailSubscribed, isPhoneSubscribed } = await req.json()
-
       const user = await prisma.user.update({
          where: {
             id: userId,
          },
          data: {
-            isPhoneSubscribed,
-            isEmailSubscribed,
+            isEmailSubscribed: true,
          },
       })
 
-      return NextResponse.json(user)
+      return NextResponse
+   } catch (error) {
+      const message = error.message
+      return new NextResponse('Internal error', { status: 500 })
+   }
+}
+
+export async function DELETE(req: Request) {
+   try {
+      const { emailUnsubscribeToken } = await req.json()
+
+      const user = await prisma.user.update({
+         where: {
+            emailUnsubscribeToken,
+         },
+         data: {
+            isEmailSubscribed: false,
+         },
+      })
+
+      return NextResponse
    } catch (error) {
       const message = error.message
       return new NextResponse('Internal error', { status: 500 })
