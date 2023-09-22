@@ -18,7 +18,10 @@ export async function POST(req: Request) {
          },
       })
 
-      return NextResponse
+      return NextResponse.json({
+         email: user.email,
+         isEmailSubscribed: user.isEmailSubscribed,
+      })
    } catch (error) {
       const message = error.message
       return new NextResponse('Internal error', { status: 500 })
@@ -38,7 +41,10 @@ export async function DELETE(req: Request) {
          },
       })
 
-      return NextResponse
+      return NextResponse.json({
+         email: user.email,
+         isEmailSubscribed: user.isEmailSubscribed,
+      })
    } catch (error) {
       const message = error.message
       return new NextResponse('Internal error', { status: 500 })

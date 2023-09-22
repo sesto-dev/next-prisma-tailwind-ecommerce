@@ -23,12 +23,18 @@ export async function GET(req: Request) {
             },
             addresses: true,
             wishlist: true,
-            notifications: true,
-            errors: true,
          },
       })
 
-      return NextResponse.json(user)
+      return NextResponse.json({
+         phone: user.phone,
+         email: user.email,
+         name: user.name,
+         birthday: user.birthday,
+         addresses: user.addresses,
+         wishlist: user.wishlist,
+         cart: user.cart,
+      })
    } catch (error) {
       console.error('[PROFILE_GET]', error)
       return new NextResponse('Internal error', { status: 500 })

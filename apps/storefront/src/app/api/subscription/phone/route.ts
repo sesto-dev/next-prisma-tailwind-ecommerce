@@ -18,7 +18,10 @@ export async function POST(req: Request) {
          },
       })
 
-      return NextResponse
+      return NextResponse.json({
+         phone: user.phone,
+         isPhoneSubscribed: user.isPhoneSubscribed,
+      })
    } catch (error) {
       const message = error.message
       return new NextResponse('Internal error', { status: 500 })
@@ -42,7 +45,10 @@ export async function DELETE(req: Request) {
          },
       })
 
-      return NextResponse
+      return NextResponse.json({
+         phone: user.phone,
+         isPhoneSubscribed: user.isPhoneSubscribed,
+      })
    } catch (error) {
       const message = error.message
       return new NextResponse('Internal error', { status: 500 })
