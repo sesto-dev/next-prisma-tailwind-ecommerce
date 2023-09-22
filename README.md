@@ -14,10 +14,11 @@ Welcome to the open-source Next.js E-Commerce Storefront with Admin Panel projec
 ## 🥂 Features
 
 - [x] [**Next.js 13**](https://nextjs.org) App Router and React Server Components.
-- [x] Admin dashboard with stores, products, orders, subscriptions, and payments.
+- [x] Custom dynamic `Sitemap.xml` generation.
+- [x] Admin dashboard with products, orders, and payments.
 - [x] File uploads using `next-cloudinary`.
 - [x] Authentication using `middleware.ts` and `httpOnly` cookies.
-- [x] Storefront with products, categories, and subcategories.
+- [x] Storefront with blog, products, and categories.
 - [x] Database-Stored blogs powered by **MDX** templates.
 - [x] Email verification and invoices using [react-email-tailwind-templates](https://github.com/accretence/react-email-tailwind-templates).
 - [x] [**TailwindCSS**](https://tailwindcss.com/) for utility-first CSS.
@@ -92,4 +93,4 @@ Follow the deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 
 This project is MIT-licensed and is free to use and modify for your own projects. Check the [LICENSE](./LICENSE) file for details.
 
-It was created by [Amirhossein Mohammadi](https://github.com/accretence).
+Created by [Amirhossein Mohammadi](https://github.com/accretence).

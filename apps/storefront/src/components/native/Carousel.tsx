@@ -1,39 +1,68 @@
 'use client'
 
-import { Card, CardContent } from '@/components/ui/card'
-import { Carousel as CarouselImport } from 'flowbite-react'
-import { Suspense } from 'react'
+import { cn } from '@/lib/utils'
+import Autoplay from 'embla-carousel-autoplay'
+import useEmblaCarousel from 'embla-carousel-react'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
-import { Loader } from '../ui/loader'
+export default function Carousel({ images }: { images: string[] }) {
+   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()])
 
-export default function Carousel({ images }) {
+   const [selectedIndex, setSelectedIndex] = useState(0)
+
+   useEffect(() => {
+      function selectHandler() {
+         // selectedScrollSnap gives us the current selected index.
+         const index = emblaApi?.selectedScrollSnap()
+         setSelectedIndex(index || 0)
+      }
+
+      emblaApi?.on('select', selectHandler)
+      // cleanup
+      return () => {
+         emblaApi?.off('select', selectHandler)
+      }
+   }, [emblaApi])
+
    return (
-      <Card>
-         <CardContent className="p-0">
-            <Suspense fallback={<Loading />}>
-               <CarouselImport className="h-[70vh]">
-                  {images.map((image: any) => (
-                     <img
-                        className="rounded-lg h-full"
-                        key={image}
-                        alt="..."
-                        src={image}
-                        style={{ objectFit: 'cover' }}
-                     />
-                  ))}
-               </CarouselImport>
-            </Suspense>
-         </CardContent>
-      </Card>
+      <>
+         <div className="overflow-hidden rounded-lg" ref={emblaRef}>
+            <div className="flex">
+               {images.map((src, i) => (
+                  <div className="relative h-96 flex-[0_0_100%]" key={i}>
+                     <Image src={src} fill className="object-cover" alt="" />
+                  </div>
+               ))}
+            </div>
+         </div>
+         <Dots itemsLength={images.length} selectedIndex={selectedIndex} />
+      </>
    )
 }
 
-function Loading() {
+type Props = {
+   itemsLength: number
+   selectedIndex: number
+}
+const Dots = ({ itemsLength, selectedIndex }: Props) => {
+   const arr = new Array(itemsLength).fill(0)
    return (
-      <div className="h-[70vh]">
-         <div className="h-full">
-            <Loader />
-         </div>
+      <div className="flex gap-1 justify-center -translate-y-8">
+         {arr.map((_, index) => {
+            const selected = index === selectedIndex
+            return (
+               <div
+                  className={cn({
+                     'h-3 w-3 rounded-full transition-all duration-300 bg-primary-foreground':
+                        true,
+                     // tune down the opacity if slide is not selected
+                     'h-3 w-3 opacity-50': !selected,
+                  })}
+                  key={index}
+               />
+            )
+         })}
       </div>
    )
 }
