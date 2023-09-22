@@ -1,6 +1,4 @@
 import { ImageSkeleton } from '@/components/native/icons'
-import Image from 'next/image'
-import Link from 'next/link'
 import {
    Card,
    CardContent,
@@ -9,6 +7,8 @@ import {
    CardHeader,
    CardTitle,
 } from '@/components/ui/card'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export function BlogPostGrid({ blogs }) {
    return (
@@ -43,6 +43,7 @@ export function BlogPostCard({ post }) {
                      src={image}
                      alt="product image"
                      fill
+                     sizes="(min-width: 1000px) 30vw, 50vw"
                      style={{ objectFit: 'cover' }}
                   />
                </div>

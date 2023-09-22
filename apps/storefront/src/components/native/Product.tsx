@@ -1,8 +1,5 @@
-import Link from 'next/link'
-
-import Image from 'next/image'
 import { ImageSkeleton } from '@/components/native/icons'
-import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import {
    Card,
    CardContent,
@@ -11,9 +8,9 @@ import {
    CardHeader,
    CardTitle,
 } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { ProductWithIncludes } from '@/types/prisma'
-import { TagIcon } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export const ProductGrid = ({
    products,
@@ -68,6 +65,7 @@ export const Product = ({ product }: { product: ProductWithIncludes }) => {
                      src={product?.images[0]}
                      alt="product image"
                      fill
+                     sizes="(min-width: 1000px) 30vw, 50vw"
                      style={{ objectFit: 'cover' }}
                   />
                </div>

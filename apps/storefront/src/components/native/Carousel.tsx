@@ -3,6 +3,7 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Carousel as CarouselImport } from 'flowbite-react'
 import { Suspense } from 'react'
+
 import { Loader } from '../ui/loader'
 
 export default function Carousel({ images }) {

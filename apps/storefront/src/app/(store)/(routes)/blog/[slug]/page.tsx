@@ -61,6 +61,7 @@ function Recomendations({ recommendations }) {
                               src={image}
                               alt="Blog Post Cover"
                               fill
+                              sizes="(min-width: 1000px) 30vw, 50vw"
                               style={{ objectFit: 'cover' }}
                            />
                         </div>

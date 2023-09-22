@@ -1,11 +1,10 @@
 'use client'
 
-import { CldUploadWidget } from 'next-cloudinary'
-import { useEffect, useState } from 'react'
-
 import { Button } from '@/components/ui/button'
-import Image from 'next/image'
 import { ImagePlus, Trash } from 'lucide-react'
+import { CldUploadWidget } from 'next-cloudinary'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 interface ImageUploadProps {
    disabled?: boolean
@@ -52,7 +51,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                         <Trash className="h-4" />
                      </Button>
                   </div>
-                  <Image fill className="object-cover" alt="Image" src={url} />
+                  <Image
+                     fill
+                     sizes="(min-width: 1000px) 30vw, 50vw"
+                     className="object-cover"
+                     alt="Image"
+                     src={url}
+                  />
                </div>
             ))}
          </div>
@@ -68,9 +73,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                      disabled={disabled}
                      variant="secondary"
                      onClick={onClick}
+                     className="flex gap-2"
                   >
-                     <ImagePlus className="h-4 mr-2" />
-                     Upload an Image
+                     <ImagePlus className="h-4" />
+                     <p>Upload an Image</p>
                   </Button>
                )
             }}

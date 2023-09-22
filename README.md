@@ -7,45 +7,89 @@
 <a href="https://admin.accretence.com">Admin Panel</a>
 </div>
 
-## Introduction
+## 👋 Introduction
 
 Welcome to the open-source Next.js E-Commerce Storefront with Admin Panel project! This project is built with TypeScript, Tailwind CSS, and Prisma, providing a powerful and flexible solution for building and managing your e-commerce website.
 
-## Features
+## 🥂 Features
 
--  **Next.js Framework**: A popular React framework for building server-rendered React applications.
--  **TypeScript**: Strongly typed codebase for improved maintainability.
--  **Tailwind CSS**: A utility-first CSS framework for rapidly building custom designs.
--  **Prisma**: An open-source database toolkit for Node.js that simplifies database access with type-safe queries.
--  **E-Commerce Functionality**: Implement and manage product listings, shopping cart, and orders.
--  **Admin Panel**: A user-friendly admin panel for managing products, orders, and customers.
--  **Authentication**: Secure user authentication for both customers and administrators.
--  **Responsive Design**: Mobile-friendly storefront for an optimal shopping experience.
+- [x] [**Next.js 13**](https://nextjs.org) App Router and React Server Components.
+- [x] Admin dashboard with stores, products, orders, subscriptions, and payments.
+- [x] File uploads using `next-cloudinary`.
+- [x] Authentication using `middleware.ts` and `httpOnly` cookies.
+- [x] Storefront with products, categories, and subcategories.
+- [x] Database-Stored blogs powered by **MDX** templates.
+- [x] Email verification and invoices using [react-email-tailwind-templates](https://github.com/accretence/react-email-tailwind-templates).
+- [x] [**TailwindCSS**](https://tailwindcss.com/) for utility-first CSS.
+- [x] UI built with [**Radix**](https://www.radix-ui.com/) and stunning UI components, all thanks to [**shadcn/ui**](https://ui.shadcn.com/).
+- [x] Type-Validation with **Zod**.
+- [x] [**Next Metadata API**](https://nextjs.org/docs/api-reference/metadata) for SEO handling.
+- [ ] Comprehensive implementations for i18n.
 
-## Development
 
-Navigate to each of 2 apps inside the `apps` folder and go steps below:
+## 🔐 Authentication
 
-#### Install dependencies
+The authentication is handled using JWT tokens stored in cookies and verified inside the `middleware.ts` file. The middleware function takes in the HTTP request, reads the `token` cookie and if the JWT is successfully verified, it sets the `X-USER-ID` header with the userId as the value, otherwise the request is sent back with 401 status.
+
+## 👁‍🗨 Environment variables
+
+Environment variables are stored in `.env` files. By default the `.env.example` file is included in source control and contains
+settings and defaults to get the app running. Any secrets or local overrides of these values should be placed in a
+`.env` file, which is ignored from source control.
+
+Remember, never commit and store `.env` in the source control, just only `.env.example` without any data specified.
+
+You can [read more about environment variables here](https://nextjs.org/docs/basic-features/environment-variables).
+
+## 🏃‍♂️ Getting Started Locally
+
+Clone the repository.
+
+```bash
+git clone https://github.com/accretence/next-prisma-tailwind-ecommerce
+```
+
+Navigate to each folder in the `apps` folder and and set the variables.
+
+```sh
+cp .env.example .env
+```
+
+Get all dependencies sorted.
 
 ```sh
 yarn install
 ```
 
-#### Build and run packages
+Bring your database to life with pushing the database schema.
+
+```bash
+yarn db:push
+```
 
 ```sh
 yarn dev
 ```
 
-## Authentication
+## 🔑 Database
 
-The authentication is handled using JWT tokens stored in cookies and verified inside the `middleware.ts` file. The middleware function takes in the HTTP request, reads the `token` cookie and if the JWT is successfully verified, it sets the `X-USER-ID` header with the userId as the value, otherwise the request is sent back with 401 status.
+Prisma ORM can use any PostgreSQL database. [Supabase is the easiest to work with.](https://www.prisma.io/docs/guides/database/supabase) Simply set `DATABASE_URL` in your `.env` file to work.
 
-## Authors
+### `yarn db`
 
--  Amirhossein Mohammadi ([@accretence](https://accretence.com))
+This project exposes a package.json script for accessing prisma via `yarn db:<command>`. You should always try to use this script when interacting with prisma locally.
 
-## License
+### Making changes to the database schema
 
-MIT License
+Make changes to your database by modifying `packages/database/prisma/schema.prisma`.
+
+
+## 🛸 How to Deploy the Project
+
+Follow the deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+
+## 📄 License
+
+This project is MIT-licensed and is free to use and modify for your own projects. Check the [LICENSE](./LICENSE) file for details.
+
+It was created by [Amirhossein Mohammadi](https://github.com/accretence).

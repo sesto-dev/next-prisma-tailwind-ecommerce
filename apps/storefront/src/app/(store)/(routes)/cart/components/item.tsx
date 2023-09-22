@@ -232,6 +232,7 @@ export const Item = ({ cartItem }) => {
                      src={product?.images[0]}
                      alt="product image"
                      fill
+                     sizes="(min-width: 1000px) 30vw, 50vw"
                      style={{ objectFit: 'cover' }}
                   />
                </Link>

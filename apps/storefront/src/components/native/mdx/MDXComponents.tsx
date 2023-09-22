@@ -11,8 +11,8 @@ function MDXImage({ alt, src }) {
             alt={alt}
             className="mx-auto rounded-lg"
             src={src}
-            height="200"
-            width="400"
+            fill
+            sizes="(min-width: 1000px) 30vw, 50vw"
          />
       </div>
    )
