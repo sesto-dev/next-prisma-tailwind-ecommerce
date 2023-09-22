@@ -1,13 +1,5 @@
 'use client'
 
-import {
-   LogOutIcon,
-   HeartIcon,
-   UserIcon,
-   ListOrderedIcon,
-   CreditCardIcon,
-   MapPinIcon,
-} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
    DropdownMenu,
@@ -19,8 +11,16 @@ import {
    DropdownMenuShortcut,
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import Link from 'next/link'
+import {
+   CreditCardIcon,
+   HeartIcon,
+   ListOrderedIcon,
+   LogOutIcon,
+   MapPinIcon,
+   UserIcon,
+} from 'lucide-react'
 import { ShoppingBasketIcon } from 'lucide-react'
+import Link from 'next/link'
 
 export function UserNav() {
    async function onLogout() {

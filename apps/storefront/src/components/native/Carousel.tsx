@@ -13,13 +13,12 @@ export default function Carousel({ images }: { images: string[] }) {
 
    useEffect(() => {
       function selectHandler() {
-         // selectedScrollSnap gives us the current selected index.
          const index = emblaApi?.selectedScrollSnap()
          setSelectedIndex(index || 0)
       }
 
       emblaApi?.on('select', selectHandler)
-      // cleanup
+
       return () => {
          emblaApi?.off('select', selectHandler)
       }
