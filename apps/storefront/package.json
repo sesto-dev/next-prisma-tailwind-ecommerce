@@ -1,6 +1,9 @@
 {
    "name": "next-prisma-tailwind-ecommerce",
-   "author": "@accretence",
+   "author": {
+      "name": "Amirhossein Mohammadi",
+      "url": "https://github.com/accretence"
+   },
    "license": "MIT",
    "scripts": {
       "yarn": "yarn",
@@ -8,6 +11,7 @@
       "build": "next build",
       "start": "next start",
       "lint": "next lint",
+      "prepare": "husky install",
       "postinstall": "prisma generate",
       "update": "npx npm-check-updates -u",
       "db:generate": "npx prisma generate",
