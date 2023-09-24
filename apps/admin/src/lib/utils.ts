@@ -44,11 +44,11 @@ export function slugify(str) {
    str = str.toLowerCase()
 
    // Remove accents, swap ñ for n, etc
-   var from =
+   const from =
       'ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;'
-   var to =
+   const to =
       'AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------'
-   for (var i = 0, l = from.length; i < l; i++) {
+   for (let i = 0, l = from.length; i < l; i++) {
       str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i))
    }
 

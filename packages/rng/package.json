@@ -1,0 +1,34 @@
+{
+   "name": "@persepolis/rng",
+   "version": "0.0.1",
+   "description": "RNG Package.",
+   "main": "dist/index.js",
+   "scripts": {
+      "yarn": "yarn",
+      "publish": "npm publish --access public",
+      "build": "tsc",
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Accretence/next-tailwind-portfolio.git"
+   },
+   "files": [
+      "dist"
+   ],
+   "author": {
+      "name": "Amirhossein Mohammadi",
+      "url": "https://github.com/accretence"
+    },
+   "license": "MIT",
+   "bugs": {
+      "url": "https://github.com/Accretence/next-tailwind-portfolio/issues"
+   },
+   "homepage": "https://github.com/Accretence/next-tailwind-portfolio#readme",
+   "devDependencies": {
+      "typescript": "^5.2.2"
+   },
+   "dependencies": {
+      "@types/node": "^20.6.2"
+   }
+}

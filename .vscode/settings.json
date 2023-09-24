@@ -6,5 +6,5 @@
       "**/dist": true,
       "**/yarn.lock": true
    },
-   "eslint.workingDirectories": ["./apps/storefront", "./apps/admin"]
+   "eslint.workingDirectories": ["./apps/storefront", "./apps/admin", "./apps/storefront/.react-email"]
 }
