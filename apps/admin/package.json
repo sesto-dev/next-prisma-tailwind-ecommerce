@@ -15,7 +15,6 @@
    },
    "dependencies": {
       "@hookform/resolvers": "^3.3.1",
-      "@persepolis/database": "^1.0.7",
       "@persepolis/mail": "^1.0.7",
       "@persepolis/ui": "^0.1.9",
       "@persepolis/zarinpal": "^0.1.0",
@@ -68,8 +67,5 @@
       "tailwindcss": "3.3.3",
       "tailwindcss-animate": "^1.0.7",
       "typescript": "5.2.2"
-   },
-   "prisma": {
-      "schema": "node_modules/@persepolis/database/prisma/schema.prisma"
    }
 }

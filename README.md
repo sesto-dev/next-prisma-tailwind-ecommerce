@@ -13,20 +13,19 @@ Welcome to the open-source Next.js E-Commerce Storefront with Admin Panel projec
 
 ## 🥂 Features
 
-- [x] [**Next.js 13**](https://nextjs.org) App Router and React Server Components.
-- [x] Custom dynamic `Sitemap.xml` generation.
-- [x] Admin dashboard with products, orders, and payments.
-- [x] File uploads using `next-cloudinary`.
-- [x] Authentication using `middleware.ts` and `httpOnly` cookies.
-- [x] Storefront with blog, products, and categories.
-- [x] Database-Stored blogs powered by **MDX** templates.
-- [x] Email verification and invoices using [react-email-tailwind-templates](https://github.com/accretence/react-email-tailwind-templates).
-- [x] [**TailwindCSS**](https://tailwindcss.com/) for utility-first CSS.
-- [x] UI built with [**Radix**](https://www.radix-ui.com/) and stunning UI components, all thanks to [**shadcn/ui**](https://ui.shadcn.com/).
-- [x] Type-Validation with **Zod**.
-- [x] [**Next Metadata API**](https://nextjs.org/docs/api-reference/metadata) for SEO handling.
-- [ ] Comprehensive implementations for i18n.
-
+-  [x] [**Next.js 13**](https://nextjs.org) App Router and React Server Components.
+-  [x] Custom dynamic `Sitemap.xml` generation.
+-  [x] Admin dashboard with products, orders, and payments.
+-  [x] File uploads using `next-cloudinary`.
+-  [x] Authentication using `middleware.ts` and `httpOnly` cookies.
+-  [x] Storefront with blog, products, and categories.
+-  [x] Database-Stored blogs powered by **MDX** templates.
+-  [x] Email verification and invoices using [react-email-tailwind-templates](https://github.com/accretence/react-email-tailwind-templates).
+-  [x] [**TailwindCSS**](https://tailwindcss.com/) for utility-first CSS.
+-  [x] UI built with [**Radix**](https://www.radix-ui.com/) and stunning UI components, all thanks to [**shadcn/ui**](https://ui.shadcn.com/).
+-  [x] Type-Validation with **Zod**.
+-  [x] [**Next Metadata API**](https://nextjs.org/docs/api-reference/metadata) for SEO handling.
+-  [ ] Comprehensive implementations for i18n.
 
 ## 🔐 Authentication
 
@@ -82,8 +81,7 @@ This project exposes a package.json script for accessing prisma via `yarn db:<co
 
 ### Making changes to the database schema
 
-Make changes to your database by modifying `packages/database/prisma/schema.prisma`.
-
+Make changes to your database by modifying `prisma/schema.prisma`.
 
 ## 🛸 How to Deploy the Project
 
