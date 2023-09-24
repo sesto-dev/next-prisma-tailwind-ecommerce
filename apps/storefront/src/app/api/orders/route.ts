@@ -1,6 +1,6 @@
 import config from '@/config/site'
+import Mail from '@/emails/order_notification_owner'
 import prisma from '@/lib/prisma'
-import Mail from '@/mails/order_notification_owner'
 import { sendMail } from '@persepolis/mail'
 import { render } from '@react-email/render'
 import { NextResponse } from 'next/server'
