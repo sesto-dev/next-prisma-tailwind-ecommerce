@@ -374,6 +374,32 @@
     nodemailer "^6.9.4"
     react "^18.2.0"
 
+"@persepolis/regex@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@persepolis/regex/-/regex-0.0.1.tgz#f33b74d2977f6c090474a27dc5f1a226dbf39780"
+  integrity sha512-+oCYkvqqhTnT7KpNe9+fdalfzhKydxVsRuraakFleXpDafRywDL1+BXC1UMsIKzcPlPw3LcnVN5UEpvtPKUjhA==
+  dependencies:
+    "@types/node" "^20.6.2"
+
+"@persepolis/rng@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@persepolis/rng/-/rng-0.0.1.tgz#2e8e4dcca6eeb4d623b21182a939ae821b22c7b8"
+  integrity sha512-ynEfK7/LaFO8zdacF46Ba0W/xuTpIHl5rnVcF4Zkgk2vGO9zBGFy/8juYh7mEDA9vx0ZmaC+SSTMPa4ROIKNWg==
+  dependencies:
+    "@types/node" "^20.6.2"
+
+"@persepolis/slugify@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@persepolis/slugify/-/slugify-0.0.1.tgz#3e96d0feb6190d27319f097ef878688252957ce0"
+  integrity sha512-7Sq/TdIaVvg9Tjvj76vDeRaqw+0ICnxhqEjVO1wLEy+J+zF9vuq5g9xZT4wOw79UeL2rP1LN4YJCG3Ce6tbAXQ==
+
+"@persepolis/sms@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@persepolis/sms/-/sms-0.0.1.tgz#1f42f915820b2ea43d83abf840d564362b290883"
+  integrity sha512-HAi6sf1FJqQ9rAedJ2q4kqhdkn2pIbda9vz47YX40aTQmrPPR4adwmSAP85M3o4sYrIWdGEQ2VlmAMvbkybweQ==
+  dependencies:
+    "@types/node" "^20.6.2"
+
 "@persepolis/ui@^0.1.9":
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/@persepolis/ui/-/ui-0.1.9.tgz#210809f1cf76d6d0b27a24483675920c243c6b22"
@@ -1249,6 +1275,11 @@
   version "20.6.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.6.2.tgz#a065925409f59657022e9063275cd0b9bd7e1b12"
   integrity sha512-Y+/1vGBHV/cYk6OI1Na/LHzwnlNCAfU3ZNGrc1LdRe/LAIbdDPTTv/HU3M7yXN448aTVDq3eKRm2cg7iKLb8gw==
+
+"@types/node@^20.6.2":
+  version "20.6.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.6.5.tgz#4c6a79adf59a8e8193ac87a0e522605b16587258"
+  integrity sha512-2qGq5LAOTh9izcc0+F+dToFigBWiK1phKPt7rNhOqJSr35y8rlIBjDwGtFSgAI6MGIhjwOVNSQZVdJsZJ2uR1w==
 
 "@types/prop-types@*":
   version "15.7.5"

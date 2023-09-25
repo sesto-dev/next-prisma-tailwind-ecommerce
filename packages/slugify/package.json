@@ -1,7 +1,7 @@
 {
-   "name": "@persepolis/regex",
-   "version": "0.0.2",
-   "description": "Regex Package.",
+   "name": "@persepolis/slugify",
+   "version": "0.0.1",
+   "description": "Slugify Package.",
    "main": "dist/index.js",
    "scripts": {
       "yarn": "yarn",

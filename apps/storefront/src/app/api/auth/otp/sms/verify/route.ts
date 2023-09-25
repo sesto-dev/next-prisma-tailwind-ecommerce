@@ -9,11 +9,11 @@ export async function POST(req: NextRequest) {
       const expiryMinutes = 30 * 24 * 60
       const tokenMaxAge = expiryMinutes * 60
 
-      const { email, OTP, cart } = await req.json()
+      const { phone, OTP, cart } = await req.json()
 
       const user = await prisma.user.update({
-         where: { email: email.toString().toLowerCase(), OTP },
-         data: { isEmailVerified: true },
+         where: { phone: phone.toString().toLowerCase(), OTP },
+         data: { isPhoneVerified: true },
       })
 
       if (cart?.items?.length > 0) {

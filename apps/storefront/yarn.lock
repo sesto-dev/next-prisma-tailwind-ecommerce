@@ -420,6 +420,30 @@
     nodemailer "^6.9.4"
     react "^18.2.0"
 
+"@persepolis/regex@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@persepolis/regex/-/regex-0.0.2.tgz#6347dcb59499889a193c341883f67107e5bc8f3c"
+  integrity sha512-imnyZ9F9luXjPG9b5HEGrcPiQD1ZD2aXtpgJ2sJ0BSz1G14xNS13dtma8EjW74Db4m2an6J8VyvPvDTftralrw==
+
+"@persepolis/rng@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@persepolis/rng/-/rng-0.0.1.tgz#2e8e4dcca6eeb4d623b21182a939ae821b22c7b8"
+  integrity sha512-ynEfK7/LaFO8zdacF46Ba0W/xuTpIHl5rnVcF4Zkgk2vGO9zBGFy/8juYh7mEDA9vx0ZmaC+SSTMPa4ROIKNWg==
+  dependencies:
+    "@types/node" "^20.6.2"
+
+"@persepolis/slugify@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@persepolis/slugify/-/slugify-0.0.1.tgz#3e96d0feb6190d27319f097ef878688252957ce0"
+  integrity sha512-7Sq/TdIaVvg9Tjvj76vDeRaqw+0ICnxhqEjVO1wLEy+J+zF9vuq5g9xZT4wOw79UeL2rP1LN4YJCG3Ce6tbAXQ==
+
+"@persepolis/sms@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@persepolis/sms/-/sms-0.0.1.tgz#1f42f915820b2ea43d83abf840d564362b290883"
+  integrity sha512-HAi6sf1FJqQ9rAedJ2q4kqhdkn2pIbda9vz47YX40aTQmrPPR4adwmSAP85M3o4sYrIWdGEQ2VlmAMvbkybweQ==
+  dependencies:
+    "@types/node" "^20.6.2"
+
 "@prisma/client@^5.3.1":
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/@prisma/client/-/client-5.3.1.tgz#fc7fc2d91e814cc4fe18a4bc5e78bf851c26985e"
@@ -1349,6 +1373,11 @@
   version "0.7.31"
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
+
+"@types/node@^20.6.2":
+  version "20.6.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.6.5.tgz#4c6a79adf59a8e8193ac87a0e522605b16587258"
+  integrity sha512-2qGq5LAOTh9izcc0+F+dToFigBWiK1phKPt7rNhOqJSr35y8rlIBjDwGtFSgAI6MGIhjwOVNSQZVdJsZJ2uR1w==
 
 "@types/node@^20.6.3":
   version "20.6.3"

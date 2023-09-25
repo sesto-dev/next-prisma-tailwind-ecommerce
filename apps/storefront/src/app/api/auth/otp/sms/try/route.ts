@@ -1,11 +1,8 @@
-import config from '@/config/site'
-import Mail from '@/emails/verify'
 import prisma from '@/lib/prisma'
 import { generateSerial } from '@/lib/serial'
 import { getErrorResponse } from '@/lib/utils'
-import { sendMail } from '@persepolis/mail'
-import { isEmailValid } from '@persepolis/regex'
-import { render } from '@react-email/render'
+import { isValidPhoneNumber } from '@persepolis/regex'
+import { sendTransactionalSMS } from '@persepolis/sms'
 import { NextRequest, NextResponse } from 'next/server'
 import { ZodError } from 'zod'
 
@@ -13,27 +10,35 @@ export async function POST(req: NextRequest) {
    try {
       const OTP = generateSerial({})
 
-      const { email } = await req.json()
+      const { phone } = await req.json()
 
-      if (isEmailValid(email)) {
-         await prisma.owner.update({
-            where: { email },
-            data: {
+      if (isValidPhoneNumber(phone)) {
+         await prisma.user.upsert({
+            where: { phone: phone.toString().toLowerCase() },
+            update: {
+               OTP,
+            },
+            create: {
+               phone: phone.toString().toLowerCase(),
                OTP,
             },
          })
 
-         await sendMail({
-            name: config.name,
-            to: email,
-            subject: 'Verify your email.',
-            html: render(Mail({ code: OTP, name: config.name })),
+         await sendTransactionalSMS({
+            Mobile: phone,
+            TemplateId: 100000,
+            Parameters: [
+               {
+                  name: 'Code',
+                  value: '12345',
+               },
+            ],
          })
 
          return new NextResponse(
             JSON.stringify({
                status: 'success',
-               email,
+               phone,
             }),
             {
                status: 200,
@@ -42,7 +47,7 @@ export async function POST(req: NextRequest) {
          )
       }
 
-      if (!isEmailValid(email)) {
+      if (!isValidPhoneNumber(phone)) {
          return getErrorResponse(400, 'Incorrect Email')
       }
    } catch (error) {

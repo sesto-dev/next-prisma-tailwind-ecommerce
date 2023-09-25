@@ -22,7 +22,8 @@ import {
    SelectValue,
 } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
-import { cn, isVariableValid, slugify } from '@/lib/utils'
+import { cn, isVariableValid } from '@/lib/utils'
+import { slugify } from '@persepolis/slugify'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'

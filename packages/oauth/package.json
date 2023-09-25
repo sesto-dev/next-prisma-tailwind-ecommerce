@@ -24,7 +24,7 @@
    "devDependencies": {
       "typescript": "^5.2.2"
    },
-   "dependencies": {
+   "peerDependencies": {
       "@types/node": "^20.6.2",
       "querystring": "^0.2.1"
    }

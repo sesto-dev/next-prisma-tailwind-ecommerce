@@ -16,7 +16,9 @@
    },
    "homepage": "https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms#readme",
    "devDependencies": {
-      "@types/node": "^20.5.9",
       "typescript": "^5.2.2"
+   },
+   "peerDependencies": {
+      "@types/node": "^20.6.2"
    }
 }

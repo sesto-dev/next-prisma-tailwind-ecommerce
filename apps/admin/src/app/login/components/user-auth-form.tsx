@@ -3,8 +3,8 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { isEmailValid } from '@/lib/regex'
 import { cn } from '@/lib/utils'
+import { isEmailValid } from '@persepolis/regex'
 import { Loader, SmartphoneIcon } from 'lucide-react'
 import * as React from 'react'
 

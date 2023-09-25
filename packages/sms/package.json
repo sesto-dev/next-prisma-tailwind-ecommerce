@@ -1,7 +1,7 @@
 {
-   "name": "@persepolis/regex",
+   "name": "@persepolis/sms",
    "version": "0.0.2",
-   "description": "Regex Package.",
+   "description": "SMS Package.",
    "main": "dist/index.js",
    "scripts": {
       "yarn": "yarn",

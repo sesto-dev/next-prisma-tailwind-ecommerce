@@ -11,7 +11,7 @@
    },
    "repository": {
       "type": "git",
-      "url": "git+https://github.com/Accretence/next-tailwind-portfolio.git"
+      "url": "git+https://github.com/Accretence/next-prisma-tailwind-ecommerce.git"
    },
    "files": [
       "dist"
@@ -19,16 +19,16 @@
    "author": {
       "name": "Amirhossein Mohammadi",
       "url": "https://github.com/accretence"
-    },
+   },
    "license": "MIT",
    "bugs": {
-      "url": "https://github.com/Accretence/next-tailwind-portfolio/issues"
+      "url": "https://github.com/Accretence/next-prisma-tailwind-ecommerce/issues"
    },
-   "homepage": "https://github.com/Accretence/next-tailwind-portfolio#readme",
+   "homepage": "https://github.com/Accretence/next-prisma-tailwind-ecommerce#readme",
    "devDependencies": {
       "typescript": "^5.2.2"
    },
-   "dependencies": {
+   "peerDependencies": {
       "@types/node": "^20.6.2"
    }
 }
