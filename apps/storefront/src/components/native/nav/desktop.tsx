@@ -120,7 +120,6 @@ const ListItem = forwardRef<
       <li>
          <NavigationMenuLink asChild>
             <Link
-               // @ts-ignore
                href={href}
                ref={ref}
                className={cn(

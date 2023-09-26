@@ -13,13 +13,7 @@ import {
 import { docsConfig } from '@/config/docs'
 import { cn } from '@/lib/utils'
 import { DialogProps } from '@radix-ui/react-alert-dialog'
-import {
-   CircleIcon,
-   FileIcon,
-   LaptopIcon,
-   MoonIcon,
-   SunIcon,
-} from 'lucide-react'
+import { CircleIcon, LaptopIcon, MoonIcon, SunIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import * as React from 'react'

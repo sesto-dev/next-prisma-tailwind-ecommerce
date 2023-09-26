@@ -3,83 +3,32 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { cn } from '@/lib/utils'
-import { isEmailValid } from '@persepolis/regex'
-import { Loader, SmartphoneIcon } from 'lucide-react'
+import { cn, isVariableValid } from '@/lib/utils'
+import { isEmailValid, isIranianPhoneNumberValid } from '@persepolis/regex'
+import { Loader, MailIcon, SmartphoneIcon } from 'lucide-react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
    const [isLoading, setIsLoading] = React.useState<boolean>(false)
-   const [email, setEmail] = React.useState<string>('')
-   const [OTP, setOTP] = React.useState('')
-   const [usingOTP, setUsingOTP] = React.useState(false)
-
-   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setEmail(event.target.value)
-   }
-
-   const handleOTPChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setOTP(event.target.value)
-   }
-
-   async function onSubmit() {
-      try {
-         setIsLoading(true)
-
-         const response = await fetch('/api/auth/otp/email/try', {
-            method: 'POST',
-            body: JSON.stringify({ email }),
-            cache: 'no-store',
-         })
-
-         if (response.ok) {
-            setUsingOTP(true)
-         }
-
-         setIsLoading(false)
-      } catch (error) {
-         console.error({ error })
-      }
-   }
-
-   async function onVerifyOTP() {
-      try {
-         setIsLoading(true)
-
-         const response = await fetch('/api/auth/otp/email/verify', {
-            method: 'POST',
-            body: JSON.stringify({ email, OTP }),
-            cache: 'no-store',
-         })
-
-         if (response.ok) {
-            window.location.assign(`/`)
-         }
-      } catch (error) {
-         console.error({ error })
-      }
-   }
+   const [fetchedOTP, setFetchedOTP] = React.useState<boolean>(false)
 
    return (
       <div className={cn('grid gap-6', className)} {...props}>
-         <div className="grid gap-2">
-            {usingOTP ? (
-               <VerifyComponents
-                  handleOTPChange={handleOTPChange}
-                  onVerifyOTP={onVerifyOTP}
-                  isLoading={isLoading}
-               />
-            ) : (
-               <TryComponents
-                  email={email}
-                  handleEmailChange={handleEmailChange}
-                  onSubmit={onSubmit}
-                  isLoading={isLoading}
-               />
-            )}
-         </div>
+         {fetchedOTP ? (
+            <VerifyComponents
+               isLoading={isLoading}
+               setIsLoading={setIsLoading}
+            />
+         ) : (
+            <TryComponents
+               isLoading={isLoading}
+               setIsLoading={setIsLoading}
+               setFetchedOTP={setFetchedOTP}
+            />
+         )}
          <div className="relative">
             <div className="absolute inset-0 flex items-center">
                <span className="w-full border-t" />
@@ -90,24 +39,167 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                </span>
             </div>
          </div>
-         <Button disabled variant="outline" type="button">
-            {isLoading ? (
-               <Loader className="mr-2 h-4 animate-spin" />
-            ) : (
-               <SmartphoneIcon className="mr-2 h-4" />
-            )}
-            Phone Number [Coming Soon]
-         </Button>
+         <ChangeMethodButton isLoading={isLoading} />
       </div>
    )
 }
 
-function TryComponents({ handleEmailChange, isLoading, onSubmit, email }) {
+function ChangeMethodButton({ isLoading }) {
+   const router = useRouter()
+   const pathname = usePathname()
+   const searchParams = useSearchParams()
+   const method = searchParams.get('method')
+
+   function changeMethod() {
+      const params = new URLSearchParams(Array.from(searchParams.entries()))
+
+      params.set('method', method == 'phone' ? 'email' : 'phone')
+      const search = params.toString()
+      const query = search ? `?${search}` : ''
+
+      router.replace(`${pathname}${query}`, {
+         scroll: false,
+      })
+   }
+
+   if (method === 'phone')
+      return (
+         <Button onClick={changeMethod} disabled={isLoading} type="button">
+            {isLoading ? (
+               <Loader className="mr-2 h-4 animate-spin" />
+            ) : (
+               <MailIcon className="mr-2 h-4" />
+            )}
+            Email
+         </Button>
+      )
+
+   return (
+      <Button onClick={changeMethod} disabled={isLoading} type="button">
+         {isLoading ? (
+            <Loader className="mr-2 h-4 animate-spin" />
+         ) : (
+            <SmartphoneIcon className="mr-2 h-4" />
+         )}
+         Phone Number
+      </Button>
+   )
+}
+
+function TryComponents({ isLoading, setIsLoading, setFetchedOTP }) {
+   const router = useRouter()
+   const pathname = usePathname()
+   const searchParams = useSearchParams()
+   const method = searchParams.get('method')
+   const email = searchParams.get('email')
+   const phone = searchParams.get('phone')
+
+   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const params = new URLSearchParams(Array.from(searchParams.entries()))
+
+      params.set('email', event.target.value)
+      const search = params.toString()
+      const query = search ? `?${search}` : ''
+
+      router.replace(`${pathname}${query}`, {
+         scroll: false,
+      })
+   }
+
+   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const params = new URLSearchParams(Array.from(searchParams.entries()))
+
+      params.set('phone', event.target.value)
+      const search = params.toString()
+      const query = search ? `?${search}` : ''
+
+      router.replace(`${pathname}${query}`, {
+         scroll: false,
+      })
+   }
+
+   async function onSubmitEmail() {
+      try {
+         setIsLoading(true)
+
+         const response = await fetch('/api/auth/otp/email/try', {
+            method: 'POST',
+            body: JSON.stringify({ email }),
+            cache: 'no-store',
+         })
+
+         if (response.ok) {
+            setFetchedOTP(true)
+         }
+
+         setIsLoading(false)
+      } catch (error) {
+         console.error({ error })
+      }
+   }
+
+   async function onSubmitPhone() {
+      try {
+         setIsLoading(true)
+
+         const response = await fetch('/api/auth/otp/phone/try', {
+            method: 'POST',
+            body: JSON.stringify({ phone }),
+            cache: 'no-store',
+         })
+
+         if (response.ok) {
+            setFetchedOTP(true)
+         }
+
+         setIsLoading(false)
+      } catch (error) {
+         console.error({ error })
+      }
+   }
+
+   if (method === 'phone')
+      return (
+         <>
+            <div className="grid gap-1">
+               <Label
+                  className="text-sm font-light text-foreground/60"
+                  htmlFor="email"
+               >
+                  Phone
+               </Label>
+               <Input
+                  id="phone"
+                  placeholder="+989123456789"
+                  type="phone"
+                  autoCapitalize="none"
+                  autoComplete="phone"
+                  autoCorrect="off"
+                  disabled={isLoading}
+                  onChange={handlePhoneChange}
+                  required
+               />
+               {isVariableValid(phone) && !isIranianPhoneNumberValid(phone) && (
+                  <p className="mt-2 text-sm text-red-700">
+                     Phone Number is not valid.
+                  </p>
+               )}
+            </div>
+            <Button
+               onClick={onSubmitPhone}
+               disabled={isLoading || !isIranianPhoneNumberValid(phone)}
+            >
+               {isLoading && <Loader className="mr-2 h-4 animate-spin" />}
+               Login with Phone
+            </Button>
+         </>
+      )
+
    return (
       <>
          <div className="grid gap-1">
             <Label
-               className="text-sm text-foreground/60 font-light"
+               className="text-sm font-light text-foreground/60"
                htmlFor="email"
             >
                Email
@@ -125,7 +217,7 @@ function TryComponents({ handleEmailChange, isLoading, onSubmit, email }) {
             />
          </div>
          <Button
-            onClick={onSubmit}
+            onClick={onSubmitEmail}
             disabled={isLoading || !isEmailValid(email)}
          >
             {isLoading && <Loader className="mr-2 h-4 animate-spin" />}
@@ -135,12 +227,59 @@ function TryComponents({ handleEmailChange, isLoading, onSubmit, email }) {
    )
 }
 
-function VerifyComponents({ isLoading, onVerifyOTP, handleOTPChange }) {
+function VerifyComponents({ isLoading, setIsLoading }) {
+   const router = useRouter()
+   const pathname = usePathname()
+   const searchParams = useSearchParams()
+   const method = searchParams.get('method')
+   const email = searchParams.get('email')
+   const phone = searchParams.get('phone')
+   const OTP = searchParams.get('OTP')
+
+   const handleOTPChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const params = new URLSearchParams(Array.from(searchParams.entries()))
+
+      params.set('OTP', event.target.value)
+      const search = params.toString()
+      const query = search ? `?${search}` : ''
+
+      router.replace(`${pathname}${query}`, {
+         scroll: false,
+      })
+   }
+
+   async function onVerifyOTP() {
+      try {
+         setIsLoading(true)
+
+         const response = await fetch(
+            method === 'phone'
+               ? '/api/auth/otp/phone/verify'
+               : '/api/auth/otp/email/verify',
+            {
+               method: 'POST',
+               body: JSON.stringify({
+                  email,
+                  phone,
+                  OTP,
+               }),
+               cache: 'no-store',
+            }
+         )
+
+         if (response.ok) {
+            window.location.assign(`/`)
+         }
+      } catch (error) {
+         console.error({ error })
+      }
+   }
+
    return (
       <>
          <div className="grid gap-1">
             <Label
-               className="text-sm text-foreground/60 font-light"
+               className="text-sm font-light text-foreground/60"
                htmlFor="email"
             >
                One-Time Password

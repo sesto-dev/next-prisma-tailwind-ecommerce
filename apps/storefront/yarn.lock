@@ -420,10 +420,10 @@
     nodemailer "^6.9.4"
     react "^18.2.0"
 
-"@persepolis/regex@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@persepolis/regex/-/regex-0.0.2.tgz#6347dcb59499889a193c341883f67107e5bc8f3c"
-  integrity sha512-imnyZ9F9luXjPG9b5HEGrcPiQD1ZD2aXtpgJ2sJ0BSz1G14xNS13dtma8EjW74Db4m2an6J8VyvPvDTftralrw==
+"@persepolis/regex@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@persepolis/regex/-/regex-0.0.3.tgz#c36f224ae85ac02d9a98da954f6b108838b7546e"
+  integrity sha512-iG038MVBYPwNaUnBqOY6xvImZK2hu8pqmYm0eYjCDdptONnE1fS7vPO3MbD3NESL2bp8Ma7ulkQRQInml/C5AA==
 
 "@persepolis/rng@^0.0.1":
   version "0.0.1"

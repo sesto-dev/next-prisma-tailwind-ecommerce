@@ -23,7 +23,7 @@
    "dependencies": {
       "@hookform/resolvers": "^3.3.1",
       "@persepolis/mail": "^1.0.7",
-      "@persepolis/regex": "^0.0.2",
+      "@persepolis/regex": "^0.0.3",
       "@persepolis/rng": "^0.0.1",
       "@persepolis/slugify": "^0.0.1",
       "@persepolis/sms": "^0.0.1",

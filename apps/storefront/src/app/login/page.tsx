@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function AuthenticationPage() {
    return (
       <div className="container relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-         <div className="relative hidden bg-zinc-900 h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
+         <div className="relative hidden bg-zinc-900 h-full flex-col bg-muted p-10 dark:border-r lg:flex">
             <Link
                href="/"
                className="relative z-20 flex items-center text-lg font-medium"

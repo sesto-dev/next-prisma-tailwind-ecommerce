@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma'
 import { generateSerial } from '@/lib/serial'
 import { getErrorResponse } from '@/lib/utils'
-import { isValidPhoneNumber } from '@persepolis/regex'
+import { isIranianPhoneNumberValid } from '@persepolis/regex'
 import { sendTransactionalSMS } from '@persepolis/sms'
 import { NextRequest, NextResponse } from 'next/server'
 import { ZodError } from 'zod'
@@ -12,7 +12,8 @@ export async function POST(req: NextRequest) {
 
       const { phone } = await req.json()
 
-      if (isValidPhoneNumber(phone)) {
+      // Use isPhoneNumberValid if international
+      if (isIranianPhoneNumberValid(phone)) {
          await prisma.user.upsert({
             where: { phone: phone.toString().toLowerCase() },
             update: {
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
          )
       }
 
-      if (!isValidPhoneNumber(phone)) {
+      if (!isIranianPhoneNumberValid(phone)) {
          return getErrorResponse(400, 'Incorrect Email')
       }
    } catch (error) {
