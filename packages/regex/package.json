@@ -11,20 +11,20 @@
    },
    "repository": {
       "type": "git",
-      "url": "git+https://github.com/Accretence/next-prisma-tailwind-ecommerce.git"
+      "url": "git+https://github.com/sesto-dev/next-prisma-tailwind-ecommerce.git"
    },
    "files": [
       "dist"
    ],
    "author": {
-      "name": "Amirhossein Mohammadi",
-      "url": "https://github.com/accretence"
+      "name": "Sesto",
+      "url": "https://github.com/sesto-dev"
    },
    "license": "MIT",
    "bugs": {
-      "url": "https://github.com/Accretence/next-prisma-tailwind-ecommerce/issues"
+      "url": "https://github.com/sesto-dev/next-prisma-tailwind-ecommerce/issues"
    },
-   "homepage": "https://github.com/Accretence/next-prisma-tailwind-ecommerce#readme",
+   "homepage": "https://github.com/sesto-dev/next-prisma-tailwind-ecommerce#readme",
    "devDependencies": {
       "typescript": "^5.2.2"
    },

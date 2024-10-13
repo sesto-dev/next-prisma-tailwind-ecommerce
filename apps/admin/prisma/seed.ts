@@ -35,12 +35,7 @@ async function main() {
 
    const providers = ['Parsian', 'Pasargad', 'Dey']
 
-   const owners = [
-      'accretence@gmail.com',
-      'iqoror@gmail.com',
-      'elnaz.adibg@gmail.com',
-      'hsmoghaddasi@gmail.com',
-   ]
+   const owners = ['sesto@post.com']
 
    const categories = [
       'Electronics',
@@ -276,7 +271,7 @@ async function main() {
       await prisma.author.create({
          data: {
             name: 'Amirhossein Mohammadi',
-            email: 'accretence@gmail.com',
+            email: 'sesto@post.com',
             blogs: {
                create: blogPosts,
             },
@@ -290,7 +285,7 @@ async function main() {
 
    const user = await prisma.user.create({
       data: {
-         email: 'accretence@gmail.com',
+         email: 'sesto@post.com',
          name: 'Amirhossein Mohammadi',
          cart: {
             create: {},

@@ -1,6 +1,6 @@
 {
    "name": "@persepolis/mail",
-   "version": "1.0.7",
+   "version": "1.0.9",
    "description": "Mail service for the Persepolis e-commerce platform.",
    "main": "dist/index.js",
    "scripts": {
@@ -10,25 +10,25 @@
    },
    "repository": {
       "type": "git",
-      "url": "git+https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms.git"
+      "url": "git+https://github.com/sesto-dev/next-prisma-tailwind-ecommerce.git"
    },
    "files": [
       "dist"
    ],
-   "author": "@accretence",
+   "author": "@sesto-dev",
    "license": "MIT",
    "bugs": {
-      "url": "https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms/issues"
+      "url": "https://github.com/sesto-dev/next-prisma-tailwind-ecommerce/issues"
    },
-   "homepage": "https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms#readme",
+   "homepage": "https://github.com/sesto-dev/next-prisma-tailwind-ecommerce#readme",
    "devDependencies": {
-      "@types/nodemailer": "^6.4.9",
-      "@types/react": "^18.2.21",
-      "typescript": "^5.2.2"
+      "@types/nodemailer": "^6.4.16",
+      "@types/react": "^18.3.11",
+      "typescript": "^5.6.3"
    },
    "peerDependencies": {
-      "@react-email/components": "^0.0.7",
-      "@react-email/html": "^0.0.4",
+      "@react-email/components": "^0.0.25",
+      "@react-email/render": "^1.0.1",
       "nodemailer": "^6.9.4",
       "react": "^18.2.0"
    }

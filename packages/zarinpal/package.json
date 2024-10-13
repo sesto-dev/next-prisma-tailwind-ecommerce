@@ -8,13 +8,16 @@
       "build": "tsc",
       "test": "echo \"Error: no test specified\" && exit 1"
    },
-   "author": "@accretence",
+   "author": {
+      "name": "Sesto",
+      "url": "https://github.com/sesto-dev"
+   },
    "license": "MIT",
    "repository": {
       "type": "git",
-      "url": "git+https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms.git"
+      "url": "git+https://github.com/sesto-dev/next-prisma-tailwind-ecommerce.git"
    },
-   "homepage": "https://github.com/Accretence/next-prisma-tailwind-ecommerce-cms#readme",
+   "homepage": "https://github.com/sesto-dev/next-prisma-tailwind-ecommerce#readme",
    "devDependencies": {
       "typescript": "^5.2.2"
    },

@@ -13,8 +13,8 @@ If you discover a security vulnerability in this project, we appreciate your res
 
 To report a vulnerability, please follow these steps:
 
-1.  **Email**: Send an email to our security team at [:accretence@gmail.com](mailto:accretence@gmail.com).
-2.  **Subject**: Use a clear and descriptive subject line, such as "Security Vulnerability Report - [Scribbly]."
+1.  **Email**: Send an email to our security team at [:sesto@post.com](mailto:sesto@post.com).
+2.  **Subject**: Use a clear and descriptive subject line, such as "Security Vulnerability Report"
 3.  **Description**: Provide a detailed description of the vulnerability, including the steps to reproduce it and any relevant information that can help us understand and address the issue.
 4.  **Attach Proof of Concept**: If possible, provide a proof-of-concept or sample code that demonstrates the vulnerability. However, please refrain from performing any destructive actions or violating any privacy or security laws during your research.
 5.  **Encryption (Optional)**: If you prefer to encrypt your communication, please use our public PGP key, which can be found on our website or on public key servers.

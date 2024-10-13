@@ -12,13 +12,12 @@ import {
 } from '@/components/ui/command'
 import { docsConfig } from '@/config/docs'
 import { cn } from '@/lib/utils'
-import { DialogProps } from '@radix-ui/react-alert-dialog'
 import { CircleIcon, LaptopIcon, MoonIcon, SunIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import * as React from 'react'
 
-export function CommandMenu({ ...props }: DialogProps) {
+export function CommandMenu({ ...props }: any) {
    const router = useRouter()
    const [open, setOpen] = React.useState(false)
    const { setTheme } = useTheme()

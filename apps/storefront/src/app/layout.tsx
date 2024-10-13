@@ -11,12 +11,10 @@ export const metadata = {
    title: 'Store',
    description: 'E-Commerce Store',
    keywords: ['E-Commerce', 'Store', 'Shop'],
-   authors: [
-      { name: 'Amirhossein Mohammadi', url: 'https://github.com/accretence' },
-   ],
+   authors: [{ name: 'Sesto', url: 'https://github.com/sesto-dev' }],
    colorScheme: 'dark',
-   creator: 'Amirhossein Mohammadi',
-   publisher: 'Amirhossein Mohammadi',
+   creator: 'Sesto',
+   publisher: 'Sesto',
 }
 
 export default async function RootLayout({

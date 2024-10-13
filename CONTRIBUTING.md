@@ -4,12 +4,12 @@ Thank you for considering contributing to this repository! We appreciate your in
 
 ### Table of Contents
 
-- [Getting Started](https://github.com/accretence/folio/blob/main/CONTRIBUTING.md#getting-started)
-- [How to Contribute](https://github.com/accretence/folio/blob/main/CONTRIBUTING.md/#how-to-contribute)
-- [Code Style](https://github.com/accretence/folio/blob/main/CONTRIBUTING.md#code-style)
-- [Reporting Issues](https://github.com/accretence/folio/blob/main/CONTRIBUTING.md#reporting-issues)
-- [Submitting Pull Requests](https://github.com/accretence/folio/blob/main/CONTRIBUTING.md#submitting-pull-requests)
-- [License](https://github.com/accretence/folio/blob/main/CONTRIBUTING.md#license)
+- [Getting Started](https://github.com/sesto-dev/next-prisma-tailwind-ecommerce/blob/main/CONTRIBUTING.md#getting-started)
+- [How to Contribute](https://github.com/sesto-dev/next-prisma-tailwind-ecommerce/blob/main/CONTRIBUTING.md/#how-to-contribute)
+- [Code Style](https://github.com/sesto-dev/next-prisma-tailwind-ecommerce/blob/main/CONTRIBUTING.md#code-style)
+- [Reporting Issues](https://github.com/sesto-dev/next-prisma-tailwind-ecommerce/blob/main/CONTRIBUTING.md#reporting-issues)
+- [Submitting Pull Requests](https://github.com/sesto-dev/next-prisma-tailwind-ecommerce/blob/main/CONTRIBUTING.md#submitting-pull-requests)
+- [License](https://github.com/sesto-dev/next-prisma-tailwind-ecommerce/blob/main/CONTRIBUTING.md#license)
 
 ### Getting Started
 
@@ -56,4 +56,4 @@ To contribute code to this repository, please follow these steps:
 
 ### License
 
-By contributing to this repository, you agree that your contributions will be licensed under the [LICENSE](https://github.com/accretence/folio/blob/main/LICENSE.md) file of this project.
+By contributing to this repository, you agree that your contributions will be licensed under the [LICENSE](https://github.com/sesto-dev/next-prisma-tailwind-ecommerce/blob/main/LICENSE.md) file of this project.

@@ -1,10 +1,10 @@
-![Screenshot](https://github.com/Accretence/next-prisma-tailwind-ecommerce/assets/45223699/00444538-a496-4f90-814f-7e57a580ad17)
+![Screenshot](https://github.com/sesto-dev/next-prisma-tailwind-ecommerce/assets/45223699/00444538-a496-4f90-814f-7e57a580ad17)
 
 <div align="center"><h3>Full-Stack E-Commerce Platform</h3><p>Built using Typescript with Next.js, Prisma ORM and TailwindCSS.</p></div>
 <div align="center">
-<a href="https://store.accretence.com">Storefront</a> 
+<a href="https://pasargad.vercel.app">Storefront</a> 
 <span> · </span>
-<a href="https://admin.accretence.com">Admin Panel</a>
+<a href="https://pardis.vercel.app">Admin Panel</a>
 </div>
 
 ## 👋 Introduction
@@ -20,7 +20,7 @@ Welcome to the open-source Next.js E-Commerce Storefront with Admin Panel projec
 -  [x] Authentication using `middleware.ts` and `httpOnly` cookies.
 -  [x] Storefront with blog, products, and categories.
 -  [x] Database-Stored blogs powered by **MDX** templates.
--  [x] Email verification and invoices using [react-email-tailwind-templates](https://github.com/accretence/react-email-tailwind-templates).
+-  [x] Email verification and invoices using [react-email-tailwind-templates](https://github.com/sesto-dev/react-email-tailwind-templates).
 -  [x] [**TailwindCSS**](https://tailwindcss.com/) for utility-first CSS.
 -  [x] UI built with [**Radix**](https://www.radix-ui.com/) and stunning UI components, all thanks to [**shadcn/ui**](https://ui.shadcn.com/).
 -  [x] Type-Validation with **Zod**.
@@ -46,7 +46,7 @@ You can [read more about environment variables here](https://nextjs.org/docs/bas
 Clone the repository.
 
 ```bash
-git clone https://github.com/accretence/next-prisma-tailwind-ecommerce
+git clone https://github.com/sesto-dev/next-prisma-tailwind-ecommerce
 ```
 
 Navigate to each folder in the `apps` folder and and set the variables.
@@ -91,4 +91,4 @@ Follow the deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 
 This project is MIT-licensed and is free to use and modify for your own projects. Check the [LICENSE](./LICENSE) file for details.
 
-Created by [Amirhossein Mohammadi](https://github.com/accretence).
+Created by [Amirhossein Mohammadi](https://github.com/sesto-dev).

@@ -14,7 +14,10 @@
       "publish": "npm publish --access public",
       "test": "echo \"Error: no test specified\" && exit 1"
    },
-   "author": "@accretence",
+   "author": {
+      "name": "Sesto",
+      "url": "https://github.com/sesto-dev"
+   },
    "license": "MIT",
    "peerDependencies": {
       "react": "^18.2.0"
