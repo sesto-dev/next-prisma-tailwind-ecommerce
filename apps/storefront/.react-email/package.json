@@ -4,7 +4,6 @@
    "description": "The React Email preview application",
    "license": "MIT",
    "scripts": {
-      "yarn": "yarn",
       "dev": "next dev",
       "build": "next build",
       "start": "next start",

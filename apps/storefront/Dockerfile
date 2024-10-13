@@ -5,17 +5,17 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Install dependencies
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json bun.lockb ./
+RUN bun install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
 
 # Generate Prisma client
-RUN yarn prisma generate
+RUN bun prisma generate
 
 # Build the Next.js application
-RUN yarn build
+RUN bun run build
 
 # Stage 2: Run the application
 FROM node:18-alpine AS runner
@@ -27,8 +27,8 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 # Install only production dependencies
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --production
+COPY package.json bun.lockb ./
+RUN bun install --frozen-lockfile --production
 
 # Copy built application from the builder stage
 COPY --from=builder /app/.next ./.next
@@ -40,4 +40,4 @@ COPY --from=builder /app/node_modules ./node_modules
 EXPOSE 3000
 
 # Start the Next.js application
-CMD ["yarn", "start"]
+CMD ["bun", "run", "start"]

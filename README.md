@@ -27,6 +27,14 @@ Welcome to the open-source Next.js E-Commerce Storefront with Admin Panel projec
 -  [x] [**Next Metadata API**](https://nextjs.org/docs/api-reference/metadata) for SEO handling.
 -  [ ] Comprehensive implementations for i18n.
 
+## 2️⃣ Why are there 2 apps in the app folder?
+
+This project is made up of 2 separate apps ( admin and storefront ) which should be deployed separately. If you are deploying with Vercel you should create 2 different apps.
+
+![image](https://github.com/Accretence/next-prisma-tailwind-ecommerce/assets/45223699/f5adc1ac-9dbb-46cb-bb6e-a8db15883348)
+
+Under the general tab there is a Root Directory option, for the admin app you should put in "apps/admin" and for the storefront app you should put in "apps/storefront".
+
 ## 🔐 Authentication
 
 The authentication is handled using JWT tokens stored in cookies and verified inside the `middleware.ts` file. The middleware function takes in the HTTP request, reads the `token` cookie and if the JWT is successfully verified, it sets the `X-USER-ID` header with the userId as the value, otherwise the request is sent back with 401 status.
@@ -58,26 +66,26 @@ cp .env.example .env
 Get all dependencies sorted.
 
 ```sh
-yarn install
+bun install
 ```
 
 Bring your database to life with pushing the database schema.
 
 ```bash
-yarn db:push
+bun run db:push
 ```
 
 ```sh
-yarn dev
+bun run dev
 ```
 
 ## 🔑 Database
 
 Prisma ORM can use any PostgreSQL database. [Supabase is the easiest to work with.](https://www.prisma.io/docs/guides/database/supabase) Simply set `DATABASE_URL` in your `.env` file to work.
 
-### `yarn db`
+### `bun run db`
 
-This project exposes a package.json script for accessing prisma via `yarn db:<command>`. You should always try to use this script when interacting with prisma locally.
+This project exposes a package.json script for accessing prisma via `bun run db:<command>`. You should always try to use this script when interacting with prisma locally.
 
 ### Making changes to the database schema
 

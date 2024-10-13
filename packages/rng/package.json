@@ -4,7 +4,6 @@
    "description": "RNG Package.",
    "main": "dist/index.js",
    "scripts": {
-      "yarn": "yarn",
       "publish": "npm publish --access public",
       "build": "tsc",
       "test": "echo \"Error: no test specified\" && exit 1"

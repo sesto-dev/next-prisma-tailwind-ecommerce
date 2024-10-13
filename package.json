@@ -1,28 +1,27 @@
 {
-  "name": "next-prisma-tailwind-ecommerce",
-  "version": "1.0.0",
-  "scripts": {
-    "prepare": "husky install",
-    "update": "npx npm-check-updates -u"
-  },
-  "author": {
-    "name": "Sesto",
-    "url": "https://github.com/sesto-dev"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "@commitlint/cli": "^19.5.0",
-    "@commitlint/config-conventional": "^19.5.0",
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.8.1",
-    "@typescript-eslint/parser": "^8.8.1",
-    "eslint": "^9.12.0",
-    "eslint-config-next": "^14.2.15",
-    "eslint-plugin-react": "^7.37.1",
-    "husky": "^9.1.6",
-    "lint-staged": "^15.2.10",
-    "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.8"
-  },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+   "name": "next-prisma-tailwind-ecommerce",
+   "version": "1.0.0",
+   "scripts": {
+      "prepare": "husky install",
+      "update": "npx npm-check-updates -u"
+   },
+   "author": {
+      "name": "Sesto",
+      "url": "https://github.com/sesto-dev"
+   },
+   "license": "MIT",
+   "devDependencies": {
+      "@commitlint/cli": "^19.5.0",
+      "@commitlint/config-conventional": "^19.5.0",
+      "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+      "@typescript-eslint/eslint-plugin": "^8.8.1",
+      "@typescript-eslint/parser": "^8.8.1",
+      "eslint": "^9.12.0",
+      "eslint-config-next": "^14.2.15",
+      "eslint-plugin-react": "^7.37.1",
+      "husky": "^9.1.6",
+      "lint-staged": "^15.2.10",
+      "prettier": "^3.3.3",
+      "prettier-plugin-tailwindcss": "^0.6.8"
+   }
 }
