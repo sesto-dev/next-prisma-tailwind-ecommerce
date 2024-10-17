@@ -113,7 +113,7 @@ export async function POST(req: Request) {
             name: config.name,
             to: owner.email,
             subject: 'An order was created.',
-            html: render(
+            html: await render(
                Mail({
                   id: order.id,
                   payable: payable.toFixed(2),

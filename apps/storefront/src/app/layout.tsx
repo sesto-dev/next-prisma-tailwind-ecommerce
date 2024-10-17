@@ -12,7 +12,6 @@ export const metadata = {
    description: 'E-Commerce Store',
    keywords: ['E-Commerce', 'Store', 'Shop'],
    authors: [{ name: 'Sesto', url: 'https://github.com/sesto-dev' }],
-   colorScheme: 'dark',
    creator: 'Sesto',
    publisher: 'Sesto',
 }

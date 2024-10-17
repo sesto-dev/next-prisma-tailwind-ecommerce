@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
             name: config.name,
             to: email,
             subject: 'Verify your email.',
-            html: render(Mail({ code: OTP, name: config.name })),
+            html: await render(Mail({ code: OTP, name: config.name })),
          })
 
          return new NextResponse(
