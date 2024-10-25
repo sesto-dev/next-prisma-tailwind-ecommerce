@@ -11,44 +11,34 @@ export async function POST(req: Request) {
 
       const body = await req.json()
 
-      const { title, description, bannerId } = body
+      const { title, description, logo } = body
 
       if (!title) {
          return new NextResponse('Name is required', { status: 400 })
       }
 
-      if (!bannerId) {
-         return new NextResponse('Banner ID is required', { status: 400 })
-      }
-
-      // Create a new category
-      const category = await prisma.category.create({
+      const brand = await prisma.brand.create({
          data: {
             title,
             description,
-            banners: {
-               connect: {
-                  id: bannerId,
-               },
-            },
+            logo,
          },
       })
 
-      return NextResponse.json(category)
+      return NextResponse.json(brand)
    } catch (error) {
-      console.error('[CATEGORIES_POST]', error)
+      console.error('[BRANDS_POST]', error)
       return new NextResponse('Internal error', { status: 500 })
    }
 }
 
 export async function GET(req: Request) {
    try {
-      // Find all categories
-      const categories = await prisma.category.findMany()
+      const brands = await prisma.brand.findMany({})
 
-      return NextResponse.json(categories)
+      return NextResponse.json(brands)
    } catch (error) {
-      console.error('[CATEGORIES_GET]', error)
+      console.error('[BRANDS_GET]', error)
       return new NextResponse('Internal error', { status: 500 })
    }
 }

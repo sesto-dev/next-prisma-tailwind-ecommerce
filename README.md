@@ -13,7 +13,7 @@ Welcome to the open-source Next.js E-Commerce Storefront with Admin Panel projec
 
 ## 🥂 Features
 
--  [x] [**Next.js 13**](https://nextjs.org) App Router and React Server Components.
+-  [x] [**Next.js 14**](https://nextjs.org) App Router and React Server Components.
 -  [x] Custom dynamic `Sitemap.xml` generation.
 -  [x] Admin dashboard with products, orders, and payments.
 -  [x] File uploads using `next-cloudinary`.

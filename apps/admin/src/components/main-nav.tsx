@@ -42,6 +42,11 @@ export function MainNav({
          active: pathname.includes(`/users`),
       },
       {
+         href: `/brands`,
+         label: 'Brands',
+         active: pathname.includes(`/brands`),
+      },
+      {
          href: `/codes`,
          label: 'Codes',
          active: pathname.includes(`/codes`),
