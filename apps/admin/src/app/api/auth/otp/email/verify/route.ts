@@ -12,6 +12,11 @@ export async function POST(req: NextRequest) {
 
       email = email.toString().toLowerCase()
 
+      if (!process.env.JWT_SECRET_KEY) {
+         console.error('JWT secret key is missing')
+         return getErrorResponse(500, 'Internal Server Error')
+      }
+
       const user = await prisma.owner.findFirstOrThrow({
          where: { email, OTP },
       })
