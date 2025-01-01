@@ -21,6 +21,11 @@ export async function middleware(req: NextRequest) {
       return token
    }
 
+   if (!process.env.JWT_SECRET_KEY) {
+      console.error('JWT secret key is missing')
+      return getErrorResponse(500, 'Internal Server Error')
+   }
+
    const token = getToken()
 
    if (!token) {
